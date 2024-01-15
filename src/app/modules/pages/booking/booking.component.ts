@@ -15,6 +15,7 @@ import {MatCardModule} from "@angular/material/card";
 @Component({
     selector: 'booking',
     templateUrl: './booking.component.html',
+    styleUrls: ['booking.component.css'],
     imports: [
         FormsModule,
         MatFormFieldModule,
@@ -38,6 +39,7 @@ import {MatCardModule} from "@angular/material/card";
 export class BookingComponent implements OnInit{
 
     branchCode: string;
+    formFieldHelpers: string[] = [''];
 
     ngOnInit(): void {
 

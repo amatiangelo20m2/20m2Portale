@@ -5,16 +5,138 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 w-full min-w-0">
             <div class="sm:col-span-2 md:col-span-4 lg:col-span-2 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
                 <div class="flex flex-col sm:flex-row items-start justify-between">
-                    <div class="text-lg font-medium tracking-tight leading-6 truncate">Configurazioni generali</div>
+                    <div class="text-lg font-bold tracking-tight leading-6 truncate">Configurazioni generali</div>
                 </div>
-                Permettere overbooking?
-                <div class="flex flex-col flex-auto mt-1">
-                    <mat-chip-listbox aria-label="Fish selection">
-                        <mat-chip-option selected>Permetti Overbooking</mat-chip-option>
-                        <mat-chip-option color="warn">Non permettere overbooking</mat-chip-option>
-                    </mat-chip-listbox>
+                <div class="flex flex-col mt-1 gt-sm:mt-0 gt-sm:ml-16">
+                    <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Numero posti disponibili</mat-label>
+                        <input type="number" matInput placeholder="Numero posti disponibili" [formControlName]="'guests'">
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pl-3">
+                        <mat-label>Slot in minuti per prenotazione</mat-label>
+                        <mat-select>
+                            <mat-option value="0">0 Minuti</mat-option>
+                            <mat-option value="15">15 Minuti</mat-option>
+                            <mat-option value="30">30 Minuti</mat-option>
+                        </mat-select>
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'mat_outline:access_time'"></mat-icon>
+                    </mat-form-field>
                 </div>
 
+                <div class="flex flex-col mt-2 gt-sm:mt-0 gt-sm:ml-16">
+                    <span class="font-medium mb-2">Lista d'attesa
+                    <mat-icon [matTooltip]="tooltip || 'Al raggiungimento del numero massimo di prenotati le richieste di prenotazione verranno inserite in una lista di attesa. Nel caso una prenotazione venga cancellata questi verranno contattati in automatico per confermare la prenotazione'" [svgIcon]="'mat_outline:info'"></mat-icon></span>
+                    <mat-radio-group
+                        class="flex flex-col"
+                        [color]="'primary'"
+                        [formControlName]="'allow_waiting_list'">
+                        <mat-radio-button
+                            class="mb-2"
+                            [value]="'true'">
+                            Abilita
+                        </mat-radio-button>
+                        <mat-radio-button
+                            class="mb-2"
+                            [value]="'false'">
+                            Disabilita
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="flex flex-col mt-2 gt-sm:mt-0 gt-sm:ml-16">
+                    <span class="font-medium mb-2">Permetti prenotazioni multiple per medesima fascia oraria?
+                    <mat-icon [matTooltip]="tooltip || 'Se sei un ristorante abilita le prenotazioni multiple per la medesima fascia oraria. Se la tua attività non prevedere prenotazioni multiple (ex parrucchiere che lavora da solo), disabilita la funzione'" [svgIcon]="'mat_outline:info'"></mat-icon>
+                    </span>
+                    <mat-radio-group
+
+                        class="flex flex-col"
+                        [color]="'primary'"
+                        [formControlName]="'allow_overlap'">
+                        <mat-radio-button
+                            class="mb-2"
+                            [value]="'true'">
+                            Permetti
+                        </mat-radio-button>
+                        <mat-radio-button
+                            class="mb-2"
+                            [value]="'false'">
+                            Non permettere
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="flex flex-col mt-2 gt-sm:mt-0 gt-sm:ml-16">
+                    <span class="font-medium mb-2">Conferma la prenotazione
+                    <mat-icon [matTooltip]="tooltip || 'Una volta che il cliente prenota il gestore dovrà confermare la prenotazione tramite portale o app'" [svgIcon]="'mat_outline:info'"></mat-icon></span>
+                    <mat-radio-group
+                        class="flex flex-col"
+                        [color]="'primary'"
+                        [formControlName]="'allow_waiting_list'">
+                        <mat-radio-button
+                            class="mb-2"
+                            [value]="'true'">
+                            Invia conferma
+                        </mat-radio-button>
+                        <mat-radio-button
+                            class="mb-2"
+                            [value]="'false'">
+                            Inviare conferma contestualmente alla prenotazione
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <div class="flex flex-col mt-2 gt-sm:mt-0 gt-sm:ml-16">
+                    <div class="font-medium mb-2">
+                        Contestualmente alla conferma di prenotazione il cliente riceverà un link con cui potrà modificare/cancellare la prenotazione
+                    </div>
+                    <mat-radio-group
+                        class="flex flex-col"
+                        [color]="'primary'"
+                        [formControlName]="'allow_waiting_list'">
+                        <mat-radio-button
+                            class="mb-2"
+                            [value]="'true'">
+                            Permetti di modificare/cancellare
+                        </mat-radio-button>
+                        <mat-radio-button
+                            class="mb-2"
+                            [value]="'false'">
+                            Non permettere
+                        </mat-radio-button>
+                    </mat-radio-group>
+                </div>
+
+                <div class="flex flex-col gt-xs:flex-row">
+                    <mat-form-field
+                        [ngClass]="formFieldHelpers"
+                        class="flex-auto gt-xs:pl-3">
+                        <mat-label>Tempo massimo entro il quale poter modificare/cancellare prenotazione</mat-label>
+                        <mat-select>
+                            <mat-option value="select1">30 Minuti</mat-option>
+                            <mat-option value="select2">1 ora</mat-option>
+                            <mat-option value="select3">2 Ore</mat-option>
+                            <mat-option value="select4">4 Ore</mat-option>
+                            <mat-option value="select5">5 Ore</mat-option>
+                        </mat-select>
+                        <mat-icon
+                            class="icon-size-5"
+                            matSuffix
+                            [svgIcon]="'mat_outline:access_time'"></mat-icon>
+                    </mat-form-field>
+                </div>
+                <div class="flex flex-col mt-2 gt-sm:mt-0 gt-sm:ml-16">
+                    <div class="font-medium tracking-tight text-secondary text-xs">
+                        In caso di problemi con il portale mostrare il numero di cellulare con cui contattare direttamente il gestore per la prenotazione
+                    </div>
+                    <mat-form-field appearance="outline" class="form-field">
+                        <mat-label>Recovery number<span class="font-medium mb-2"></span></mat-label>
+                        <input type="phone" matInput placeholder="Numero di cellulare" [formControlName]="'guests'">
+                    </mat-form-field>
+                </div>
 
             </div>
             <div class="sm:col-span-2 md:col-span-4 lg:col-span-2 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">

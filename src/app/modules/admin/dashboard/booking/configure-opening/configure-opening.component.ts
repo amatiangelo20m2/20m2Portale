@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatListModule} from "@angular/material/list";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
@@ -9,7 +9,7 @@ import {MatInputModule} from "@angular/material/input";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {NgForOf, NgIf, NgStyle} from "@angular/common";
+import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
 import {DayhoursComponent} from "./dayhours/dayhours.component";
 import {BranchResponseEntity} from "../../../../../core/dashboard";
@@ -28,6 +28,8 @@ import {EdithoursComponent} from "./dayhours/edit-hours/edithours.component";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatChipsModule} from "@angular/material/chips";
+import {MatRadioModule} from "@angular/material/radio";
+import {environment} from "../../../../../../environments/environment";
 
 
 @Component({
@@ -55,11 +57,15 @@ import {MatChipsModule} from "@angular/material/chips";
         MatSelectModule,
         MatCheckboxModule,
         MatChipsModule,
-        NgStyle
+        NgStyle,
+        MatRadioModule,
+        NgClass
     ],
     standalone: true
 })
 export class ConfigureOpeningComponent implements OnInit{
+
+    @Input() tooltip: string;
 
     currentBranch : BranchResponseEntity;
     url = "";
@@ -68,13 +74,16 @@ export class ConfigureOpeningComponent implements OnInit{
     urlform: FormGroup;
 
     restaurantConfigForm: FormGroup;
+
     restaurantConfigDTO: RestaurantConfigurationDTO;
+    formFieldHelpers: string[] = [''];
 
     ngOnInit() {
         this._dataProvideService.branch$.subscribe((branch) => {
             this.currentBranch = branch;
 
-            this.url = 'http://localhost:4200/reservation?branchCode=' + this.currentBranch.branchCode;
+            this.url = 'https://' + environment.apiURL +'/reservation?branchCode=' + this.currentBranch.branchCode;
+
             this.urlform = this.fb.group({
                 url: [this.url, /* Other Validators if needed */],
                 iframe: [`<iframe src="${this.url}" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>\n`]
@@ -85,9 +94,10 @@ export class ConfigureOpeningComponent implements OnInit{
         this._bookingControllerService.checkWaApiStatus(this.currentBranch.branchCode)
             .subscribe((bookingConfDTO : RestaurantConfigurationDTO) =>{
                 this.restaurantConfigurationDTO = bookingConfDTO;
+
                 this.restaurantConfigForm = this.fb.group({
                     guests: [this.restaurantConfigDTO?.guests ?? 0, Validators.required],
-                    allowOverbooking: [this.restaurantConfigDTO?.allowOverbooking ?? false],
+                    allowOverbooking: [this.restaurantConfigDTO?.bookingSlotInMinutes ?? 0],
                     confirmReservation: [this.restaurantConfigDTO?.confirmReservation ?? false],
                     bookingSlotInMinutes: [this.restaurantConfigDTO?.bookingSlotInMinutes ?? 0, Validators.required],
                     recoveryNumber: [this.restaurantConfigDTO?.recoveryNumber ?? '', Validators.required]
@@ -114,7 +124,7 @@ export class ConfigureOpeningComponent implements OnInit{
 
             this.restaurantConfigForm = this.fb.group({
                 guests: [this.restaurantConfigDTO.guests, [Validators.required, Validators.min(1)]],
-                allowOverbooking: [this.restaurantConfigDTO.allowOverbooking],
+                allowOverbooking: [this.restaurantConfigDTO.allowOverlap],
                 confirmReservation: [this.restaurantConfigDTO.confirmReservation],
                 bookingSlotInMinutes: [this.restaurantConfigDTO.bookingSlotInMinutes, [Validators.required, Validators.min(1)]],
                 recoveryNumber: [this.restaurantConfigDTO.recoveryNumber, Validators.required]

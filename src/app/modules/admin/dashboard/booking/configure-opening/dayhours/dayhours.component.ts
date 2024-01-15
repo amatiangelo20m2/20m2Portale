@@ -24,7 +24,6 @@ import {EdithoursComponent} from "./edit-hours/edithours.component";
     standalone: true
 })
 export class DayhoursComponent implements OnInit{
-
     currentBranch : BranchResponseEntity;
     restaurantConfigurationDTO: RestaurantConfigurationDTO;
 
