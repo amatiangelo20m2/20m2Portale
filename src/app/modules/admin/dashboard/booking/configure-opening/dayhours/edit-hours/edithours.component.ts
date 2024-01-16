@@ -15,13 +15,8 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatButtonModule} from "@angular/material/button";
 import {NgForOf, NgIf} from "@angular/common";
-import {
-    BookingControllerService,
-    BranchTimeRangeDTO,
-    LocalTime,
-    TimeRange,
-    TimeRangeUpdateRequest
-} from "../../../../../../../core/booking";
+import {BranchTimeRangeDTO, LocalTime, TimeRangeUpdateRequest} from "../../../../../../../core/booking";
+
 
 @Component({
     selector: 'edithours',
@@ -43,7 +38,6 @@ export class EdithoursComponent implements OnInit {
     branchTimeForm: FormGroup;
     selectedDays: string[] = [];
     days: string[] = Object.values(BranchTimeRangeDTO.DayOfWeekEnum).filter(day => day !== 'FESTIVO');
-
     constructor(private fb: FormBuilder,
                 private _dataProvideService: DataproviderService) {
 

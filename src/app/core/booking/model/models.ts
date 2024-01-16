@@ -1,3 +1,4 @@
+export * from './branchOpeningEditConfigurationRequest';
 export * from './branchTimeRangeDTO';
 export * from './localTime';
 export * from './restaurantConfigurationDTO';

@@ -6,7 +6,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators} from "@angular/forms";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
@@ -15,12 +15,6 @@ import {DayhoursComponent} from "./dayhours/dayhours.component";
 import {BranchResponseEntity} from "../../../../../core/dashboard";
 import {DataproviderService} from "../../dataprovider.service";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {
-    BookingControllerService,
-    BranchTimeRangeDTO, LocalTime,
-    RestaurantConfigurationDTO,
-    TimeRange
-} from "../../../../../core/booking";
 import {MatTableModule} from "@angular/material/table";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatTabsModule} from "@angular/material/tabs";
@@ -30,6 +24,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatRadioModule} from "@angular/material/radio";
 import {environment} from "../../../../../../environments/environment";
+import {BranchTimeRangeDTO, LocalTime, RestaurantConfigurationDTO, TimeRange} from "../../../../../core/booking";
 
 
 @Component({
@@ -71,18 +66,23 @@ export class ConfigureOpeningComponent implements OnInit{
     url = "";
     restaurantConfigurationDTO : RestaurantConfigurationDTO;
     dataSource : BranchTimeRangeDTO[] = [];
-    urlform: FormGroup;
 
+    urlform: FormGroup;
     restaurantConfigForm: FormGroup;
 
-    restaurantConfigDTO: RestaurantConfigurationDTO;
-    formFieldHelpers: string[] = [''];
+    constructor(private _matDialog: MatDialog,
+                private _dataProvideService: DataproviderService,
+                private fb: FormBuilder,
+                // private clipboard: Clipboard,
+                // private snackBar: MatSnackBar
+    ) {
+    }
 
     ngOnInit() {
         this._dataProvideService.branch$.subscribe((branch) => {
             this.currentBranch = branch;
 
-            this.url = 'https://' + environment.apiURL +'/reservation?branchCode=' + this.currentBranch.branchCode;
+            this.url = environment.hostname +'/reservation?branchCode=' + this.currentBranch.branchCode;
 
             this.urlform = this.fb.group({
                 url: [this.url, /* Other Validators if needed */],
@@ -91,23 +91,22 @@ export class ConfigureOpeningComponent implements OnInit{
             // this.cdr.detectChanges();
         });
 
-        this._bookingControllerService.checkWaApiStatus(this.currentBranch.branchCode)
-            .subscribe((bookingConfDTO : RestaurantConfigurationDTO) =>{
-                this.restaurantConfigurationDTO = bookingConfDTO;
-
-                this.restaurantConfigForm = this.fb.group({
-                    guests: [this.restaurantConfigDTO?.guests ?? 0, Validators.required],
-                    allowOverbooking: [this.restaurantConfigDTO?.bookingSlotInMinutes ?? 0],
-                    confirmReservation: [this.restaurantConfigDTO?.confirmReservation ?? false],
-                    bookingSlotInMinutes: [this.restaurantConfigDTO?.bookingSlotInMinutes ?? 0, Validators.required],
-                    recoveryNumber: [this.restaurantConfigDTO?.recoveryNumber ?? '', Validators.required]
-                });
-                // this.cdr.detectChanges();
+        this._dataProvideService.restaurantConfiguration$.subscribe((restaurantConfDTO : RestaurantConfigurationDTO)=>{
+            this.restaurantConfigurationDTO = restaurantConfDTO;
+            this.restaurantConfigForm = this.fb.group({
+                branchCode: [restaurantConfDTO?.branchCode],
+                guests: [restaurantConfDTO?.guests ?? 0, Validators.required],
+                bookingSlotInMinutes: [restaurantConfDTO?.bookingSlotInMinutes.toString()],
+                reservationConfirmedManually: [restaurantConfDTO?.reservationConfirmedManually],
+                guestReceivingAuthConfirm: [restaurantConfDTO?.guestReceivingAuthConfirm],
+                minBeforeSendConfirmMessage: [restaurantConfDTO?.minBeforeSendConfirmMessage.toString()],
             });
+
+            console.log(this.restaurantConfigForm)
+        })
 
         this._dataProvideService?.restaurantConfiguration$.subscribe((restaurantConfiguration)=>{
             this.restaurantConfigurationDTO = restaurantConfiguration;
-
 
             this.dataSource = this.restaurantConfigurationDTO?.branchTimeRanges.map((branchTime: BranchTimeRangeDTO) => {
                 return branchTime;
@@ -116,34 +115,27 @@ export class ConfigureOpeningComponent implements OnInit{
             // this.cdr.detectChanges();
         });
     }
-
     saveConfiguration(): void {
 
         if (this.restaurantConfigForm.valid) {
-            this.restaurantConfigDTO = { ...this.restaurantConfigForm.value };
+            console.log("salvataggio..")
+            console.log(this.restaurantConfigForm.value);
 
-            this.restaurantConfigForm = this.fb.group({
-                guests: [this.restaurantConfigDTO.guests, [Validators.required, Validators.min(1)]],
-                allowOverbooking: [this.restaurantConfigDTO.allowOverlap],
-                confirmReservation: [this.restaurantConfigDTO.confirmReservation],
-                bookingSlotInMinutes: [this.restaurantConfigDTO.bookingSlotInMinutes, [Validators.required, Validators.min(1)]],
-                recoveryNumber: [this.restaurantConfigDTO.recoveryNumber, Validators.required]
-            });
+            this._dataProvideService.updateBranchBookingConfigration({
+                    guests: this.restaurantConfigForm.get('guests')?.value,
+                    bookingSlotInMinutes: +this.restaurantConfigForm.get('bookingSlotInMinutes')?.value,
+                    branchCode: this.restaurantConfigForm.get('branchCode')?.value,
+                    guestReceivingAuthConfirm: this.restaurantConfigForm.get('guestReceivingAuthConfirm')?.value,
+                    minBeforeSendConfirmMessage: +this.restaurantConfigForm.get('minBeforeSendConfirmMessage')?.value,
+                    reservationConfirmedManually: this.restaurantConfigForm.get('reservationConfirmedManually')?.value,
+                }
+
+            )
 
         } else {
             console.log('Invalid form. Please check the entered values.');
         }
     }
-
-    constructor(private _matDialog: MatDialog,
-                private _dataProvideService: DataproviderService,
-                private _bookingControllerService: BookingControllerService,
-                private fb: FormBuilder,
-                // private clipboard: Clipboard,
-                // private snackBar: MatSnackBar
-    ) {
-    }
-
 
     openEditLabelsDialog() {
         this._matDialog.open(DayhoursComponent, {autoFocus: false});

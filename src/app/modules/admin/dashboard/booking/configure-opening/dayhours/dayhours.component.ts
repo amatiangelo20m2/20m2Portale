@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {DataproviderService} from "../../../dataprovider.service";
@@ -31,7 +31,6 @@ export class DayhoursComponent implements OnInit{
     dataSource : BranchTimeRangeDTO[] = [];
 
     constructor(private _dataProvideService: DataproviderService,
-                private cdr: ChangeDetectorRef,
                 private _matDialog: MatDialog,) {
 
     }
@@ -40,7 +39,7 @@ export class DayhoursComponent implements OnInit{
 
         this._dataProvideService.branch$.subscribe((branch) => {
             this.currentBranch = branch;
-            this.cdr.detectChanges();
+            // this.cdr.detectChanges();
         });
 
         this._dataProvideService.restaurantConfiguration$.subscribe((restaurantConfiguration)=>{
@@ -52,7 +51,7 @@ export class DayhoursComponent implements OnInit{
             }) || [];
 
 
-            this.cdr.detectChanges();
+            // this.cdr.detectChanges();
         });
     }
 

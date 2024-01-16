@@ -9,17 +9,12 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { BranchTimeRangeDTO } from './branchTimeRangeDTO';
-import { WaApiConfigDTO } from './waApiConfigDTO';
 
-export interface RestaurantConfigurationDTO {
-    restaurantConfId?: number;
+export interface BranchOpeningEditConfigurationRequest {
     branchCode?: string;
     guests?: number;
     bookingSlotInMinutes?: number;
     guestReceivingAuthConfirm?: number;
     minBeforeSendConfirmMessage?: number;
-    waApiConfigDTO?: WaApiConfigDTO;
-    branchTimeRanges?: Array<BranchTimeRangeDTO>;
     reservationConfirmedManually?: boolean;
 }

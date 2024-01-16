@@ -4,7 +4,7 @@ import {UserService} from "../../../core/user/user.service";
 import {User} from "../../../core/user/user.types";
 import {BranchResponseEntity, DashboardControllerService} from "../../../core/dashboard";
 import {
-    BookingControllerService,
+    BookingControllerService, BranchOpeningEditConfigurationRequest,
     BranchTimeRangeDTO,
     RestaurantConfigurationDTO,
     TimeRangeUpdateRequest
@@ -73,7 +73,6 @@ export class DataproviderService {
                     });
             });
     }
-
     selectBranch(branch: BranchResponseEntity) {
         localStorage.setItem('branchCode', branch?.branchCode ?? '');
         this.currentBranch.next(branch);
@@ -87,7 +86,6 @@ export class DataproviderService {
         }
         this.currentBranchesList.next(this.currentBranchesList.value);
     }
-
     retrieveBookingConfiguration(branchCode: string){
         this._bookingControllerService.checkWaApiStatus(branchCode)
             .subscribe((bookingConfDTO) =>{
@@ -101,7 +99,6 @@ export class DataproviderService {
     setBranchTimeRangeDTOToUpdate(branchTimeRangeDTO1: BranchTimeRangeDTO) {
         this.branchTimeRangeDTO.next(branchTimeRangeDTO1);
     }
-
     ids : number[] = [];
     fromCurrentTimeRangeListRetrieveIdsByDaysSelected(selectedDays: string[]) {
         this.ids = [];
@@ -115,7 +112,6 @@ export class DataproviderService {
 
         return this.ids;
     }
-
     private getDayFromSelectedDay(selectedDay: string) {
 
         const enumValues: string[] = Object.values(BranchTimeRangeDTO.DayOfWeekEnum);
@@ -126,10 +122,17 @@ export class DataproviderService {
 
         return undefined;
     }
-
     public updateTimeRange(param: { branchCode: string; timeRanges: Array<TimeRangeUpdateRequest>; listConfIds: number[] }) {
         this._bookingControllerService.updateTimeRange(param).subscribe((restaurantConf)=>{
             this.currentRestaurantConfiguration.next(restaurantConf);
+        });
+    }
+    public updateBranchBookingConfigration(branchOpeningEditConfigurationRequest : BranchOpeningEditConfigurationRequest){
+
+        this._bookingControllerService.updateConfiguration(
+            branchOpeningEditConfigurationRequest
+        ).subscribe((branchResDTO)=>{
+            this.currentRestaurantConfiguration.next(branchResDTO);
         });
     }
 }

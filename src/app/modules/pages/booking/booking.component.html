@@ -1,6 +1,6 @@
 <style>
     .transparent-background {
-        background-color: #111827;
+        /*background-color: #111827;*/
     }
 
 </style>
@@ -26,43 +26,43 @@
             </mat-form-field>
         </div>
 
-<!--        <div style="display: flex; justify-content: center;">-->
-<!--            <mat-button-toggle-group name="fontStyle" aria-label="Font Style">-->
-<!--                <mat-button-toggle value="date" (change)="selectToggle('date')">-->
-<!--                    <mat-icon class="icon-size-6" [svgIcon]="'heroicons_outline:calendar-days'"></mat-icon> {{selectedDate | date:'yyyy-MM-dd' }} <span *ngIf="selectedDate == null">Data</span>-->
-<!--                </mat-button-toggle>-->
-<!--                <mat-button-toggle value="pax" (change)="selectToggle('pax')">-->
-<!--                    <mat-icon class="icon-size-6" [svgIcon]="'mat_solid:people_outline'"></mat-icon>{{selectedNumber}} Persone-->
-<!--                </mat-button-toggle>-->
-<!--                <mat-button-toggle value="hour" (change)="selectToggle('hour')">-->
-<!--                    <mat-icon class="icon-size-6" [svgIcon]="'heroicons_outline:clock'"></mat-icon> Ora-->
-<!--                </mat-button-toggle>-->
-<!--            </mat-button-toggle-group>-->
-<!--        </div>-->
+        <div style="display: flex; justify-content: center;">
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                <mat-button-toggle value="date" (change)="selectToggle('date')">
+                    <mat-icon class="icon-size-6" [svgIcon]="'heroicons_outline:calendar-days'"></mat-icon> {{selectedDate | date:'yyyy-MM-dd' }} <span *ngIf="selectedDate == null">Data</span>
+                </mat-button-toggle>
+                <mat-button-toggle value="pax" (change)="selectToggle('pax')">
+                    <mat-icon class="icon-size-6" [svgIcon]="'mat_solid:people_outline'"></mat-icon>{{selectedNumber}} Persone
+                </mat-button-toggle>
+                <mat-button-toggle value="hour" (change)="selectToggle('hour')">
+                    <mat-icon class="icon-size-6" [svgIcon]="'heroicons_outline:clock'"></mat-icon> Ora
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
 
-<!--        <div *ngIf="selectedToggle=='date'">-->
-<!--            <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">-->
-<!--                <div fxFlex="20%">-->
-<!--                    <mat-calendar [selected]="selectedDate"-->
-<!--                                  (selectedChange)="onSelect($event)"></mat-calendar>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        <div *ngIf="selectedToggle=='pax'">-->
+        <div *ngIf="selectedToggle=='date'">
+            <div class="container" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+                <div fxFlex="20%">
+                    <mat-calendar [selected]="selectedDate"
+                                  (selectedChange)="onSelect($event)"></mat-calendar>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="selectedToggle=='pax'">
 
-<!--            <div class="flex flex-wrap -mx-4">-->
-<!--                <ng-container *ngIf="(numbers$) as numbers">-->
-<!--                    <ng-container *ngFor="let number of numbers">-->
-<!--                        <div-->
-<!--                            class="flex flex-col items-center justify-center m-4 p-4 min-w-36 max-w-36 min-h-30 max-h-30 rounded border-2 cursor-pointer bg-card"-->
-<!--                            [class.border-primary]="selectedNumber === number"-->
-<!--                            (click)="selectNumber(number)">-->
-<!--                            <div class="text-3xl text-center break-all text-secondary">{{ number }}</div>-->
-<!--                        </div>-->
-<!--                    </ng-container>-->
-<!--                </ng-container>-->
-<!--            </div>-->
-<!--        </div>-->
+            <div class="flex flex-wrap -mx-4">
+                <ng-container *ngIf="(numbers$) as numbers">
+                    <ng-container *ngFor="let number of numbers">
+                        <div
+                            class="flex flex-col items-center justify-center m-4 p-4 min-w-36 max-w-36 min-h-30 max-h-30 rounded border-2 cursor-pointer bg-card"
+                            [class.border-primary]="selectedNumber === number"
+                            (click)="selectNumber(number)">
+                            <div class="text-3xl text-center break-all text-secondary">{{ number }}</div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
     </div>
 </div>
 
