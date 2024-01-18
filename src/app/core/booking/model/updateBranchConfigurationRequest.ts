@@ -11,7 +11,7 @@
  */
 import { TimeRangeUpdateRequest } from './timeRangeUpdateRequest';
 
-export interface UpdateRestaurantConfigurationRequest { 
+export interface UpdateBranchConfigurationRequest { 
     branchCode?: string;
     listConfIds?: Array<number>;
     timeRanges?: Array<TimeRangeUpdateRequest>;

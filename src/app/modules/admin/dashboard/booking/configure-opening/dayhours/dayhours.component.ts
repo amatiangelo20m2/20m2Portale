@@ -7,8 +7,8 @@ import {MatGridListModule} from "@angular/material/grid-list";
 import {MatIconModule} from "@angular/material/icon";
 import {NgForOf} from "@angular/common";
 import {MatTableModule} from "@angular/material/table";
-import {BranchTimeRangeDTO, LocalTime, RestaurantConfigurationDTO, TimeRange} from "../../../../../../core/booking";
 import {EdithoursComponent} from "./edit-hours/edithours.component";
+import {BranchConfigurationDTO, BranchTimeRangeDTO, LocalTime, TimeRange} from "../../../../../../core/booking";
 
 @Component({
     selector: 'app-dayhours',
@@ -25,7 +25,7 @@ import {EdithoursComponent} from "./edit-hours/edithours.component";
 })
 export class DayhoursComponent implements OnInit{
     currentBranch : BranchResponseEntity;
-    restaurantConfigurationDTO: RestaurantConfigurationDTO;
+    restaurantConfigurationDTO: BranchConfigurationDTO;
 
     displayedColumns: string[] = ['day', 'time', 'edit'];
     dataSource : BranchTimeRangeDTO[] = [];

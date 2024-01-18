@@ -4,9 +4,9 @@ import {UserService} from "../../../core/user/user.service";
 import {User} from "../../../core/user/user.types";
 import {BranchResponseEntity, DashboardControllerService} from "../../../core/dashboard";
 import {
-    BookingControllerService, BranchOpeningEditConfigurationRequest,
+    BookingControllerService,
+    BranchConfigurationDTO, BranchOpeningEditConfigurationRequest,
     BranchTimeRangeDTO,
-    RestaurantConfigurationDTO,
     TimeRangeUpdateRequest
 } from "../../../core/booking";
 
@@ -19,7 +19,7 @@ export class DataproviderService {
     private currentBranch: BehaviorSubject<BranchResponseEntity> = new BehaviorSubject(null);
     private currentBranchesList : BehaviorSubject<BranchResponseEntity[]> = new BehaviorSubject(null);
 
-    private currentRestaurantConfiguration : BehaviorSubject<RestaurantConfigurationDTO> = new BehaviorSubject(null);
+    private currentRestaurantConfiguration : BehaviorSubject<BranchConfigurationDTO> = new BehaviorSubject(null);
 
 
     branch$ = this.currentBranch.asObservable();

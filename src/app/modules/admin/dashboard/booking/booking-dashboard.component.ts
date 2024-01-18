@@ -15,11 +15,9 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {ConfigureOpeningComponent} from "./configure-opening/configure-opening.component";
-import {
-    BookingControllerService,
-    RestaurantConfigurationDTO
-} from "../../../../core/booking";
+
 import bookingRoutes from "../../../pages/booking/booking.routes";
+import {BookingControllerService, BranchConfigurationDTO} from "../../../../core/booking";
 @Component({
     selector       : 'booking-dashboard',
     templateUrl    : './booking-dashboard.component.html',
@@ -47,7 +45,7 @@ export class BookingDashboardComponent implements OnInit {
     currentBranch : BranchResponseEntity;
     qrCodeImage: String = '';
 
-    restaurantConfigurationDTO : RestaurantConfigurationDTO;
+    branchConfigurationDTO : BranchConfigurationDTO;
 
     constructor(private _dataProvideService: DataproviderService,
                 private _bookingControllerService : BookingControllerService,
@@ -63,7 +61,7 @@ export class BookingDashboardComponent implements OnInit {
         });
 
         this._dataProvideService.restaurantConfiguration$.subscribe((restaurantConfiguration)=>{
-            this.restaurantConfigurationDTO = restaurantConfiguration;
+            this.branchConfigurationDTO = restaurantConfiguration;
             this.cdr.detectChanges();
         });
     }
@@ -78,7 +76,7 @@ export class BookingDashboardComponent implements OnInit {
         this._bookingControllerService
             .configureNumberForWhatsAppMessaging(this.currentBranch.branchCode)
             .subscribe((bookingConfDTO) =>{
-                    this.restaurantConfigurationDTO = bookingConfDTO;
+                    this.branchConfigurationDTO = bookingConfDTO;
                     this.qrCodeImage = bookingConfDTO?.waApiConfigDTO.lastQrCode;
                     this.buttonConfigurationClick = false;
                     this.remainingSeconds = 60;
@@ -90,11 +88,11 @@ export class BookingDashboardComponent implements OnInit {
 
                             this._bookingControllerService.checkWaApiStatus(this.currentBranch.branchCode)
                                 .subscribe((bookingConfDTO)=>{
-                                    this.restaurantConfigurationDTO = bookingConfDTO;
-                                    console.log('Current status: ' + this.restaurantConfigurationDTO?.waApiConfigDTO?.instanceStatus)
-                                    if (this.restaurantConfigurationDTO != null
-                                        && this.restaurantConfigurationDTO?.waApiConfigDTO != null
-                                        && this.restaurantConfigurationDTO?.waApiConfigDTO?.instanceStatus === 'OK') {
+                                    this.branchConfigurationDTO = bookingConfDTO;
+                                    console.log('Current status: ' + this.branchConfigurationDTO?.waApiConfigDTO?.instanceStatus)
+                                    if (this.branchConfigurationDTO != null
+                                        && this.branchConfigurationDTO?.waApiConfigDTO != null
+                                        && this.branchConfigurationDTO?.waApiConfigDTO?.instanceStatus === 'OK') {
                                         console.log('Loop condition met. Stopping the loop.');
                                         this.remainingSeconds = 0;
                                     }

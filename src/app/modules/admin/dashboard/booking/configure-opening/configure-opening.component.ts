@@ -24,7 +24,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatRadioModule} from "@angular/material/radio";
 import {environment} from "../../../../../../environments/environment";
-import {BranchTimeRangeDTO, LocalTime, RestaurantConfigurationDTO, TimeRange} from "../../../../../core/booking";
+import {BranchConfigurationDTO, BranchTimeRangeDTO, LocalTime, TimeRange} from "../../../../../core/booking";
 
 
 @Component({
@@ -64,7 +64,7 @@ export class ConfigureOpeningComponent implements OnInit{
 
     currentBranch : BranchResponseEntity;
     url = "";
-    restaurantConfigurationDTO : RestaurantConfigurationDTO;
+    restaurantConfigurationDTO : BranchConfigurationDTO;
     dataSource : BranchTimeRangeDTO[] = [];
 
     urlform: FormGroup;
@@ -91,15 +91,15 @@ export class ConfigureOpeningComponent implements OnInit{
             // this.cdr.detectChanges();
         });
 
-        this._dataProvideService.restaurantConfiguration$.subscribe((restaurantConfDTO : RestaurantConfigurationDTO)=>{
-            this.restaurantConfigurationDTO = restaurantConfDTO;
+        this._dataProvideService.restaurantConfiguration$.subscribe((branchConfigurationDTO : BranchConfigurationDTO)=>{
+            this.restaurantConfigurationDTO = branchConfigurationDTO;
             this.restaurantConfigForm = this.fb.group({
-                branchCode: [restaurantConfDTO?.branchCode],
-                guests: [restaurantConfDTO?.guests ?? 0, Validators.required],
-                bookingSlotInMinutes: [restaurantConfDTO?.bookingSlotInMinutes.toString()],
-                reservationConfirmedManually: [restaurantConfDTO?.reservationConfirmedManually],
-                guestReceivingAuthConfirm: [restaurantConfDTO?.guestReceivingAuthConfirm],
-                minBeforeSendConfirmMessage: [restaurantConfDTO?.minBeforeSendConfirmMessage.toString()],
+                branchCode: [branchConfigurationDTO?.branchCode],
+                guests: [branchConfigurationDTO?.guests ?? 0, Validators.required],
+                bookingSlotInMinutes: [branchConfigurationDTO?.bookingSlotInMinutes.toString()],
+                reservationConfirmedManually: [branchConfigurationDTO?.reservationConfirmedManually],
+                guestReceivingAuthConfirm: [branchConfigurationDTO?.guestReceivingAuthConfirm],
+                minBeforeSendConfirmMessage: [branchConfigurationDTO?.minBeforeSendConfirmMessage.toString()],
             });
 
             console.log(this.restaurantConfigForm)

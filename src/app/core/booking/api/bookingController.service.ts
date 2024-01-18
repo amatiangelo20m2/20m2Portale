@@ -17,12 +17,13 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { BranchConfigurationDTO } from '../model/branchConfigurationDTO';
 import { BranchOpeningEditConfigurationRequest } from '../model/branchOpeningEditConfigurationRequest';
-import { RestaurantConfigurationDTO } from '../model/restaurantConfigurationDTO';
-import { UpdateRestaurantConfigurationRequest } from '../model/updateRestaurantConfigurationRequest';
+import { UpdateBranchConfigurationRequest } from '../model/updateBranchConfigurationRequest';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
+
 
 
 @Injectable({providedIn: 'root'})
@@ -64,9 +65,9 @@ export class BookingControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public checkWaApiStatus(branchCode: string, observe?: 'body', reportProgress?: boolean): Observable<RestaurantConfigurationDTO>;
-    public checkWaApiStatus(branchCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<RestaurantConfigurationDTO>>;
-    public checkWaApiStatus(branchCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<RestaurantConfigurationDTO>>;
+    public checkWaApiStatus(branchCode: string, observe?: 'body', reportProgress?: boolean): Observable<BranchConfigurationDTO>;
+    public checkWaApiStatus(branchCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BranchConfigurationDTO>>;
+    public checkWaApiStatus(branchCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BranchConfigurationDTO>>;
     public checkWaApiStatus(branchCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (branchCode === null || branchCode === undefined) {
@@ -93,7 +94,7 @@ export class BookingControllerService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<RestaurantConfigurationDTO>('get',`${this.basePath}/booking/configuration/waapi/instance/checkstatus`,
+        return this.httpClient.request<BranchConfigurationDTO>('get',`${this.basePath}/booking/configuration/waapi/instance/checkstatus`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -111,9 +112,9 @@ export class BookingControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public configureNumberForWhatsAppMessaging(branchCode: string, observe?: 'body', reportProgress?: boolean): Observable<RestaurantConfigurationDTO>;
-    public configureNumberForWhatsAppMessaging(branchCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<RestaurantConfigurationDTO>>;
-    public configureNumberForWhatsAppMessaging(branchCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<RestaurantConfigurationDTO>>;
+    public configureNumberForWhatsAppMessaging(branchCode: string, observe?: 'body', reportProgress?: boolean): Observable<BranchConfigurationDTO>;
+    public configureNumberForWhatsAppMessaging(branchCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BranchConfigurationDTO>>;
+    public configureNumberForWhatsAppMessaging(branchCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BranchConfigurationDTO>>;
     public configureNumberForWhatsAppMessaging(branchCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (branchCode === null || branchCode === undefined) {
@@ -140,7 +141,7 @@ export class BookingControllerService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<RestaurantConfigurationDTO>('get',`${this.basePath}/booking/configuration/waapi/instance/configure`,
+        return this.httpClient.request<BranchConfigurationDTO>('get',`${this.basePath}/booking/configuration/waapi/instance/configure`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -158,9 +159,9 @@ export class BookingControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteTimeRange(timeRangeId: number, observe?: 'body', reportProgress?: boolean): Observable<RestaurantConfigurationDTO>;
-    public deleteTimeRange(timeRangeId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<RestaurantConfigurationDTO>>;
-    public deleteTimeRange(timeRangeId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<RestaurantConfigurationDTO>>;
+    public deleteTimeRange(timeRangeId: number, observe?: 'body', reportProgress?: boolean): Observable<BranchConfigurationDTO>;
+    public deleteTimeRange(timeRangeId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BranchConfigurationDTO>>;
+    public deleteTimeRange(timeRangeId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BranchConfigurationDTO>>;
     public deleteTimeRange(timeRangeId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (timeRangeId === null || timeRangeId === undefined) {
@@ -187,7 +188,7 @@ export class BookingControllerService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<RestaurantConfigurationDTO>('delete',`${this.basePath}/booking/deletetimerange`,
+        return this.httpClient.request<BranchConfigurationDTO>('delete',`${this.basePath}/booking/deletetimerange`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -205,9 +206,9 @@ export class BookingControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public reboot(branchCode: string, observe?: 'body', reportProgress?: boolean): Observable<RestaurantConfigurationDTO>;
-    public reboot(branchCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<RestaurantConfigurationDTO>>;
-    public reboot(branchCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<RestaurantConfigurationDTO>>;
+    public reboot(branchCode: string, observe?: 'body', reportProgress?: boolean): Observable<BranchConfigurationDTO>;
+    public reboot(branchCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BranchConfigurationDTO>>;
+    public reboot(branchCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BranchConfigurationDTO>>;
     public reboot(branchCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (branchCode === null || branchCode === undefined) {
@@ -234,7 +235,7 @@ export class BookingControllerService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<RestaurantConfigurationDTO>('get',`${this.basePath}/booking/configuration/waapi/instance/reboot`,
+        return this.httpClient.request<BranchConfigurationDTO>('get',`${this.basePath}/booking/configuration/waapi/instance/reboot`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -252,9 +253,9 @@ export class BookingControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateConfiguration(body: BranchOpeningEditConfigurationRequest, observe?: 'body', reportProgress?: boolean): Observable<RestaurantConfigurationDTO>;
-    public updateConfiguration(body: BranchOpeningEditConfigurationRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<RestaurantConfigurationDTO>>;
-    public updateConfiguration(body: BranchOpeningEditConfigurationRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<RestaurantConfigurationDTO>>;
+    public updateConfiguration(body: BranchOpeningEditConfigurationRequest, observe?: 'body', reportProgress?: boolean): Observable<BranchConfigurationDTO>;
+    public updateConfiguration(body: BranchOpeningEditConfigurationRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BranchConfigurationDTO>>;
+    public updateConfiguration(body: BranchOpeningEditConfigurationRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BranchConfigurationDTO>>;
     public updateConfiguration(body: BranchOpeningEditConfigurationRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
@@ -281,7 +282,7 @@ export class BookingControllerService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<RestaurantConfigurationDTO>('post',`${this.basePath}/booking/updateconfiguration`,
+        return this.httpClient.request<BranchConfigurationDTO>('post',`${this.basePath}/booking/updateconfiguration`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -299,10 +300,10 @@ export class BookingControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateTimeRange(body: UpdateRestaurantConfigurationRequest, observe?: 'body', reportProgress?: boolean): Observable<RestaurantConfigurationDTO>;
-    public updateTimeRange(body: UpdateRestaurantConfigurationRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<RestaurantConfigurationDTO>>;
-    public updateTimeRange(body: UpdateRestaurantConfigurationRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<RestaurantConfigurationDTO>>;
-    public updateTimeRange(body: UpdateRestaurantConfigurationRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateTimeRange(body: UpdateBranchConfigurationRequest, observe?: 'body', reportProgress?: boolean): Observable<BranchConfigurationDTO>;
+    public updateTimeRange(body: UpdateBranchConfigurationRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BranchConfigurationDTO>>;
+    public updateTimeRange(body: UpdateBranchConfigurationRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BranchConfigurationDTO>>;
+    public updateTimeRange(body: UpdateBranchConfigurationRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateTimeRange.');
@@ -328,7 +329,7 @@ export class BookingControllerService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<RestaurantConfigurationDTO>('post',`${this.basePath}/booking/configuration/timerange/update`,
+        return this.httpClient.request<BranchConfigurationDTO>('post',`${this.basePath}/booking/configuration/timerange/update`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
