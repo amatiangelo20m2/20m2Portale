@@ -22,6 +22,8 @@ import {SettingsPlanBillingComponent} from "../../pages/settings/plan-billing/pl
 import {SettingsNotificationsComponent} from "./notifications/notifications.component";
 import {SettingsTeamComponent} from "./team/team.component";
 import {MatDialogConfig, MatDialogModule} from "@angular/material/dialog";
+import {ConfigureOpeningComponent} from "./booking/configure-opening/configure-opening.component";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @Component({
     selector: 'dashboard',
@@ -40,7 +42,7 @@ import {MatDialogConfig, MatDialogModule} from "@angular/material/dialog";
         SettingsSecurityComponent,
         SettingsPlanBillingComponent,
         SettingsNotificationsComponent,
-        SettingsTeamComponent, NgIf],
+        SettingsTeamComponent, NgIf, ConfigureOpeningComponent, MatExpansionModule],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -55,7 +57,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     drawerMode: 'over' | 'side' = 'side';
     drawerOpened: boolean = true;
     panels: any[] = [];
-    selectedPanel: string = 'booking';
+    selectedPanel: string = 'branchsetting';
 
     /**
      * Constructor
@@ -67,6 +69,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this.panels = [
+            {
+                id         : 'branchsetting',
+                icon       : 'mat_outline:app_settings_alt',
+                title      : 'Configura Attività',
+                description: 'Aperture - Form - Strategia',
+            },
             {
                 id         : 'booking',
                 icon       : 'heroicons_outline:calendar-days',

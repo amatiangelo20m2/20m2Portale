@@ -15,8 +15,6 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {ConfigureOpeningComponent} from "./configure-opening/configure-opening.component";
-
-import bookingRoutes from "../../../pages/booking/booking.routes";
 import {BookingControllerService, BranchConfigurationDTO} from "../../../../core/booking";
 @Component({
     selector       : 'booking-dashboard',

@@ -1,103 +1,66 @@
-<div class="flex flex-col flex-auto w-full">
-    <div class="flex flex-wrap w-full max-w-screen-xl mx-auto p-2 md:p-2">
 
-        <div *ngIf="branchConfigurationDTO == null || (branchConfigurationDTO?.waApiConfigDTO?.instanceStatus!='success'); else elseBlock">
-            <div class="flex flex-col w-full">
-                <div class="mb-2">
-                    <h2 class="text-xl font-semibold tracking-tight leading-6">Prenotazioni</h2>
-                    <div class="font-medium tracking-tight text-secondary text-xs">
-                        Configura un numero what's app per iniziare ad utilizzare il servizio prenotazione
-                    </div>
-                </div>
-                <div *ngIf="remainingSeconds>1">
-                    <img [src]="qrCodeImage" alt="Base64 Image" style="height: 150px; width: 150px; object-fit: cover;">
-                </div>
-                <div *ngIf="remainingSeconds>1">
-                    <div class="font-medium tracking-tight text-secondary text-xs">
-                        Associa il tuo dispositivo scannerizzando il qr code tramite What's App. Il qr code ha validità di {{remainingSeconds}} secondi.
-                    </div>
-                </div>
-                <div class="flex items-center">
-                    <button
-                        class="fuse-mat-button-large mt-4"
-                        mat-flat-button
-                        [color]="'primary'"
-                        [disabled]="buttonConfigurationClick"
-                        (click)="configureNumber()">
-                        <mat-icon [svgIcon]="'heroicons_outline:qr-code'"></mat-icon>
-                        <span *ngIf="!buttonConfigurationClick" style="margin-left: 3px; font-size: 12px;">Ottieni il Qr Code</span>
-                        <mat-progress-spinner
-                            *ngIf="buttonConfigurationClick"
-                            [diameter]="20"
-                            [mode]="'indeterminate'"
-                        ></mat-progress-spinner>
-                    </button>
-                </div>
+
+<div *ngIf="branchConfigurationDTO == null || (branchConfigurationDTO?.waApiConfigDTO?.instanceStatus!='success'); else elseBlock">
+    <div class="flex flex-col w-full">
+        <div class="mb-2">
+            <h2 class="text-xl font-semibold tracking-tight leading-6">Prenotazioni</h2>
+            <div class="font-medium tracking-tight text-secondary text-xs">
+                Configura un numero what's app per iniziare ad utilizzare il servizio prenotazione
             </div>
         </div>
-        <ng-template #elseBlock>
-            <div class="flex flex-auto items-center min-w-0">
-                <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
-                    <img
-                        class="w-20 h-20 rounded-full ring-2 ring-bg-card"
-                        src="{{this.branchConfigurationDTO?.waApiConfigDTO?.profilePicUrl}}"
-                        alt="User avatar">
-                </div>
-                <div class="flex flex-col min-w-0 ml-4">
-                    <ng-container>
-                        <div class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">{{this.branchConfigurationDTO?.waApiConfigDTO?.displayName}}</div>
-                    </ng-container>
-                    <div class="flex items-center">
-                        <mat-icon
-                            class="icon-size-5"
-                            [svgIcon]="'heroicons_outline:star'"></mat-icon>
-                        <div class="ml-1.5 leading-6 truncate text-secondary">{{this.currentBranch?.name}}</div><mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_outline:device-phone-mobile'"></mat-icon>
-                        <div class="ml-1.5 leading-6 truncate text-secondary">{{this.branchConfigurationDTO?.waApiConfigDTO?.formattedNumber}}</div><mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_outline:hand-thumb-up'"></mat-icon>
-                        <div class="ml-1.5 leading-6 truncate text-secondary">{{this.branchConfigurationDTO?.waApiConfigDTO?.instanceStatus}}</div>
-                    </div>
-
-                </div>
-
+        <div *ngIf="remainingSeconds>1">
+            <img [src]="qrCodeImage" alt="Base64 Image" style="height: 150px; width: 150px; object-fit: cover;">
+        </div>
+        <div *ngIf="remainingSeconds>1">
+            <div class="font-medium tracking-tight text-secondary text-xs">
+                Associa il tuo dispositivo scannerizzando il qr code tramite What's App. Il qr code ha validità di {{remainingSeconds}} secondi.
             </div>
-            <div class="flex items-center mt-6 sm:mt-0 sm:ml-2 space-x-3">
-                <button
-                    mat-flat-button
-                    [color]="'accent'">
-                    <mat-icon
-                        class="icon-size-5"
-                        [svgIcon]="'mat_outline:phonelink_setup'"></mat-icon>
-                    <span class="ml-2">Cambia Numbero</span>
-                </button>
-            </div>
-
-            <div class="flex flex-col w-full mt-2">
-                <mat-accordion>
-                    <mat-expansion-panel hideToggle>
-                        <mat-expansion-panel-header class="flex items-center justify-between">
-                            <mat-icon [svgIcon]="'mat_outline:settings'"></mat-icon>
-                            <mat-panel-description>
-                                Configura apertura ristorante
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <configure-opening></configure-opening>
-                    </mat-expansion-panel>
-
-                    <mat-expansion-panel [expanded]="true" (opened)="panelOpenState = true"
-                                         (closed)="panelOpenState = false" hideToggle>
-                        <mat-expansion-panel-header>
-                            <mat-icon [svgIcon]="'heroicons_outline:calendar-days'"></mat-icon>
-                            <mat-panel-description>
-                                Prenotazioni
-                            </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <p>I'm visible because I am open</p>
-                    </mat-expansion-panel>
-                </mat-accordion>
-            </div>
-        </ng-template>
+        </div>
+        <div class="flex items-center">
+            <button
+                class="fuse-mat-button-large mt-4"
+                mat-flat-button
+                [color]="'primary'"
+                [disabled]="buttonConfigurationClick"
+                (click)="configureNumber()">
+                <mat-icon [svgIcon]="'heroicons_outline:qr-code'"></mat-icon>
+                <span *ngIf="!buttonConfigurationClick" style="margin-left: 3px; font-size: 12px;">Ottieni il Qr Code</span>
+                <mat-progress-spinner
+                    *ngIf="buttonConfigurationClick"
+                    [diameter]="20"
+                    [mode]="'indeterminate'"
+                ></mat-progress-spinner>
+            </button>
+        </div>
     </div>
 </div>
+<ng-template #elseBlock>
+    <div class="flex flex-auto items-center min-w-0">
+        <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
+            <img
+                class="w-20 h-20 rounded-full ring-2 ring-bg-card"
+                src="{{this.branchConfigurationDTO?.waApiConfigDTO?.profilePicUrl}}"
+                alt="User avatar">
+        </div>
+        <div class="flex flex-col min-w-0 ml-4">
+            <ng-container>
+                <div class="text-2xl md:text-5xl font-semibold tracking-tight leading-7 md:leading-snug truncate">{{this.branchConfigurationDTO?.waApiConfigDTO?.displayName}}</div>
+            </ng-container>
+            <div class="flex items-center">
+                <mat-icon
+                    class="icon-size-5"
+                    [svgIcon]="'heroicons_outline:star'"></mat-icon>
+                <div class="ml-1.5 leading-6 truncate text-secondary">{{this.currentBranch?.name}}</div><mat-icon
+                class="icon-size-5"
+                [svgIcon]="'heroicons_outline:device-phone-mobile'"></mat-icon>
+                <div class="ml-1.5 leading-6 truncate text-secondary">{{this.branchConfigurationDTO?.waApiConfigDTO?.formattedNumber}}</div><mat-icon
+                class="icon-size-5"
+                [svgIcon]="'heroicons_outline:hand-thumb-up'"></mat-icon>
+                <div class="ml-1.5 leading-6 truncate text-secondary">{{this.branchConfigurationDTO?.waApiConfigDTO?.instanceStatus}}</div>
+            </div>
+
+        </div>
+
+    </div>
+    <configure-opening></configure-opening>
+</ng-template>

@@ -18,6 +18,7 @@ export interface BranchCreationEntity {
     vat?: string;
     type?: BranchCreationEntity.TypeEnum;
     userCode?: string;
+    logoImage?: Array<string>;
 }
 export namespace BranchCreationEntity {
     export type TypeEnum = 'RESTAURANT' | 'SUPPLIER';

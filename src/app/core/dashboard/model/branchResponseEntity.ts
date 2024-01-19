@@ -9,8 +9,6 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { BranchConfiguration } from './branchConfiguration';
-import { BranchSchedule } from './branchSchedule';
 
 export interface BranchResponseEntity { 
     name?: string;
@@ -21,8 +19,7 @@ export interface BranchResponseEntity {
     type?: BranchResponseEntity.TypeEnum;
     branchCode?: string;
     role?: BranchResponseEntity.RoleEnum;
-    branchConfiguration?: BranchConfiguration;
-    branchSchedule?: BranchSchedule;
+    logoImage?: Array<string>;
 }
 export namespace BranchResponseEntity {
     export type TypeEnum = 'RESTAURANT' | 'SUPPLIER';

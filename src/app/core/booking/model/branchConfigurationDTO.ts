@@ -9,7 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { BranchTimeRangeDTO } from './branchTimeRangeDTO';
+import { BookingFormDto } from './bookingFormDto';
 import { WaApiConfigDTO } from './waApiConfigDTO';
 
 export interface BranchConfigurationDTO { 
@@ -20,6 +20,6 @@ export interface BranchConfigurationDTO {
     guestReceivingAuthConfirm?: number;
     minBeforeSendConfirmMessage?: number;
     waApiConfigDTO?: WaApiConfigDTO;
-    branchTimeRanges?: Array<BranchTimeRangeDTO>;
+    bookingFormList?: Array<BookingFormDto>;
     reservationConfirmedManually?: boolean;
 }

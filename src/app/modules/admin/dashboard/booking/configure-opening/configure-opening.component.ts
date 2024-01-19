@@ -6,7 +6,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
@@ -24,13 +24,19 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatRadioModule} from "@angular/material/radio";
 import {environment} from "../../../../../../environments/environment";
-import {BranchConfigurationDTO, BranchTimeRangeDTO, LocalTime, TimeRange} from "../../../../../core/booking";
+import {
+    BookingFormDto,
+    BranchConfigurationDTO,
+    BranchTimeRangeDTO,
+    LocalTime,
+    TimeRange
+} from "../../../../../core/booking";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 
 @Component({
     selector: 'configure-opening',
     templateUrl: './configure-opening.component.html',
-    styleUrls: ['./configure-opening.component.css'],
     imports: [
         MatDatepickerModule,
         MatListModule,
@@ -69,10 +75,15 @@ export class ConfigureOpeningComponent implements OnInit{
 
     urlform: FormGroup;
     restaurantConfigForm: FormGroup;
+    formConfiguration: FormGroup;
+
+    currentWorkingForm: BookingFormDto;
+
 
     constructor(private _matDialog: MatDialog,
                 private _dataProvideService: DataproviderService,
                 private fb: FormBuilder,
+                private _snackBar: MatSnackBar
                 // private clipboard: Clipboard,
                 // private snackBar: MatSnackBar
     ) {
@@ -81,14 +92,6 @@ export class ConfigureOpeningComponent implements OnInit{
     ngOnInit() {
         this._dataProvideService.branch$.subscribe((branch) => {
             this.currentBranch = branch;
-
-            this.url = environment.hostname +'/reservation?branchCode=' + this.currentBranch.branchCode;
-
-            this.urlform = this.fb.group({
-                url: [this.url, /* Other Validators if needed */],
-                iframe: [`<iframe src="${this.url}" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>\n`]
-            });
-            // this.cdr.detectChanges();
         });
 
         this._dataProvideService.restaurantConfiguration$.subscribe((branchConfigurationDTO : BranchConfigurationDTO)=>{
@@ -102,13 +105,27 @@ export class ConfigureOpeningComponent implements OnInit{
                 minBeforeSendConfirmMessage: [branchConfigurationDTO?.minBeforeSendConfirmMessage.toString()],
             });
 
+            this.currentWorkingForm = branchConfigurationDTO?.bookingFormList?.at(0);
+
+            this.formConfiguration = this.fb.group({
+                formType: [this.currentWorkingForm?.formType],
+                redirectPage: [this.currentWorkingForm?.redirectPage]
+            });
+
+            this.url = environment.hostname +'/reservation?branchCode=' + this.currentBranch.branchCode + '&form=' + this.currentWorkingForm.formCode;
+
+            this.urlform = this.fb.group({
+                url: [this.url, /* Other Validators if needed */],
+                iframe: [`<iframe src="${this.url}" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>\n`]
+            });
+
             console.log(this.restaurantConfigForm)
         })
 
         this._dataProvideService?.restaurantConfiguration$.subscribe((restaurantConfiguration)=>{
             this.restaurantConfigurationDTO = restaurantConfiguration;
 
-            this.dataSource = this.restaurantConfigurationDTO?.branchTimeRanges.map((branchTime: BranchTimeRangeDTO) => {
+            this.dataSource = this.restaurantConfigurationDTO?.bookingFormList?.at(0).branchTimeRanges.map((branchTime: BranchTimeRangeDTO) => {
                 return branchTime;
             }) || [];
 
@@ -119,7 +136,7 @@ export class ConfigureOpeningComponent implements OnInit{
 
         if (this.restaurantConfigForm.valid) {
             console.log("salvataggio..")
-            console.log(this.restaurantConfigForm.value);
+            // console.log(this.restaurantConfigForm.value);
 
             this._dataProvideService.updateBranchBookingConfigration({
                     guests: this.restaurantConfigForm.get('guests')?.value,
@@ -129,8 +146,10 @@ export class ConfigureOpeningComponent implements OnInit{
                     minBeforeSendConfirmMessage: +this.restaurantConfigForm.get('minBeforeSendConfirmMessage')?.value,
                     reservationConfirmedManually: this.restaurantConfigForm.get('reservationConfirmedManually')?.value,
                 }
-
-            )
+            );
+            this._snackBar.open('Configurazione salvata con successo', 'Undo', {
+                duration: 3000,
+            });
 
         } else {
             console.log('Invalid form. Please check the entered values.');

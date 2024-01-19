@@ -1,7 +1,0 @@
-.calendar-container {
-    position: relative;
-    width: 80%; /* Adjust the width as needed */
-    min-width: 300px; /* Minimum width of 300px */
-    min-height: 300px;
-    height: 60%; /* Adjust the height as needed */
-}

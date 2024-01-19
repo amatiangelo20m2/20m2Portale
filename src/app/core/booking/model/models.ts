@@ -1,3 +1,4 @@
+export * from './bookingFormDto';
 export * from './branchConfigurationDTO';
 export * from './branchOpeningEditConfigurationRequest';
 export * from './branchTimeRangeDTO';

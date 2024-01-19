@@ -2,13 +2,15 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Subject, takeUntil} from 'rxjs';
 import {UserService} from "../../../core/user/user.service";
 import {User} from "../../../core/user/user.types";
-import {BranchResponseEntity, DashboardControllerService} from "../../../core/dashboard";
+
 import {
     BookingControllerService,
-    BranchConfigurationDTO, BranchOpeningEditConfigurationRequest,
-    BranchTimeRangeDTO,
-    TimeRangeUpdateRequest
-} from "../../../core/booking";
+    BranchConfigurationDTO,
+    BranchOpeningEditConfigurationRequest,
+    BranchTimeRangeDTO, TimeRangeUpdateRequest
+} from 'app/core/booking';
+import {BranchResponseEntity, DashboardControllerService} from "../../../core/dashboard";
+
 
 
 
@@ -47,7 +49,7 @@ export class DataproviderService {
 
                         console.log("Retrieve branches with code : " + user.userCode)
 
-                        this._dashboardControllerService.retrieveDashboardData(user.userCode).subscribe(
+                        this._dashboardControllerService?.retrieveDashboardData(user?.userCode).subscribe(
                             value => {
                                 this.currentBranchesList.next(value.branches);
 
@@ -104,7 +106,7 @@ export class DataproviderService {
         this.ids = [];
         this.restaurantConfiguration$.subscribe((restaurantConfig)=>{
             selectedDays.forEach((day)=>{
-                this.ids.push(restaurantConfig.branchTimeRanges.find((branchTimeRange)=>
+                this.ids.push(restaurantConfig?.bookingFormList?.at(0).branchTimeRanges.find((branchTimeRange)=>
                     branchTimeRange.dayOfWeek == this.getDayFromSelectedDay(day)
                 ).id);
             });
@@ -127,12 +129,15 @@ export class DataproviderService {
             this.currentRestaurantConfiguration.next(restaurantConf);
         });
     }
-    public updateBranchBookingConfigration(branchOpeningEditConfigurationRequest : BranchOpeningEditConfigurationRequest){
+    public updateBranchBookingConfigration(branchOpeningEditConfigurationRequest :
+                                               BranchOpeningEditConfigurationRequest): boolean{
 
         this._bookingControllerService.updateConfiguration(
             branchOpeningEditConfigurationRequest
         ).subscribe((branchResDTO)=>{
             this.currentRestaurantConfiguration.next(branchResDTO);
+            return true;
         });
+        return false;
     }
 }

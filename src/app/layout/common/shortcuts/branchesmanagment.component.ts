@@ -80,6 +80,9 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
 
         this._dashboardService.branches$.subscribe((branches) => {
             this.currentBranchList = branches;
+            if(this.currentBranchList?.length == 0){
+                this.openPanel();
+            }
         });
 
         this._dashboardService.branch$.subscribe((branch) => {
@@ -93,6 +96,7 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
             phone: ['', Validators.required],
             type: ['RESTAURANT']
         });
+
     }
 
     /**

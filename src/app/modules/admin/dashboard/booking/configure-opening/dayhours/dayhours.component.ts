@@ -46,7 +46,7 @@ export class DayhoursComponent implements OnInit{
             this.restaurantConfigurationDTO = restaurantConfiguration;
 
 
-            this.dataSource = this.restaurantConfigurationDTO?.branchTimeRanges.map((branchTime: BranchTimeRangeDTO) => {
+            this.dataSource = this.restaurantConfigurationDTO?.bookingFormList.at(0).branchTimeRanges.map((branchTime: BranchTimeRangeDTO) => {
                 return branchTime;
             }) || [];
 

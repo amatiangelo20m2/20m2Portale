@@ -25,7 +25,6 @@ import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables'
 import { Configuration }                                     from '../configuration';
 
 
-
 @Injectable({providedIn: 'root'})
 export class BookingControllerService {
 
