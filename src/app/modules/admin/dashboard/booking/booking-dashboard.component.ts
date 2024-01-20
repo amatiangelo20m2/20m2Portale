@@ -58,7 +58,7 @@ export class BookingDashboardComponent implements OnInit {
             this.cdr.detectChanges();
         });
 
-        this._dataProvideService.restaurantConfiguration$.subscribe((restaurantConfiguration)=>{
+        this._dataProvideService.branchConfiguration$.subscribe((restaurantConfiguration)=>{
             this.branchConfigurationDTO = restaurantConfiguration;
             this.cdr.detectChanges();
         });
@@ -67,12 +67,11 @@ export class BookingDashboardComponent implements OnInit {
 
     buttonConfigurationClick : boolean = false;
     remainingSeconds: number = 0;
-    panelOpenState: boolean = true;
 
     configureNumber() {
         this.buttonConfigurationClick = true;
         this._bookingControllerService
-            .configureNumberForWhatsAppMessaging(this.currentBranch.branchCode)
+            .configureNumberForWhatsAppMessaging(this.currentBranch?.branchCode)
             .subscribe((bookingConfDTO) =>{
                     this.branchConfigurationDTO = bookingConfDTO;
                     this.qrCodeImage = bookingConfDTO?.waApiConfigDTO.lastQrCode;
@@ -84,7 +83,7 @@ export class BookingDashboardComponent implements OnInit {
                         .subscribe(() => {
 
 
-                            this._bookingControllerService.checkWaApiStatus(this.currentBranch.branchCode)
+                            this._bookingControllerService.checkWaApiStatus(this.currentBranch?.branchCode)
                                 .subscribe((bookingConfDTO)=>{
                                     this.branchConfigurationDTO = bookingConfDTO;
                                     console.log('Current status: ' + this.branchConfigurationDTO?.waApiConfigDTO?.instanceStatus)

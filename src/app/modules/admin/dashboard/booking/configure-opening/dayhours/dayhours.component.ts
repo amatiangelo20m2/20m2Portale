@@ -42,7 +42,7 @@ export class DayhoursComponent implements OnInit{
             // this.cdr.detectChanges();
         });
 
-        this._dataProvideService.restaurantConfiguration$.subscribe((restaurantConfiguration)=>{
+        this._dataProvideService.branchConfiguration$.subscribe((restaurantConfiguration)=>{
             this.restaurantConfigurationDTO = restaurantConfiguration;
 
 

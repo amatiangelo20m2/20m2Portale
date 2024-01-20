@@ -12,6 +12,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatCardModule} from "@angular/material/card";
+import {BookingControllerService} from "../../../core/booking";
 @Component({
     selector: 'booking',
     templateUrl: './booking.component.html',
@@ -39,25 +40,30 @@ import {MatCardModule} from "@angular/material/card";
 export class BookingComponent implements OnInit{
 
     branchCode: string;
+    formCode: string;
     formFieldHelpers: string[] = [''];
+    reservationForm: UntypedFormGroup;
+    numbers$ = Array.from({ length: 24 }, (_, index) => index + 1);
+    selectedNumber: any;
+
+    currentDate: Date;
+
 
     ngOnInit(): void {
 
         this.route.queryParams.subscribe((params) => {
             this.branchCode = params['branchCode'];
-            console.log('Branch Code from URL:', this.branchCode);
+            this.formCode = params['form'];
+            console.log('Branch Code from URL: ' +  this.branchCode + ' - form code: ' + this.formCode );
         });
     }
 
-
-    reservationForm: UntypedFormGroup;
-    numbers$ = Array.from({ length: 24 }, (_, index) => index + 1);
-    selectedNumber: any;
-
-
     constructor(
         private fb: FormBuilder,
-        private route: ActivatedRoute) {
+        private route: ActivatedRoute,
+        private _bookingService: BookingControllerService) {
+
+
         this.reservationForm = this.fb.group({
             phone: ['', Validators.required],
             phonePrefix: ['', Validators.required],
@@ -68,6 +74,8 @@ export class BookingComponent implements OnInit{
                 console.log('trigger e method', value);
             }
         });
+
+
     }
 
     unlock() {

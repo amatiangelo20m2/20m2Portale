@@ -19,6 +19,7 @@ import { Observable }                                        from 'rxjs';
 
 import { BranchConfigurationDTO } from '../model/branchConfigurationDTO';
 import { BranchOpeningEditConfigurationRequest } from '../model/branchOpeningEditConfigurationRequest';
+import { FormTag } from '../model/formTag';
 import { UpdateBranchConfigurationRequest } from '../model/updateBranchConfigurationRequest';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -141,6 +142,116 @@ export class BookingControllerService {
         ];
 
         return this.httpClient.request<BranchConfigurationDTO>('get',`${this.basePath}/booking/configuration/waapi/instance/configure`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param tagName
+     * @param branchCode
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createTag(tagName: string, branchCode: string, observe?: 'body', reportProgress?: boolean): Observable<FormTag>;
+    public createTag(tagName: string, branchCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FormTag>>;
+    public createTag(tagName: string, branchCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FormTag>>;
+    public createTag(tagName: string, branchCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (tagName === null || tagName === undefined) {
+            throw new Error('Required parameter tagName was null or undefined when calling createTag.');
+        }
+
+        if (branchCode === null || branchCode === undefined) {
+            throw new Error('Required parameter branchCode was null or undefined when calling createTag.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (tagName !== undefined && tagName !== null) {
+            queryParameters = queryParameters.set('tagName', <any>tagName);
+        }
+        if (branchCode !== undefined && branchCode !== null) {
+            queryParameters = queryParameters.set('branchCode', <any>branchCode);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<FormTag>('post',`${this.basePath}/booking/create/tag`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param tagName
+     * @param branchCode
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public deleteTag(tagName: string, branchCode: string, observe?: 'body', reportProgress?: boolean): Observable<void>;
+    public deleteTag(tagName: string, branchCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FormTag>>;
+    public deleteTag(tagName: string, branchCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FormTag>>;
+    public deleteTag(tagName: string, branchCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (tagName === null || tagName === undefined) {
+            throw new Error('Required parameter tagName was null or undefined when calling deleteTag.');
+        }
+
+        if (branchCode === null || branchCode === undefined) {
+            throw new Error('Required parameter branchCode was null or undefined when calling deleteTag.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (tagName !== undefined && tagName !== null) {
+            queryParameters = queryParameters.set('tagName', <any>tagName);
+        }
+        if (branchCode !== undefined && branchCode !== null) {
+            queryParameters = queryParameters.set('branchCode', <any>branchCode);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<FormTag>('post',`${this.basePath}/booking/delete/tag`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

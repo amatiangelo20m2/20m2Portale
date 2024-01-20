@@ -2,15 +2,13 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject, Subject, takeUntil} from 'rxjs';
 import {UserService} from "../../../core/user/user.service";
 import {User} from "../../../core/user/user.types";
-
+import {BranchResponseEntity, DashboardControllerService} from "../../../core/dashboard";
 import {
     BookingControllerService,
-    BranchConfigurationDTO,
-    BranchOpeningEditConfigurationRequest,
-    BranchTimeRangeDTO, TimeRangeUpdateRequest
-} from 'app/core/booking';
-import {BranchResponseEntity, DashboardControllerService} from "../../../core/dashboard";
-
+    BranchConfigurationDTO, BranchOpeningEditConfigurationRequest,
+    BranchTimeRangeDTO, FormTag,
+    TimeRangeUpdateRequest
+} from "../../../core/booking";
 
 
 
@@ -21,13 +19,13 @@ export class DataproviderService {
     private currentBranch: BehaviorSubject<BranchResponseEntity> = new BehaviorSubject(null);
     private currentBranchesList : BehaviorSubject<BranchResponseEntity[]> = new BehaviorSubject(null);
 
-    private currentRestaurantConfiguration : BehaviorSubject<BranchConfigurationDTO> = new BehaviorSubject(null);
+    private currentBranchConfiguration : BehaviorSubject<BranchConfigurationDTO> = new BehaviorSubject(null);
 
 
     branch$ = this.currentBranch.asObservable();
     branches$ = this.currentBranchesList.asObservable();
 
-    restaurantConfiguration$ = this.currentRestaurantConfiguration.asObservable();
+    branchConfiguration$ = this.currentBranchConfiguration.asObservable();
 
     user : User;
 
@@ -91,7 +89,7 @@ export class DataproviderService {
     retrieveBookingConfiguration(branchCode: string){
         this._bookingControllerService.checkWaApiStatus(branchCode)
             .subscribe((bookingConfDTO) =>{
-                this.currentRestaurantConfiguration?.next(bookingConfDTO);
+                this.currentBranchConfiguration?.next(bookingConfDTO);
             });
     }
 
@@ -104,7 +102,7 @@ export class DataproviderService {
     ids : number[] = [];
     fromCurrentTimeRangeListRetrieveIdsByDaysSelected(selectedDays: string[]) {
         this.ids = [];
-        this.restaurantConfiguration$.subscribe((restaurantConfig)=>{
+        this.branchConfiguration$.subscribe((restaurantConfig)=>{
             selectedDays.forEach((day)=>{
                 this.ids.push(restaurantConfig?.bookingFormList?.at(0).branchTimeRanges.find((branchTimeRange)=>
                     branchTimeRange.dayOfWeek == this.getDayFromSelectedDay(day)
@@ -126,7 +124,7 @@ export class DataproviderService {
     }
     public updateTimeRange(param: { branchCode: string; timeRanges: Array<TimeRangeUpdateRequest>; listConfIds: number[] }) {
         this._bookingControllerService.updateTimeRange(param).subscribe((restaurantConf)=>{
-            this.currentRestaurantConfiguration.next(restaurantConf);
+            this.currentBranchConfiguration.next(restaurantConf);
         });
     }
     public updateBranchBookingConfigration(branchOpeningEditConfigurationRequest :
@@ -135,9 +133,29 @@ export class DataproviderService {
         this._bookingControllerService.updateConfiguration(
             branchOpeningEditConfigurationRequest
         ).subscribe((branchResDTO)=>{
-            this.currentRestaurantConfiguration.next(branchResDTO);
+            this.currentBranchConfiguration.next(branchResDTO);
             return true;
         });
         return false;
+    }
+
+    // createTag(tag: FormTag, branchCode: string): FormTag {
+    //
+    // }
+    createTag(tag: FormTag, branchCode: string) {
+        this._bookingControllerService.createTag(tag.title, branchCode)
+            .subscribe((tag: FormTag)=>{
+                this.currentBranchConfiguration.value.tags.push(tag);
+            }
+        )
+    }
+
+    deleteTag(tag: FormTag, branchCode: string) {
+        this._bookingControllerService.deleteTag(tag.title, branchCode)
+            .subscribe(()=>{
+                    console.log("tag deleted with id " , tag.id);
+                    this.currentBranchConfiguration.value?.tags?.filter(tag => tag.id !== tag.id);
+                }
+            )
     }
 }
