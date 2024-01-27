@@ -74,7 +74,7 @@ export class BookingDashboardComponent implements OnInit {
             .configureNumberForWhatsAppMessaging(this.currentBranch?.branchCode)
             .subscribe((bookingConfDTO) =>{
                     this.branchConfigurationDTO = bookingConfDTO;
-                    this.qrCodeImage = bookingConfDTO?.waApiConfigDTO.lastQrCode;
+                    this.qrCodeImage = bookingConfDTO?.lastQrCode;
                     this.buttonConfigurationClick = false;
                     this.remainingSeconds = 60;
 
@@ -86,10 +86,10 @@ export class BookingDashboardComponent implements OnInit {
                             this._bookingControllerService.checkWaApiStatus(this.currentBranch?.branchCode)
                                 .subscribe((bookingConfDTO)=>{
                                     this.branchConfigurationDTO = bookingConfDTO;
-                                    console.log('Current status: ' + this.branchConfigurationDTO?.waApiConfigDTO?.instanceStatus)
+                                    console.log('Current status: ' + this.branchConfigurationDTO?.instanceStatus)
                                     if (this.branchConfigurationDTO != null
-                                        && this.branchConfigurationDTO?.waApiConfigDTO != null
-                                        && this.branchConfigurationDTO?.waApiConfigDTO?.instanceStatus === 'OK') {
+                                        && this.branchConfigurationDTO != null
+                                        && this.branchConfigurationDTO?.instanceStatus === 'OK') {
                                         console.log('Loop condition met. Stopping the loop.');
                                         this.remainingSeconds = 0;
                                     }

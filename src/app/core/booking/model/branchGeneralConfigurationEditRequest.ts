@@ -10,8 +10,12 @@
  * Do not edit the class manually.
  */
 
-export interface FormTag { 
-    id?: number;
-    title?: string;
-    active?: boolean;
+export interface BranchGeneralConfigurationEditRequest { 
+    branchCode?: string;
+    guests?: number;
+    bookingSlotInMinutes?: number;
+    guestReceivingAuthConfirm?: number;
+    maxTableNumber?: number;
+    minBeforeSendConfirmMessage?: number;
+    reservationConfirmedManually?: boolean;
 }

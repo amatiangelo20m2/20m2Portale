@@ -6,7 +6,7 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
@@ -20,7 +20,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatTabsModule} from "@angular/material/tabs";
 import {EdithoursComponent} from "./dayhours/edit-hours/edithours.component";
 import {MatSelectModule} from "@angular/material/select";
-import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatRadioModule} from "@angular/material/radio";
 import {environment} from "../../../../../../environments/environment";
@@ -157,6 +157,7 @@ export class ConfigureOpeningComponent implements OnInit {
     openEditLabelsDialog() {
         this._matDialog.open(DayhoursComponent, {autoFocus: false});
     }
+
     getTime(timeRanges: Array<TimeRange>) {
         var timeSlotToShow = '';
         if(timeRanges.length > 0){
@@ -193,5 +194,9 @@ export class ConfigureOpeningComponent implements OnInit {
     editHour(timeRange: BranchTimeRangeDTO) {
         this._dataProvideService.setBranchTimeRangeDTOToUpdate(timeRange)
         this._matDialog.open(EdithoursComponent, {autoFocus: false});
+    }
+
+    switchClosedStatus(timeRangeDTO: BranchTimeRangeDTO) {
+        this._dataProvideService.switchClosedStatus(timeRangeDTO);
     }
 }

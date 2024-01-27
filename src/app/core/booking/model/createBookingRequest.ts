@@ -9,10 +9,19 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { TimeRangeUpdateRequest } from './timeRangeUpdateRequest';
+import { LocalTime } from './localTime';
 
-export interface UpdateBranchConfigurationRequest { 
+export interface CreateBookingRequest { 
     branchCode?: string;
-    listConfIds?: Array<number>;
-    timeRanges?: Array<TimeRangeUpdateRequest>;
+    formCode?: string;
+    userEmail?: string;
+    userPhone?: string;
+    userName?: string;
+    userLastName?: string;
+    userDOB?: string;
+    guests?: number;
+    particularRequests?: string;
+    date?: string;
+    time?: LocalTime;
+    treatmentPersonalData?: boolean;
 }

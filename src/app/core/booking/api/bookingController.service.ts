@@ -18,9 +18,10 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { BranchConfigurationDTO } from '../model/branchConfigurationDTO';
-import { BranchOpeningEditConfigurationRequest } from '../model/branchOpeningEditConfigurationRequest';
-import { FormTag } from '../model/formTag';
-import { UpdateBranchConfigurationRequest } from '../model/updateBranchConfigurationRequest';
+import { BranchGeneralConfigurationEditRequest } from '../model/branchGeneralConfigurationEditRequest';
+import { CreateBookingRequest } from '../model/createBookingRequest';
+import { CustomerFormData } from '../model/customerFormData';
+import { UpdateBranchTimeRanges } from '../model/updateBranchTimeRanges';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -155,30 +156,22 @@ export class BookingControllerService {
     /**
      *
      *
-     * @param tagName
-     * @param branchCode
+     * @param createBookingRequest
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createTag(tagName: string, branchCode: string, observe?: 'body', reportProgress?: boolean): Observable<FormTag>;
-    public createTag(tagName: string, branchCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FormTag>>;
-    public createTag(tagName: string, branchCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FormTag>>;
-    public createTag(tagName: string, branchCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public createBooking(createBookingRequest: CreateBookingRequest, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public createBooking(createBookingRequest: CreateBookingRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public createBooking(createBookingRequest: CreateBookingRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public createBooking(createBookingRequest: CreateBookingRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (tagName === null || tagName === undefined) {
-            throw new Error('Required parameter tagName was null or undefined when calling createTag.');
-        }
-
-        if (branchCode === null || branchCode === undefined) {
-            throw new Error('Required parameter branchCode was null or undefined when calling createTag.');
+        if (createBookingRequest === null || createBookingRequest === undefined) {
+            throw new Error('Required parameter createBookingRequest was null or undefined when calling createBooking.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (tagName !== undefined && tagName !== null) {
-            queryParameters = queryParameters.set('tagName', <any>tagName);
-        }
-        if (branchCode !== undefined && branchCode !== null) {
-            queryParameters = queryParameters.set('branchCode', <any>branchCode);
+        if (createBookingRequest !== undefined && createBookingRequest !== null) {
+            queryParameters = queryParameters.set('createBookingRequest', <any>createBookingRequest);
         }
 
         let headers = this.defaultHeaders;
@@ -196,62 +189,7 @@ export class BookingControllerService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<FormTag>('post',`${this.basePath}/booking/create/tag`,
-            {
-                params: queryParameters,
-                withCredentials: this.configuration.withCredentials,
-                headers: headers,
-                observe: observe,
-                reportProgress: reportProgress
-            }
-        );
-    }
-
-    /**
-     *
-     *
-     * @param tagName
-     * @param branchCode
-     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
-     * @param reportProgress flag to report request and response progress.
-     */
-    public deleteTag(tagName: string, branchCode: string, observe?: 'body', reportProgress?: boolean): Observable<void>;
-    public deleteTag(tagName: string, branchCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FormTag>>;
-    public deleteTag(tagName: string, branchCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FormTag>>;
-    public deleteTag(tagName: string, branchCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-
-        if (tagName === null || tagName === undefined) {
-            throw new Error('Required parameter tagName was null or undefined when calling deleteTag.');
-        }
-
-        if (branchCode === null || branchCode === undefined) {
-            throw new Error('Required parameter branchCode was null or undefined when calling deleteTag.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (tagName !== undefined && tagName !== null) {
-            queryParameters = queryParameters.set('tagName', <any>tagName);
-        }
-        if (branchCode !== undefined && branchCode !== null) {
-            queryParameters = queryParameters.set('branchCode', <any>branchCode);
-        }
-
-        let headers = this.defaultHeaders;
-
-        // to determine the Accept header
-        let httpHeaderAccepts: string[] = [
-            '*/*'
-        ];
-        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
-        if (httpHeaderAcceptSelected != undefined) {
-            headers = headers.set('Accept', httpHeaderAcceptSelected);
-        }
-
-        // to determine the Content-Type header
-        const consumes: string[] = [
-        ];
-
-        return this.httpClient.request<FormTag>('post',`${this.basePath}/booking/delete/tag`,
+        return this.httpClient.request<any>('get',`${this.basePath}/booking/booking/create`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -359,14 +297,116 @@ export class BookingControllerService {
     /**
      *
      *
+     * @param branchCode
+     * @param formCode
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public retrieveFormData(branchCode: string, formCode: string, observe?: 'body', reportProgress?: boolean): Observable<CustomerFormData>;
+    public retrieveFormData(branchCode: string, formCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CustomerFormData>>;
+    public retrieveFormData(branchCode: string, formCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CustomerFormData>>;
+    public retrieveFormData(branchCode: string, formCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (branchCode === null || branchCode === undefined) {
+            throw new Error('Required parameter branchCode was null or undefined when calling retrieveFormData.');
+        }
+
+        if (formCode === null || formCode === undefined) {
+            throw new Error('Required parameter formCode was null or undefined when calling retrieveFormData.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (branchCode !== undefined && branchCode !== null) {
+            queryParameters = queryParameters.set('branchCode', <any>branchCode);
+        }
+        if (formCode !== undefined && formCode !== null) {
+            queryParameters = queryParameters.set('formCode', <any>formCode);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<CustomerFormData>('get',`${this.basePath}/booking/retrieveformdata`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param branchTimeRangeId
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public switchisclosedbranchtime(branchTimeRangeId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public switchisclosedbranchtime(branchTimeRangeId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public switchisclosedbranchtime(branchTimeRangeId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public switchisclosedbranchtime(branchTimeRangeId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (branchTimeRangeId === null || branchTimeRangeId === undefined) {
+            throw new Error('Required parameter branchTimeRangeId was null or undefined when calling switchisclosedbranchtime.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (branchTimeRangeId !== undefined && branchTimeRangeId !== null) {
+            queryParameters = queryParameters.set('branchTimeRangeId', <any>branchTimeRangeId);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('get',`${this.basePath}/booking/switchisclosedbranchtime`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
      * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateConfiguration(body: BranchOpeningEditConfigurationRequest, observe?: 'body', reportProgress?: boolean): Observable<BranchConfigurationDTO>;
-    public updateConfiguration(body: BranchOpeningEditConfigurationRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BranchConfigurationDTO>>;
-    public updateConfiguration(body: BranchOpeningEditConfigurationRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BranchConfigurationDTO>>;
-    public updateConfiguration(body: BranchOpeningEditConfigurationRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateConfiguration(body: BranchGeneralConfigurationEditRequest, observe?: 'body', reportProgress?: boolean): Observable<BranchConfigurationDTO>;
+    public updateConfiguration(body: BranchGeneralConfigurationEditRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BranchConfigurationDTO>>;
+    public updateConfiguration(body: BranchGeneralConfigurationEditRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BranchConfigurationDTO>>;
+    public updateConfiguration(body: BranchGeneralConfigurationEditRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateConfiguration.');
@@ -410,10 +450,10 @@ export class BookingControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public updateTimeRange(body: UpdateBranchConfigurationRequest, observe?: 'body', reportProgress?: boolean): Observable<BranchConfigurationDTO>;
-    public updateTimeRange(body: UpdateBranchConfigurationRequest, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BranchConfigurationDTO>>;
-    public updateTimeRange(body: UpdateBranchConfigurationRequest, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BranchConfigurationDTO>>;
-    public updateTimeRange(body: UpdateBranchConfigurationRequest, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public updateTimeRange(body: UpdateBranchTimeRanges, observe?: 'body', reportProgress?: boolean): Observable<BranchConfigurationDTO>;
+    public updateTimeRange(body: UpdateBranchTimeRanges, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BranchConfigurationDTO>>;
+    public updateTimeRange(body: UpdateBranchTimeRanges, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BranchConfigurationDTO>>;
+    public updateTimeRange(body: UpdateBranchTimeRanges, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
             throw new Error('Required parameter body was null or undefined when calling updateTimeRange.');

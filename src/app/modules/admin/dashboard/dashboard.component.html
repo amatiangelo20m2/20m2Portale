@@ -6,7 +6,7 @@
             <mat-drawer-container class="flex-auto sm:h-full">
                 <!-- Drawer -->
                 <mat-drawer
-                    class="sm:w-72 dark:bg-gray-900"
+                    class="sm:w-64 dark:bg-gray-900"
                     [autoFocus]="false" [mode]="drawerMode" [opened]="drawerOpened" #drawer>
                     <div class="flex items-center justify-between m-4 mr-2 sm:my-5">
                         <!-- Title -->
@@ -51,7 +51,7 @@
                 <mat-drawer-content class="flex flex-col">
 
                     <!-- Main -->
-                    <div class="flex-auto px-4 pt-6 pb-8 md:p-4 md:pb-8 lg:p-8">
+                    <div class="flex-auto px-4 pt-0 pb-8 md:p-4 md:pb-8 lg:p-8">
 
                         <!-- Panel header -->
                         <div class="flex items-center">
@@ -65,14 +65,14 @@
                             </button>
                         </div>
 
-                        <div class="mt-4">
+                        <div class="mt-1">
                             <ng-container [ngSwitch]="selectedPanel">
                                 <!-- Account -->
                                 <ng-container *ngSwitchCase="'branchsetting'">
                                     <booking-dashboard></booking-dashboard>
                                 </ng-container>
                                 <ng-container *ngSwitchCase="'booking'">
-                                    <booking-dashboard></booking-dashboard>
+                                    <app-bookingcomponent></app-bookingcomponent>
                                 </ng-container>
                                 <!-- Security -->
                                 <ng-container *ngSwitchCase="'security'">

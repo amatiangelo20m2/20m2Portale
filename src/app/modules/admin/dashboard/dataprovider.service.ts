@@ -5,12 +5,10 @@ import {User} from "../../../core/user/user.types";
 import {BranchResponseEntity, DashboardControllerService} from "../../../core/dashboard";
 import {
     BookingControllerService,
-    BranchConfigurationDTO, BranchOpeningEditConfigurationRequest,
+    BranchConfigurationDTO, BranchGeneralConfigurationEditRequest,
     BranchTimeRangeDTO, FormTag,
     TimeRangeUpdateRequest
 } from "../../../core/booking";
-
-
 
 @Injectable({providedIn: 'root'})
 export class DataproviderService {
@@ -49,9 +47,9 @@ export class DataproviderService {
 
                         this._dashboardControllerService?.retrieveDashboardData(user?.userCode).subscribe(
                             value => {
-                                this.currentBranchesList.next(value.branches);
+                                this.currentBranchesList?.next(value.branches);
 
-                                if(this.currentBranchesList.value){
+                                if(this.currentBranchesList?.value){
 
                                     let branchCodeRetrieved = localStorage.getItem("branchCode") ?? '';
 
@@ -62,7 +60,7 @@ export class DataproviderService {
                                         this.selectBranch(
                                             this.currentBranchesList.value
                                                 .find(branch =>
-                                                    branch.branchCode === branchCodeRetrieved) ?? value[0]
+                                                    branch?.branchCode === branchCodeRetrieved) ?? value[0]
                                         );
 
 
@@ -127,11 +125,11 @@ export class DataproviderService {
             this.currentBranchConfiguration.next(restaurantConf);
         });
     }
-    public updateBranchBookingConfigration(branchOpeningEditConfigurationRequest :
-                                               BranchOpeningEditConfigurationRequest): boolean{
+    public updateBranchBookingConfigration(branchGeneralConfigurationEditRequest :
+                                               BranchGeneralConfigurationEditRequest): boolean{
 
         this._bookingControllerService.updateConfiguration(
-            branchOpeningEditConfigurationRequest
+            branchGeneralConfigurationEditRequest
         ).subscribe((branchResDTO)=>{
             this.currentBranchConfiguration.next(branchResDTO);
             return true;
@@ -143,19 +141,27 @@ export class DataproviderService {
     //
     // }
     createTag(tag: FormTag, branchCode: string) {
-        this._bookingControllerService.createTag(tag.title, branchCode)
-            .subscribe((tag: FormTag)=>{
-                this.currentBranchConfiguration.value.tags.push(tag);
-            }
-        )
+        // this._bookingControllerService.createTag(tag.title, branchCode)
+        //     .subscribe((tag: FormTag)=>{
+        //         this.currentBranchConfiguration.value.tags.push(tag);
+        //     }
+        // )
     }
 
     deleteTag(tag: FormTag, branchCode: string) {
-        this._bookingControllerService.deleteTag(tag.title, branchCode)
-            .subscribe(()=>{
-                    console.log("tag deleted with id " , tag.id);
-                    this.currentBranchConfiguration.value?.tags?.filter(tag => tag.id !== tag.id);
-                }
-            )
+        // this._bookingControllerService.deleteTag(tag.title, branchCode)
+        //     .subscribe(()=>{
+        //             console.log("tag deleted with id " , tag.id);
+        //             this.currentBranchConfiguration.value?.tags?.filter(tag => tag.id !== tag.id);
+        //         }
+        //     );
+    }
+
+    switchClosedStatus(timeRangeDTO: BranchTimeRangeDTO) {
+        this._bookingControllerService.switchisclosedbranchtime(timeRangeDTO.id).subscribe((response)=>{
+            if(response.status == 200){
+
+            }
+        });
     }
 }

@@ -12,7 +12,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatCardModule} from "@angular/material/card";
-import {BookingControllerService} from "../../../core/booking";
+import {BookingControllerService, CustomerFormData} from "../../../core/booking";
 @Component({
     selector: 'booking',
     templateUrl: './booking.component.html',
@@ -48,6 +48,8 @@ export class BookingComponent implements OnInit{
 
     currentDate: Date;
 
+    customerFormData : CustomerFormData;
+
 
     ngOnInit(): void {
 
@@ -55,6 +57,12 @@ export class BookingComponent implements OnInit{
             this.branchCode = params['branchCode'];
             this.formCode = params['form'];
             console.log('Branch Code from URL: ' +  this.branchCode + ' - form code: ' + this.formCode );
+
+            this._bookingService.retrieveFormData(this.branchCode, this.formCode)
+                .subscribe((customerFormData: CustomerFormData)=>{
+                this.customerFormData = customerFormData;
+                console.log(this.customerFormData);
+            });
         });
     }
 
@@ -62,6 +70,7 @@ export class BookingComponent implements OnInit{
         private fb: FormBuilder,
         private route: ActivatedRoute,
         private _bookingService: BookingControllerService) {
+
 
 
         this.reservationForm = this.fb.group({

@@ -9,18 +9,10 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { TimeRangeUpdateRequest } from './timeRangeUpdateRequest';
 
-export interface WaApiConfigDTO { 
-    waapiConfId?: number;
-    instanceId?: string;
-    instanceStatus?: string;
-    displayName?: string;
-    formattedNumber?: string;
-    profilePicUrl?: string;
-    lastQrCode?: string;
-    owner?: string;
-    explanation?: string;
-    message?: string;
-    creationDate?: Date;
-    updateDate?: Date;
+export interface UpdateBranchTimeRanges { 
+    branchCode?: string;
+    listConfIds?: Array<number>;
+    timeRanges?: Array<TimeRangeUpdateRequest>;
 }
