@@ -157,11 +157,19 @@ export class DataproviderService {
         //     );
     }
 
-    switchClosedStatus(timeRangeDTO: BranchTimeRangeDTO) {
+    switchClosedStatus(timeRangeDTO: BranchTimeRangeDTO,
+                       formCode: string) {
         this._bookingControllerService.switchisclosedbranchtime(timeRangeDTO.id).subscribe((response)=>{
-            if(response.status == 200){
 
-            }
+                console.log("changinfasdasdasdsad ")
+                this.currentBranchConfiguration
+                    .value
+                    .bookingFormList
+                    .find(form =>
+                        form.formCode === formCode)
+                    .branchTimeRanges
+                    .find(branchTimeRangeDTO => branchTimeRangeDTO.id === timeRangeDTO.id).closed = !timeRangeDTO.closed;
+
         });
     }
 }

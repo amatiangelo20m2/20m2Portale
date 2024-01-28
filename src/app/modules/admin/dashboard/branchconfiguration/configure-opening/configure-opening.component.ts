@@ -196,7 +196,7 @@ export class ConfigureOpeningComponent implements OnInit {
         this._matDialog.open(EdithoursComponent, {autoFocus: false});
     }
 
-    switchClosedStatus(timeRangeDTO: BranchTimeRangeDTO) {
-        this._dataProvideService.switchClosedStatus(timeRangeDTO);
+    switchClosedStatus(timeRangeDTO: BranchTimeRangeDTO, formCode: string) {
+        this._dataProvideService.switchClosedStatus(timeRangeDTO, formCode);
     }
 }

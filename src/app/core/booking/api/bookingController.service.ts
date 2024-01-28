@@ -20,6 +20,7 @@ import { Observable }                                        from 'rxjs';
 import { BranchConfigurationDTO } from '../model/branchConfigurationDTO';
 import { BranchGeneralConfigurationEditRequest } from '../model/branchGeneralConfigurationEditRequest';
 import { CreateBookingRequest } from '../model/createBookingRequest';
+import { Customer } from '../model/customer';
 import { CustomerFormData } from '../model/customerFormData';
 import { UpdateBranchTimeRanges } from '../model/updateBranchTimeRanges';
 
@@ -339,6 +340,61 @@ export class BookingControllerService {
         ];
 
         return this.httpClient.request<CustomerFormData>('get',`${this.basePath}/booking/retrieveformdata`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param phone
+     * @param email
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public retrievecustomerbyphoneoremail(phone: string, email: string, observe?: 'body', reportProgress?: boolean): Observable<Customer>;
+    public retrievecustomerbyphoneoremail(phone: string, email: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Customer>>;
+    public retrievecustomerbyphoneoremail(phone: string, email: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Customer>>;
+    public retrievecustomerbyphoneoremail(phone: string, email: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (phone === null || phone === undefined) {
+            throw new Error('Required parameter phone was null or undefined when calling retrievecustomerbyphoneoremail.');
+        }
+
+        if (email === null || email === undefined) {
+            throw new Error('Required parameter email was null or undefined when calling retrievecustomerbyphoneoremail.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (phone !== undefined && phone !== null) {
+            queryParameters = queryParameters.set('phone', <any>phone);
+        }
+        if (email !== undefined && email !== null) {
+            queryParameters = queryParameters.set('email', <any>email);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Customer>('get',`${this.basePath}/booking/retrievecustomerbyphoneoremail`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

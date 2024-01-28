@@ -1,18 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, LOCALE_ID, OnInit} from '@angular/core';
 import {FormBuilder, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
-import {MatOptionModule} from "@angular/material/core";
+import {MAT_DATE_LOCALE, MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
-import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgClass, NgForOf, NgIf, registerLocaleData} from "@angular/common";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatCardModule} from "@angular/material/card";
 import {BookingControllerService, CustomerFormData} from "../../../core/booking";
+import {MatChipsModule} from "@angular/material/chips";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {FuseAlertComponent, FuseAlertType} from "../../../../@fuse/components/alert";
+import localeIt from '@angular/common/locales/it';
+
+registerLocaleData(localeIt, 'it');
+
 @Component({
     selector: 'booking',
     templateUrl: './booking.component.html',
@@ -34,6 +41,13 @@ import {BookingControllerService, CustomerFormData} from "../../../core/booking"
         MatDatepickerModule,
         MatCardModule,
         DatePipe,
+        MatChipsModule,
+        RouterLink,
+        MatCheckboxModule,
+        FuseAlertComponent,
+    ],
+    providers: [
+        { provide: MAT_DATE_LOCALE, useValue: 'it-IT' }
     ],
     standalone: true
 })
@@ -52,6 +66,15 @@ export class BookingComponent implements OnInit{
 
 
     ngOnInit(): void {
+
+        this.signUpForm = this.fb.group({
+                name      : ['', Validators.required],
+                lastname      : ['', Validators.required],
+                email     : ['', [Validators.required, Validators.email]],
+                phone  : ['', Validators.required],
+                agreements: ['', Validators.requiredTrue],
+            },
+        );
 
         this.route.queryParams.subscribe((params) => {
             this.branchCode = params['branchCode'];
@@ -96,8 +119,13 @@ export class BookingComponent implements OnInit{
 
     selectedToggle: string = "date";
     selectedDate: Date = null;
+    signUpForm: any;
+    showAlert: any;
 
-
+    alert: { type: FuseAlertType; message: string } = {
+        type   : 'success',
+        message: '',
+    };
     selectToggle(value: string): void {
         this.selectedToggle = value;
     }
@@ -116,4 +144,7 @@ export class BookingComponent implements OnInit{
         return null;
     }
 
+    signUp() {
+
+    }
 }

@@ -163,16 +163,16 @@
 
     <div class="flex flex-col mt-2 divide-y">
 
-        <ng-container *ngFor="let element of dataSource;">
+        <ng-container *ngFor="let branchTimeRangeDTO of dataSource;">
             <div class="flex flex-row items-center justify-between py-2 px-0.5"> <!-- Adjusted padding -->
                 <div class="flex flex-col">
-                    <div class="font-medium text-sm">{{element.dayOfWeek}}</div> <!-- Smaller text -->
+                    <div class="font-medium text-sm">{{branchTimeRangeDTO.dayOfWeek}}</div> <!-- Smaller text -->
                     <div class="flex flex-col sm:flex-row sm:items-center -ml-0.5 mt-1 space-y-1 sm:space-y-0 sm:space-x-2"> <!-- Adjusted spacing -->
                         <ng-container>
                             <div class="flex items-center">
-                                <mat-icon class="icon-size-4 text-hint" [svgIcon]="'heroicons_solid:clock'"></mat-icon> <!-- Adjusted icon size -->
-                                <div class="ml-1 text-sm" [ngStyle]="{'color': getTime(element.timeRanges) == 'CHIUSO' ? 'red' : 'inherit'}">
-                                    {{ getTime(element.timeRanges) }}
+                                <mat-icon class="icon-size-4 text-hint" [svgIcon]="'heroicons_solid:clock'" [style.color]="branchTimeRangeDTO.closed ? 'red' : 'green'"></mat-icon> <!-- Adjusted icon size -->
+                                <div class="ml-1 text-sm" [ngStyle]="{'color': getTime(branchTimeRangeDTO.timeRanges) == 'CHIUSO' ? 'red' : 'inherit'}">
+                                    {{ getTime(branchTimeRangeDTO.timeRanges) }}
                                 </div>
                                 <!-- Smaller text -->
                             </div>
@@ -180,10 +180,10 @@
                     </div>
                 </div>
                 <div>
-                    <button mat-icon-button (click)="switchClosedStatus(element)">
-                        <mat-icon [svgIcon]="'mat_outline:vpn_key'"></mat-icon>
+                    <button mat-icon-button (click)="switchClosedStatus(branchTimeRangeDTO, this.currentWorkingForm.formCode)">
+                        <mat-icon [svgIcon]="branchTimeRangeDTO.closed ? 'heroicons_solid:lock-closed' : 'heroicons_solid:lock-open'" [style.color]="branchTimeRangeDTO.closed ? 'red' : 'green'"></mat-icon>
                     </button>
-                    <button mat-icon-button (click)="editHour(element)">
+                    <button mat-icon-button (click)="editHour(branchTimeRangeDTO)">
                         <mat-icon [svgIcon]="'mat_outline:edit'"></mat-icon>
                     </button>
                 </div>

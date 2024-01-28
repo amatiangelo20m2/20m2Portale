@@ -3,6 +3,7 @@ export * from './branchConfigurationDTO';
 export * from './branchGeneralConfigurationEditRequest';
 export * from './branchTimeRangeDTO';
 export * from './createBookingRequest';
+export * from './customer';
 export * from './customerFormData';
 export * from './dateTimeRangeAvailableGuests';
 export * from './formTag';
