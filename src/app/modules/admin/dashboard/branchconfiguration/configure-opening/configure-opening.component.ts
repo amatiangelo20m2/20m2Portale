@@ -26,6 +26,7 @@ import {MatRadioModule} from "@angular/material/radio";
 import {environment} from "../../../../../../environments/environment";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatRippleModule} from "@angular/material/core";
+import {TagComponent} from "./tag/tag.component";
 import {
     BookingFormDto,
     BranchConfigurationDTO,
@@ -33,7 +34,6 @@ import {
     LocalTime,
     TimeRange
 } from "../../../../../core/booking";
-import {TagComponent} from "./tag/tag.component";
 
 
 @Component({
@@ -114,6 +114,9 @@ export class ConfigureOpeningComponent implements OnInit {
                 redirectPage: [this.currentWorkingForm?.redirectPage]
             });
 
+
+            // TODO: use encoded value to make shorter and encrypted the url to go to reservation form
+            let encodedVal = btoa(this.currentBranch.branchCode + this.currentWorkingForm.formCode);
             this.url = environment.hostname +'/reservation?branchCode=' + this.currentBranch.branchCode + '&form=' + this.currentWorkingForm.formCode;
 
             this.urlform = this.fb.group({

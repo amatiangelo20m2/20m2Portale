@@ -10,6 +10,7 @@ import {
     TimeRangeUpdateRequest
 } from "../../../core/booking";
 
+
 @Injectable({providedIn: 'root'})
 export class DataproviderService {
 
@@ -159,9 +160,8 @@ export class DataproviderService {
 
     switchClosedStatus(timeRangeDTO: BranchTimeRangeDTO,
                        formCode: string) {
-        this._bookingControllerService.switchisclosedbranchtime(timeRangeDTO.id).subscribe((response)=>{
+        this._bookingControllerService.switchIsClosedBranchTime(timeRangeDTO.id).subscribe((response)=>{
 
-                console.log("changinfasdasdasdsad ")
                 this.currentBranchConfiguration
                     .value
                     .bookingFormList

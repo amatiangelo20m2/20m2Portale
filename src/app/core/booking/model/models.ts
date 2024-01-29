@@ -5,6 +5,7 @@ export * from './branchTimeRangeDTO';
 export * from './createBookingRequest';
 export * from './customer';
 export * from './customerFormData';
+export * from './customerResult';
 export * from './dateTimeRangeAvailableGuests';
 export * from './formTag';
 export * from './localTime';

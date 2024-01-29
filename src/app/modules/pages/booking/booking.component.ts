@@ -1,10 +1,17 @@
-import {Component, LOCALE_ID, OnInit} from '@angular/core';
-import {FormBuilder, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators} from "@angular/forms";
+import {Component, isStandalone, OnInit, ViewChild} from '@angular/core';
+import {
+    FormsModule,
+    NgForm,
+    ReactiveFormsModule,
+    UntypedFormBuilder,
+    UntypedFormGroup,
+    Validators
+} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {MAT_DATE_LOCALE, MatOptionModule} from "@angular/material/core";
-import {MatSelectModule} from "@angular/material/select";
+import {MatSelectChange, MatSelectModule} from "@angular/material/select";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
@@ -12,18 +19,19 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {DatePipe, NgClass, NgForOf, NgIf, registerLocaleData} from "@angular/common";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatCardModule} from "@angular/material/card";
-import {BookingControllerService, CustomerFormData} from "../../../core/booking";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {FuseAlertComponent, FuseAlertType} from "../../../../@fuse/components/alert";
 import localeIt from '@angular/common/locales/it';
+import {BookingControllerService, CustomerFormData} from "../../../core/booking";
+import {OptCodeDialogComponent} from "./optconfirm/optconfirm.component";
+import {MatDialog} from "@angular/material/dialog";
 
 registerLocaleData(localeIt, 'it');
 
 @Component({
     selector: 'booking',
     templateUrl: './booking.component.html',
-    styleUrls: ['booking.component.css'],
     imports: [
         FormsModule,
         MatFormFieldModule,
@@ -53,29 +61,39 @@ registerLocaleData(localeIt, 'it');
 })
 export class BookingComponent implements OnInit{
 
-    branchCode: string;
-    formCode: string;
-    formFieldHelpers: string[] = [''];
-    reservationForm: UntypedFormGroup;
-    numbers$ = Array.from({ length: 24 }, (_, index) => index + 1);
-    selectedNumber: any;
+    @ViewChild('signUpNgForm') signUpNgForm: NgForm;
 
-    currentDate: Date;
+    alert: { type: FuseAlertType; message: string } = {
+        type   : 'success',
+        message: '',
+    };
+
+    phoneValidationForm: UntypedFormGroup;
+    showAlert: boolean = false;
 
     customerFormData : CustomerFormData;
+    branchCode: string;
+    formCode: string;
 
+    /**
+     * Constructor
+     */
+    constructor(
+        private _formBuilder: UntypedFormBuilder,
+        private route: ActivatedRoute,
+        private _bookingService: BookingControllerService,
+        public dialog: MatDialog) {
+    }
 
-    ngOnInit(): void {
+    // -----------------------------------------------------------------------------------------------------
+    // @ Lifecycle hooks
+    // -----------------------------------------------------------------------------------------------------
 
-        this.signUpForm = this.fb.group({
-                name      : ['', Validators.required],
-                lastname      : ['', Validators.required],
-                email     : ['', [Validators.required, Validators.email]],
-                phone  : ['', Validators.required],
-                agreements: ['', Validators.requiredTrue],
-            },
-        );
-
+    /**
+     * On init
+     */
+    ngOnInit(): void
+    {
         this.route.queryParams.subscribe((params) => {
             this.branchCode = params['branchCode'];
             this.formCode = params['form'];
@@ -83,68 +101,57 @@ export class BookingComponent implements OnInit{
 
             this._bookingService.retrieveFormData(this.branchCode, this.formCode)
                 .subscribe((customerFormData: CustomerFormData)=>{
-                this.customerFormData = customerFormData;
-                console.log(this.customerFormData);
-            });
+                    this.customerFormData = customerFormData;
+                    console.log(this.customerFormData);
+
+
+                });
+
+            this.phoneValidationForm = this._formBuilder.group({
+                    mobilePhone      : ['', Validators.required],
+                    selectedCountry      : ['39', Validators.required],
+                },
+            );
         });
     }
 
-    constructor(
-        private fb: FormBuilder,
-        private route: ActivatedRoute,
-        private _bookingService: BookingControllerService) {
+    validatePhone(): void {
 
-
-
-        this.reservationForm = this.fb.group({
-            phone: ['', Validators.required],
-            phonePrefix: ['', Validators.required],
-        });
-
-        this.reservationForm.get('phone').valueChanges.subscribe((value: string) => {
-            if (value.length === 10) {
-                console.log('trigger e method', value);
-            }
-        });
-
-
-    }
-
-    unlock() {
-    }
-
-    selectNumber(number: any) {
-        this.selectedNumber = number;
-    }
-
-    selectedToggle: string = "date";
-    selectedDate: Date = null;
-    signUpForm: any;
-    showAlert: any;
-
-    alert: { type: FuseAlertType; message: string } = {
-        type   : 'success',
-        message: '',
-    };
-    selectToggle(value: string): void {
-        this.selectedToggle = value;
-    }
-
-    onSelect(event){
-        this.selectedDate = event;
-        this.selectedToggle = 'pax';
-    }
-
-    transform(value: any, format: string = 'yyyy-MM-dd'): any {
-
-        if (value) {
-            const datePipe = new DatePipe('en-US');
-            return datePipe.transform(value, format);
+        if ( this.phoneValidationForm.invalid ) {
+            return;
         }
-        return null;
+
+        this.phoneValidationForm.disable();
+        this.showAlert = false;
+
+
+
+        console.log("phone : " + this.phoneValidationForm.get('mobilePhone').value);
+        console.log("clountry : " + this.phoneValidationForm.get('selectedCountry').value);
+
+        let number = this.phoneValidationForm.get('selectedCountry').value.toString()
+            + this.phoneValidationForm.get('mobilePhone').value.toString();
+
+        this._bookingService.retrieveCustomerAndSendOtp(this.branchCode,
+            number
+            , "").subscribe(
+            (response)=>{
+                console.log(response);
+                this.openDialog();
+            }
+        );
     }
 
-    signUp() {
+    openDialog(): void {
+        const dialogRef = this.dialog.open(OptCodeDialogComponent, {
+            width: '250px',
+            data: {} // You can pass data to the dialog if needed
+        });
 
+        dialogRef.afterClosed().subscribe(result => {
+            // Handle the result from the dialog (e.g., opt code)
+            console.log('Dialog closed with result:', result);
+        });
     }
+
 }

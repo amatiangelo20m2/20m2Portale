@@ -20,8 +20,8 @@ import { Observable }                                        from 'rxjs';
 import { BranchConfigurationDTO } from '../model/branchConfigurationDTO';
 import { BranchGeneralConfigurationEditRequest } from '../model/branchGeneralConfigurationEditRequest';
 import { CreateBookingRequest } from '../model/createBookingRequest';
-import { Customer } from '../model/customer';
 import { CustomerFormData } from '../model/customerFormData';
+import { CustomerResult } from '../model/customerResult';
 import { UpdateBranchTimeRanges } from '../model/updateBranchTimeRanges';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -299,6 +299,63 @@ export class BookingControllerService {
      *
      *
      * @param branchCode
+     * @param phone
+     * @param email
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public retrieveCustomerAndSendOtp(branchCode: string, phone?: string, email?: string, observe?: 'body', reportProgress?: boolean): Observable<CustomerResult>;
+    public retrieveCustomerAndSendOtp(branchCode: string, phone?: string, email?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CustomerResult>>;
+    public retrieveCustomerAndSendOtp(branchCode: string, phone?: string, email?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CustomerResult>>;
+    public retrieveCustomerAndSendOtp(branchCode: string, phone?: string, email?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (branchCode === null || branchCode === undefined) {
+            throw new Error('Required parameter branchCode was null or undefined when calling retrieveCustomerAndSendOtp.');
+        }
+
+
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (branchCode !== undefined && branchCode !== null) {
+            queryParameters = queryParameters.set('branchCode', <any>branchCode);
+        }
+        if (phone !== undefined && phone !== null) {
+            queryParameters = queryParameters.set('phone', <any>phone);
+        }
+        if (email !== undefined && email !== null) {
+            queryParameters = queryParameters.set('email', <any>email);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<CustomerResult>('get',`${this.basePath}/booking/retrievecustomerbyphoneoremail`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param branchCode
      * @param formCode
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -354,29 +411,29 @@ export class BookingControllerService {
      *
      *
      * @param phone
-     * @param email
+     * @param branchCode
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public retrievecustomerbyphoneoremail(phone: string, email: string, observe?: 'body', reportProgress?: boolean): Observable<Customer>;
-    public retrievecustomerbyphoneoremail(phone: string, email: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Customer>>;
-    public retrievecustomerbyphoneoremail(phone: string, email: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Customer>>;
-    public retrievecustomerbyphoneoremail(phone: string, email: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public sendOtp(phone: string, branchCode: string, observe?: 'body', reportProgress?: boolean): Observable<string>;
+    public sendOtp(phone: string, branchCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<string>>;
+    public sendOtp(phone: string, branchCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<string>>;
+    public sendOtp(phone: string, branchCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (phone === null || phone === undefined) {
-            throw new Error('Required parameter phone was null or undefined when calling retrievecustomerbyphoneoremail.');
+            throw new Error('Required parameter phone was null or undefined when calling sendOtp.');
         }
 
-        if (email === null || email === undefined) {
-            throw new Error('Required parameter email was null or undefined when calling retrievecustomerbyphoneoremail.');
+        if (branchCode === null || branchCode === undefined) {
+            throw new Error('Required parameter branchCode was null or undefined when calling sendOtp.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (phone !== undefined && phone !== null) {
             queryParameters = queryParameters.set('phone', <any>phone);
         }
-        if (email !== undefined && email !== null) {
-            queryParameters = queryParameters.set('email', <any>email);
+        if (branchCode !== undefined && branchCode !== null) {
+            queryParameters = queryParameters.set('branchCode', <any>branchCode);
         }
 
         let headers = this.defaultHeaders;
@@ -394,7 +451,7 @@ export class BookingControllerService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Customer>('get',`${this.basePath}/booking/retrievecustomerbyphoneoremail`,
+        return this.httpClient.request<string>('get',`${this.basePath}/booking/sendopt`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -412,13 +469,13 @@ export class BookingControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public switchisclosedbranchtime(branchTimeRangeId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public switchisclosedbranchtime(branchTimeRangeId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public switchisclosedbranchtime(branchTimeRangeId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public switchisclosedbranchtime(branchTimeRangeId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public switchIsClosedBranchTime(branchTimeRangeId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public switchIsClosedBranchTime(branchTimeRangeId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public switchIsClosedBranchTime(branchTimeRangeId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public switchIsClosedBranchTime(branchTimeRangeId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (branchTimeRangeId === null || branchTimeRangeId === undefined) {
-            throw new Error('Required parameter branchTimeRangeId was null or undefined when calling switchisclosedbranchtime.');
+            throw new Error('Required parameter branchTimeRangeId was null or undefined when calling switchIsClosedBranchTime.');
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});

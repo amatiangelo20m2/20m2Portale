@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Enter 4-digit Opt Code</h2>
+<mat-dialog-content>
+    <mat-form-field>
+        <input matInput type="text" [(ngModel)]="optCode" placeholder="Opt Code" maxlength="4">
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancel</button>
+    <button mat-button (click)="onSubmit()">Submit</button>
+</mat-dialog-actions>
