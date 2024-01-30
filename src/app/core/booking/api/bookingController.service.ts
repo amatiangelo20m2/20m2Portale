@@ -299,6 +299,7 @@ export class BookingControllerService {
     /**
      *
      *
+     * @param brancCode
      * @param name
      * @param lastname
      * @param email
@@ -309,10 +310,14 @@ export class BookingControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public registerCustomer(name: string, lastname: string, email: string, prefix: string, phone: string, dob: string, treatmentPersonalData: boolean, observe?: 'body', reportProgress?: boolean): Observable<Customer>;
-    public registerCustomer(name: string, lastname: string, email: string, prefix: string, phone: string, dob: string, treatmentPersonalData: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Customer>>;
-    public registerCustomer(name: string, lastname: string, email: string, prefix: string, phone: string, dob: string, treatmentPersonalData: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Customer>>;
-    public registerCustomer(name: string, lastname: string, email: string, prefix: string, phone: string, dob: string, treatmentPersonalData: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public registerCustomer(brancCode: string, name: string, lastname: string, email: string, prefix: string, phone: string, dob: string, treatmentPersonalData: boolean, observe?: 'body', reportProgress?: boolean): Observable<Customer>;
+    public registerCustomer(brancCode: string, name: string, lastname: string, email: string, prefix: string, phone: string, dob: string, treatmentPersonalData: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Customer>>;
+    public registerCustomer(brancCode: string, name: string, lastname: string, email: string, prefix: string, phone: string, dob: string, treatmentPersonalData: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Customer>>;
+    public registerCustomer(brancCode: string, name: string, lastname: string, email: string, prefix: string, phone: string, dob: string, treatmentPersonalData: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (brancCode === null || brancCode === undefined) {
+            throw new Error('Required parameter brancCode was null or undefined when calling registerCustomer.');
+        }
 
         if (name === null || name === undefined) {
             throw new Error('Required parameter name was null or undefined when calling registerCustomer.');
@@ -343,6 +348,9 @@ export class BookingControllerService {
         }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (brancCode !== undefined && brancCode !== null) {
+            queryParameters = queryParameters.set('brancCode', <any>brancCode);
+        }
         if (name !== undefined && name !== null) {
             queryParameters = queryParameters.set('name', <any>name);
         }

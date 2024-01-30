@@ -27,7 +27,9 @@ import localeIt from '@angular/common/locales/it';
 import {OptCodeDialogComponent} from "./optconfirm/optconfirm.component";
 import {MatDialog} from "@angular/material/dialog";
 import {DateTime} from "luxon";
+import {MatTabsModule} from "@angular/material/tabs";
 import {BookingControllerService, CustomerFormData} from "../../../core/booking";
+import {CustomcalendarComponent} from "./customcalendar/customcalendar.component";
 
 registerLocaleData(localeIt, 'it');
 const mobilePhonePattern = /^[0-9]{5,15}$/;
@@ -56,6 +58,8 @@ const mobilePhonePattern = /^[0-9]{5,15}$/;
         RouterLink,
         MatCheckboxModule,
         FuseAlertComponent,
+        MatTabsModule,
+        CustomcalendarComponent,
     ],
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'it-IT' }
@@ -135,10 +139,15 @@ export class BookingComponent implements OnInit{
     }
 
     onChangeEvent(selectedDate: MatDatepickerInputEvent<any, any>) {
-        console.log(selectedDate.value)
+
+
+
         if (selectedDate.value instanceof DateTime) {
             // Update the 'dob' form field value
-            this.registerCustomerForm.get('dob').setValue(selectedDate.value);
+
+            this.registerCustomerForm.get('dob').setValue(selectedDate.value.year + '-' +
+                selectedDate?.value?.month?.toString()?.padStart(2, '0')
+                + '-' + selectedDate?.value?.day?.toString()?.padStart(2, '0'));
             console.log('Selected Date:', selectedDate.value);
         } else {
             // Handle invalid date if needed
@@ -160,8 +169,7 @@ export class BookingComponent implements OnInit{
         console.log("phone : " + this.phoneValidationForm.get('mobilePhone').value);
         console.log("clountry : " + this.phoneValidationForm.get('selectedCountry').value);
 
-        let number = this.phoneValidationForm.get('selectedCountry').value.toString()
-            + this.phoneValidationForm.get('mobilePhone').value.toString();
+        let number = this.phoneValidationForm.get('mobilePhone').value.toString();
 
         this._bookingService.retrieveCustomerAndSendOtp(this.branchCode,
             number
@@ -197,6 +205,7 @@ export class BookingComponent implements OnInit{
 
         // name: string, lastname: string, email: string, prefix: string, phone: string, dob: string, treatmentPersonalData:
         this._bookingService.registerCustomer(
+            this.branchCode,
             this.registerCustomerForm.get('name').value,
             this.registerCustomerForm.get('lastname').value,
             this.registerCustomerForm.get('email').value,
@@ -206,8 +215,6 @@ export class BookingComponent implements OnInit{
             true).subscribe((customer)=>{
                 console.log("customer save:  " + customer)
         });
-
-
     }
 
 }
