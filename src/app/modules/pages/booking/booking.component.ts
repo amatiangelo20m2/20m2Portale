@@ -1,18 +1,10 @@
-import {Component, isStandalone, OnInit, ViewChild} from '@angular/core';
-import {
-    AbstractControl, FormControl, FormGroup,
-    FormsModule,
-    NgForm,
-    ReactiveFormsModule,
-    UntypedFormBuilder,
-    UntypedFormGroup, ValidatorFn,
-    Validators
-} from "@angular/forms";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {FormGroup, FormsModule, NgForm, ReactiveFormsModule, UntypedFormBuilder, Validators} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {MAT_DATE_LOCALE, MatOptionModule} from "@angular/material/core";
-import {MatSelectChange, MatSelectModule} from "@angular/material/select";
+import {MatSelectModule} from "@angular/material/select";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
@@ -30,9 +22,9 @@ import {DateTime} from "luxon";
 import {MatTabsModule} from "@angular/material/tabs";
 import {BookingControllerService, CustomerFormData} from "../../../core/booking";
 import {CustomcalendarComponent} from "./customcalendar/customcalendar.component";
+import {Observable, Subscription} from "rxjs";
 
 registerLocaleData(localeIt, 'it');
-const mobilePhonePattern = /^[0-9]{5,15}$/;
 
 @Component({
     selector: 'booking',
@@ -85,9 +77,14 @@ export class BookingComponent implements OnInit{
 
     dob: Date | null;
 
-    customerFormData : CustomerFormData;
+    // customerFormData : CustomerFormData;
+
+    customerFormData: CustomerFormData;
+    customerFormDataSubscription: Subscription;
+
     branchCode: string;
     formCode: string;
+    chooseTable: boolean = true;
 
     /**
      * Constructor
@@ -106,19 +103,17 @@ export class BookingComponent implements OnInit{
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         this.route.queryParams.subscribe((params) => {
             this.branchCode = params['branchCode'];
             this.formCode = params['form'];
             console.log('Branch Code from URL: ' +  this.branchCode + ' - form code: ' + this.formCode );
 
-            this._bookingService.retrieveFormData(this.branchCode, this.formCode)
-                .subscribe((customerFormData: CustomerFormData)=>{
-                    this.customerFormData = customerFormData;
-                    console.log(this.customerFormData);
+            // this.customerFormData$ = this._bookingService.retrieveFormData(this.branchCode, this.formCode);
 
-
+            this.customerFormDataSubscription = this._bookingService.retrieveFormData(this.branchCode, this.formCode)
+                .subscribe((data: CustomerFormData) => {
+                    this.customerFormData = data;
                 });
 
             this.phoneValidationForm = this._formBuilder.group({
@@ -135,12 +130,11 @@ export class BookingComponent implements OnInit{
                     agreements: ['', Validators.requiredTrue]
                 },
             );
+
         });
     }
 
     onChangeEvent(selectedDate: MatDatepickerInputEvent<any, any>) {
-
-
 
         if (selectedDate.value instanceof DateTime) {
             // Update the 'dob' form field value
@@ -169,7 +163,7 @@ export class BookingComponent implements OnInit{
         console.log("phone : " + this.phoneValidationForm.get('mobilePhone').value);
         console.log("clountry : " + this.phoneValidationForm.get('selectedCountry').value);
 
-        let number = this.phoneValidationForm.get('mobilePhone').value.toString();
+        let number = this.phoneValidationForm.get('selectedCountry').value.toString() + this.phoneValidationForm.get('mobilePhone').value.toString();
 
         this._bookingService.retrieveCustomerAndSendOtp(this.branchCode,
             number
@@ -213,8 +207,9 @@ export class BookingComponent implements OnInit{
             this.phoneValidationForm.get('mobilePhone').value,
             this.registerCustomerForm.get('dob').value,
             true).subscribe((customer)=>{
-                console.log("customer save:  " + customer)
+                console.log("customer save:  " + customer);
+
+                this.chooseTable = true;
         });
     }
-
 }

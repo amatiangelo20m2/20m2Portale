@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {DatePipe, NgForOf, NgIf} from "@angular/common";
 import {MatCalendar, MatDatepickerModule} from "@angular/material/datepicker";
 import {FormsModule} from "@angular/forms";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
+import {BranchTimeRangeDTO, CustomerFormData} from "../../../../core/booking";
 
 @Component({
   selector: 'app-customcalendar',
@@ -22,29 +23,45 @@ import {MatIconModule} from "@angular/material/icon";
   standalone: true
 })
 export class CustomcalendarComponent implements OnInit {
-  ngOnInit(): void {
 
+  @Input() configuration: CustomerFormData;
+
+  ngOnInit(): void {
+    console.log('Customer Form Data in CustomcalendarComponent:', this.configuration);
     this.currentDate = new Date();
-    this.calendar = new Calendar(this.currentDate.getMonth(), this.currentDate.getFullYear());
+    this.calendar = new Calendar(
+        this.currentDate.getMonth(),
+        this.currentDate.getFullYear(),
+        this.configuration);
   }
 
   currentDate: Date;
   calendar: Calendar;
 
   selectedTabIndex = 0;
-  selectedDate: any;
+  selectedDate: { day: number, month: number, year: number };
 
   selectDay(selectedDay: number) {
     // Set the selected date
-    this.selectedDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), selectedDay);
-    console.log("selected " + this.selectedDate);
+    this.selectedDate = {
+      day: selectedDay,
+      month: this.currentDate.getMonth(),
+      year: this.currentDate.getFullYear()
+    };
+
+    this.goToTab(1);
   }
 
   isSelected(selectedDay: number): boolean {
-    return this.selectedDate && selectedDay === this.selectedDate.getDate();
+    return (
+        this.selectedDate &&
+        selectedDay === this.selectedDate.day &&
+        this.currentDate?.getMonth() === this.selectedDate.month &&
+        this.currentDate?.getFullYear() === this.selectedDate.year
+    );
   }
 
-  showComponent(index: number) {
+  goToTab(index: number) {
     this.selectedTabIndex = index;
   }
 
@@ -97,27 +114,67 @@ export class CustomcalendarComponent implements OnInit {
 
 class Calendar {
   daysOfWeek: string[] = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
-  daysInMonth: number[] = [];
+  daysInMonth: DayInfo[] = [];
   currentMonth: number;
   currentYear: number;
 
-  constructor(month: number, year: number) {
+  customerFormData: CustomerFormData;
+
+  constructor(month: number, year: number, configuration: CustomerFormData) {
     this.currentMonth = month;
     this.currentYear = year;
+    this.customerFormData = configuration;
     this.initializeDaysInMonth();
   }
 
   initializeDaysInMonth(): void {
     const firstDayOfMonth = new Date(this.currentYear, this.currentMonth, 1);
-    let startingDayIndex = firstDayOfMonth.getDay() - 1; // Adjust for Sunday being 0
+    let startingDayIndex = firstDayOfMonth.getDay() - 1;
 
-    // If the result is -1 (Sunday), set it to 6 (Saturday)
     if (startingDayIndex === -1) {
       startingDayIndex = 6;
     }
 
     const daysInMonth = new Date(this.currentYear, this.currentMonth + 1, 0).getDate();
-    this.daysInMonth = Array.from({ length: daysInMonth + startingDayIndex }, (_, i) => i - startingDayIndex + 1);
+
+    this.daysInMonth = Array.from({ length: daysInMonth + startingDayIndex }, (_, i) => {
+      const dayValue = i - startingDayIndex + 1;
+
+      let dayOfWeek = new Date(this.currentYear, this.currentMonth, dayValue).getDay();
+
+      const isOpen = this.isDayOfWeekClosed(dayOfWeek, this.customerFormData?.branchTimeRangeDTOS);
+
+      // const isOpen = false;
+      return new DayInfo(dayValue, isOpen);
+    });
   }
 
+
+  isDayOfWeekClosed(dayOfWeek: number, timeRanges: BranchTimeRangeDTO[]): boolean {
+    const dayOfWeekMapping: { [key: number]: BranchTimeRangeDTO.DayOfWeekEnum } = {
+      0: 'DOMENICA',
+      1: 'LUNEDI',
+      2: 'MARTEDI',
+      3: 'MERCOLEDI',
+      4: 'GIOVEDI',
+      5: 'VENERDI',
+      6: 'SABATO'
+    };
+
+    const dayOfWeekEnum = dayOfWeekMapping[dayOfWeek];
+    const matchingTimeRange = timeRanges.find(range => range.dayOfWeek === dayOfWeekEnum);
+
+    return matchingTimeRange ? matchingTimeRange.closed : true;
+  }
+
+}
+
+class DayInfo {
+  value: number;
+  isOpen: boolean;
+
+  constructor(value: number, isOpen: boolean) {
+    this.value = value;
+    this.isOpen = isOpen;
+  }
 }
