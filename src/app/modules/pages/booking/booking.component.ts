@@ -1,10 +1,11 @@
 import {Component, isStandalone, OnInit, ViewChild} from '@angular/core';
 import {
+    AbstractControl, FormControl, FormGroup,
     FormsModule,
     NgForm,
     ReactiveFormsModule,
     UntypedFormBuilder,
-    UntypedFormGroup,
+    UntypedFormGroup, ValidatorFn,
     Validators
 } from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
@@ -17,17 +18,19 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatButtonModule} from "@angular/material/button";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {DatePipe, NgClass, NgForOf, NgIf, registerLocaleData} from "@angular/common";
-import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatDatepickerInputEvent, MatDatepickerModule} from "@angular/material/datepicker";
 import {MatCardModule} from "@angular/material/card";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {FuseAlertComponent, FuseAlertType} from "../../../../@fuse/components/alert";
 import localeIt from '@angular/common/locales/it';
-import {BookingControllerService, CustomerFormData} from "../../../core/booking";
 import {OptCodeDialogComponent} from "./optconfirm/optconfirm.component";
 import {MatDialog} from "@angular/material/dialog";
+import {DateTime} from "luxon";
+import {BookingControllerService, CustomerFormData} from "../../../core/booking";
 
 registerLocaleData(localeIt, 'it');
+const mobilePhonePattern = /^[0-9]{5,15}$/;
 
 @Component({
     selector: 'booking',
@@ -63,13 +66,20 @@ export class BookingComponent implements OnInit{
 
     @ViewChild('signUpNgForm') signUpNgForm: NgForm;
 
+
     alert: { type: FuseAlertType; message: string } = {
         type   : 'success',
         message: '',
     };
 
-    phoneValidationForm: UntypedFormGroup;
+    phoneValidationForm: FormGroup;
+    registerCustomerForm: FormGroup;
+
     showAlert: boolean = false;
+
+    isPhoneVerified : boolean = false;
+
+    dob: Date | null;
 
     customerFormData : CustomerFormData;
     branchCode: string;
@@ -112,7 +122,28 @@ export class BookingComponent implements OnInit{
                     selectedCountry      : ['39', Validators.required],
                 },
             );
+
+            this.registerCustomerForm = this._formBuilder.group({
+                    name      : ['', Validators.required],
+                    lastname  : ['', Validators.required],
+                    email  : ['', Validators.required],
+                    dob  : ['', Validators.required],
+                    agreements: ['', Validators.requiredTrue]
+                },
+            );
         });
+    }
+
+    onChangeEvent(selectedDate: MatDatepickerInputEvent<any, any>) {
+        console.log(selectedDate.value)
+        if (selectedDate.value instanceof DateTime) {
+            // Update the 'dob' form field value
+            this.registerCustomerForm.get('dob').setValue(selectedDate.value);
+            console.log('Selected Date:', selectedDate.value);
+        } else {
+            // Handle invalid date if needed
+            console.error('Invalid Date');
+        }
     }
 
     validatePhone(): void {
@@ -121,7 +152,7 @@ export class BookingComponent implements OnInit{
             return;
         }
 
-        this.phoneValidationForm.disable();
+        // this.phoneValidationForm.disable();
         this.showAlert = false;
 
 
@@ -137,21 +168,46 @@ export class BookingComponent implements OnInit{
             , "").subscribe(
             (response)=>{
                 console.log(response);
-                this.openDialog();
+                this.openDialog(response?.opt);
             }
         );
     }
 
-    openDialog(): void {
+    openDialog(opt: string): void {
         const dialogRef = this.dialog.open(OptCodeDialogComponent, {
-            width: '250px',
-            data: {} // You can pass data to the dialog if needed
+            width: '50vw',
+            maxWidth: '350px',
+            data: {
+                otpValue: opt,
+            }
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            // Handle the result from the dialog (e.g., opt code)
             console.log('Dialog closed with result:', result);
+            this.isPhoneVerified = result;
+            this.phoneValidationForm.get('mobilePhone').disable();
         });
+    }
+
+    registerCustomerAndGoToReservationPage() {
+        if (this.registerCustomerForm.invalid ) {
+            return;
+        }
+        this.showAlert = false;
+
+        // name: string, lastname: string, email: string, prefix: string, phone: string, dob: string, treatmentPersonalData:
+        this._bookingService.registerCustomer(
+            this.registerCustomerForm.get('name').value,
+            this.registerCustomerForm.get('lastname').value,
+            this.registerCustomerForm.get('email').value,
+            this.phoneValidationForm.get('selectedCountry').value,
+            this.phoneValidationForm.get('mobilePhone').value,
+            this.registerCustomerForm.get('dob').value,
+            true).subscribe((customer)=>{
+                console.log("customer save:  " + customer)
+        });
+
+
     }
 
 }

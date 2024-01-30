@@ -9,19 +9,15 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { Customer } from './customer';
 import { LocalTime } from './localTime';
 
 export interface CreateBookingRequest { 
     branchCode?: string;
     formCode?: string;
-    userEmail?: string;
-    userPhone?: string;
-    userName?: string;
-    userLastName?: string;
-    userDOB?: string;
     guests?: number;
     particularRequests?: string;
     date?: string;
     time?: LocalTime;
-    treatmentPersonalData?: boolean;
+    customer?: Customer;
 }

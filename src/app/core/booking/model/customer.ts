@@ -15,9 +15,11 @@ export interface Customer {
     name?: string;
     lastname?: string;
     email?: string;
+    prefix?: string;
     phone?: string;
     dob?: string;
     registrationDate?: Date;
     treatmentPersonalData?: boolean;
     branchCode?: string;
+    numberVerified?: boolean;
 }

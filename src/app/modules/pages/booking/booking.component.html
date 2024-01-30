@@ -1,17 +1,18 @@
 <div class="flex flex-col flex-auto items-center sm:justify-center min-w-0">
     <div class="w-full sm:w-auto py-1 px-1 sm:p-12 sm:rounded-2xl sm:shadow sm:bg-card">
-        <div class="w-full max-w-100 sm:w-180 mx-auto sm:mx-0">
+        <div class="w-full max-w-90 sm:w-90 mx-auto sm:mx-0">
             <!-- Logo -->
             <div class="w-12">
                 <img src="assets/images/logo/logo.png">
             </div>
 
+            <div class="flex items-baseline mt-8  font-medium">
+                <div>Prenota un tavolo presso</div>
+            </div>
+            <div class="text-2xl font-extrabold tracking-tight leading-tight">{{this.customerFormData?.branchName ?? ''}}</div>
 
-
-            <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">{{this.customerFormData?.branchName ?? ''}}</div>
-            <div class="mt-1 tracking-tight leading-tight text-center">{{this.customerFormData?.address ?? ''}}</div>
-            <div class="flex items-baseline mt-0.5 font-medium">
-                <div>Prenota un tavolo</div>
+            <div class="flex items-baseline mt-0.5 font-small">
+                <div>{{this.customerFormData?.address ?? ''}}</div>
             </div>
 
             <!-- Alert -->
@@ -24,7 +25,6 @@
                     [@shake]="alert.type === 'error'">
                 {{alert.message}}
             </fuse-alert>
-
             <!-- Sign Up form -->
             <form
                     class="mt-8"
@@ -32,7 +32,6 @@
 
                 <!-- Name field -->
                 <mat-form-field class="w-full">
-                    <mat-label>Cellulare</mat-label>
                     <input
                             id="mobilePhone"
                             matInput
@@ -92,24 +91,105 @@
                         <!-- China -->
                         <mat-option value="86">China (+86)</mat-option>
                     </mat-select>
-
+                    <mat-icon [svgIcon]="'heroicons_solid:check-badge'" [style.color]="'green'" *ngIf="isPhoneVerified"></mat-icon>
                     <mat-error *ngIf="phoneValidationForm.get('mobilePhone').hasError('required')">
                         Inserisci il numero di cellulare
                     </mat-error>
+                    <mat-error *ngIf="phoneValidationForm.get('mobilePhone').hasError('minLength')">
+                        Numero non valido
+                    </mat-error>
+
                 </mat-form-field>
 
-                <!-- Submit button -->
                 <button
                         class="fuse-mat-button-large w-full mt-6"
                         mat-flat-button
                         [color]="'accent'"
                         [disabled]="phoneValidationForm.disabled"
-                        (click)="validatePhone()">
+                        (click)="validatePhone()" *ngIf="!isPhoneVerified">
                     <span *ngIf="!phoneValidationForm.disabled">
                         Verifica Cellulare
                     </span>
                     <mat-progress-spinner
                             *ngIf="phoneValidationForm.disabled"
+                            [diameter]="24"
+                            [mode]="'indeterminate'"></mat-progress-spinner>
+                </button>
+            </form>
+            <form *ngIf="isPhoneVerified" class="mt-1"
+                  [formGroup]="registerCustomerForm">
+
+                <mat-form-field class="w-full">
+                    <input
+                            id="name"
+                            matInput
+                            [placeholder]="'Nome'"
+                            [formControlName]="'name'">
+                    <mat-error *ngIf="registerCustomerForm.get('name').hasError('required')">
+                        Inserisci il nome
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-full">
+                    <input
+                            id="lastname"
+                            matInput
+                            [placeholder]="'Cognome'"
+                            [formControlName]="'lastname'">
+                    <mat-error *ngIf="registerCustomerForm.get('lastname').hasError('required')">
+                        Inserisci il cognome
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="w-full">
+                    <input
+                            id="email"
+                            matInput
+                            [placeholder]="'Email'"
+                            [formControlName]="'email'">
+                    <mat-error *ngIf="registerCustomerForm.get('email').hasError('required')">
+                        Inserisci la mail
+                    </mat-error>
+                </mat-form-field>
+                <div class="flex">
+                    <mat-form-field class="flex-auto">
+                        <input
+                                matInput
+                                [placeholder]="'Data di Nascita'"
+                                [matDatepicker]="picker1"
+                                (dateChange)="onChangeEvent($event)"
+                                (click)="picker1.open()">
+                        <mat-datepicker-toggle
+                                matSuffix
+                                [for]="picker1"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <mat-error *ngIf="registerCustomerForm.get('dob').hasError('required')">
+                    Inserisci la data di nascita
+                </mat-error>
+                <div class="inline-flex items-end w-full mt-1.5">
+                    <mat-checkbox
+                            class="-ml-2"
+                            [color]="'accent'"
+                            [formControlName]="'agreements'">
+                        <span>Acconsento al trattamento dei dati personali </span>
+                        <a
+                                class="ml-1 text-primary-500 hover:underline"
+                                [routerLink]="['./']">Terms And Conditions
+                        </a>
+                    </mat-checkbox>
+                </div>
+                <button
+                        class="fuse-mat-button-large w-full mt-6"
+                        mat-flat-button
+                        [color]="'accent'"
+                        [disabled]="registerCustomerForm.disabled"
+                        (click)="registerCustomerAndGoToReservationPage()" *ngIf="isPhoneVerified">
+                    <span *ngIf="!registerCustomerForm.disabled">
+                        Trova un tavolo
+                    </span>
+                    <mat-progress-spinner
+                            *ngIf="registerCustomerForm.disabled"
                             [diameter]="24"
                             [mode]="'indeterminate'"></mat-progress-spinner>
                 </button>

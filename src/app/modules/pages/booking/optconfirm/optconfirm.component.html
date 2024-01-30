@@ -1,10 +1,12 @@
-<h2 mat-dialog-title>Enter 4-digit Opt Code</h2>
-<mat-dialog-content>
-    <mat-form-field>
-        <input matInput type="text" [(ngModel)]="optCode" placeholder="Opt Code" maxlength="4">
-    </mat-form-field>
-</mat-dialog-content>
-<mat-dialog-actions>
-    <button mat-button (click)="onCancel()">Cancel</button>
-    <button mat-button (click)="onSubmit()">Submit</button>
-</mat-dialog-actions>
+<div>
+    <div class="flex items-baseline mt-0.5 font-medium">
+        <div>Inserisci il codice otp che ti abbiamo inviato tramite what's app</div>
+    </div>
+    <code-input
+            [isCodeHidden]="false"
+            [isNonDigitsCode]="false"
+            [codeLength]="4"
+            (codeChanged)="onCodeChanged($event)"
+            (codeCompleted)="onCodeCompleted($event)">
+    </code-input>
+</div>

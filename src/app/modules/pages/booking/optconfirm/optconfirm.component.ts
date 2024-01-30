@@ -1,9 +1,10 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {MatInputModule} from "@angular/material/input";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import Swal from 'sweetalert2';
+import {CodeInputModule} from "angular-code-input";
 
 @Component({
     selector: 'app-opt-code-dialog',
@@ -12,32 +13,53 @@ import Swal from 'sweetalert2';
         MatDialogModule,
         MatInputModule,
         FormsModule,
-        MatButtonModule
+        MatButtonModule,
+        ReactiveFormsModule,
+        CodeInputModule
     ],
     standalone: true
 })
 export class OptCodeDialogComponent implements OnInit {
-    optCode: string = '';
 
-    constructor(
-        public dialogRef: MatDialogRef<OptCodeDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any
-    ) {}
+    @Output() dialogResult = new EventEmitter<boolean>();
 
-    ngOnInit() {}
-
-    onCancel(): void {
-        this.dialogRef.close();
-        Swal.fire({
-            title: "Grazie",
-            timer: 1500,
-            showConfirmButton: false,
-            text: "Cellulare verificato!",
-            icon: "success"
-        });
+    constructor(@Inject(MAT_DIALOG_DATA) public data: any, private dialogRef: MatDialogRef<OptCodeDialogComponent>,) {
+        console.log('Received opt:  ' + this.data.otpValue)
     }
 
-    onSubmit(): void {
-        this.dialogRef.close(this.optCode);
+    ngOnInit(): void {
+    }
+    onCodeChanged($event: string) {
+
+    }
+
+    onCodeCompleted($event: string) {
+
+        // Your code verification logic here
+        const isCodeValid = this.data.otpValue === $event.toString();
+
+        if (isCodeValid) {
+            // Close the dialog with a true result
+            Swal.fire({
+                title: "Cellulare verificato",
+                text: "",
+                timer: 1500,
+                showConfirmButton: false,
+                icon: "success"
+            });
+            this.dialogResult.emit(true);
+            this.dialogRef.close(true);
+        } else {
+            // Show an error or handle invalid code
+            Swal.fire({
+                title: "Codice non valido",
+                text: "",
+                timer: 1500,
+                showConfirmButton: false,
+                icon: "error"
+            });
+            this.dialogResult.emit(false);
+            this.dialogRef.close(false);
+        }
     }
 }

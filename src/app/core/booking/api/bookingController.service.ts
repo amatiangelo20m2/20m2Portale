@@ -20,6 +20,7 @@ import { Observable }                                        from 'rxjs';
 import { BranchConfigurationDTO } from '../model/branchConfigurationDTO';
 import { BranchGeneralConfigurationEditRequest } from '../model/branchGeneralConfigurationEditRequest';
 import { CreateBookingRequest } from '../model/createBookingRequest';
+import { Customer } from '../model/customer';
 import { CustomerFormData } from '../model/customerFormData';
 import { CustomerResult } from '../model/customerResult';
 import { UpdateBranchTimeRanges } from '../model/updateBranchTimeRanges';
@@ -190,7 +191,7 @@ export class BookingControllerService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/booking/booking/create`,
+        return this.httpClient.request<any>('get',`${this.basePath}/booking/create`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -285,6 +286,101 @@ export class BookingControllerService {
         ];
 
         return this.httpClient.request<BranchConfigurationDTO>('get',`${this.basePath}/booking/configuration/waapi/instance/reboot`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param name
+     * @param lastname
+     * @param email
+     * @param prefix
+     * @param phone
+     * @param dob
+     * @param treatmentPersonalData
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public registerCustomer(name: string, lastname: string, email: string, prefix: string, phone: string, dob: string, treatmentPersonalData: boolean, observe?: 'body', reportProgress?: boolean): Observable<Customer>;
+    public registerCustomer(name: string, lastname: string, email: string, prefix: string, phone: string, dob: string, treatmentPersonalData: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Customer>>;
+    public registerCustomer(name: string, lastname: string, email: string, prefix: string, phone: string, dob: string, treatmentPersonalData: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Customer>>;
+    public registerCustomer(name: string, lastname: string, email: string, prefix: string, phone: string, dob: string, treatmentPersonalData: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (name === null || name === undefined) {
+            throw new Error('Required parameter name was null or undefined when calling registerCustomer.');
+        }
+
+        if (lastname === null || lastname === undefined) {
+            throw new Error('Required parameter lastname was null or undefined when calling registerCustomer.');
+        }
+
+        if (email === null || email === undefined) {
+            throw new Error('Required parameter email was null or undefined when calling registerCustomer.');
+        }
+
+        if (prefix === null || prefix === undefined) {
+            throw new Error('Required parameter prefix was null or undefined when calling registerCustomer.');
+        }
+
+        if (phone === null || phone === undefined) {
+            throw new Error('Required parameter phone was null or undefined when calling registerCustomer.');
+        }
+
+        if (dob === null || dob === undefined) {
+            throw new Error('Required parameter dob was null or undefined when calling registerCustomer.');
+        }
+
+        if (treatmentPersonalData === null || treatmentPersonalData === undefined) {
+            throw new Error('Required parameter treatmentPersonalData was null or undefined when calling registerCustomer.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (name !== undefined && name !== null) {
+            queryParameters = queryParameters.set('name', <any>name);
+        }
+        if (lastname !== undefined && lastname !== null) {
+            queryParameters = queryParameters.set('lastname', <any>lastname);
+        }
+        if (email !== undefined && email !== null) {
+            queryParameters = queryParameters.set('email', <any>email);
+        }
+        if (prefix !== undefined && prefix !== null) {
+            queryParameters = queryParameters.set('prefix', <any>prefix);
+        }
+        if (phone !== undefined && phone !== null) {
+            queryParameters = queryParameters.set('phone', <any>phone);
+        }
+        if (dob !== undefined && dob !== null) {
+            queryParameters = queryParameters.set('dob', <any>dob);
+        }
+        if (treatmentPersonalData !== undefined && treatmentPersonalData !== null) {
+            queryParameters = queryParameters.set('treatmentPersonalData', <any>treatmentPersonalData);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<Customer>('get',`${this.basePath}/booking/register/customer`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
