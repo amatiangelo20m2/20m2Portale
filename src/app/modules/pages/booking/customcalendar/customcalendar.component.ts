@@ -1,11 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {MatCalendar, MatDatepickerModule} from "@angular/material/datepicker";
 import {FormsModule} from "@angular/forms";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {BranchTimeRangeDTO, CustomerFormData} from "../../../../core/booking";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-customcalendar',
@@ -18,13 +19,18 @@ import {BranchTimeRangeDTO, CustomerFormData} from "../../../../core/booking";
     MatTabsModule,
     NgIf,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    NgClass
   ],
   standalone: true
 })
 export class CustomcalendarComponent implements OnInit {
 
   @Input() configuration: CustomerFormData;
+
+
+  constructor(private _snackBar: MatSnackBar) {
+  }
 
   ngOnInit(): void {
     console.log('Customer Form Data in CustomcalendarComponent:', this.configuration);
@@ -41,24 +47,33 @@ export class CustomcalendarComponent implements OnInit {
   selectedTabIndex = 0;
   selectedDate: { day: number, month: number, year: number };
 
-  selectDay(selectedDay: number) {
-    // Set the selected date
-    this.selectedDate = {
-      day: selectedDay,
-      month: this.currentDate.getMonth(),
-      year: this.currentDate.getFullYear()
-    };
+  selectDay(selectedDay: DayInfo) {
+    if(!selectedDay.isOpen){
+      this.selectedDate = {
+        day: selectedDay.value,
+        month: this.currentDate.getMonth(),
+        year: this.currentDate.getFullYear()
+      };
 
-    this.goToTab(1);
+      this.goToTab(1);
+    }else{
+      this._snackBar.open('Ci dispiace, in data '
+          + selectedDay.value + '/'
+          + this.currentDate.getMonth() + 1
+          + '/' + this.currentDate.getFullYear() + ' siamo chiusi 😭', '', {
+        duration: 2000
+      });
+    }
+
   }
 
-  isSelected(selectedDay: number): boolean {
-    return (
-        this.selectedDate &&
-        selectedDay === this.selectedDate.day &&
-        this.currentDate?.getMonth() === this.selectedDate.month &&
-        this.currentDate?.getFullYear() === this.selectedDate.year
-    );
+  isSelected(selectedDay: DayInfo): boolean {
+      return (
+          this.selectedDate &&
+          selectedDay.value === this.selectedDate.day &&
+          this.currentDate?.getMonth() === this.selectedDate.month &&
+          this.currentDate?.getFullYear() === this.selectedDate.year
+      );
   }
 
   goToTab(index: number) {
@@ -145,7 +160,7 @@ class Calendar {
       const isOpen = this.isDayOfWeekClosed(dayOfWeek, this.customerFormData?.branchTimeRangeDTOS);
 
       // const isOpen = false;
-      return new DayInfo(dayValue, isOpen);
+      return new DayInfo(dayValue, isOpen, new Date(this.currentYear, this.currentMonth, dayValue) >= new Date());
     });
   }
 
@@ -172,9 +187,11 @@ class Calendar {
 class DayInfo {
   value: number;
   isOpen: boolean;
+  isEnabled: boolean;
 
-  constructor(value: number, isOpen: boolean) {
+  constructor(value: number, isOpen: boolean, isEnabled: boolean) {
     this.value = value;
     this.isOpen = isOpen;
+    this.isEnabled = isEnabled;
   }
 }

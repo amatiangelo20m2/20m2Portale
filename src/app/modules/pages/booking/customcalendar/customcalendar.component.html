@@ -42,9 +42,10 @@
                                     rounded border-2
                                     cursor-pointer
                                     bg-card"
-                                    [class.border-primary]="isSelected(day.value)"
-                                    [class.border-warn]="day.isOpen"
-                                    (click)="selectDay(day.value)">
+                                    [ngClass]="{'bg-grey': day.isOpen}"
+                                    [class.border-primary]="isSelected(day)"
+
+                                    (click)="selectDay(day)">
 
                                 <div class="text-center break-all text-secondary font-bold">{{day.value}}</div>
 
@@ -60,6 +61,9 @@
 
         <mat-tab label="Ospiti">
             <!-- Content for Tab 2 -->
+            {{selectedDate?.day}}
+            {{selectedDate?.month + 1}}
+            {{selectedDate?.year}}
             <div>
                 <button mat-button (click)="goToTab(2)">Show Component 2</button>
             </div>

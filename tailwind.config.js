@@ -27,6 +27,10 @@ const themes = {
             ...colors.slate,
             DEFAULT: colors.slate[800]
         },
+        grey   : {
+            ...colors.gray,
+            DEFAULT: colors.gray[300]
+        },
         warn     : {
             ...colors.red,
             DEFAULT: colors.red[600]
