@@ -10,14 +10,12 @@ import {
     TimeRangeUpdateRequest
 } from "../../../core/booking";
 
-
 @Injectable({providedIn: 'root'})
 export class DataproviderService {
 
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     private currentBranch: BehaviorSubject<BranchResponseEntity> = new BehaviorSubject(null);
     private currentBranchesList : BehaviorSubject<BranchResponseEntity[]> = new BehaviorSubject(null);
-
     private currentBranchConfiguration : BehaviorSubject<BranchConfigurationDTO> = new BehaviorSubject(null);
 
 
@@ -43,28 +41,29 @@ export class DataproviderService {
                 this._userService.user$.pipe(
                     (takeUntil(this._unsubscribeAll)))
                     .subscribe((user: User) => {
-
-                        console.log("Retrieve branches with code : " + user.userCode)
+                        console.log("Retrieve branches for user with code : " + user.userCode)
 
                         this._dashboardControllerService?.retrieveDashboardData(user?.userCode).subscribe(
                             value => {
-                                this.currentBranchesList?.next(value.branches);
 
-                                if(this.currentBranchesList?.value){
+                                if(value.branches?.length != 0){
+                                    console.log(value.branches)
+                                    this.currentBranchesList?.next(value.branches);
+                                    if(this.currentBranchesList?.value){
+                                        console.log(this.currentBranchesList)
+                                        let branchCodeRetrieved = localStorage.getItem("branchCode") ?? '';
 
-                                    let branchCodeRetrieved = localStorage.getItem("branchCode") ?? '';
-
-                                    if(branchCodeRetrieved == ''){
-                                        this.selectBranch(value[0]);
-
+                                        if(branchCodeRetrieved == ''){
+                                            this.selectBranch(value.branches[0]);
+                                        }else{
+                                            this.selectBranch(
+                                                this.currentBranchesList.value
+                                                    .find(branch =>
+                                                        branch?.branchCode === branchCodeRetrieved) ?? value[0]
+                                            );
+                                        }
                                     }else{
-                                        this.selectBranch(
-                                            this.currentBranchesList.value
-                                                .find(branch =>
-                                                    branch?.branchCode === branchCodeRetrieved) ?? value[0]
-                                        );
-
-
+                                        console.log("no branch found");
                                     }
                                 }
                             }
@@ -77,6 +76,8 @@ export class DataproviderService {
         this.currentBranch.next(branch);
         this.retrieveBookingConfiguration(branch?.branchCode);
     }
+
+
     addBranch(branch: BranchResponseEntity) {
 
         this.currentBranchesList.value.push(branch);
@@ -85,6 +86,8 @@ export class DataproviderService {
         }
         this.currentBranchesList.next(this.currentBranchesList.value);
     }
+
+
     retrieveBookingConfiguration(branchCode: string){
         this._bookingControllerService.checkWaApiStatus(branchCode)
             .subscribe((bookingConfDTO) =>{

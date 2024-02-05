@@ -11,13 +11,16 @@
  */
 
 export interface BranchCreationEntity { 
+    branchCode?: string;
+    userCode?: string;
     name?: string;
-    address?: string;
     email?: string;
-    phone?: string;
+    address?: string;
+    city?: string;
+    cap?: string;
+    phoneNumber?: string;
     vat?: string;
     type?: BranchCreationEntity.TypeEnum;
-    userCode?: string;
     logoImage?: Array<string>;
 }
 export namespace BranchCreationEntity {

@@ -91,9 +91,10 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
 
         this.branchForm = this._formBuilder.group({
             name : ['', [Validators.required]],
-            address : ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
-            phone: ['', Validators.required],
+            address : ['', Validators.required],
+            city: ['', Validators.required],
+            cap: ['', Validators.required],
             type: ['RESTAURANT']
         });
 
@@ -183,17 +184,21 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
         this.branchForm.disable();
 
         console.log("this.branchForm.get('type').value," + this.branchForm.get('type').value)
+
         this.branchEntity = {
             name: this.branchForm.get('name').value,
             address: this.branchForm.get('address').value,
             email: this.branchForm.get('email').value,
-            phone: this.branchForm.get('phone').value,
-            vat: this.branchForm.get('phone').value,
+            phoneNumber: '',
+            city: this.branchForm.get('city').value,
+            cap: this.branchForm.get('cap').value,
+            vat: '',
             type: this.branchForm.get('type').value ?? 'RESTAURANT',
             userCode: this.user.userCode,
         }
 
         this._dashboardControllerService.save(this.branchEntity).pipe(
+
             catchError((error) => {
                 this._snackBar.open('error: ' + error.statusCode, 'Undo', {
                     duration: 3000

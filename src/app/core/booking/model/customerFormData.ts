@@ -19,9 +19,11 @@ export interface CustomerFormData {
     phone?: string;
     formCode?: string;
     formLogo?: string;
+    guests?: number;
     bookingSlotInMinutes?: number;
     maxTableNumber?: number;
     address?: string;
+    dogsAllowed?: number;
     branchTimeRangeDTOS?: Array<BranchTimeRangeDTO>;
     dateTimeRangeAvailableGuests?: Array<DateTimeRangeAvailableGuests>;
 }

@@ -60,6 +60,53 @@ export class DashboardControllerService {
     /**
      *
      *
+     * @param branchCode
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getBranchData(branchCode: string, observe?: 'body', reportProgress?: boolean): Observable<BranchResponseEntity>;
+    public getBranchData(branchCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BranchResponseEntity>>;
+    public getBranchData(branchCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BranchResponseEntity>>;
+    public getBranchData(branchCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (branchCode === null || branchCode === undefined) {
+            throw new Error('Required parameter branchCode was null or undefined when calling getBranchData.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (branchCode !== undefined && branchCode !== null) {
+            queryParameters = queryParameters.set('branchCode', <any>branchCode);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<BranchResponseEntity>('get',`${this.basePath}/api/dashboard/getbranchdata`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
      * @param userCode
      * @param branchCode
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.

@@ -9,17 +9,19 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { Customer } from './customer';
+import { LocalTime } from './localTime';
 
-export interface CreateBookingRequest { 
+export interface BookingDTO { 
+    bookingId?: number;
     branchCode?: string;
-    formCode?: string;
-    guests?: number;
-    child?: number;
-    dogsAllowed?: number;
-    particularRequests?: string;
     date?: string;
-    time?: string;
-    customerId?: number;
-    branchName?: string;
-    branchAddress?: string;
+    time?: LocalTime;
+    guest?: number;
+    child?: number;
+    allowedDogs?: number;
+    requests?: string;
+    formCodeFrom?: string;
+    insertBookingTime?: Date;
+    customer?: Customer;
 }

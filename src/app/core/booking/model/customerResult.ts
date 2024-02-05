@@ -14,5 +14,6 @@ import { Customer } from './customer';
 export interface CustomerResult { 
     customer?: Customer;
     opt?: string;
+    profilePhoto?: string;
     customerFound?: boolean;
 }

@@ -156,10 +156,25 @@
                     class="p-6"
                     [formGroup]="branchForm">
                     <mat-form-field class="w-full">
-                        <mat-label>Nome</mat-label>
+                        <mat-label>Nome attività</mat-label>
                         <input
                             matInput
                             [formControlName]="'name'"
+                            required>
+                    </mat-form-field>
+
+                    <mat-form-field class="w-full">
+                        <mat-label>Email</mat-label>
+                        <input
+                            matInput
+                            [formControlName]="'email'"
+                            required>
+                    </mat-form-field>
+                    <mat-form-field class="w-full">
+                        <mat-label>Città</mat-label>
+                        <input
+                            matInput
+                            [formControlName]="'city'"
                             required>
                     </mat-form-field>
                     <mat-form-field class="w-full">
@@ -169,17 +184,10 @@
                             [formControlName]="'address'">
                     </mat-form-field>
                     <mat-form-field class="w-full">
-                        <mat-label>Email</mat-label>
+                        <mat-label>Cap</mat-label>
                         <input
                             matInput
-                            [formControlName]="'email'"
-                            required>
-                    </mat-form-field>
-                    <mat-form-field class="w-full">
-                        <mat-label>Cellulare</mat-label>
-                        <input
-                            matInput
-                            [formControlName]="'phone'"
+                            [formControlName]="'cap'"
                             required>
                     </mat-form-field>
                     <div class="flex">

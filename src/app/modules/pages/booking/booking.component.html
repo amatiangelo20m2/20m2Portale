@@ -1,16 +1,17 @@
 <div class="flex flex-col flex-auto items-center sm:justify-center min-w-0" *ngIf="chooseTable">
-    <div class="w-full sm:w-auto py-1 px-1 sm:p-12 sm:rounded-2xl sm:shadow sm:bg-card">
+    <div class="w-full sm:w-auto py-1 px-1 sm:p-1 sm:rounded-2xl sm:shadow sm:bg-card">
         <div class="w-full max-w-90 sm:w-90 mx-auto sm:mx-0">
             <ng-container *ngIf="customerFormData">
                 <!-- Your component content here -->
-                <app-customcalendar [configuration]="customerFormData"></app-customcalendar>
+                <app-customcalendar [configuration]="customerFormData" [customer]="customer"></app-customcalendar>
             </ng-container>
         </div>
     </div>
 </div>
 
+
 <div class="flex flex-col flex-auto items-center sm:justify-center min-w-0" *ngIf="!chooseTable">
-    <div class="w-full sm:w-auto py-1 px-1 sm:p-12 sm:rounded-2xl sm:shadow sm:bg-card">
+    <div class="w-full sm:w-auto py-1 px-1 sm:p-6 sm:rounded-2xl sm:shadow sm:bg-card">
         <div class="w-full max-w-90 sm:w-90 mx-auto sm:mx-0">
             <!-- Logo -->
             <div class="w-12">
@@ -209,4 +210,3 @@
         </div>
     </div>
 </div>
-

@@ -15,7 +15,6 @@ import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {map, Observable, startWith} from "rxjs";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 
-
 @Component({
     selector: 'tag',
     templateUrl: './tag.component.html',

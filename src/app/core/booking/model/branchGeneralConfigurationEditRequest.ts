@@ -17,5 +17,6 @@ export interface BranchGeneralConfigurationEditRequest {
     guestReceivingAuthConfirm?: number;
     maxTableNumber?: number;
     minBeforeSendConfirmMessage?: number;
+    dogsAllowed?: number;
     reservationConfirmedManually?: boolean;
 }

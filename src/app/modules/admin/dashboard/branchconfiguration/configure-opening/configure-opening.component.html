@@ -1,8 +1,6 @@
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 pb-6 pt-6 gap-6 w-full min-w-0">
-
-    <div class="sm:col-span-2 md:col-span-4 lg:col-span-2 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden">
-
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 pb-6 pt-6 p-5 gap-6 w-full min-w-0">
+    <form class="sm:col-span-2 md:col-span-4 lg:col-span-2 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden" [formGroup]="restaurantConfigForm" (ngSubmit)="saveConfiguration()">
         <div class="flex flex-col items-start">
 
             <div class="flex-0 w-16 h-16 rounded-full overflow-hidden">
@@ -34,9 +32,6 @@
 
         </div>
 
-
-    </div>
-    <form class="sm:col-span-2 md:col-span-4 lg:col-span-2 flex flex-col flex-auto p-6 bg-card shadow rounded-2xl overflow-hidden" [formGroup]="restaurantConfigForm" (ngSubmit)="saveConfiguration()">
         <div class="flex flex-col sm:flex-row items-start justify-between">
             <div class="text-lg font-bold tracking-tight leading-6 truncate">Configurazioni generali</div>
         </div>
@@ -48,7 +43,7 @@
         </div>
         <div class="flex flex-col mt-4 gt-sm:mt-0 gt-sm:ml-16">
             <mat-form-field appearance="outline" class="form-field">
-                <mat-label>Mandare messaggio di conferma per tavoli con numero di persone superiore a: </mat-label>
+                <mat-label>Quante persone puoi accetare, al massimo, per singola prenotazione?</mat-label>
                 <input type="number" matInput placeholder="Numero coperti che necessitano di conferma" [formControlName]="'maxTableNumber'">
             </mat-form-field>
         </div>
@@ -64,6 +59,22 @@
                     class="icon-size-5"
                     matSuffix
                     [svgIcon]="'mat_outline:access_time'"></mat-icon>
+            </mat-form-field>
+        </div>
+        <div class="flex flex-col gt-xs:flex-row">
+            <mat-form-field class="flex-auto gt-xs:pl-3">
+                <mat-label>Cani ammessi? </mat-label>
+                <mat-select [formControlName]="'dogsAllowed'">
+                    <mat-option value="0">No</mat-option>
+                    <mat-option value="5">Fino a 5 Kg</mat-option>
+                    <mat-option value="10">Fino a 10 Kg</mat-option>
+                    <mat-option value="15">Fino a 15 Kg</mat-option>
+                    <mat-option value="30">Fino a 30 Kg</mat-option>
+                    <mat-option value="99">Più di 30 Kg</mat-option>
+                </mat-select>
+                <img
+                    class="w-6 ml-2"
+                    [src]="'assets/images/others/penny.svg'">
             </mat-form-field>
         </div>
 

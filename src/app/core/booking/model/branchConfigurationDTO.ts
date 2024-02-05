@@ -36,5 +36,6 @@ export interface BranchConfigurationDTO {
     lastWaApiConfCheck?: Date;
     branchConfCreationDate?: Date;
     bookingFormList?: Array<BookingFormDto>;
+    dogsAllowed?: number;
     reservationConfirmedManually?: boolean;
 }

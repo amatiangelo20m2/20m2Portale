@@ -20,9 +20,11 @@ import {OptCodeDialogComponent} from "./optconfirm/optconfirm.component";
 import {MatDialog} from "@angular/material/dialog";
 import {DateTime} from "luxon";
 import {MatTabsModule} from "@angular/material/tabs";
-import {BookingControllerService, CustomerFormData} from "../../../core/booking";
 import {CustomcalendarComponent} from "./customcalendar/customcalendar.component";
-import {Observable, Subscription} from "rxjs";
+import {Subscription} from "rxjs";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {BookingControllerService, Customer, CustomerFormData, CustomerResult} from "../../../core/booking";
+import Swal from "sweetalert2";
 
 registerLocaleData(localeIt, 'it');
 
@@ -52,6 +54,7 @@ registerLocaleData(localeIt, 'it');
         FuseAlertComponent,
         MatTabsModule,
         CustomcalendarComponent,
+        MatTooltipModule,
     ],
     providers: [
         { provide: MAT_DATE_LOCALE, useValue: 'it-IT' }
@@ -68,23 +71,21 @@ export class BookingComponent implements OnInit{
         message: '',
     };
 
+    //state machine
+    chooseTable: boolean = false;
+
     phoneValidationForm: FormGroup;
     registerCustomerForm: FormGroup;
-
     showAlert: boolean = false;
-
     isPhoneVerified : boolean = false;
-
     dob: Date | null;
-
-    // customerFormData : CustomerFormData;
-
     customerFormData: CustomerFormData;
     customerFormDataSubscription: Subscription;
-
+    customer: Customer;
     branchCode: string;
     formCode: string;
-    chooseTable: boolean = true;
+    currentPhotoUrl: string;
+    customerResult: CustomerResult;
 
     /**
      * Constructor
@@ -99,6 +100,7 @@ export class BookingComponent implements OnInit{
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
+    imagew: string = 'https://pps.whatsapp.net/v/t61.24694-24/414551696_646621444157815_2604241172986211136_n.jpg?ccb=11-4&oh=01_AdQK-En-P9NCMth_gk47BPPGxHTWoyXtmpcVFQ7LiKXKkA&oe=65C7CEE6&_nc_sid=e6ed6c&_nc_cat=103';
 
     /**
      * On init
@@ -158,19 +160,27 @@ export class BookingComponent implements OnInit{
         // this.phoneValidationForm.disable();
         this.showAlert = false;
 
-
-
         console.log("phone : " + this.phoneValidationForm.get('mobilePhone').value);
         console.log("clountry : " + this.phoneValidationForm.get('selectedCountry').value);
 
-        let number = this.phoneValidationForm.get('selectedCountry').value.toString() + this.phoneValidationForm.get('mobilePhone').value.toString();
-
         this._bookingService.retrieveCustomerAndSendOtp(this.branchCode,
-            number
-            , "").subscribe(
-            (response)=>{
-                console.log(response);
-                this.openDialog(response?.opt);
+            this.phoneValidationForm.get('selectedCountry').value.toString(),
+            this.phoneValidationForm.get('mobilePhone').value.toString()
+             ).subscribe(
+            (customerResult : CustomerResult)=> {
+                this.customerResult = customerResult;
+                if(this.customerResult.customerFound){
+                    this.registerCustomerForm = this._formBuilder.group({
+                            name      : [this.customerResult?.customer?.name, Validators.required],
+                            lastname  : [this.customerResult?.customer?.lastname, Validators.required],
+                            email  : [this.customerResult?.customer?.email, Validators.required],
+                            dob  : [this.customerResult?.customer?.dob, Validators.required],
+                            agreements: [this.customerResult?.customer?.treatmentPersonalData, Validators.requiredTrue]
+                        },
+                    );
+                }
+                this.currentPhotoUrl = customerResult?.profilePhoto;
+                this.openDialog(customerResult?.opt);
             }
         );
     }
@@ -185,9 +195,63 @@ export class BookingComponent implements OnInit{
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('Dialog closed with result:', result);
-            this.isPhoneVerified = result;
-            this.phoneValidationForm.get('mobilePhone').disable();
+            if(result && this.customerResult.customerFound){
+
+                console.log('Dialog closed with result and customer found:', result);
+                this.isPhoneVerified = result;
+                this.phoneValidationForm.get('mobilePhone').disable();
+                let timerInterval;
+
+                Swal.fire({
+                    title: "Bentornato " + this.customerResult.customer.name,
+                    html: "Recupero i tuoi dati e ti porto a prenotare il tavolo<b></b>",
+                    timer: 2500,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading();
+                        const timer = Swal.getPopup().querySelector("b");
+                        timerInterval = setInterval(() => {
+                            timer.textContent = `${(Swal.getTimerLeft())} secondi`;
+                        }, 100);
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval);
+                    }
+                }).then((result) => {
+                    this.customer = this.customerResult.customer;
+                    this.chooseTable = true;
+                });
+            }else if(result){
+
+                console.log('Dialog closed with result:', result);
+                this.isPhoneVerified = result;
+                this.phoneValidationForm.get('mobilePhone').disable();
+
+                Swal.fire({
+                    title: "Cellulare verificato",
+                    text: "",
+                    timer: 1500,
+                    showConfirmButton: false,
+                    icon: "success"
+                });
+
+            }else{
+
+                console.log('Dialog closed with result:', result);
+                this.isPhoneVerified = false;
+                this.phoneValidationForm.get('mobilePhone').enable();
+
+                Swal.fire({
+                    title: "Codice non valido",
+                    text: "",
+                    timer: 2500,
+                    showConfirmButton: false,
+                    icon: "error"
+                });
+
+
+            }
+
         });
     }
 
@@ -206,10 +270,10 @@ export class BookingComponent implements OnInit{
             this.phoneValidationForm.get('selectedCountry').value,
             this.phoneValidationForm.get('mobilePhone').value,
             this.registerCustomerForm.get('dob').value,
-            true).subscribe((customer)=>{
-                console.log("customer save:  " + customer);
-
-                this.chooseTable = true;
+            true,
+            this.currentPhotoUrl).subscribe((customer : Customer)=>{
+            this.customer = customer;
+            this.chooseTable = true;
         });
     }
 }

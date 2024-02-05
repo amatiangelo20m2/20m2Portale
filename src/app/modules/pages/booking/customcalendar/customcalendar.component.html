@@ -1,14 +1,16 @@
-<div class="flex flex-col flex-auto items-center sm:justify-center min-w-0">
+<div class="flex flex-col flex-auto items-center sm:justify-center min-w-0" *ngIf="!confirmationPage">
     <mat-tab-group [(selectedIndex)]="selectedTabIndex">
-        <mat-tab label="Data">
+        <mat-tab>
+            <ng-template mat-tab-label>
+
+                <div *ngIf="selectedTabIndex===0">
+                    <mat-icon [svgIcon]="'heroicons_outline:calendar-days'" color="primary"></mat-icon>
+                </div>
+                Data
+            </ng-template>
             <div *ngIf="selectedTabIndex === 0">
 
                 <div class="flex flex-col items-center justify-center mt-1">
-
-<!--                    <div class="items-center justify-center">-->
-<!--                        <mat-icon class="icon-size-5 text-current" [svgIcon]="'heroicons_outline:calendar-days'"></mat-icon>-->
-<!--                        <span class="ml-2">Seleziona un giorno</span>-->
-<!--                    </div>-->
 
                     <div class="flex items-center justify-between mt-4">
                         <div class="flex items-center">
@@ -20,8 +22,6 @@
                             <!-- Your existing content -->
                             <span class="ml-2 font-bold">{{getMonthByMonthNumber(calendar.currentMonth)}} {{calendar.currentYear}}</span>
                         </div>
-
-                        <!-- Right arrow (adjust styling as needed) -->
                         <button mat-icon-button (click)="nextMonth()">
                             <mat-icon [svgIcon]="'heroicons_mini:arrow-small-right'"></mat-icon>
                         </button>
@@ -37,15 +37,15 @@
                     <ng-container *ngFor="let day of calendar.daysInMonth">
                         <ng-container *ngIf="day.value > 0; else emptySlot">
                             <div
-                                    class="flex flex-col items-center justify-center m-2 mb-1 p-1
+                                class="flex flex-col items-center justify-center m-2 mb-1 p-1
                                     min-w-11 max-w-20 min-h-11 max-h-20
                                     rounded border-2
                                     cursor-pointer
                                     bg-card"
-                                    [ngClass]="{'bg-grey': day.isOpen}"
-                                    [class.border-primary]="isSelected(day)"
+                                [ngClass]="{'bg-grey': day.isOpen}"
+                                [class.border-primary]="isSelected(day)"
 
-                                    (click)="selectDay(day)">
+                                (click)="selectDay(day)">
 
                                 <div class="text-center break-all text-secondary font-bold">{{day.value}}</div>
 
@@ -59,25 +59,228 @@
             </div>
         </mat-tab>
 
-        <mat-tab label="Ospiti">
-            <!-- Content for Tab 2 -->
-            {{selectedDate?.day}}
-            {{selectedDate?.month + 1}}
-            {{selectedDate?.year}}
-            <div>
-                <button mat-button (click)="goToTab(2)">Show Component 2</button>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <div *ngIf="selectedTabIndex===1">
+                    <mat-icon [svgIcon]="'heroicons_outline:users'" color="primary"></mat-icon>
+                </div>
+                Ospiti
+            </ng-template>
+
+            <div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-7 gap-1 mt-1">
+                <ng-container *ngIf="guestsBookable.length > 0">
+                    <ng-container *ngFor="let guests of guestsBookable.slice(0, displayedGuestsCount)">
+                        <div class="flex flex-col items-center justify-center m-2 mb-1 p-1 min-w-18 max-w-23 min-h-18 max-h-23
+                                rounded border-2 cursor-pointer bg-card"
+                             [class.border-primary]="isGuestsValueSelected(guests)"
+
+                             (click)="selectGuest(guests)">
+                            <div class="text-center break-all text-secondary font-bold">{{guests}}</div>
+                        </div>
+                    </ng-container>
+                </ng-container>
             </div>
-            <div *ngIf="selectedTabIndex === 1">Content for Component 2</div>
+            <button class="fuse-mat-button-large w-full mt-7 " mat-flat-button [color]="'accent'"
+                    *ngIf="displayedGuestsCount < guestsBookable.length"
+                    (click)="showMoreGuests()">
+                Mostra più alternative
+            </button>
         </mat-tab>
 
-        <mat-tab label="Fascia oraria">
-            <!-- Content for Tab 3 -->
-            <div>
-                <button mat-button (click)="goToTab(0)">Show Component 3</button>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <div *ngIf="selectedTabIndex===2">
+                    <mat-icon [svgIcon]="'heroicons_outline:clock'" color="primary"></mat-icon>
+                </div>
+                Ora
+            </ng-template>
+
+            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 gap-1 mt-1">
+                <ng-container *ngIf="bookableTime.length > 0">
+                    <ng-container *ngFor="let bookSlot of bookableTime">
+                        <div class="flex flex-col items-center justify-center m-2 mb-1 p-1 min-w-18 max-w-23 min-h-18 max-h-23
+                                rounded border-2 cursor-pointer bg-card"
+                             [class.border-primary]="isTimeSlotValueSelected(bookSlot)"
+                             (click)="selectTimeSlot(bookSlot)">
+                            <div class="text-center break-all text-secondary font-bold">{{bookSlot}}</div>
+                        </div>
+                    </ng-container>
+                </ng-container>
             </div>
-            <div *ngIf="selectedTabIndex === 2">Content for Component 3</div>
         </mat-tab>
     </mat-tab-group>
 </div>
 
 
+<div class="flex flex-col flex-auto items-center sm:justify-center min-w-0" *ngIf="confirmationPage" [formGroup]="formReservationDetails">
+    <div class="flex flex-col w-full">
+
+        <!-- View mode -->
+
+        <!-- Header -->
+        <div class="relative w-full h-40 sm:h-48 px-8 sm:px-12 bg-accent-100 dark:bg-accent-700">
+
+            <!-- Close button -->
+            <div class="flex items-center justify-start w-full max-w-3xl mx-auto pt-6">
+                <a
+                    mat-icon-button
+                    (click)="returnToChoosePage()"
+                    [matTooltip]="'Torna indietro'">
+                    <mat-icon
+                        class="text-white"
+                        [svgIcon]="'heroicons_outline:arrow-small-left'"></mat-icon>
+                </a>
+            </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:p-12 sm:pt-0">
+            <div class="w-full max-w-3xl">
+
+                <!-- Avatar and actions -->
+                <div class="flex flex-auto items-end -mt-16">
+                    <!-- Avatar -->
+                    <div class="flex items-center justify-center w-32 h-32 rounded-full overflow-hidden ring-4 ring-bg-card">
+                        <img
+                            class="object-cover w-full h-full"
+                            [src]="customer.imageProfile.replaceAll('%26','&')">
+                        <div
+                            class="flex items-center justify-center w-full h-full rounded overflow-hidden
+                            uppercase text-8xl font-bold leading-none
+                            bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
+                            {{this.customer.name}}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Name -->
+                <div class="mt-3 text-4xl font-bold truncate">{{this.customer.name}} {{this.customer.lastname}}</div>
+
+                <div class="flex flex-col mt-4 pt-6 border-t space-y-8">
+                    <!-- Emails -->
+                    <ng-container *ngIf="this.customer.email.length">
+                        <div class="flex">
+                            <mat-icon [svgIcon]="'heroicons_outline:envelope'"></mat-icon>
+                            <div class="min-w-0 ml-6 space-y-1">
+
+                                <div class="flex items-center leading-6">
+                                    <a
+                                        class="hover:underline text-primary-500"
+                                        [href]="'mailto:' + this.customer.email"
+                                        target="_blank">
+                                        {{this.customer.email}}
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <!-- Phone -->
+                    <ng-container *ngIf="this.customer.phone.length">
+                        <div class="flex">
+                            <mat-icon [svgIcon]="'heroicons_outline:phone'"></mat-icon>
+                            <div class="min-w-0 ml-6 space-y-1">
+                                <div class="flex items-center leading-6">
+                                    <div class="ml-2.5 font-mono">{{this.customer.phone}}</div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="this.customer.dob">
+                        <div class="flex sm:items-center">
+                            <mat-icon [svgIcon]="'heroicons_outline:cake'"></mat-icon>
+                            <div class="ml-6 leading-6">{{this.customer.dob}}</div>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="mt-3 text-1xl font-bold truncate">Dettagli prenotazione</div>
+
+                <div class="flex flex-col mt-4 pt-6 border-t space-y-8">
+                    <ng-container>
+                        <div class="flex">
+                            <mat-icon [svgIcon]="'heroicons_outline:building-storefront'"></mat-icon>
+                            <div class="min-w-0 ml-6 space-y-1">
+                                <div class="flex items-center leading-6">
+                                    <div class="ml-2.5 font-mono">{{this.configuration.branchName}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container>
+                        <div class="flex">
+                            <mat-icon [svgIcon]="'heroicons_outline:map-pin'"></mat-icon>
+                            <div class="min-w-0 ml-6 space-y-1">
+                                <div class="flex items-center leading-6">
+                                    <div class="ml-2.5 font-mono">{{this.configuration.address}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="this.selectedGuests">
+                        <div class="flex">
+                            <mat-icon [svgIcon]="'heroicons_outline:users'"></mat-icon>
+                            <div class="min-w-0 ml-6 space-y-1">
+                                <div class="flex items-center leading-6">
+                                    <div class="ml-2.5 font-mono">{{this.selectedGuests}} ospiti</div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="this.selectedDate">
+                        <div class="flex">
+                            <mat-icon [svgIcon]="'heroicons_outline:calendar-days'"></mat-icon>
+                            <div class="min-w-0 ml-6 space-y-1">
+                                <div class="flex items-center leading-6">
+                                    <div class="ml-2.5 font-mono">{{this.selectedDate.day}} {{this.getItalianMonthFromSelectedDate(this.selectedDate)}} {{this.selectedDate.year}}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="this.selectedSlotTime">
+                        <div class="flex sm:items-center">
+                            <mat-icon [svgIcon]="'heroicons_outline:clock'"></mat-icon>
+                            <div class="ml-6 leading-6">{{this.selectedSlotTime}}</div>
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="mt-3 text-1xl font-bold truncate">Richieste particolari</div>
+                <mat-form-field [ngClass]="formFieldHelpers" style="width: 100%;">
+
+                        <textarea
+                            matInput
+                            cdkTextareaAutosize
+                            [formControlName]="'particularRequest'"
+                            [cdkAutosizeMinRows]="3"></textarea>
+                    <mat-icon
+                        class="icon-size-5"
+                        matSuffix
+                        [svgIcon]="'heroicons_outline:information-circle'"></mat-icon>
+                </mat-form-field>
+                <mat-form-field *ngIf="configuration.dogsAllowed > 0" style="width: 100%;">
+                    <mat-label>Porti con te animali da compagnia?</mat-label>
+                    <mat-select [formControlName]="'dogsAllowed'">
+                        <mat-option value="0">No</mat-option>
+                        <mat-option value="5" *ngIf="configuration.dogsAllowed >= 5">Si,pesa meno di 5 Kg</mat-option>
+                        <mat-option value="10" *ngIf="configuration.dogsAllowed >= 10">Si,pesa meno di 10 Kg</mat-option>
+                        <mat-option value="15" *ngIf="configuration.dogsAllowed >= 15">Si,pesa meno di 15 Kg</mat-option>
+                        <mat-option value="30" *ngIf="configuration.dogsAllowed >= 30">Si,pesa meno di 30 Kg</mat-option>
+                        <mat-option value="99" *ngIf="configuration.dogsAllowed >= 99">Si,supera i 30 Kg</mat-option>
+                    </mat-select>
+                    <img
+                        class="w-6 ml-2"
+                        [src]="'assets/images/others/penny.svg'">
+                </mat-form-field>
+            </div>
+            <button class="fuse-mat-button-large w-full mt-1" mat-flat-button [color]="'accent'"
+                    (click)="performBooking()">
+                PRENOTA
+            </button>
+        </div>
+
+    </div>
+
+</div>

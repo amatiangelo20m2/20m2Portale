@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatListModule} from "@angular/material/list";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
@@ -86,8 +86,7 @@ export class ConfigureOpeningComponent implements OnInit {
     constructor(private _matDialog: MatDialog,
                 private _dataProvideService: DataproviderService,
                 private fb: FormBuilder,
-                private _snackBar: MatSnackBar
-    ) {
+                private _snackBar: MatSnackBar) {
     }
 
     ngOnInit() {
@@ -105,6 +104,7 @@ export class ConfigureOpeningComponent implements OnInit {
                 maxTableNumber: [branchConfigurationDTO?.maxTableNumber],
                 guestReceivingAuthConfirm: [branchConfigurationDTO?.guestReceivingAuthConfirm],
                 minBeforeSendConfirmMessage: [branchConfigurationDTO?.minBeforeSendConfirmMessage.toString()],
+                dogsAllowed: [branchConfigurationDTO?.dogsAllowed.toString()]
             });
 
             this.currentWorkingForm = branchConfigurationDTO?.bookingFormList?.at(0);
@@ -146,6 +146,7 @@ export class ConfigureOpeningComponent implements OnInit {
                     maxTableNumber: this.restaurantConfigForm.get('maxTableNumber')?.value,
                     minBeforeSendConfirmMessage: +this.restaurantConfigForm.get('minBeforeSendConfirmMessage')?.value,
                     reservationConfirmedManually: this.restaurantConfigForm.get('reservationConfirmedManually')?.value,
+                    dogsAllowed: this.restaurantConfigForm.get('dogsAllowed')?.value
                 }
             );
             this._snackBar.open('Configurazione salvata con successo', 'Undo', {

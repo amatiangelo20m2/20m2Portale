@@ -17,6 +17,7 @@ export interface Customer {
     email?: string;
     prefix?: string;
     phone?: string;
+    imageProfile?: string;
     dob?: string;
     registrationDate?: Date;
     treatmentPersonalData?: boolean;
