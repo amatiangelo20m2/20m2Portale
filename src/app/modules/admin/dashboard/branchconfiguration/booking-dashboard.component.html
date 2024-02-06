@@ -1,5 +1,5 @@
 <div *ngIf="branchConfigurationDTO == null || (branchConfigurationDTO?.instanceStatus!='success'); else elseBlock">
-    <div class="relative flex-0 py-8 px-4 sm:p-16 overflow-hidden bg-gray-800 dark">
+    <div class="relative flex-0 py-8 px-4 sm:p-16 overflow-hidden dark">
         <!-- Background - @formatter:off -->
         <!-- Rings -->
         <svg class="absolute inset-0 pointer-events-none"
@@ -16,43 +16,40 @@
                 {{this.currentBranch?.name}}
             </div>
             <div class="max-w-2xl mt-6 sm:text-2xl text-center tracking-tight text-secondary">
-                Our courses will step you through the process of a building small applications, or adding new features to existing applications.
+                Configura un numero what's app per iniziare ad utilizzare i servizi del portale 20m2
+            </div>
+            <div class="flex items-center">
+                <button
+                    class="fuse-mat-button-large mt-4"
+                    mat-flat-button
+                    [color]="'primary'"
+                    [disabled]="buttonConfigurationClick"
+                    (click)="configureNumber()">
+                    <mat-icon [svgIcon]="'heroicons_outline:qr-code'"></mat-icon>
+                    <span *ngIf="!buttonConfigurationClick" style="margin-left: 3px; font-size: 12px;">Ottieni il Qr Code</span>
+                    <mat-progress-spinner
+                        *ngIf="buttonConfigurationClick"
+                        [diameter]="20"
+                        [mode]="'indeterminate'"
+                    ></mat-progress-spinner>
+                </button>
+
+            </div>
+            <div *ngIf="remainingSeconds>1" class="p-12">
+                <img [src]="qrCodeImage" alt="Base64 Image" style="height: 150px; width: 150px; object-fit: cover;">
             </div>
         </div>
     </div>
 
-    <div class="flex flex-col w-full">
-        <div class="mb-2">
-            <h2 class="text-xl font-semibold tracking-tight leading-6">Configura Numero</h2>
-            <div class="font-medium tracking-tight text-secondary text-xs">
-                Configura un numero what's app per iniziare ad utilizzare il servizio
-            </div>
-        </div>
-        <div *ngIf="remainingSeconds>1">
-            <img [src]="qrCodeImage" alt="Base64 Image" style="height: 150px; width: 150px; object-fit: cover;">
-        </div>
-        <div *ngIf="remainingSeconds>1">
-            <div class="font-medium tracking-tight text-secondary text-xs">
-                Associa il tuo dispositivo scannerizzando il qr code tramite What's App. Il qr code ha validità di {{remainingSeconds}} secondi.
-            </div>
-        </div>
-        <div class="flex items-center">
-            <button
-                class="fuse-mat-button-large mt-4"
-                mat-flat-button
-                [color]="'primary'"
-                [disabled]="buttonConfigurationClick"
-                (click)="configureNumber()">
-                <mat-icon [svgIcon]="'heroicons_outline:qr-code'"></mat-icon>
-                <span *ngIf="!buttonConfigurationClick" style="margin-left: 3px; font-size: 12px;">Ottieni il Qr Code</span>
-                <mat-progress-spinner
-                    *ngIf="buttonConfigurationClick"
-                    [diameter]="20"
-                    [mode]="'indeterminate'"
-                ></mat-progress-spinner>
-            </button>
-        </div>
-    </div>
+<!--    <div class="flex flex-col w-full">-->
+<!--        -->
+<!--        <div *ngIf="remainingSeconds>1">-->
+<!--            <div class="font-medium tracking-tight text-secondary text-xs">-->
+<!--                Associa il tuo dispositivo scannerizzando il qr code tramite What's App. Il qr code ha validità di {{remainingSeconds}} secondi.-->
+<!--            </div>-->
+<!--        </div>-->
+
+<!--    </div>-->
 </div>
 <ng-template #elseBlock>
     <configure-opening></configure-opening>

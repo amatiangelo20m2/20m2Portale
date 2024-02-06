@@ -47,7 +47,6 @@ export class DataproviderService {
                             value => {
 
                                 if(value.branches?.length != 0){
-                                    console.log(value.branches)
                                     this.currentBranchesList?.next(value.branches);
                                     if(this.currentBranchesList?.value){
                                         console.log(this.currentBranchesList)
@@ -62,9 +61,9 @@ export class DataproviderService {
                                                         branch?.branchCode === branchCodeRetrieved) ?? value[0]
                                             );
                                         }
-                                    }else{
-                                        console.log("no branch found");
                                     }
+                                }else{
+                                    this.currentBranchesList?.next([]);
                                 }
                             }
                         );

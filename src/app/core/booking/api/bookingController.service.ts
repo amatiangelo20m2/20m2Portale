@@ -29,6 +29,7 @@ import { UpdateBranchTimeRanges } from '../model/updateBranchTimeRanges';
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
 
+
 @Injectable({providedIn: 'root'})
 export class BookingControllerService {
 
@@ -194,6 +195,53 @@ export class BookingControllerService {
         return this.httpClient.request<any>('post',`${this.basePath}/booking/booking/create`,
             {
                 body: body,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param branchCode
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createBranchConfiguration(branchCode: string, observe?: 'body', reportProgress?: boolean): Observable<BranchConfigurationDTO>;
+    public createBranchConfiguration(branchCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<BranchConfigurationDTO>>;
+    public createBranchConfiguration(branchCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<BranchConfigurationDTO>>;
+    public createBranchConfiguration(branchCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (branchCode === null || branchCode === undefined) {
+            throw new Error('Required parameter branchCode was null or undefined when calling createBranchConfiguration.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (branchCode !== undefined && branchCode !== null) {
+            queryParameters = queryParameters.set('branchCode', <any>branchCode);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<BranchConfigurationDTO>('get',`${this.basePath}/booking/createbranchconfiguration`,
+            {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
@@ -411,21 +459,34 @@ export class BookingControllerService {
      *
      *
      * @param branchCode
+     * @param startDate
+     * @param endDate
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public retrieveBookingsByBranchCode(branchCode: string, observe?: 'body', reportProgress?: boolean): Observable<Array<BookingDTO>>;
-    public retrieveBookingsByBranchCode(branchCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<BookingDTO>>>;
-    public retrieveBookingsByBranchCode(branchCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<BookingDTO>>>;
-    public retrieveBookingsByBranchCode(branchCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public retrieveBookingsByBranchCode(branchCode: string, startDate: string, endDate?: string, observe?: 'body', reportProgress?: boolean): Observable<Array<BookingDTO>>;
+    public retrieveBookingsByBranchCode(branchCode: string, startDate: string, endDate?: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<BookingDTO>>>;
+    public retrieveBookingsByBranchCode(branchCode: string, startDate: string, endDate?: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<BookingDTO>>>;
+    public retrieveBookingsByBranchCode(branchCode: string, startDate: string, endDate?: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (branchCode === null || branchCode === undefined) {
             throw new Error('Required parameter branchCode was null or undefined when calling retrieveBookingsByBranchCode.');
         }
 
+        if (startDate === null || startDate === undefined) {
+            throw new Error('Required parameter startDate was null or undefined when calling retrieveBookingsByBranchCode.');
+        }
+
+
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (branchCode !== undefined && branchCode !== null) {
             queryParameters = queryParameters.set('branchCode', <any>branchCode);
+        }
+        if (startDate !== undefined && startDate !== null) {
+            queryParameters = queryParameters.set('startDate', <any>startDate);
+        }
+        if (endDate !== undefined && endDate !== null) {
+            queryParameters = queryParameters.set('endDate', <any>endDate);
         }
 
         let headers = this.defaultHeaders;
@@ -444,6 +505,61 @@ export class BookingControllerService {
         ];
 
         return this.httpClient.request<Array<BookingDTO>>('get',`${this.basePath}/booking/booking/getlist`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param prefix
+     * @param phone
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public retrieveCustomer(prefix: string, phone: string, observe?: 'body', reportProgress?: boolean): Observable<CustomerResult>;
+    public retrieveCustomer(prefix: string, phone: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<CustomerResult>>;
+    public retrieveCustomer(prefix: string, phone: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<CustomerResult>>;
+    public retrieveCustomer(prefix: string, phone: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (prefix === null || prefix === undefined) {
+            throw new Error('Required parameter prefix was null or undefined when calling retrieveCustomer.');
+        }
+
+        if (phone === null || phone === undefined) {
+            throw new Error('Required parameter phone was null or undefined when calling retrieveCustomer.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (prefix !== undefined && prefix !== null) {
+            queryParameters = queryParameters.set('prefix', <any>prefix);
+        }
+        if (phone !== undefined && phone !== null) {
+            queryParameters = queryParameters.set('phone', <any>phone);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<CustomerResult>('get',`${this.basePath}/booking/retrievecustomer`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

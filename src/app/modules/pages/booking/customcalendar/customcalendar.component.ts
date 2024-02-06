@@ -79,7 +79,7 @@ export class CustomcalendarComponent implements OnInit {
 
         this.guestsBookable = Array.from({ length: this.configuration.maxTableNumber }, (_, index) => index + 1);
         this.formReservationDetails = this._formBuilder.group({
-            dogsAllowed     : [''],
+            dogsAllowed     : ['No'],
             particularRequest  : ['']
         });
     }

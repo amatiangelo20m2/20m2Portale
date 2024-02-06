@@ -26,6 +26,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {BookingControllerService, Customer, CustomerFormData, CustomerResult} from "../../../core/booking";
 import Swal from "sweetalert2";
 
+
 registerLocaleData(localeIt, 'it');
 
 @Component({
@@ -97,11 +98,6 @@ export class BookingComponent implements OnInit{
         public dialog: MatDialog) {
     }
 
-    // -----------------------------------------------------------------------------------------------------
-    // @ Lifecycle hooks
-    // -----------------------------------------------------------------------------------------------------
-    imagew: string = 'https://pps.whatsapp.net/v/t61.24694-24/414551696_646621444157815_2604241172986211136_n.jpg?ccb=11-4&oh=01_AdQK-En-P9NCMth_gk47BPPGxHTWoyXtmpcVFQ7LiKXKkA&oe=65C7CEE6&_nc_sid=e6ed6c&_nc_cat=103';
-
     /**
      * On init
      */
@@ -139,8 +135,8 @@ export class BookingComponent implements OnInit{
     onChangeEvent(selectedDate: MatDatepickerInputEvent<any, any>) {
 
         if (selectedDate.value instanceof DateTime) {
-            // Update the 'dob' form field value
 
+            // Update the 'dob' form field value
             this.registerCustomerForm.get('dob').setValue(selectedDate.value.year + '-' +
                 selectedDate?.value?.month?.toString()?.padStart(2, '0')
                 + '-' + selectedDate?.value?.day?.toString()?.padStart(2, '0'));
@@ -163,8 +159,7 @@ export class BookingComponent implements OnInit{
         console.log("phone : " + this.phoneValidationForm.get('mobilePhone').value);
         console.log("clountry : " + this.phoneValidationForm.get('selectedCountry').value);
 
-        this._bookingService.retrieveCustomerAndSendOtp(this.branchCode,
-            this.phoneValidationForm.get('selectedCountry').value.toString(),
+        this._bookingService.retrieveCustomerAndSendOtp(this.branchCode, this.phoneValidationForm.get('selectedCountry').value.toString(),
             this.phoneValidationForm.get('mobilePhone').value.toString()
              ).subscribe(
             (customerResult : CustomerResult)=> {

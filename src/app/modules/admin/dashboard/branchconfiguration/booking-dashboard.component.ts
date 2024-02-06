@@ -88,7 +88,6 @@ export class BookingDashboardComponent implements OnInit {
                                     this.branchConfigurationDTO = bookingConfDTO;
                                     console.log('Current status: ' + this.branchConfigurationDTO?.instanceStatus)
                                     if (this.branchConfigurationDTO != null
-                                        && this.branchConfigurationDTO != null
                                         && this.branchConfigurationDTO?.instanceStatus === 'OK') {
                                         console.log('Loop condition met. Stopping the loop.');
                                         this.remainingSeconds = 0;

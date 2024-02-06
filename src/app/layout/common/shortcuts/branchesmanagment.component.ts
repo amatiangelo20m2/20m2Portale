@@ -79,6 +79,7 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
         this.user = this._dashboardService.user;
 
         this._dashboardService.branches$.subscribe((branches) => {
+
             this.currentBranchList = branches;
             if(this.currentBranchList?.length == 0){
                 this.openPanel();
@@ -214,6 +215,7 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
                 console.log('valeria' + branchResponseEntity.branchCode);
                 this._dashboardService.addBranch(branchResponseEntity);
 
+                this.closePanel();
             }
         );
         this.branchForm.enable();
