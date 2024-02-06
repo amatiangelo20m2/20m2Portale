@@ -16,10 +16,7 @@ import {User} from "../../../core/user/user.types";
 import {BranchResponseEntity} from "../../../core/dashboard";
 import {MatDrawer, MatSidenavModule} from "@angular/material/sidenav";
 import {FuseMediaWatcherService} from "../../../../@fuse/services/media-watcher";
-import {SettingsSecurityComponent} from "./security/security.component";
 import {SettingsPlanBillingComponent} from "../../pages/settings/plan-billing/plan-billing.component";
-import {SettingsNotificationsComponent} from "./notifications/notifications.component";
-import {SettingsTeamComponent} from "./team/team.component";
 import {MatExpansionModule} from "@angular/material/expansion";
 import {ConfigureOpeningComponent} from "./branchconfiguration/configure-opening/configure-opening.component";
 import {BookingDashboardComponent} from "./branchconfiguration/booking-dashboard.component";
@@ -39,10 +36,11 @@ import {BookingcomponentComponent} from "./booking/bookingcomponent/bookingcompo
         NgSwitch,
         NgSwitchCase,
         BookingDashboardComponent,
-        SettingsSecurityComponent,
         SettingsPlanBillingComponent,
-        SettingsNotificationsComponent,
-        SettingsTeamComponent, NgIf, ConfigureOpeningComponent, MatExpansionModule, BookingcomponentComponent],
+        NgIf,
+        ConfigureOpeningComponent,
+        MatExpansionModule,
+        BookingcomponentComponent],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
     private _unsubscribeAll: Subject<any> = new Subject<any>();

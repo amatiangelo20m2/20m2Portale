@@ -219,6 +219,7 @@ export class BookingComponent implements OnInit{
             }else if(result){
 
                 console.log('Dialog closed with result:', result);
+
                 this.isPhoneVerified = result;
                 this.phoneValidationForm.get('mobilePhone').disable();
 

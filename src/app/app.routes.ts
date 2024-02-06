@@ -7,7 +7,6 @@ import { LayoutComponent } from 'app/layout/layout.component';
 export const appRoutes: Route[] = [
 
     {path: '', pathMatch : 'full', redirectTo: 'dashboard/managment'},
-
     {path: 'dashboard', pathMatch : 'full', redirectTo: 'dashboard/managment'},
     {path: 'signed-in-redirect', pathMatch : 'full', redirectTo: 'dashboard/managment'},
 
@@ -57,8 +56,7 @@ export const appRoutes: Route[] = [
             // {path: 'reservation', loadChildren: () => import('app/modules/pages/booking/booking.routes')},
 
         ]
-    },
-    {
+    }, {
         path: 'dashboard',
         canActivate: [AuthGuard],
         canActivateChild: [AuthGuard],
@@ -68,6 +66,7 @@ export const appRoutes: Route[] = [
         },
         children: [
             { path: 'managment', loadChildren: () => import('app/modules/admin/dashboard/dashboard.routes')},
+            { path: 'bookings', loadChildren: () => import('app/modules/admin/bookingpage/bookingpage.routes')},
             { path: 'settings', loadChildren: () => import('app/modules/pages/settings/settings.routes')},
         ]
     }
