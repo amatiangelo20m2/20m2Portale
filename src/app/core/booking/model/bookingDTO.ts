@@ -25,4 +25,5 @@ export interface BookingDTO {
     formCodeFrom?: string;
     insertBookingTime?: Date;
     customer?: Customer;
+    bookingStatus?: string;
 }

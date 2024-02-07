@@ -1,0 +1,118 @@
+<div class="flex flex-col flex-auto items-center sm:justify-center min-w-0">
+    <div class="w-full sm:w-auto py-1 px-1 sm:p-1 sm:rounded-2xl sm:shadow sm:bg-card">
+        <div class="w-full max-w-90 sm:w-90 mx-auto sm:mx-0">
+            <div class="flex flex-col flex-auto items-center sm:justify-center min-w-0">
+                <mat-tab-group [(selectedIndex)]="selectedTabIndex">
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+
+                            <div *ngIf="selectedTabIndex===0">
+                                <mat-icon [svgIcon]="'heroicons_outline:calendar-days'" color="primary"></mat-icon>
+                            </div>
+                            Data
+                        </ng-template>
+                        <div *ngIf="selectedTabIndex === 0">
+
+                            <div class="flex flex-col items-center justify-center mt-1">
+
+                                <div class="flex items-center justify-between mt-4">
+                                    <div class="flex items-center">
+                                        <!-- Left arrow (adjust styling as needed) -->
+                                        <button mat-icon-button (click)="previousMonth()">
+                                            <mat-icon [svgIcon]="'heroicons_mini:arrow-small-left'"></mat-icon>
+                                        </button>
+
+                                        <!-- Your existing content -->
+                                        <span class="ml-2 font-bold">{{getMonthByMonthNumber(calendar.currentMonth)}} {{calendar.currentYear}}</span>
+                                    </div>
+                                    <button mat-icon-button (click)="nextMonth()">
+                                        <mat-icon [svgIcon]="'heroicons_mini:arrow-small-right'"></mat-icon>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-7 sm:grid-cols-7 md:grid-cols-7 lg:grid-cols-7 xl:grid-cols-7 gap-1 mt-1">
+                                <ng-container *ngFor="let dayOfWeek of calendar.daysOfWeek">
+                                    <div class="py-4 px-4">
+                                        <div class="content-center font-bold">{{ dayOfWeek }}</div>
+                                    </div>
+                                </ng-container>
+                                <ng-container *ngFor="let day of calendar.daysInMonth">
+                                    <ng-container *ngIf="day.value > 0; else emptySlot">
+                                        <div
+                                            class="flex flex-col items-center justify-center m-2 mb-1 p-1
+                                    min-w-11 max-w-20 min-h-11 max-h-20
+                                    rounded border-2
+                                    cursor-pointer
+                                    bg-card"
+                                            [ngClass]="{'bg-grey': day.isOpen}"
+                                            [class.border-primary]="isSelected(day)"
+
+                                            (click)="selectDay(day)">
+
+                                            <div class="text-center break-all text-secondary font-bold">{{day.value}}</div>
+
+                                        </div>
+                                    </ng-container>
+                                    <ng-template #emptySlot>
+                                        <div class="py-4 px-4"></div>
+                                    </ng-template>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </mat-tab>
+
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <div *ngIf="selectedTabIndex===1">
+                                <mat-icon [svgIcon]="'heroicons_outline:users'" color="primary"></mat-icon>
+                            </div>
+                            Ospiti
+                        </ng-template>
+
+                        <div class="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-7 gap-1 mt-1">
+                            <ng-container *ngIf="guestsBookable.length > 0">
+                                <ng-container *ngFor="let guests of guestsBookable.slice(0, displayedGuestsCount)">
+                                    <div class="flex flex-col items-center justify-center m-2 mb-1 p-1 min-w-18 max-w-23 min-h-18 max-h-23
+                                rounded border-2 cursor-pointer bg-card"
+                                         [class.border-primary]="isGuestsValueSelected(guests)"
+
+                                         (click)="selectGuest(guests)">
+                                        <div class="text-center break-all text-secondary font-bold">{{guests}}</div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                        <button class="fuse-mat-button-large w-full mt-7 " mat-flat-button [color]="'accent'"
+                                *ngIf="displayedGuestsCount < guestsBookable.length"
+                                (click)="showMoreGuests()">
+                            Mostra più alternative
+                        </button>
+                    </mat-tab>
+
+                    <mat-tab>
+                        <ng-template mat-tab-label>
+                            <div *ngIf="selectedTabIndex===2">
+                                <mat-icon [svgIcon]="'heroicons_outline:clock'" color="primary"></mat-icon>
+                            </div>
+                            Ora
+                        </ng-template>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1 xl:grid-cols-1 gap-1 mt-1">
+                            <ng-container *ngIf="bookableTime.length > 0">
+                                <ng-container *ngFor="let bookSlot of bookableTime">
+                                    <div class="flex flex-col items-center justify-center m-2 mb-1 p-1 min-w-18 max-w-23 min-h-18 max-h-23
+                                rounded border-2 cursor-pointer bg-card"
+                                         [class.border-primary]="isTimeSlotValueSelected(bookSlot)"
+                                         (click)="selectTimeSlot(bookSlot)">
+                                        <div class="text-center break-all text-secondary font-bold">{{bookSlot}}</div>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
+            </div>
+        </div>
+    </div>
+</div>

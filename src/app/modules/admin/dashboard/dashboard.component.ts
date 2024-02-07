@@ -10,7 +10,7 @@ import {
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {Subject, takeUntil} from "rxjs";
-import {DataproviderService} from "./dataprovider.service";
+import {DataproviderService} from "../dataprovider.service";
 import {NgClass, NgFor, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {User} from "../../../core/user/user.types";
 import {BranchResponseEntity} from "../../../core/dashboard";

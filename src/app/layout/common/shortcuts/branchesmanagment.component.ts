@@ -21,7 +21,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
 import {catchError, Subject, throwError} from 'rxjs';
-import {DataproviderService} from "../../../modules/admin/dashboard/dataprovider.service";
+import {DataproviderService} from "../../../modules/admin/dataprovider.service";
 import {User} from "../../../core/user/user.types";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";

@@ -13,7 +13,7 @@ import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
 import {DayhoursComponent} from "./dayhours/dayhours.component";
 import {BranchResponseEntity} from "../../../../../core/dashboard";
-import {DataproviderService} from "../../dataprovider.service";
+import {DataproviderService} from "../../../dataprovider.service";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatTableModule} from "@angular/material/table";
 import {MatTooltipModule} from "@angular/material/tooltip";

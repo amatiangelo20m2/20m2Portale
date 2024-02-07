@@ -1,7 +1,7 @@
 import {ChangeDetectorRef, Component, ElementRef, inject, OnInit, ViewChild} from "@angular/core";
 import {FormControl, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup} from "@angular/forms";
 import {MatCheckboxChange, MatCheckboxModule} from "@angular/material/checkbox";
-import {DataproviderService} from "../../../dataprovider.service";
+import {DataproviderService} from "../../../../dataprovider.service";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";

@@ -1,10 +1,10 @@
 import {Routes} from "@angular/router";
-import {BookingComponent} from "./booking.component";
+import {TablehunterComponent} from "./tablehunter.component";
 
 export default [
     {
         path     : '',
-        component: BookingComponent,
+        component: TablehunterComponent,
         resolve  : {
         },
     },

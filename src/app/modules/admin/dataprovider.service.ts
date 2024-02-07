@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Subject, takeUntil} from 'rxjs';
-import {UserService} from "../../../core/user/user.service";
-import {User} from "../../../core/user/user.types";
-import {BranchResponseEntity, DashboardControllerService} from "../../../core/dashboard";
+import {BehaviorSubject, Observable, of, Subject, takeUntil} from 'rxjs';
+import {UserService} from "../../core/user/user.service";
+import {User} from "../../core/user/user.types";
+import {BranchResponseEntity, DashboardControllerService} from "../../core/dashboard";
 import {
-    BookingControllerService,
+    BookingControllerService, BookingDTO,
     BranchConfigurationDTO, BranchGeneralConfigurationEditRequest,
     BranchTimeRangeDTO, FormTag,
     TimeRangeUpdateRequest
-} from "../../../core/booking";
+} from "../../core/booking";
 
 @Injectable({providedIn: 'root'})
 export class DataproviderService {
@@ -17,7 +17,6 @@ export class DataproviderService {
     private currentBranch: BehaviorSubject<BranchResponseEntity> = new BehaviorSubject(null);
     private currentBranchesList : BehaviorSubject<BranchResponseEntity[]> = new BehaviorSubject(null);
     private currentBranchConfiguration : BehaviorSubject<BranchConfigurationDTO> = new BehaviorSubject(null);
-
 
     branch$ = this.currentBranch.asObservable();
     branches$ = this.currentBranchesList.asObservable();
@@ -173,5 +172,57 @@ export class DataproviderService {
                     .find(branchTimeRangeDTO => branchTimeRangeDTO.id === timeRangeDTO.id).closed = !timeRangeDTO.closed;
 
         });
+    }
+
+
+
+
+
+
+
+
+
+    //booking page service
+
+    private _bookings: BehaviorSubject<BookingDTO[] | null> = new BehaviorSubject(null);
+    private _originalBookings: BookingDTO[] = [];
+
+    getBookingData() {
+        this.getDashData();
+        let branchCodeRetrieved = localStorage.getItem("branchCode") ?? '';
+        if(branchCodeRetrieved != '') {
+            this._bookingControllerService.retrieveBookingsByBranchCode(branchCodeRetrieved, '2024-02-02','').subscribe(
+                (retrievedBooking: BookingDTO[])=>{
+                    this._originalBookings = this.sortBookingsByCustomerName(retrievedBooking);
+                    this._bookings.next(this.sortBookingsByCustomerName(retrievedBooking));
+                }
+            );
+        }
+    }
+
+    sortBookingsByCustomerName(bookings: BookingDTO[]): BookingDTO[] {
+        return bookings.sort((a, b) => {
+            const nameA = a.customer.name.toLowerCase();
+            const nameB = b.customer.name.toLowerCase();
+            if (nameA < nameB) {
+                return -1;
+            }
+            if (nameA > nameB) {
+                return 1;
+            }
+            return 0;
+        });
+    }
+
+    get bookings$(): Observable<BookingDTO[]> {
+        return this._bookings.asObservable();
+    }
+
+    searchInputControl(query: string): Observable<BookingDTO[]> {
+        const filteredBookings = this._originalBookings.filter(booking =>
+            booking.customer.name.toLowerCase().includes(query.toLowerCase())
+        );
+        this._bookings.next(filteredBookings);
+        return of();
     }
 }

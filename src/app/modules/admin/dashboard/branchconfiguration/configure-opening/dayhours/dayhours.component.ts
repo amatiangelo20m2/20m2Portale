@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatButtonModule} from "@angular/material/button";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
-import {DataproviderService} from "../../../dataprovider.service";
+import {DataproviderService} from "../../../../dataprovider.service";
 import {BranchResponseEntity} from "../../../../../../core/dashboard";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatIconModule} from "@angular/material/icon";

@@ -1,14 +1,14 @@
 import {Routes} from '@angular/router';
 import {inject} from "@angular/core";
 import {BookingPageComponent} from "./booking-page.component";
-import {BookingpageproividerService} from "./bookingpageproivider.service";
+import {DataproviderService} from "../dataprovider.service";
 
 export default [
     {
         path     : '',
         component: BookingPageComponent,
         resolve  : {
-            data: () => inject(BookingpageproividerService).getBookingData(),
+            data: () => inject(DataproviderService).getBookingData(),
         },
     },
 ] as Routes;

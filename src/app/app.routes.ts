@@ -25,6 +25,7 @@ export const appRoutes: Route[] = [
             {path: 'sign-in', loadChildren: () => import('app/modules/auth/sign-in/sign-in.routes')},
             {path: 'sign-up', loadChildren: () => import('app/modules/auth/sign-up/sign-up.routes')},
             {path: 'reservation', loadChildren: () => import('app/modules/pages/booking/booking.routes')},
+            {path: 'tablefounder', loadChildren: () => import('app/modules/pages/tablehunter/tablehunters.routes')},
         ]
     },
 
