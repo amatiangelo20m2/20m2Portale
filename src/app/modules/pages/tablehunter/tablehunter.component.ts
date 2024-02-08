@@ -75,7 +75,7 @@ export class TablehunterComponent implements OnInit{
         );
 
         this.formReservationDetails = this._formBuilder.group({
-            dogsAllowed     : ['No'],
+            dogsAllowed     : ['0'],
             particularRequest  : ['']
         });
 

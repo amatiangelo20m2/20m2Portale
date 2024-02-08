@@ -24,6 +24,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 link : '/dashboard/bookings',
             },
             {
+                id   : 'customers',
+                title: 'I miei clienti',
+                type : 'basic',
+                icon : 'heroicons_outline:user-group',
+                link : '/dashboard/customers',
+            },
+            {
                 id   : 'catering',
                 title: 'Catering',
                 type : 'basic',
