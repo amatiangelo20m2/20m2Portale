@@ -28,11 +28,14 @@ import { Configuration }                                     from '../configurat
 @Injectable({providedIn: 'root'})
 export class DashboardControllerService {
 
-    protected basePath = 'http://localhost:8088/ventimetridashboard';
+    protected basePath = 'http://ristorantecisternino.com:8088/ventimetridashboard';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient,
+                @Optional()@Inject(BASE_PATH) basePath: string,
+                @Optional() configuration: Configuration) {
+
         if (basePath) {
             this.basePath = basePath;
         }
