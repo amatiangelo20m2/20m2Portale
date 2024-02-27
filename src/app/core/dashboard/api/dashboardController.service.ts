@@ -28,7 +28,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({providedIn: 'root'})
 export class DashboardControllerService {
 
-    protected basePath = 'http://ristorantecisternino.com:8088/ventimetridashboard';
+    protected basePath = 'https://20m2datacloud.com:8088/ventimetridashboard';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 

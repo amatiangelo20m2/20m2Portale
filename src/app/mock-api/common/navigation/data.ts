@@ -17,6 +17,12 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 icon : 'heroicons_outline:home',
                 link : '/dashboard/managment',
             },{
+                id   : 'settings',
+                title: 'Configura Apertura',
+                type : 'basic',
+                icon : 'heroicons_outline:wrench-screwdriver',
+                link : '/dashboard/configure',
+            },{
                 id   : 'booking',
                 title: 'Prenotazioni',
                 type : 'basic',

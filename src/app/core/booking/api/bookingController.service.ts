@@ -33,18 +33,23 @@ import { Configuration }                                     from '../configurat
 @Injectable({providedIn: 'root'})
 export class BookingControllerService {
 
-    protected basePath = 'http://ristorantecisternino.com:8088/ventimetribooking';
+    protected basePath = 'https://20m2datacloud.com:8088/ventimetribooking';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
-    constructor(protected httpClient: HttpClient, @Optional()@Inject(BASE_PATH) basePath: string, @Optional() configuration: Configuration) {
+    constructor(protected httpClient: HttpClient,
+                @Optional()@Inject(BASE_PATH) basePath: string,
+                @Optional() configuration: Configuration) {
+
         if (basePath) {
             this.basePath = basePath;
         }
+
         if (configuration) {
             this.configuration = configuration;
             this.basePath = basePath || configuration.basePath || this.basePath;
         }
+
     }
 
     /**

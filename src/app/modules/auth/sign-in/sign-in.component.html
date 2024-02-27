@@ -6,6 +6,7 @@
                 <img src="assets/images/logo/20NOBG.png">
             </div>
 
+
             <!-- Title -->
             <div class="mt-8 text-4xl font-extrabold tracking-tight leading-tight">Sign in</div>
             <div class="flex items-baseline mt-0.5 font-medium">
@@ -15,8 +16,6 @@
                     [routerLink]="['/sign-up']">Sign up
                 </a>
             </div>
-
-            <!-- Alert -->
             <fuse-alert
                 class="mt-8"
                 [appearance]="'outline'"
@@ -129,6 +128,8 @@
                     </button>
                 </div>
             </form>
+
+
         </div>
     </div>
     <div class="relative hidden md:flex flex-auto items-center justify-center w-1/2 h-full p-16 lg:px-28 overflow-hidden bg-gray-800 dark:border-l">
@@ -157,9 +158,14 @@
             <div class="text-7xl font-bold leading-none text-gray-100">
                 <div>{{this._common.headerMessage}}</div>
             </div>
-            <div class="mt-6 text-lg tracking-tight leading-6 text-gray-400">
+            <div class="mt-6 p-0.5 text-lg tracking-tight leading-6 text-gray-400">
                {{this._common.welcomeMessage}}
             </div>
+            <div class="w-26">
+                <img src="https://www.positivessl.com/images/seals/positivessl_trust_seal_sm_124x32.png">
+            </div>
+
         </div>
     </div>
 </div>
+

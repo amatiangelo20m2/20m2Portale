@@ -60,6 +60,7 @@ export class CustomcalendarComponent implements OnInit {
                 private _bookingService: BookingControllerService,
                 private _formBuilder: UntypedFormBuilder,) {
 
+        this._bookingService = new BookingControllerService(null, '', null);
 
     }
 
