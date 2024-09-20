@@ -11,15 +11,15 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
-import {CommonMessages} from "../common/common_messages";
 
 @Component({
-    selector     : 'auth-sign-in',
-    templateUrl  : './sign-in.component.html',
+    selector: 'auth-sign-in',
+    templateUrl: './sign-in.component.html',
     encapsulation: ViewEncapsulation.None,
-    animations   : fuseAnimations,
-    standalone   : true,
-    imports      : [RouterLink, FuseAlertComponent, NgIf, FormsModule,
+    animations: fuseAnimations,
+    standalone: true,
+    imports: [
+        RouterLink, FuseAlertComponent, NgIf, FormsModule,
         ReactiveFormsModule, MatFormFieldModule, MatInputModule,
         MatButtonModule, MatIconModule, MatCheckboxModule, MatProgressSpinnerModule
     ],
@@ -29,7 +29,7 @@ export class AuthSignInComponent implements OnInit {
     @ViewChild('signInNgForm') signInNgForm: NgForm;
 
     alert: { type: FuseAlertType; message: string } = {
-        type   : 'success',
+        type: 'success',
         message: '',
     };
 
@@ -40,48 +40,50 @@ export class AuthSignInComponent implements OnInit {
         private _activatedRoute: ActivatedRoute,
         private _authService: AuthService,
         private _formBuilder: UntypedFormBuilder,
-        private _router: Router,
-        public _common: CommonMessages) {
-    }
+        private _router: Router
+    ) {}
 
     /**
      * On init
      */
     ngOnInit(): void {
         this.signInForm = this._formBuilder.group({
-            email     : ['', [Validators.required, Validators.email]],
-            password  : ['', Validators.required],
+            userCode: ['', [Validators.required, Validators.minLength(10)]],
+            password: ['', Validators.required],
             rememberMe: [''],
         });
     }
 
+    /**
+     * Handle sign-in form submission
+     */
     signIn(): void {
-
-        if ( this.signInForm.invalid ) {
+        if (this.signInForm.invalid) {
             return;
         }
 
+        // Disable the form
         this.signInForm.disable();
+
+        // Hide the alert
         this.showAlert = false;
+        // Sign in via AuthService
+        this._authService.signInWithUserCode(this.signInForm.value).subscribe(
+            () => {
+                // Redirect to the target URL
+                const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
+                this._router.navigateByUrl(redirectURL);
+            },
+            (response) => {
 
-        this._authService.signIn(this.signInForm.value).subscribe(() => {
+                this.signInForm.enable();
 
-                    const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
-                    this._router.navigateByUrl(redirectURL);
-                    },
-                (response) => {
-                    this.signInForm.enable();
-                    // this.signInNgForm.resetForm();
-                    this.alert = {
-                        type   : 'error',
-                        message: 'Error code: ' + response,
-                    };
-                    this.showAlert = true;
-                },
-            );
-    }
-
-    authenticateWithGoogle() {
-
+                this.alert = {
+                    type: 'error',
+                    message: 'Error code: ' + response.message,
+                };
+                this.showAlert = true;
+            }
+        );
     }
 }

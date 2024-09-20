@@ -22,11 +22,13 @@ export interface BranchCreationEntity {
     vat?: string;
     type?: BranchCreationEntity.TypeEnum;
     logoImage?: Array<string>;
+    fcmToken?: string;
 }
 export namespace BranchCreationEntity {
-    export type TypeEnum = 'RESTAURANT' | 'SUPPLIER';
+    export type TypeEnum = 'RISTORANTE' | 'FORNITORE' | 'CATERING';
     export const TypeEnum = {
-        RESTAURANT: 'RESTAURANT' as TypeEnum,
-        SUPPLIER: 'SUPPLIER' as TypeEnum
+        RISTORANTE: 'RISTORANTE' as TypeEnum,
+        FORNITORE: 'FORNITORE' as TypeEnum,
+        CATERING: 'CATERING' as TypeEnum
     };
 }

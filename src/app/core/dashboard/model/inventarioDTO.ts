@@ -9,8 +9,14 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { BranchResponseEntity } from './branchResponseEntity';
+import { InventoryAction } from './inventoryAction';
+import { ProductDTO } from './productDTO';
 
-export interface DashboardData { 
-    branches?: Array<BranchResponseEntity>;
+export interface InventarioDTO { 
+    inventarioId?: number;
+    insertionDate?: string;
+    deletionDate?: string;
+    productDTO?: ProductDTO;
+    inventoryAction?: Array<InventoryAction>;
+    stock?: number;
 }

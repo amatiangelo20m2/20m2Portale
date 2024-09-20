@@ -3,14 +3,20 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 
-import { DashboardControllerService } from './api/dashboardController.service';
+import { BranchControllerService } from './api/branchController.service';
+import { OrderControllerService } from './api/orderController.service';
+import { StorageControllerService } from './api/storageController.service';
+import { SupplierControllerService } from './api/supplierController.service';
 
 @NgModule({
   imports:      [],
   declarations: [],
   exports:      [],
   providers: [
-    DashboardControllerService ]
+    BranchControllerService,
+    OrderControllerService,
+    StorageControllerService,
+    SupplierControllerService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders<ApiModule> {

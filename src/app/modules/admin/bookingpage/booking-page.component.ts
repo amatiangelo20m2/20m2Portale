@@ -48,16 +48,16 @@ import {BranchResponseEntity} from "../../../core/dashboard";
 })
 export class BookingPageComponent implements OnInit{
 
-    @Input() tooltip: string;
-    @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
-
-    bookings: BookingDTO[];
-    selectedBooking: BookingDTO;
+    // @Input() tooltip: string;
+    // @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
+    //
+    // bookings: BookingDTO[];
+    // selectedBooking: BookingDTO;
     drawerMode: 'side' | 'over';
     bookingCount: number = 0;
-
+    //
     searchInputControl: UntypedFormControl = new UntypedFormControl();
-    private _unsubscribeAll: Subject<any> = new Subject<any>();
+    // private _unsubscribeAll: Subject<any> = new Subject<any>();
     currentBranch: BranchResponseEntity;
 
     constructor(private _dataproviderService: DataproviderService,
@@ -71,27 +71,27 @@ export class BookingPageComponent implements OnInit{
         this._dataproviderService.branch$.subscribe((branch) => {
             this.currentBranch = branch;
         });
-
-        this._dataproviderService.bookings$.subscribe((bookings) =>{
-            this.bookings = bookings
-            this.bookingCount = this.bookings?.length;
-            this._changeDetectorRef.markForCheck();
-        });
-
-        this.searchInputControl.valueChanges.pipe(
-                takeUntil(this._unsubscribeAll),
-                switchMap(query =>
-                    this._dataproviderService.searchInputControl(query),
-                ),
-            )
-            .subscribe();
-
-        this.matDrawer.openedChange.subscribe((opened) => {
-            if ( !opened ) {
-                this.selectedBooking = null;
-                this._changeDetectorRef.markForCheck();
-            }
-        });
+        //
+        // this._dataproviderService.bookings$.subscribe((bookings) =>{
+        //     this.bookings = bookings
+        //     this.bookingCount = this.bookings?.length;
+        //     this._changeDetectorRef.markForCheck();
+        // });
+        //
+        // this.searchInputControl.valueChanges.pipe(
+        //         takeUntil(this._unsubscribeAll),
+        //         switchMap(query =>
+        //             this._dataproviderService.searchInputControl(query),
+        //         ),
+        //     )
+        //     .subscribe();
+        //
+        // this.matDrawer.openedChange.subscribe((opened) => {
+        //     if ( !opened ) {
+        //         this.selectedBooking = null;
+        //         this._changeDetectorRef.markForCheck();
+        //     }
+        // });
     }
 
     trackByFn(index: number, item: any): any

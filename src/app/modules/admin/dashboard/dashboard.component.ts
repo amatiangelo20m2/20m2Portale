@@ -1,9 +1,9 @@
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
-    Component,
+    Component, inject,
     OnDestroy,
-    OnInit,
+    OnInit, signal,
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
@@ -18,9 +18,21 @@ import {MatDrawer, MatSidenavModule} from "@angular/material/sidenav";
 import {FuseMediaWatcherService} from "../../../../@fuse/services/media-watcher";
 import {SettingsPlanBillingComponent} from "../../pages/settings/plan-billing/plan-billing.component";
 import {MatExpansionModule} from "@angular/material/expansion";
-import {ConfigureOpeningComponent} from "./branchconfiguration/configure-opening/configure-opening.component";
-import {BookingDashboardComponent} from "./branchconfiguration/booking-dashboard.component";
-import {BookingcomponentComponent} from "./booking/bookingcomponent/bookingcomponent.component";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatCardModule} from "@angular/material/card";
+import {MatInputModule} from "@angular/material/input";
+import {FormsModule} from "@angular/forms";
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatChipEditedEvent, MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
+import {LiveAnnouncer} from "@angular/cdk/a11y";
+import {COMMA, ENTER} from "@angular/cdk/keycodes";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
+import {ApexOptions, NgApexchartsModule} from "ng-apexcharts";
+import {MatMenuModule} from "@angular/material/menu";
+
+export interface Fruit {
+    name: string;
+}
 
 @Component({
     selector: 'dashboard',
@@ -35,14 +47,17 @@ import {BookingcomponentComponent} from "./booking/bookingcomponent/bookingcompo
         NgClass,
         NgSwitch,
         NgSwitchCase,
-        BookingDashboardComponent,
         SettingsPlanBillingComponent,
         NgIf,
-        ConfigureOpeningComponent,
         MatExpansionModule,
-        BookingcomponentComponent],
+        MatDatepickerModule,
+        MatCardModule,
+        MatInputModule, FormsModule, MatDialogModule, MatChipsModule, MatButtonToggleModule, NgApexchartsModule, MatMenuModule],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+
+    data: any;
+
     private _unsubscribeAll: Subject<any> = new Subject<any>();
 
     @ViewChild('drawer') drawer: MatDrawer;
@@ -65,6 +80,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
                 private _fuseMediaWatcherService: FuseMediaWatcherService,) {
     }
 
+    readonly panelOpenState = signal(false);
     ngOnInit(): void {
         this.panels = [
             {
@@ -88,7 +104,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
             {
                 id         : 'catering',
                 icon       : 'mat_outline:local_bar',
-                title      : 'Catering',
+                title      : 'Catering ed Eventi',
                 description: 'Catering and Events',
             },
             {
@@ -143,8 +159,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
         return this.panels.find(panel => panel.id === id);
     }
 
-    goToPanel(panel: string): void
-    {
+    goToPanel(panel: string): void {
         this.selectedPanel = panel;
 
         // Close the drawer on 'over' mode
@@ -153,5 +168,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
             this.drawer.close();
         }
     }
-
+}
+export interface DialogData {
+    animal: string;
+    name: string;
 }

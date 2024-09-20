@@ -33,7 +33,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({providedIn: 'root'})
 export class BookingControllerService {
 
-    protected basePath = 'https://20m2datacloud.com:8088/ventimetribooking';
+    protected basePath = 'http://localhost:8088/ventimetribooking';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 

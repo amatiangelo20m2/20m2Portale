@@ -9,8 +9,11 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { StorageDTO } from './storageDTO';
+import { SupplierDTO } from './supplierDTO';
 
 export interface BranchResponseEntity { 
+    branchId?: number;
     name?: string;
     address?: string;
     email?: string;
@@ -20,21 +23,25 @@ export interface BranchResponseEntity {
     branchCode?: string;
     role?: BranchResponseEntity.RoleEnum;
     logoImage?: Array<string>;
+    authorized?: boolean;
+    supplierDTOList?: Array<SupplierDTO>;
+    storageDTOS?: Array<StorageDTO>;
 }
 export namespace BranchResponseEntity {
-    export type TypeEnum = 'RESTAURANT' | 'SUPPLIER';
+    export type TypeEnum = 'RISTORANTE' | 'FORNITORE' | 'CATERING';
     export const TypeEnum = {
-        RESTAURANT: 'RESTAURANT' as TypeEnum,
-        SUPPLIER: 'SUPPLIER' as TypeEnum
+        RISTORANTE: 'RISTORANTE' as TypeEnum,
+        FORNITORE: 'FORNITORE' as TypeEnum,
+        CATERING: 'CATERING' as TypeEnum
     };
-    export type RoleEnum = 'PROPRIETARIO' | 'AMMINISTRATORE' | 'RESPONSABILE' | 'DIPENDENTE' | 'BARMAN' | 'CAMERIERE' | 'SMM';
+    export type RoleEnum = 'AMMINISTRATORE' | 'RESPONSABILE' | 'FACTOTUM' | 'RESPONSABILE_MAGAZZINO' | 'BARMAN' | 'CUOCO' | 'CAMERIERE';
     export const RoleEnum = {
-        PROPRIETARIO: 'PROPRIETARIO' as RoleEnum,
         AMMINISTRATORE: 'AMMINISTRATORE' as RoleEnum,
         RESPONSABILE: 'RESPONSABILE' as RoleEnum,
-        DIPENDENTE: 'DIPENDENTE' as RoleEnum,
+        FACTOTUM: 'FACTOTUM' as RoleEnum,
+        RESPONSABILEMAGAZZINO: 'RESPONSABILE_MAGAZZINO' as RoleEnum,
         BARMAN: 'BARMAN' as RoleEnum,
-        CAMERIERE: 'CAMERIERE' as RoleEnum,
-        SMM: 'SMM' as RoleEnum
+        CUOCO: 'CUOCO' as RoleEnum,
+        CAMERIERE: 'CAMERIERE' as RoleEnum
     };
 }

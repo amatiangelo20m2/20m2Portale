@@ -40,6 +40,7 @@ import {BookingControllerService, BranchConfigurationDTO} from "../../../../core
 })
 export class BookingDashboardComponent implements OnInit {
 
+
     currentBranch : BranchResponseEntity;
     qrCodeImage: String = '';
 

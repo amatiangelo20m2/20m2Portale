@@ -5,13 +5,15 @@ import {UserService} from 'app/core/user/user.service';
 import {catchError, Observable, of, switchMap, throwError} from 'rxjs';
 import {environment} from "../../../environments/environment";
 import {BASE_PATH} from "../common/variables";
+import {getAuth, GoogleAuthProvider, signInWithPopup} from "firebase/auth";
+//NOTE: ASSOLUTAMENTE NON TOCCARE QUESTO IMPORT : import firebase from "firebase/compat/app"; . In questa forma-> import firebase from "firebase/compat"; non funziona
 
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
     private _authenticated: boolean = false;
-
+    private auth = getAuth();
     constructor(
         private _httpClient: HttpClient,
         private _userService: UserService) {
@@ -38,13 +40,40 @@ export class AuthService {
      *
      * @param credentials
      */
-    signIn(credentials: { email: string; password: string }): Observable<any> {
+    signIn(credentials: { email: string;
+        password: string }): Observable<any> {
 
         if ( this._authenticated ) {
             return throwError('User is already logged in.');
         }
-
         return this._httpClient.post(BASE_PATH + '/ventimetriauth/api/auth/sign-in', credentials).pipe(
+            switchMap((response: any) => {
+
+                this.accessToken = response.accessToken;
+                // Set the authenticated flag to true
+                this._authenticated = true;
+                // Store the user on the user service
+                this._userService.user = response.user;
+
+                return of(response);
+            }),
+        );
+    }
+
+    /**
+     * Sign in
+     *
+     * @param credentials
+     */
+    signInWithUserCode(credentials: { userCode: string;
+        password: string }): Observable<any> {
+
+        if ( this._authenticated ) {
+            return throwError('User is already logged in.');
+        }
+        console.log('credentials code: ' +credentials.userCode);
+        console.log('credentials pass: ' +credentials.password);
+        return this._httpClient.post(BASE_PATH + '/ventimetriauth/api/auth/sign-in-with-user-code', credentials).pipe(
             switchMap((response: any) => {
 
                 this.accessToken = response.accessToken;
@@ -140,4 +169,16 @@ export class AuthService {
         // If the access token exists, and it didn't expire, sign in using it
         return this.signInUsingToken();
     }
+
+    async signInWithGoogle() {
+        const provider = new GoogleAuthProvider();
+        try {
+            const result = await signInWithPopup(this.auth, provider);
+            // Handle successful sign-in here
+        } catch (error) {
+            console.error('Sign-in error:', error);
+        }
+    }
 }
+
+

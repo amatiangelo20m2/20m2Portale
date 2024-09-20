@@ -25,7 +25,7 @@ import {DataproviderService} from "../../../modules/admin/dataprovider.service";
 import {User} from "../../../core/user/user.types";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
-import {BranchCreationEntity, BranchResponseEntity, DashboardControllerService} from "../../../core/dashboard";
+import {BranchCreationEntity, BranchResponseEntity, BranchControllerService} from "../../../core/dashboard";
 
 @Component({
     selector       : 'branches-managment',
@@ -71,7 +71,7 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
         private _overlay: Overlay,
         private _viewContainerRef: ViewContainerRef,
         private _dashboardService : DataproviderService,
-        private _dashboardControllerService : DashboardControllerService,
+        private _branchControllerService : BranchControllerService,
         private _snackBar: MatSnackBar) {
     }
 
@@ -198,7 +198,7 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
             userCode: this.user.userCode,
         }
 
-        this._dashboardControllerService.save(this.branchEntity).pipe(
+        this._branchControllerService.save(this.branchEntity).pipe(
 
             catchError((error) => {
                 this._snackBar.open('error: ' + error.statusCode, 'Undo', {

@@ -20,10 +20,8 @@ import {OptCodeDialogComponent} from "./optconfirm/optconfirm.component";
 import {MatDialog} from "@angular/material/dialog";
 import {DateTime} from "luxon";
 import {MatTabsModule} from "@angular/material/tabs";
-import {CustomcalendarComponent} from "./customcalendar/customcalendar.component";
 import {Subscription} from "rxjs";
 import {MatTooltipModule} from "@angular/material/tooltip";
-import {BookingControllerService, Customer, CustomerFormData, CustomerResult} from "../../../core/booking";
 import Swal from "sweetalert2";
 
 
@@ -54,7 +52,6 @@ registerLocaleData(localeIt, 'it');
         MatCheckboxModule,
         FuseAlertComponent,
         MatTabsModule,
-        CustomcalendarComponent,
         MatTooltipModule,
     ],
     providers: [
@@ -80,13 +77,13 @@ export class BookingComponent implements OnInit{
     showAlert: boolean = false;
     isPhoneVerified : boolean = false;
     dob: Date | null;
-    customerFormData: CustomerFormData;
+    // customerFormData: CustomerFormData;
     customerFormDataSubscription: Subscription;
-    customer: Customer;
+    // customer: Customer;
     branchCode: string;
     formCode: string;
     currentPhotoUrl: string;
-    customerResult: CustomerResult;
+    // customerResult: CustomerResult;
 
     /**
      * Constructor
@@ -94,7 +91,7 @@ export class BookingComponent implements OnInit{
     constructor(
         private _formBuilder: UntypedFormBuilder,
         private route: ActivatedRoute,
-        private _bookingService: BookingControllerService,
+        // private _bookingService: BookingControllerService,
         public dialog: MatDialog) {
     }
 
@@ -109,25 +106,25 @@ export class BookingComponent implements OnInit{
 
             // this.customerFormData$ = this._bookingService.retrieveFormData(this.branchCode, this.formCode);
 
-            this.customerFormDataSubscription = this._bookingService.retrieveFormData(this.branchCode, this.formCode)
-                .subscribe((data: CustomerFormData) => {
-                    this.customerFormData = data;
-                });
+            // this.customerFormDataSubscription = this._bookingService.retrieveFormData(this.branchCode, this.formCode)
+            //     .subscribe((data: CustomerFormData) => {
+            //         this.customerFormData = data;
+            //     });
 
-            this.phoneValidationForm = this._formBuilder.group({
-                    mobilePhone      : ['', Validators.required],
-                    selectedCountry      : ['39', Validators.required],
-                },
-            );
-
-            this.registerCustomerForm = this._formBuilder.group({
-                    name      : ['', Validators.required],
-                    lastname  : ['', Validators.required],
-                    email  : ['', Validators.required],
-                    dob  : ['', Validators.required],
-                    agreements: ['', Validators.requiredTrue]
-                },
-            );
+            // this.phoneValidationForm = this._formBuilder.group({
+            //         mobilePhone      : ['', Validators.required],
+            //         selectedCountry      : ['39', Validators.required],
+            //     },
+            // );
+            //
+            // this.registerCustomerForm = this._formBuilder.group({
+            //         name      : ['', Validators.required],
+            //         lastname  : ['', Validators.required],
+            //         email  : ['', Validators.required],
+            //         dob  : ['', Validators.required],
+            //         agreements: ['', Validators.requiredTrue]
+            //     },
+            // );
 
         });
     }
@@ -147,129 +144,129 @@ export class BookingComponent implements OnInit{
         }
     }
 
-    validatePhone(): void {
+    // validatePhone(): void {
+    //
+    //     if ( this.phoneValidationForm.invalid ) {
+    //         return;
+    //     }
+    //
+    //     // this.phoneValidationForm.disable();
+    //     this.showAlert = false;
+    //
+    //     console.log("phone : " + this.phoneValidationForm.get('mobilePhone').value);
+    //     console.log("clountry : " + this.phoneValidationForm.get('selectedCountry').value);
+    //
+    //     this._bookingService.retrieveCustomerAndSendOtp(this.branchCode, this.phoneValidationForm.get('selectedCountry').value.toString(),
+    //         this.phoneValidationForm.get('mobilePhone').value.toString()
+    //          ).subscribe(
+    //         (customerResult : CustomerResult)=> {
+    //             this.customerResult = customerResult;
+    //             if(this.customerResult.customerFound){
+    //                 this.registerCustomerForm = this._formBuilder.group({
+    //                         name      : [this.customerResult?.customer?.name, Validators.required],
+    //                         lastname  : [this.customerResult?.customer?.lastname, Validators.required],
+    //                         email  : [this.customerResult?.customer?.email, Validators.required],
+    //                         dob  : [this.customerResult?.customer?.dob, Validators.required],
+    //                         agreements: [this.customerResult?.customer?.treatmentPersonalData, Validators.requiredTrue]
+    //                     },
+    //                 );
+    //             }
+    //             this.currentPhotoUrl = customerResult?.profilePhoto;
+    //             this.openDialog(customerResult?.opt);
+    //         }
+    //     );
+    // }
 
-        if ( this.phoneValidationForm.invalid ) {
-            return;
-        }
+    // openDialog(opt: string): void {
+    //     const dialogRef = this.dialog.open(OptCodeDialogComponent, {
+    //         width: '50vw',
+    //         maxWidth: '350px',
+    //         data: {
+    //             otpValue: opt,
+    //         }
+    //     });
+    //
+    //     dialogRef.afterClosed().subscribe(result => {
+    //         if(result && this.customerResult.customerFound){
+    //
+    //             console.log('Dialog closed with result and customer found:', result);
+    //             this.isPhoneVerified = result;
+    //             this.phoneValidationForm.get('mobilePhone').disable();
+    //             let timerInterval;
+    //
+    //             Swal.fire({
+    //                 title: "Bentornato " + this.customerResult.customer.name,
+    //                 html: "Recupero i tuoi dati e ti porto a prenotare il tavolo<b></b>",
+    //                 timer: 2500,
+    //                 timerProgressBar: true,
+    //                 didOpen: () => {
+    //                     Swal.showLoading();
+    //                     const timer = Swal.getPopup().querySelector("b");
+    //                     timerInterval = setInterval(() => {
+    //                         timer.textContent = `${(Swal.getTimerLeft())} secondi`;
+    //                     }, 100);
+    //                 },
+    //                 willClose: () => {
+    //                     clearInterval(timerInterval);
+    //                 }
+    //             }).then((result) => {
+    //                 this.customer = this.customerResult.customer;
+    //                 this.chooseTable = true;
+    //             });
+    //         }else if(result){
+    //
+    //             console.log('Dialog closed with result:', result);
+    //
+    //             this.isPhoneVerified = result;
+    //             this.phoneValidationForm.get('mobilePhone').disable();
+    //
+    //             Swal.fire({
+    //                 title: "Cellulare verificato",
+    //                 text: "",
+    //                 timer: 1500,
+    //                 showConfirmButton: false,
+    //                 icon: "success"
+    //             });
+    //
+    //         }else{
+    //
+    //             console.log('Dialog closed with result:', result);
+    //             this.isPhoneVerified = false;
+    //             this.phoneValidationForm.get('mobilePhone').enable();
+    //
+    //             Swal.fire({
+    //                 title: "Codice non valido",
+    //                 text: "",
+    //                 timer: 2500,
+    //                 showConfirmButton: false,
+    //                 icon: "error"
+    //             });
+    //
+    //
+    //         }
+    //
+    //     });
+    // }
 
-        // this.phoneValidationForm.disable();
-        this.showAlert = false;
-
-        console.log("phone : " + this.phoneValidationForm.get('mobilePhone').value);
-        console.log("clountry : " + this.phoneValidationForm.get('selectedCountry').value);
-
-        this._bookingService.retrieveCustomerAndSendOtp(this.branchCode, this.phoneValidationForm.get('selectedCountry').value.toString(),
-            this.phoneValidationForm.get('mobilePhone').value.toString()
-             ).subscribe(
-            (customerResult : CustomerResult)=> {
-                this.customerResult = customerResult;
-                if(this.customerResult.customerFound){
-                    this.registerCustomerForm = this._formBuilder.group({
-                            name      : [this.customerResult?.customer?.name, Validators.required],
-                            lastname  : [this.customerResult?.customer?.lastname, Validators.required],
-                            email  : [this.customerResult?.customer?.email, Validators.required],
-                            dob  : [this.customerResult?.customer?.dob, Validators.required],
-                            agreements: [this.customerResult?.customer?.treatmentPersonalData, Validators.requiredTrue]
-                        },
-                    );
-                }
-                this.currentPhotoUrl = customerResult?.profilePhoto;
-                this.openDialog(customerResult?.opt);
-            }
-        );
-    }
-
-    openDialog(opt: string): void {
-        const dialogRef = this.dialog.open(OptCodeDialogComponent, {
-            width: '50vw',
-            maxWidth: '350px',
-            data: {
-                otpValue: opt,
-            }
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            if(result && this.customerResult.customerFound){
-
-                console.log('Dialog closed with result and customer found:', result);
-                this.isPhoneVerified = result;
-                this.phoneValidationForm.get('mobilePhone').disable();
-                let timerInterval;
-
-                Swal.fire({
-                    title: "Bentornato " + this.customerResult.customer.name,
-                    html: "Recupero i tuoi dati e ti porto a prenotare il tavolo<b></b>",
-                    timer: 2500,
-                    timerProgressBar: true,
-                    didOpen: () => {
-                        Swal.showLoading();
-                        const timer = Swal.getPopup().querySelector("b");
-                        timerInterval = setInterval(() => {
-                            timer.textContent = `${(Swal.getTimerLeft())} secondi`;
-                        }, 100);
-                    },
-                    willClose: () => {
-                        clearInterval(timerInterval);
-                    }
-                }).then((result) => {
-                    this.customer = this.customerResult.customer;
-                    this.chooseTable = true;
-                });
-            }else if(result){
-
-                console.log('Dialog closed with result:', result);
-
-                this.isPhoneVerified = result;
-                this.phoneValidationForm.get('mobilePhone').disable();
-
-                Swal.fire({
-                    title: "Cellulare verificato",
-                    text: "",
-                    timer: 1500,
-                    showConfirmButton: false,
-                    icon: "success"
-                });
-
-            }else{
-
-                console.log('Dialog closed with result:', result);
-                this.isPhoneVerified = false;
-                this.phoneValidationForm.get('mobilePhone').enable();
-
-                Swal.fire({
-                    title: "Codice non valido",
-                    text: "",
-                    timer: 2500,
-                    showConfirmButton: false,
-                    icon: "error"
-                });
-
-
-            }
-
-        });
-    }
-
-    registerCustomerAndGoToReservationPage() {
-        if (this.registerCustomerForm.invalid ) {
-            return;
-        }
-        this.showAlert = false;
-
-        // name: string, lastname: string, email: string, prefix: string, phone: string, dob: string, treatmentPersonalData:
-        this._bookingService.registerCustomer(
-            this.branchCode,
-            this.registerCustomerForm.get('name').value,
-            this.registerCustomerForm.get('lastname').value,
-            this.registerCustomerForm.get('email').value,
-            this.phoneValidationForm.get('selectedCountry').value,
-            this.phoneValidationForm.get('mobilePhone').value,
-            this.registerCustomerForm.get('dob').value,
-            true,
-            this.currentPhotoUrl).subscribe((customer : Customer)=>{
-            this.customer = customer;
-            this.chooseTable = true;
-        });
-    }
+    // registerCustomerAndGoToReservationPage() {
+    //     if (this.registerCustomerForm.invalid ) {
+    //         return;
+    //     }
+    //     this.showAlert = false;
+    //
+    //     // name: string, lastname: string, email: string, prefix: string, phone: string, dob: string, treatmentPersonalData:
+    //     this._bookingService.registerCustomer(
+    //         this.branchCode,
+    //         this.registerCustomerForm.get('name').value,
+    //         this.registerCustomerForm.get('lastname').value,
+    //         this.registerCustomerForm.get('email').value,
+    //         this.phoneValidationForm.get('selectedCountry').value,
+    //         this.phoneValidationForm.get('mobilePhone').value,
+    //         this.registerCustomerForm.get('dob').value,
+    //         true,
+    //         this.currentPhotoUrl).subscribe((customer : Customer)=>{
+    //         this.customer = customer;
+    //         this.chooseTable = true;
+    //     });
+    // }
 }

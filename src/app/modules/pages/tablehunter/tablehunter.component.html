@@ -1,393 +1,393 @@
-<!--INSERT NUMBER-->
-<div class="flex flex-col flex-auto items-center sm:justify-center min-w-0" *ngIf="reservation_status == 'CHOOSE_NUMBER'">
-    <div class="w-full sm:w-auto py-1 px-1 sm:p-6 sm:rounded-2xl sm:shadow sm:bg-card">
-        <div class="w-full max-w-90 sm:w-90 mx-auto sm:mx-0">
-            <!-- Logo -->
-            <div class="w-12">
-                <img src="assets/images/logo/logo.png">
-            </div>
+<!--&lt;!&ndash;INSERT NUMBER&ndash;&gt;-->
+<!--<div class="flex flex-col flex-auto items-center sm:justify-center min-w-0" *ngIf="reservation_status == 'CHOOSE_NUMBER'">-->
+<!--    <div class="w-full sm:w-auto py-1 px-1 sm:p-6 sm:rounded-2xl sm:shadow sm:bg-card">-->
+<!--        <div class="w-full max-w-90 sm:w-90 mx-auto sm:mx-0">-->
+<!--            &lt;!&ndash; Logo &ndash;&gt;-->
+<!--            <div class="w-12">-->
+<!--                <img src="assets/images/logo/logo.png">-->
+<!--            </div>-->
 
-            <div class="flex items-baseline mt-8  font-medium">
-                <div>Prenota un tavolo presso</div>
-            </div>
-            <div class="text-2xl font-extrabold tracking-tight leading-tight">{{this.customerFormData?.branchName ?? ''}}</div>
+<!--            <div class="flex items-baseline mt-8  font-medium">-->
+<!--                <div>Prenota un tavolo presso</div>-->
+<!--            </div>-->
+<!--            <div class="text-2xl font-extrabold tracking-tight leading-tight">{{this.customerFormData?.branchName ?? ''}}</div>-->
 
-            <div class="flex items-baseline mt-0.5 font-small">
-                <div>{{this.customerFormData?.address ?? ''}}</div>
-            </div>
+<!--            <div class="flex items-baseline mt-0.5 font-small">-->
+<!--                <div>{{this.customerFormData?.address ?? ''}}</div>-->
+<!--            </div>-->
 
-            <!-- Alert -->
-            <fuse-alert
-                class="mt-8"
-                *ngIf="showAlert"
-                [appearance]="'outline'"
-                [showIcon]="false"
-                [type]="alert.type"
-                [@shake]="alert.type === 'error'">
-                {{alert.message}}
-            </fuse-alert>
-            <!-- Sign Up form -->
-            <form
-                class="mt-8"
-                [formGroup]="phoneValidationForm">
+<!--            &lt;!&ndash; Alert &ndash;&gt;-->
+<!--            <fuse-alert-->
+<!--                class="mt-8"-->
+<!--                *ngIf="showAlert"-->
+<!--                [appearance]="'outline'"-->
+<!--                [showIcon]="false"-->
+<!--                [type]="alert.type"-->
+<!--                [@shake]="alert.type === 'error'">-->
+<!--                {{alert.message}}-->
+<!--            </fuse-alert>-->
+<!--            &lt;!&ndash; Sign Up form &ndash;&gt;-->
+<!--            <form-->
+<!--                class="mt-8"-->
+<!--                [formGroup]="phoneValidationForm">-->
 
-                <!-- Name field -->
-                <mat-form-field class="w-full">
-                    <input
-                        id="mobilePhone"
-                        matInput
-                        [placeholder]="'Cellulare'"
-                        [formControlName]="'mobilePhone'">
-                    <mat-select formControlName="selectedCountry" matPrefix>
-                        <!-- Europe -->
-                        <mat-option value="93">Afghanistan (+93)</mat-option>
-                        <mat-option value="355">Albania (+355)</mat-option>
-                        <mat-option value="376">Andorra (+376)</mat-option>
-                        <mat-option value="374">Armenia (+374)</mat-option>
-                        <mat-option value="43">Austria (+43)</mat-option>
-                        <mat-option value="994">Azerbaijan (+994)</mat-option>
-                        <mat-option value="32">Belgium (+32)</mat-option>
-                        <mat-option value="387">Bosnia and Herzegovina (+387)</mat-option>
-                        <mat-option value="359">Bulgaria (+359)</mat-option>
-                        <mat-option value="385">Croatia (+385)</mat-option>
-                        <mat-option value="357">Cyprus (+357)</mat-option>
-                        <mat-option value="420">Czech Republic (+420)</mat-option>
-                        <mat-option value="45">Denmark (+45)</mat-option>
-                        <mat-option value="372">Estonia (+372)</mat-option>
-                        <mat-option value="358">Finland (+358)</mat-option>
-                        <mat-option value="33">France (+33)</mat-option>
-                        <mat-option value="49">Germany (+49)</mat-option>
-                        <mat-option value="30">Greece (+30)</mat-option>
-                        <mat-option value="36">Hungary (+36)</mat-option>
-                        <mat-option value="354">Iceland (+354)</mat-option>
-                        <mat-option value="353">Ireland (+353)</mat-option>
-                        <mat-option value="39">Italy (+39)</mat-option>
-                        <mat-option value="371">Latvia (+371)</mat-option>
-                        <mat-option value="423">Liechtenstein (+423)</mat-option>
-                        <mat-option value="370">Lithuania (+370)</mat-option>
-                        <mat-option value="352">Luxembourg (+352)</mat-option>
-                        <mat-option value="356">Malta (+356)</mat-option>
-                        <mat-option value="377">Monaco (+377)</mat-option>
-                        <mat-option value="382">Montenegro (+382)</mat-option>
-                        <mat-option value="31">Netherlands (+31)</mat-option>
-                        <mat-option value="47">Norway (+47)</mat-option>
-                        <mat-option value="48">Poland (+48)</mat-option>
-                        <mat-option value="351">Portugal (+351)</mat-option>
-                        <mat-option value="40">Romania (+40)</mat-option>
-                        <mat-option value="7">Russia (+7)</mat-option>
-                        <mat-option value="378">San Marino (+378)</mat-option>
-                        <mat-option value="381">Serbia (+381)</mat-option>
-                        <mat-option value="421">Slovakia (+421)</mat-option>
-                        <mat-option value="386">Slovenia (+386)</mat-option>
-                        <mat-option value="34">Spain (+34)</mat-option>
-                        <mat-option value="46">Sweden (+46)</mat-option>
-                        <mat-option value="41">Switzerland (+41)</mat-option>
-                        <mat-option value="90">Turkey (+90)</mat-option>
-                        <mat-option value="380">Ukraine (+380)</mat-option>
-                        <mat-option value="44">United Kingdom (+44)</mat-option>
-                        <!-- North America -->
-                        <mat-option value="1">Canada (+1)</mat-option>
-                        <mat-option value="1">United States (+1)</mat-option>
-                        <mat-option value="52">Mexico (+52)</mat-option>
-                        <!-- China -->
-                        <mat-option value="86">China (+86)</mat-option>
-                    </mat-select>
-                    <mat-error *ngIf="phoneValidationForm.get('mobilePhone').hasError('required')">
-                        Inserisci il numero di cellulare
-                    </mat-error>
-                    <mat-error *ngIf="phoneValidationForm.get('mobilePhone').hasError('minLength')">
-                        Numero non valido
-                    </mat-error>
+<!--                &lt;!&ndash; Name field &ndash;&gt;-->
+<!--                <mat-form-field class="w-full">-->
+<!--                    <input-->
+<!--                        id="mobilePhone"-->
+<!--                        matInput-->
+<!--                        [placeholder]="'Cellulare'"-->
+<!--                        [formControlName]="'mobilePhone'">-->
+<!--                    <mat-select formControlName="selectedCountry" matPrefix>-->
+<!--                        &lt;!&ndash; Europe &ndash;&gt;-->
+<!--                        <mat-option value="93">Afghanistan (+93)</mat-option>-->
+<!--                        <mat-option value="355">Albania (+355)</mat-option>-->
+<!--                        <mat-option value="376">Andorra (+376)</mat-option>-->
+<!--                        <mat-option value="374">Armenia (+374)</mat-option>-->
+<!--                        <mat-option value="43">Austria (+43)</mat-option>-->
+<!--                        <mat-option value="994">Azerbaijan (+994)</mat-option>-->
+<!--                        <mat-option value="32">Belgium (+32)</mat-option>-->
+<!--                        <mat-option value="387">Bosnia and Herzegovina (+387)</mat-option>-->
+<!--                        <mat-option value="359">Bulgaria (+359)</mat-option>-->
+<!--                        <mat-option value="385">Croatia (+385)</mat-option>-->
+<!--                        <mat-option value="357">Cyprus (+357)</mat-option>-->
+<!--                        <mat-option value="420">Czech Republic (+420)</mat-option>-->
+<!--                        <mat-option value="45">Denmark (+45)</mat-option>-->
+<!--                        <mat-option value="372">Estonia (+372)</mat-option>-->
+<!--                        <mat-option value="358">Finland (+358)</mat-option>-->
+<!--                        <mat-option value="33">France (+33)</mat-option>-->
+<!--                        <mat-option value="49">Germany (+49)</mat-option>-->
+<!--                        <mat-option value="30">Greece (+30)</mat-option>-->
+<!--                        <mat-option value="36">Hungary (+36)</mat-option>-->
+<!--                        <mat-option value="354">Iceland (+354)</mat-option>-->
+<!--                        <mat-option value="353">Ireland (+353)</mat-option>-->
+<!--                        <mat-option value="39">Italy (+39)</mat-option>-->
+<!--                        <mat-option value="371">Latvia (+371)</mat-option>-->
+<!--                        <mat-option value="423">Liechtenstein (+423)</mat-option>-->
+<!--                        <mat-option value="370">Lithuania (+370)</mat-option>-->
+<!--                        <mat-option value="352">Luxembourg (+352)</mat-option>-->
+<!--                        <mat-option value="356">Malta (+356)</mat-option>-->
+<!--                        <mat-option value="377">Monaco (+377)</mat-option>-->
+<!--                        <mat-option value="382">Montenegro (+382)</mat-option>-->
+<!--                        <mat-option value="31">Netherlands (+31)</mat-option>-->
+<!--                        <mat-option value="47">Norway (+47)</mat-option>-->
+<!--                        <mat-option value="48">Poland (+48)</mat-option>-->
+<!--                        <mat-option value="351">Portugal (+351)</mat-option>-->
+<!--                        <mat-option value="40">Romania (+40)</mat-option>-->
+<!--                        <mat-option value="7">Russia (+7)</mat-option>-->
+<!--                        <mat-option value="378">San Marino (+378)</mat-option>-->
+<!--                        <mat-option value="381">Serbia (+381)</mat-option>-->
+<!--                        <mat-option value="421">Slovakia (+421)</mat-option>-->
+<!--                        <mat-option value="386">Slovenia (+386)</mat-option>-->
+<!--                        <mat-option value="34">Spain (+34)</mat-option>-->
+<!--                        <mat-option value="46">Sweden (+46)</mat-option>-->
+<!--                        <mat-option value="41">Switzerland (+41)</mat-option>-->
+<!--                        <mat-option value="90">Turkey (+90)</mat-option>-->
+<!--                        <mat-option value="380">Ukraine (+380)</mat-option>-->
+<!--                        <mat-option value="44">United Kingdom (+44)</mat-option>-->
+<!--                        &lt;!&ndash; North America &ndash;&gt;-->
+<!--                        <mat-option value="1">Canada (+1)</mat-option>-->
+<!--                        <mat-option value="1">United States (+1)</mat-option>-->
+<!--                        <mat-option value="52">Mexico (+52)</mat-option>-->
+<!--                        &lt;!&ndash; China &ndash;&gt;-->
+<!--                        <mat-option value="86">China (+86)</mat-option>-->
+<!--                    </mat-select>-->
+<!--                    <mat-error *ngIf="phoneValidationForm.get('mobilePhone').hasError('required')">-->
+<!--                        Inserisci il numero di cellulare-->
+<!--                    </mat-error>-->
+<!--                    <mat-error *ngIf="phoneValidationForm.get('mobilePhone').hasError('minLength')">-->
+<!--                        Numero non valido-->
+<!--                    </mat-error>-->
 
-                </mat-form-field>
+<!--                </mat-form-field>-->
 
-                <button
-                    class="fuse-mat-button-large w-full mt-6"
-                    mat-flat-button
-                    [color]="'accent'"
-                    [disabled]="phoneValidationForm.invalid"
-                    (click)="insertPhone()">
-                    <span *ngIf="!phoneValidationForm.disabled">
-                        AVANTI
-                    </span>
-                    <mat-progress-spinner
-                        *ngIf="phoneValidationForm.disabled"
-                        [diameter]="24"
-                        [mode]="'indeterminate'"></mat-progress-spinner>
-                </button>
-            </form>
-        </div>
-    </div>
-</div>
-<!--//CHOOSE TABLE-->
-<div class="flex flex-col flex-auto items-center sm:justify-center min-w-0" *ngIf="reservation_status == 'CHOOSE_TABLE'">
-    <customcalendar [configuration]=customerFormData (calendarData)="handleCalendarData($event)"></customcalendar>
-</div>
-<!--INSERT CUSTOMER DETAILS-->
-<div class="flex flex-col flex-auto items-center sm:justify-center min-w-0" *ngIf="reservation_status == 'INSERT_CUSTOMER_DETAILS'" [formGroup]="registerCustomerForm">
-    <div class="w-full sm:w-auto py-1 px-1 sm:p-6 sm:rounded-2xl sm:shadow sm:bg-card">
-        <div class="w-full max-w-90 sm:w-90 mx-auto sm:mx-0">
-            <div class="flex items-baseline mt-8  font-medium">
-                <div>{{this.customerFormData?.branchName ?? ''}}</div>
-            </div>
-            <div class="text-2xl font-extrabold tracking-tight leading-tight" style="padding-bottom: 10px">Inserisci i tuoi dati</div>
-            <mat-form-field class="w-full">
-                <input
-                    id="name"
-                    matInput
-                    [placeholder]="'Nome'"
-                    [formControlName]="'name'">
-                <mat-error *ngIf="registerCustomerForm.get('name').hasError('required')">
-                    Inserisci il nome
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field class="w-full">
-                <input
-                    id="lastname"
-                    matInput
-                    [placeholder]="'Cognome'"
-                    [formControlName]="'lastname'">
-                <mat-error *ngIf="registerCustomerForm.get('lastname').hasError('required')">
-                    Inserisci il cognome
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field class="w-full">
-                <input
-                    id="email"
-                    matInput
-                    [placeholder]="'Email'"
-                    [formControlName]="'email'">
-                <mat-error *ngIf="registerCustomerForm.get('email').hasError('required')">
-                    Inserisci la mail
-                </mat-error>
-            </mat-form-field>
-            <div class="flex">
-                <mat-form-field class="flex-auto">
-                    <input
-                        matInput
-                        [placeholder]="'Data di Nascita'"
-                        [matDatepicker]="picker1"
-                        (dateChange)="onChangeEvent($event)"
-                        (click)="picker1.open()">
-                    <mat-datepicker-toggle
-                        matSuffix
-                        [for]="picker1"
-                    ></mat-datepicker-toggle>
-                    <mat-datepicker #picker1></mat-datepicker>
-                </mat-form-field>
-            </div>
-            <mat-error *ngIf="registerCustomerForm.get('dob').hasError('required')">
-                Inserisci la data di nascita
-            </mat-error>
-            <div class="inline-flex items-end w-full mt-1.5">
-                <mat-checkbox
-                    class="-ml-2"
-                    [color]="'accent'"
-                    [formControlName]="'agreements'">
-                    <span>Acconsento al trattamento dei dati personali </span>
-                    <a
-                        class="ml-1 text-primary-500 hover:underline"
-                        [routerLink]="['./']">Terms And Conditions
-                    </a>
-                </mat-checkbox>
-            </div>
-            <button
-                class="fuse-mat-button-large w-full mt-6"
-                mat-flat-button
-                [color]="'accent'"
-                [disabled]="registerCustomerForm.invalid"
-                (click)="registerCustomerAndGoToReservationPage()">
-                    <span *ngIf="!registerCustomerForm.disabled">
-                        Avanti
-                    </span>
-                <mat-progress-spinner
-                    *ngIf="registerCustomerForm.disabled"
-                    [diameter]="24"
-                    [mode]="'indeterminate'"></mat-progress-spinner>
-            </button>
+<!--                <button-->
+<!--                    class="fuse-mat-button-large w-full mt-6"-->
+<!--                    mat-flat-button-->
+<!--                    [color]="'accent'"-->
+<!--                    [disabled]="phoneValidationForm.invalid"-->
+<!--                    (click)="insertPhone()">-->
+<!--                    <span *ngIf="!phoneValidationForm.disabled">-->
+<!--                        AVANTI-->
+<!--                    </span>-->
+<!--                    <mat-progress-spinner-->
+<!--                        *ngIf="phoneValidationForm.disabled"-->
+<!--                        [diameter]="24"-->
+<!--                        [mode]="'indeterminate'"></mat-progress-spinner>-->
+<!--                </button>-->
+<!--            </form>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--&lt;!&ndash;//CHOOSE TABLE&ndash;&gt;-->
+<!--<div class="flex flex-col flex-auto items-center sm:justify-center min-w-0" *ngIf="reservation_status == 'CHOOSE_TABLE'">-->
+<!--    <customcalendar [configuration]=customerFormData (calendarData)="handleCalendarData($event)"></customcalendar>-->
+<!--</div>-->
+<!--&lt;!&ndash;INSERT CUSTOMER DETAILS&ndash;&gt;-->
+<!--<div class="flex flex-col flex-auto items-center sm:justify-center min-w-0" *ngIf="reservation_status == 'INSERT_CUSTOMER_DETAILS'" [formGroup]="registerCustomerForm">-->
+<!--    <div class="w-full sm:w-auto py-1 px-1 sm:p-6 sm:rounded-2xl sm:shadow sm:bg-card">-->
+<!--        <div class="w-full max-w-90 sm:w-90 mx-auto sm:mx-0">-->
+<!--            <div class="flex items-baseline mt-8  font-medium">-->
+<!--                <div>{{this.customerFormData?.branchName ?? ''}}</div>-->
+<!--            </div>-->
+<!--            <div class="text-2xl font-extrabold tracking-tight leading-tight" style="padding-bottom: 10px">Inserisci i tuoi dati</div>-->
+<!--            <mat-form-field class="w-full">-->
+<!--                <input-->
+<!--                    id="name"-->
+<!--                    matInput-->
+<!--                    [placeholder]="'Nome'"-->
+<!--                    [formControlName]="'name'">-->
+<!--                <mat-error *ngIf="registerCustomerForm.get('name').hasError('required')">-->
+<!--                    Inserisci il nome-->
+<!--                </mat-error>-->
+<!--            </mat-form-field>-->
+<!--            <mat-form-field class="w-full">-->
+<!--                <input-->
+<!--                    id="lastname"-->
+<!--                    matInput-->
+<!--                    [placeholder]="'Cognome'"-->
+<!--                    [formControlName]="'lastname'">-->
+<!--                <mat-error *ngIf="registerCustomerForm.get('lastname').hasError('required')">-->
+<!--                    Inserisci il cognome-->
+<!--                </mat-error>-->
+<!--            </mat-form-field>-->
+<!--            <mat-form-field class="w-full">-->
+<!--                <input-->
+<!--                    id="email"-->
+<!--                    matInput-->
+<!--                    [placeholder]="'Email'"-->
+<!--                    [formControlName]="'email'">-->
+<!--                <mat-error *ngIf="registerCustomerForm.get('email').hasError('required')">-->
+<!--                    Inserisci la mail-->
+<!--                </mat-error>-->
+<!--            </mat-form-field>-->
+<!--            <div class="flex">-->
+<!--                <mat-form-field class="flex-auto">-->
+<!--                    <input-->
+<!--                        matInput-->
+<!--                        [placeholder]="'Data di Nascita'"-->
+<!--                        [matDatepicker]="picker1"-->
+<!--                        (dateChange)="onChangeEvent($event)"-->
+<!--                        (click)="picker1.open()">-->
+<!--                    <mat-datepicker-toggle-->
+<!--                        matSuffix-->
+<!--                        [for]="picker1"-->
+<!--                    ></mat-datepicker-toggle>-->
+<!--                    <mat-datepicker #picker1></mat-datepicker>-->
+<!--                </mat-form-field>-->
+<!--            </div>-->
+<!--            <mat-error *ngIf="registerCustomerForm.get('dob').hasError('required')">-->
+<!--                Inserisci la data di nascita-->
+<!--            </mat-error>-->
+<!--            <div class="inline-flex items-end w-full mt-1.5">-->
+<!--                <mat-checkbox-->
+<!--                    class="-ml-2"-->
+<!--                    [color]="'accent'"-->
+<!--                    [formControlName]="'agreements'">-->
+<!--                    <span>Acconsento al trattamento dei dati personali </span>-->
+<!--                    <a-->
+<!--                        class="ml-1 text-primary-500 hover:underline"-->
+<!--                        [routerLink]="['./']">Terms And Conditions-->
+<!--                    </a>-->
+<!--                </mat-checkbox>-->
+<!--            </div>-->
+<!--            <button-->
+<!--                class="fuse-mat-button-large w-full mt-6"-->
+<!--                mat-flat-button-->
+<!--                [color]="'accent'"-->
+<!--                [disabled]="registerCustomerForm.invalid"-->
+<!--                (click)="registerCustomerAndGoToReservationPage()">-->
+<!--                    <span *ngIf="!registerCustomerForm.disabled">-->
+<!--                        Avanti-->
+<!--                    </span>-->
+<!--                <mat-progress-spinner-->
+<!--                    *ngIf="registerCustomerForm.disabled"-->
+<!--                    [diameter]="24"-->
+<!--                    [mode]="'indeterminate'"></mat-progress-spinner>-->
+<!--            </button>-->
 
-        </div>
-    </div>
-</div>
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 
-<!--INSERT LAST DETAILS-->
-<div class="flex flex-col flex-auto items-center sm:justify-center min-w-0"  *ngIf="reservation_status == 'CHOOSE_BOOKING_DETAILS'" [formGroup]="formReservationDetails">
-    <div class="w-full sm:w-auto py-1 px-1 sm:p-1 sm:rounded-2xl sm:shadow sm:bg-card">
-        <div class="w-full max-w-90 sm:w-90 mx-auto sm:mx-0">
-            <div class="flex flex-col flex-auto items-center sm:justify-center min-w-0">
-                <div class="flex flex-col w-full">
+<!--&lt;!&ndash;INSERT LAST DETAILS&ndash;&gt;-->
+<!--<div class="flex flex-col flex-auto items-center sm:justify-center min-w-0"  *ngIf="reservation_status == 'CHOOSE_BOOKING_DETAILS'" [formGroup]="formReservationDetails">-->
+<!--    <div class="w-full sm:w-auto py-1 px-1 sm:p-1 sm:rounded-2xl sm:shadow sm:bg-card">-->
+<!--        <div class="w-full max-w-90 sm:w-90 mx-auto sm:mx-0">-->
+<!--            <div class="flex flex-col flex-auto items-center sm:justify-center min-w-0">-->
+<!--                <div class="flex flex-col w-full">-->
 
-                    <!-- View mode -->
+<!--                    &lt;!&ndash; View mode &ndash;&gt;-->
 
-                    <!-- Header -->
-                    <div class="relative w-full h-40 sm:h-48 px-8 sm:px-12 bg-accent-100 dark:bg-accent-700">
+<!--                    &lt;!&ndash; Header &ndash;&gt;-->
+<!--                    <div class="relative w-full h-40 sm:h-48 px-8 sm:px-12 bg-accent-100 dark:bg-accent-700">-->
 
-                        <!-- Close button -->
-                        <div class="flex items-center justify-start w-full max-w-3xl mx-auto pt-6">
-                            <a
-                                mat-icon-button
-                                (click)="returnToChoosePage()"
-                                [matTooltip]="'Torna indietro'">
-                                <mat-icon
-                                    class="text-white"
-                                    [svgIcon]="'heroicons_outline:arrow-small-left'"></mat-icon>
-                            </a>
-                        </div>
-                    </div>
+<!--                        &lt;!&ndash; Close button &ndash;&gt;-->
+<!--                        <div class="flex items-center justify-start w-full max-w-3xl mx-auto pt-6">-->
+<!--                            <a-->
+<!--                                mat-icon-button-->
+<!--                                (click)="returnToChoosePage()"-->
+<!--                                [matTooltip]="'Torna indietro'">-->
+<!--                                <mat-icon-->
+<!--                                    class="text-white"-->
+<!--                                    [svgIcon]="'heroicons_outline:arrow-small-left'"></mat-icon>-->
+<!--                            </a>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
-                    <!-- Contact -->
-                    <div class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:p-12 sm:pt-0">
-                        <div class="w-full max-w-3xl">
+<!--                    &lt;!&ndash; Contact &ndash;&gt;-->
+<!--                    <div class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:p-12 sm:pt-0">-->
+<!--                        <div class="w-full max-w-3xl">-->
 
-                            <!-- Avatar and actions -->
-                            <div class="flex flex-auto items-end -mt-16">
-                                <!-- Avatar -->
-                                <div class="flex items-center justify-center w-32 h-32 rounded-full overflow-hidden ring-4 ring-bg-card">
-                                    <img
-                                        class="object-cover w-full h-full"
-                                        [src]="customerResult?.customer?.imageProfile.replaceAll('%26','&')">
-                                    <div
-                                        class="flex items-center justify-center w-full h-full rounded overflow-hidden
-                            uppercase text-8xl font-bold leading-none
-                            bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">
-                                        {{this.customerResult?.customer?.name}}
-                                    </div>
-                                </div>
-                            </div>
+<!--                            &lt;!&ndash; Avatar and actions &ndash;&gt;-->
+<!--                            <div class="flex flex-auto items-end -mt-16">-->
+<!--                                &lt;!&ndash; Avatar &ndash;&gt;-->
+<!--                                <div class="flex items-center justify-center w-32 h-32 rounded-full overflow-hidden ring-4 ring-bg-card">-->
+<!--                                    <img-->
+<!--                                        class="object-cover w-full h-full"-->
+<!--                                        [src]="customerResult?.customer?.imageProfile.replaceAll('%26','&')">-->
+<!--                                    <div-->
+<!--                                        class="flex items-center justify-center w-full h-full rounded overflow-hidden-->
+<!--                            uppercase text-8xl font-bold leading-none-->
+<!--                            bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">-->
+<!--                                        {{this.customerResult?.customer?.name}}-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
-                            <!-- Name -->
-                            <div class="mt-3 text-4xl font-bold truncate">{{this.customerResult?.customer?.name}} {{this.customerResult?.customer?.lastname}}</div>
+<!--                            &lt;!&ndash; Name &ndash;&gt;-->
+<!--                            <div class="mt-3 text-4xl font-bold truncate">{{this.customerResult?.customer?.name}} {{this.customerResult?.customer?.lastname}}</div>-->
 
-                            <div class="flex flex-col mt-4 pt-6 border-t space-y-8">
-                                <!-- Emails -->
-                                <ng-container *ngIf="this.customerResult?.customer?.email.length">
-                                    <div class="flex">
-                                        <mat-icon [svgIcon]="'heroicons_outline:envelope'"></mat-icon>
-                                        <div class="min-w-0 ml-6 space-y-1">
+<!--                            <div class="flex flex-col mt-4 pt-6 border-t space-y-8">-->
+<!--                                &lt;!&ndash; Emails &ndash;&gt;-->
+<!--                                <ng-container *ngIf="this.customerResult?.customer?.email.length">-->
+<!--                                    <div class="flex">-->
+<!--                                        <mat-icon [svgIcon]="'heroicons_outline:envelope'"></mat-icon>-->
+<!--                                        <div class="min-w-0 ml-6 space-y-1">-->
 
-                                            <div class="flex items-center leading-6">
-                                                <a
-                                                    class="hover:underline text-primary-500"
-                                                    [href]="'mailto:' + this.customerResult?.customer?.email"
-                                                    target="_blank">
-                                                    {{this.customerResult?.customer?.email}}
-                                                </a>
-                                            </div>
+<!--                                            <div class="flex items-center leading-6">-->
+<!--                                                <a-->
+<!--                                                    class="hover:underline text-primary-500"-->
+<!--                                                    [href]="'mailto:' + this.customerResult?.customer?.email"-->
+<!--                                                    target="_blank">-->
+<!--                                                    {{this.customerResult?.customer?.email}}-->
+<!--                                                </a>-->
+<!--                                            </div>-->
 
-                                        </div>
-                                    </div>
-                                </ng-container>
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </ng-container>-->
 
-                                <!-- Phone -->
-                                <ng-container *ngIf="this.customerResult?.customer?.phone.length">
-                                    <div class="flex">
-                                        <mat-icon [svgIcon]="'heroicons_outline:phone'"></mat-icon>
-                                        <div class="min-w-0 ml-6 space-y-1">
-                                            <div class="flex items-center leading-6">
-                                                <div class="ml-2.5 font-mono">{{this.customerResult?.customer?.phone}}</div>
-                                            </div>
+<!--                                &lt;!&ndash; Phone &ndash;&gt;-->
+<!--                                <ng-container *ngIf="this.customerResult?.customer?.phone.length">-->
+<!--                                    <div class="flex">-->
+<!--                                        <mat-icon [svgIcon]="'heroicons_outline:phone'"></mat-icon>-->
+<!--                                        <div class="min-w-0 ml-6 space-y-1">-->
+<!--                                            <div class="flex items-center leading-6">-->
+<!--                                                <div class="ml-2.5 font-mono">{{this.customerResult?.customer?.phone}}</div>-->
+<!--                                            </div>-->
 
-                                        </div>
-                                    </div>
-                                </ng-container>
-                                <ng-container *ngIf="this.customerResult?.customer?.dob">
-                                    <div class="flex sm:items-center">
-                                        <mat-icon [svgIcon]="'heroicons_outline:cake'"></mat-icon>
-                                        <div class="ml-6 leading-6">{{this.customerResult?.customer?.dob}}</div>
-                                    </div>
-                                </ng-container>
-                            </div>
-                            <div class="mt-3 text-1xl font-bold truncate">Dettagli prenotazione</div>
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </ng-container>-->
+<!--                                <ng-container *ngIf="this.customerResult?.customer?.dob">-->
+<!--                                    <div class="flex sm:items-center">-->
+<!--                                        <mat-icon [svgIcon]="'heroicons_outline:cake'"></mat-icon>-->
+<!--                                        <div class="ml-6 leading-6">{{this.customerResult?.customer?.dob}}</div>-->
+<!--                                    </div>-->
+<!--                                </ng-container>-->
+<!--                            </div>-->
+<!--                            <div class="mt-3 text-1xl font-bold truncate">Dettagli prenotazione</div>-->
 
-                            <div class="flex flex-col mt-4 pt-6 border-t space-y-8">
-                                <ng-container>
-                                    <div class="flex">
-                                        <mat-icon [svgIcon]="'heroicons_outline:building-storefront'"></mat-icon>
-                                        <div class="min-w-0 ml-6 space-y-1">
-                                            <div class="flex items-center leading-6">
-                                                <div class="ml-2.5 font-mono">{{this.customerFormData?.branchName}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-container>
-                                <ng-container>
-                                    <div class="flex">
-                                        <mat-icon [svgIcon]="'heroicons_outline:map-pin'"></mat-icon>
-                                        <div class="min-w-0 ml-6 space-y-1">
-                                            <div class="flex items-center leading-6">
-                                                <div class="ml-2.5 font-mono">{{this.customerFormData?.address}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-container>
-                                <ng-container *ngIf="this.bookingData?.selectedGuests">
-                                    <div class="flex">
-                                        <mat-icon [svgIcon]="'heroicons_outline:users'"></mat-icon>
-                                        <div class="min-w-0 ml-6 space-y-1">
-                                            <div class="flex items-center leading-6">
-                                                <div class="ml-2.5 font-mono">{{this.bookingData?.selectedGuests}} ospiti</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-container>
+<!--                            <div class="flex flex-col mt-4 pt-6 border-t space-y-8">-->
+<!--                                <ng-container>-->
+<!--                                    <div class="flex">-->
+<!--                                        <mat-icon [svgIcon]="'heroicons_outline:building-storefront'"></mat-icon>-->
+<!--                                        <div class="min-w-0 ml-6 space-y-1">-->
+<!--                                            <div class="flex items-center leading-6">-->
+<!--                                                <div class="ml-2.5 font-mono">{{this.customerFormData?.branchName}}</div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </ng-container>-->
+<!--                                <ng-container>-->
+<!--                                    <div class="flex">-->
+<!--                                        <mat-icon [svgIcon]="'heroicons_outline:map-pin'"></mat-icon>-->
+<!--                                        <div class="min-w-0 ml-6 space-y-1">-->
+<!--                                            <div class="flex items-center leading-6">-->
+<!--                                                <div class="ml-2.5 font-mono">{{this.customerFormData?.address}}</div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </ng-container>-->
+<!--                                <ng-container *ngIf="this.bookingData?.selectedGuests">-->
+<!--                                    <div class="flex">-->
+<!--                                        <mat-icon [svgIcon]="'heroicons_outline:users'"></mat-icon>-->
+<!--                                        <div class="min-w-0 ml-6 space-y-1">-->
+<!--                                            <div class="flex items-center leading-6">-->
+<!--                                                <div class="ml-2.5 font-mono">{{this.bookingData?.selectedGuests}} ospiti</div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </ng-container>-->
 
-                                <ng-container *ngIf="this.bookingData?.selectedDate">
-                                    <div class="flex">
-                                        <mat-icon [svgIcon]="'heroicons_outline:calendar-days'"></mat-icon>
-                                        <div class="min-w-0 ml-6 space-y-1">
-                                            <div class="flex items-center leading-6">
-                                                <div class="ml-2.5 font-mono">{{this.bookingData?.selectedDate}}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </ng-container>
+<!--                                <ng-container *ngIf="this.bookingData?.selectedDate">-->
+<!--                                    <div class="flex">-->
+<!--                                        <mat-icon [svgIcon]="'heroicons_outline:calendar-days'"></mat-icon>-->
+<!--                                        <div class="min-w-0 ml-6 space-y-1">-->
+<!--                                            <div class="flex items-center leading-6">-->
+<!--                                                <div class="ml-2.5 font-mono">{{this.bookingData?.selectedDate}}</div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </ng-container>-->
 
-                                <ng-container *ngIf="this.bookingData?.selectedTime">
-                                    <div class="flex sm:items-center">
-                                        <mat-icon [svgIcon]="'heroicons_outline:clock'"></mat-icon>
-                                        <div class="ml-6 leading-6">{{this.bookingData?.selectedTime}}</div>
-                                    </div>
-                                </ng-container>
-                            </div>
-                            <div class="mt-3 text-1xl font-bold truncate">Richieste particolari</div>
-                            <mat-form-field [ngClass]="formFieldHelpers" style="width: 100%;">
+<!--                                <ng-container *ngIf="this.bookingData?.selectedTime">-->
+<!--                                    <div class="flex sm:items-center">-->
+<!--                                        <mat-icon [svgIcon]="'heroicons_outline:clock'"></mat-icon>-->
+<!--                                        <div class="ml-6 leading-6">{{this.bookingData?.selectedTime}}</div>-->
+<!--                                    </div>-->
+<!--                                </ng-container>-->
+<!--                            </div>-->
+<!--                            <div class="mt-3 text-1xl font-bold truncate">Richieste particolari</div>-->
+<!--                            <mat-form-field [ngClass]="formFieldHelpers" style="width: 100%;">-->
 
-                        <textarea
-                            matInput
-                            cdkTextareaAutosize
-                            [formControlName]="'particularRequest'"
-                            [cdkAutosizeMinRows]="3"></textarea>
-                                <mat-icon
-                                    class="icon-size-5"
-                                    matSuffix
-                                    [svgIcon]="'heroicons_outline:information-circle'"></mat-icon>
-                            </mat-form-field>
-                            <mat-form-field *ngIf="this.customerFormData?.dogsAllowed > 0" style="width: 100%;">
-                                <mat-label>Porti con te animali da compagnia?</mat-label>
-                                <mat-select [formControlName]="'dogsAllowed'">
-                                    <mat-option value="0">No</mat-option>
-                                    <mat-option value="5" *ngIf="this.customerFormData?.dogsAllowed >= 5">Si,pesa meno di 5 Kg</mat-option>
-                                    <mat-option value="10" *ngIf="this.customerFormData?.dogsAllowed >= 10">Si,pesa meno di 10 Kg</mat-option>
-                                    <mat-option value="15" *ngIf="this.customerFormData?.dogsAllowed >= 15">Si,pesa meno di 15 Kg</mat-option>
-                                    <mat-option value="30" *ngIf="this.customerFormData?.dogsAllowed >= 30">Si,pesa meno di 30 Kg</mat-option>
-                                    <mat-option value="99" *ngIf="this.customerFormData?.dogsAllowed >= 99">Si,supera i 30 Kg</mat-option>
-                                </mat-select>
-                                <img
-                                    class="w-6 ml-2"
-                                    [src]="'assets/images/others/penny.svg'">
-                            </mat-form-field>
-                        </div>
-                        <button class="fuse-mat-button-large w-full mt-1" mat-flat-button [color]="'accent'"
-                                (click)="performBooking()">
-                            PRENOTA
-                        </button>
-                    </div>
+<!--                        <textarea-->
+<!--                            matInput-->
+<!--                            cdkTextareaAutosize-->
+<!--                            [formControlName]="'particularRequest'"-->
+<!--                            [cdkAutosizeMinRows]="3"></textarea>-->
+<!--                                <mat-icon-->
+<!--                                    class="icon-size-5"-->
+<!--                                    matSuffix-->
+<!--                                    [svgIcon]="'heroicons_outline:information-circle'"></mat-icon>-->
+<!--                            </mat-form-field>-->
+<!--                            <mat-form-field *ngIf="this.customerFormData?.dogsAllowed > 0" style="width: 100%;">-->
+<!--                                <mat-label>Porti con te animali da compagnia?</mat-label>-->
+<!--                                <mat-select [formControlName]="'dogsAllowed'">-->
+<!--                                    <mat-option value="0">No</mat-option>-->
+<!--                                    <mat-option value="5" *ngIf="this.customerFormData?.dogsAllowed >= 5">Si,pesa meno di 5 Kg</mat-option>-->
+<!--                                    <mat-option value="10" *ngIf="this.customerFormData?.dogsAllowed >= 10">Si,pesa meno di 10 Kg</mat-option>-->
+<!--                                    <mat-option value="15" *ngIf="this.customerFormData?.dogsAllowed >= 15">Si,pesa meno di 15 Kg</mat-option>-->
+<!--                                    <mat-option value="30" *ngIf="this.customerFormData?.dogsAllowed >= 30">Si,pesa meno di 30 Kg</mat-option>-->
+<!--                                    <mat-option value="99" *ngIf="this.customerFormData?.dogsAllowed >= 99">Si,supera i 30 Kg</mat-option>-->
+<!--                                </mat-select>-->
+<!--                                <img-->
+<!--                                    class="w-6 ml-2"-->
+<!--                                    [src]="'assets/images/others/penny.svg'">-->
+<!--                            </mat-form-field>-->
+<!--                        </div>-->
+<!--                        <button class="fuse-mat-button-large w-full mt-1" mat-flat-button [color]="'accent'"-->
+<!--                                (click)="performBooking()">-->
+<!--                            PRENOTA-->
+<!--                        </button>-->
+<!--                    </div>-->
 
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
 
 
