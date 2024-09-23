@@ -1,19 +1,18 @@
 import {
     ChangeDetectionStrategy,
     ChangeDetectorRef,
-    Component, Input,
+    Component,
+    Input,
     OnInit,
     ViewChild,
     ViewEncapsulation
 } from '@angular/core';
-import {BookingDTO} from "../../../core/booking";
-import {Subject, switchMap, takeUntil} from "rxjs";
-import {I18nPluralPipe, NgClass, NgForOf, NgIf} from '@angular/common';
+import {DatePipe, I18nPluralPipe, NgClass, NgForOf, NgIf} from '@angular/common';
 import {ActivatedRoute, Router, RouterLink, RouterOutlet} from "@angular/router";
 import {MatDrawer, MatSidenavModule} from "@angular/material/sidenav";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
-import {ReactiveFormsModule, UntypedFormControl} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule, UntypedFormControl} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatGridListModule} from "@angular/material/grid-list";
@@ -21,12 +20,16 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatListModule} from "@angular/material/list";
 import {DataproviderService} from "../dataprovider.service";
 import {BranchResponseEntity} from "../../../core/dashboard";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {MatDatepickerInputEvent, MatDatepickerModule} from "@angular/material/datepicker";
+import {BookingComponent} from "../../pages/booking/booking.component";
 
 @Component({
     selector: 'bookingpage',
     templateUrl: './booking-page.component.html',
     encapsulation: ViewEncapsulation.None,
     changeDetection: ChangeDetectionStrategy.Default,
+    providers: [DatePipe],
     imports: [
         NgClass,
         RouterLink,
@@ -42,19 +45,24 @@ import {BranchResponseEntity} from "../../../core/dashboard";
         MatTooltipModule,
         MatGridListModule,
         MatMenuModule,
-        MatListModule
+        MatListModule,
+        MatDatepickerModule,
+        FormsModule,
+        DatePipe,
+        BookingComponent
     ],
     standalone: true
 })
 export class BookingPageComponent implements OnInit{
 
-    // @Input() tooltip: string;
-    // @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
+    @Input() tooltip: string;
+    @ViewChild('matDrawer', {static: true}) matDrawer: MatDrawer;
     //
     // bookings: BookingDTO[];
     // selectedBooking: BookingDTO;
     drawerMode: 'side' | 'over';
     bookingCount: number = 0;
+    selectedDate: Date = new Date();
     //
     searchInputControl: UntypedFormControl = new UntypedFormControl();
     // private _unsubscribeAll: Subject<any> = new Subject<any>();
@@ -63,7 +71,9 @@ export class BookingPageComponent implements OnInit{
     constructor(private _dataproviderService: DataproviderService,
                 private _router: Router,
                 private _changeDetectorRef: ChangeDetectorRef,
-                private _activatedRoute: ActivatedRoute) {
+                private _activatedRoute: ActivatedRoute,
+                private _snackBar: MatSnackBar,
+                private _datePipe: DatePipe){
     }
 
     ngOnInit(): void {
@@ -71,6 +81,7 @@ export class BookingPageComponent implements OnInit{
         this._dataproviderService.branch$.subscribe((branch) => {
             this.currentBranch = branch;
         });
+
         //
         // this._dataproviderService.bookings$.subscribe((bookings) =>{
         //     this.bookings = bookings
@@ -110,5 +121,22 @@ export class BookingPageComponent implements OnInit{
 
     createBooking() {
 
+    }
+
+    changeMenuSort(name: string) {
+        this._snackBar.open('Prenotazioni ordinate per ' + name , 'Undo', {
+            duration: 3000,
+        });
+    }
+
+    onDateChange(event: MatDatepickerInputEvent<Date>): void {
+        this.selectedDate = event.value;
+
+        // Format the selected date to Italian format 'dd/MM/yyyy'
+        const formattedDate = this._datePipe.transform(this.selectedDate, 'dd/MM/yyyy', 'it-IT');
+
+        this._snackBar.open('Prenotazioni del ' + formattedDate, 'Undo', {
+            duration: 3000,
+        });
     }
 }

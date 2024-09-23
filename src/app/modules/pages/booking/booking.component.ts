@@ -16,7 +16,6 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {FuseAlertComponent, FuseAlertType} from "../../../../@fuse/components/alert";
 import localeIt from '@angular/common/locales/it';
-import {OptCodeDialogComponent} from "./optconfirm/optconfirm.component";
 import {MatDialog} from "@angular/material/dialog";
 import {DateTime} from "luxon";
 import {MatTabsModule} from "@angular/material/tabs";
@@ -101,8 +100,8 @@ export class BookingComponent implements OnInit{
     ngOnInit(): void {
         this.route.queryParams.subscribe((params) => {
             this.branchCode = params['branchCode'];
-            this.formCode = params['form'];
-            console.log('Branch Code from URL: ' +  this.branchCode + ' - form code: ' + this.formCode );
+            // this.formCode = params['form'];
+            // console.log('Branch Code from URL: ' +  this.branchCode + ' - form code: ' + this.formCode );
 
             // this.customerFormData$ = this._bookingService.retrieveFormData(this.branchCode, this.formCode);
 
@@ -269,4 +268,7 @@ export class BookingComponent implements OnInit{
     //         this.chooseTable = true;
     //     });
     // }
+    registerCustomerAndGoToReservationPage() {
+
+    }
 }

@@ -1,9 +1,9 @@
 <div class="flex flex-col flex-auto items-center sm:justify-center min-w-0" *ngIf="chooseTable">
     <div class="w-full sm:w-auto py-1 px-1 sm:p-1 sm:rounded-2xl sm:shadow sm:bg-card">
         <div class="w-full max-w-90 sm:w-90 mx-auto sm:mx-0">
-            <ng-container *ngIf="customerFormData">
-                <app-customcalendar [configuration]="customerFormData" [customer]="customer"></app-customcalendar>
-            </ng-container>
+<!--            <ng-container *ngIf="customerFormData">-->
+<!--                <app-customcalendar [configuration]="customerFormData" [customer]="customer"></app-customcalendar>-->
+<!--            </ng-container>-->
         </div>
     </div>
 </div>
@@ -20,11 +20,11 @@
             <div class="flex items-baseline mt-8  font-medium">
                 <div>Prenota un tavolo presso</div>
             </div>
-            <div class="text-2xl font-extrabold tracking-tight leading-tight">{{this.customerFormData?.branchName ?? ''}}</div>
-
-            <div class="flex items-baseline mt-0.5 font-small">
-                <div>{{this.customerFormData?.address ?? ''}}</div>
-            </div>
+<!--            <div class="text-2xl font-extrabold tracking-tight leading-tight">{{this.customerFormData?.branchName ?? ''}}</div>-->
+<!---->
+<!--            <div class="flex items-baseline mt-0.5 font-small">-->
+<!--                <div>{{this.customerFormData?.address ?? ''}}</div>-->
+<!--            </div>-->
 
             <!-- Alert -->
             <fuse-alert
@@ -103,29 +103,29 @@
                         <mat-option value="86">China (+86)</mat-option>
                     </mat-select>
                     <mat-icon [svgIcon]="'heroicons_solid:check-badge'" [style.color]="'green'" *ngIf="isPhoneVerified"></mat-icon>
-                    <mat-error *ngIf="phoneValidationForm.get('mobilePhone').hasError('required')">
-                        Inserisci il numero di cellulare
-                    </mat-error>
-                    <mat-error *ngIf="phoneValidationForm.get('mobilePhone').hasError('minLength')">
-                        Numero non valido
-                    </mat-error>
+<!--                    <mat-error *ngIf="phoneValidationForm.get('mobilePhone').hasError('required')">-->
+<!--                        Inserisci il numero di cellulare-->
+<!--                    </mat-error>-->
+<!--                    <mat-error *ngIf="phoneValidationForm.get('mobilePhone').hasError('minLength')">-->
+<!--                        Numero non valido-->
+<!--                    </mat-error>-->
 
                 </mat-form-field>
 
-                <button
-                        class="fuse-mat-button-large w-full mt-6"
-                        mat-flat-button
-                        [color]="'accent'"
-                        [disabled]="phoneValidationForm.disabled"
-                        (click)="validatePhone()" *ngIf="!isPhoneVerified">
-                    <span *ngIf="!phoneValidationForm.disabled">
-                        Verifica Cellulare
-                    </span>
-                    <mat-progress-spinner
-                            *ngIf="phoneValidationForm.disabled"
-                            [diameter]="24"
-                            [mode]="'indeterminate'"></mat-progress-spinner>
-                </button>
+<!--                <button-->
+<!--                        class="fuse-mat-button-large w-full mt-6"-->
+<!--                        mat-flat-button-->
+<!--                        [color]="'accent'"-->
+<!--                        [disabled]="phoneValidationForm.disabled"-->
+<!--                        (click)="validatePhone()" *ngIf="!isPhoneVerified">-->
+<!--                    <span *ngIf="!phoneValidationForm.disabled">-->
+<!--                        Verifica Cellulare-->
+<!--                    </span>-->
+<!--                    <mat-progress-spinner-->
+<!--                            *ngIf="phoneValidationForm.disabled"-->
+<!--                            [diameter]="24"-->
+<!--                            [mode]="'indeterminate'"></mat-progress-spinner>-->
+<!--                </button>-->
             </form>
             <form *ngIf="isPhoneVerified" class="mt-1"
                   [formGroup]="registerCustomerForm">

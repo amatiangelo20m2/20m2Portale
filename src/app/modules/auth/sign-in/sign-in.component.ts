@@ -11,6 +11,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { fuseAnimations } from '@fuse/animations';
 import { FuseAlertComponent, FuseAlertType } from '@fuse/components/alert';
 import { AuthService } from 'app/core/auth/auth.service';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     selector: 'auth-sign-in',
@@ -40,7 +41,8 @@ export class AuthSignInComponent implements OnInit {
         private _activatedRoute: ActivatedRoute,
         private _authService: AuthService,
         private _formBuilder: UntypedFormBuilder,
-        private _router: Router
+        private _router: Router,
+        private _snackBar: MatSnackBar,
     ) {}
 
     /**
@@ -70,6 +72,10 @@ export class AuthSignInComponent implements OnInit {
         // Sign in via AuthService
         this._authService.signInWithUserCode(this.signInForm.value).subscribe(
             () => {
+                this._snackBar.open('Accesso eseguito 😎', 'Undo', {
+                    duration: 3000,
+                });
+
                 // Redirect to the target URL
                 const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
                 this._router.navigateByUrl(redirectURL);

@@ -11,14 +11,14 @@ import {MatMenuModule} from "@angular/material/menu";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
-import {DayhoursComponent} from "./dayhours/dayhours.component";
+// import {DayhoursComponent} from "./dayhours/dayhours.component";
 import {BranchResponseEntity} from "../../../../../core/dashboard";
 import {DataproviderService} from "../../../dataprovider.service";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatTableModule} from "@angular/material/table";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatTabsModule} from "@angular/material/tabs";
-import {EdithoursComponent} from "./dayhours/edit-hours/edithours.component";
+// import {EdithoursComponent} from "./dayhours/edit-hours/edithours.component";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatChipsModule} from "@angular/material/chips";
@@ -26,7 +26,7 @@ import {MatRadioModule} from "@angular/material/radio";
 import {environment} from "../../../../../../environments/environment";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatRippleModule} from "@angular/material/core";
-import {TagComponent} from "./tag/tag.component";
+// import {TagComponent} from "./tag/tag.component";
 import {
     BookingFormDto,
     BranchConfigurationDTO,
@@ -64,7 +64,7 @@ import {
         MatRadioModule,
         NgClass,
         MatRippleModule,
-        TagComponent
+        // TagComponent
     ],
     standalone: true
 })
@@ -94,42 +94,42 @@ export class ConfigureOpeningComponent implements OnInit {
             this.currentBranch = branch;
         });
 
-        this._dataProvideService.branchConfiguration$.subscribe((branchConfigurationDTO : BranchConfigurationDTO)=>{
-            this.branchConfigurationDTO = branchConfigurationDTO;
-            this.restaurantConfigForm = this.fb.group({
-                branchCode: [branchConfigurationDTO?.branchCode],
-                guests: [branchConfigurationDTO?.guests ?? 0, Validators.required],
-                bookingSlotInMinutes: [branchConfigurationDTO?.bookingSlotInMinutes.toString()],
-                reservationConfirmedManually: [branchConfigurationDTO?.reservationConfirmedManually],
-                maxTableNumber: [branchConfigurationDTO?.maxTableNumber],
-                guestReceivingAuthConfirm: [branchConfigurationDTO?.guestReceivingAuthConfirm],
-                minBeforeSendConfirmMessage: [branchConfigurationDTO?.minBeforeSendConfirmMessage.toString()],
-                dogsAllowed: [branchConfigurationDTO?.dogsAllowed.toString()]
-            });
-
-            this.currentWorkingForm = branchConfigurationDTO?.bookingFormList?.at(0);
-
-            this.formConfiguration = this.fb.group({
-                formType: [this.currentWorkingForm?.formType],
-                redirectPage: [this.currentWorkingForm?.redirectPage]
-            });
-
-
-            // TODO: use encoded value to make shorter and encrypted the url to go to reservation form
-            let encodedVal = btoa(this.currentBranch.branchCode + this.currentWorkingForm.formCode);
-            this.url = environment.hostname +'/reservation?branchCode=' + this.currentBranch.branchCode + '&form=' + this.currentWorkingForm.formCode;
-
-            this.urlform = this.fb.group({
-                url: [this.url, /* Other Validators if needed */],
-                iframe: [`<iframe src="${this.url}" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>\n`]
-            });
-
-            this.dataSource = this.branchConfigurationDTO?.bookingFormList?.at(0).branchTimeRanges.map((branchTime: BranchTimeRangeDTO) => {
-                return branchTime;
-            }) || [];
-
-            console.log(this.restaurantConfigForm)
-        })
+        // this._dataProvideService.branchConfiguration$.subscribe((branchConfigurationDTO : BranchConfigurationDTO)=>{
+        //     this.branchConfigurationDTO = branchConfigurationDTO;
+        //     this.restaurantConfigForm = this.fb.group({
+        //         branchCode: [branchConfigurationDTO?.branchCode],
+        //         guests: [branchConfigurationDTO?.guests ?? 0, Validators.required],
+        //         bookingSlotInMinutes: [branchConfigurationDTO?.bookingSlotInMinutes.toString()],
+        //         reservationConfirmedManually: [branchConfigurationDTO?.reservationConfirmedManually],
+        //         maxTableNumber: [branchConfigurationDTO?.maxTableNumber],
+        //         guestReceivingAuthConfirm: [branchConfigurationDTO?.guestReceivingAuthConfirm],
+        //         minBeforeSendConfirmMessage: [branchConfigurationDTO?.minBeforeSendConfirmMessage.toString()],
+        //         dogsAllowed: [branchConfigurationDTO?.dogsAllowed.toString()]
+        //     });
+        //
+        //     this.currentWorkingForm = branchConfigurationDTO?.bookingFormList?.at(0);
+        //
+        //     this.formConfiguration = this.fb.group({
+        //         formType: [this.currentWorkingForm?.formType],
+        //         redirectPage: [this.currentWorkingForm?.redirectPage]
+        //     });
+        //
+        //
+        //     // TODO: use encoded value to make shorter and encrypted the url to go to reservation form
+        //     let encodedVal = btoa(this.currentBranch.branchCode + this.currentWorkingForm.formCode);
+        //     this.url = environment.hostname +'/reservation?branchCode=' + this.currentBranch.branchCode + '&form=' + this.currentWorkingForm.formCode;
+        //
+        //     this.urlform = this.fb.group({
+        //         url: [this.url, /* Other Validators if needed */],
+        //         iframe: [`<iframe src="${this.url}" width="100%" height="100%" frameborder="0" allowfullscreen></iframe>\n`]
+        //     });
+        //
+        //     this.dataSource = this.branchConfigurationDTO?.bookingFormList?.at(0).branchTimeRanges.map((branchTime: BranchTimeRangeDTO) => {
+        //         return branchTime;
+        //     }) || [];
+        //
+        //     console.log(this.restaurantConfigForm)
+        // })
 
     }
     saveConfiguration(): void {
@@ -138,17 +138,17 @@ export class ConfigureOpeningComponent implements OnInit {
             console.log("salvataggio..")
             // console.log(this.restaurantConfigForm.value);
 
-            this._dataProvideService.updateBranchBookingConfigration({
-                    guests: this.restaurantConfigForm.get('guests')?.value,
-                    bookingSlotInMinutes: +this.restaurantConfigForm.get('bookingSlotInMinutes')?.value,
-                    branchCode: this.restaurantConfigForm.get('branchCode')?.value,
-                    guestReceivingAuthConfirm: this.restaurantConfigForm.get('guestReceivingAuthConfirm')?.value,
-                    maxTableNumber: this.restaurantConfigForm.get('maxTableNumber')?.value,
-                    minBeforeSendConfirmMessage: +this.restaurantConfigForm.get('minBeforeSendConfirmMessage')?.value,
-                    reservationConfirmedManually: this.restaurantConfigForm.get('reservationConfirmedManually')?.value,
-                    dogsAllowed: this.restaurantConfigForm.get('dogsAllowed')?.value
-                }
-            );
+            // this._dataProvideService.updateBranchBookingConfigration({
+            //         guests: this.restaurantConfigForm.get('guests')?.value,
+            //         bookingSlotInMinutes: +this.restaurantConfigForm.get('bookingSlotInMinutes')?.value,
+            //         branchCode: this.restaurantConfigForm.get('branchCode')?.value,
+            //         guestReceivingAuthConfirm: this.restaurantConfigForm.get('guestReceivingAuthConfirm')?.value,
+            //         maxTableNumber: this.restaurantConfigForm.get('maxTableNumber')?.value,
+            //         minBeforeSendConfirmMessage: +this.restaurantConfigForm.get('minBeforeSendConfirmMessage')?.value,
+            //         reservationConfirmedManually: this.restaurantConfigForm.get('reservationConfirmedManually')?.value,
+            //         dogsAllowed: this.restaurantConfigForm.get('dogsAllowed')?.value
+            //     }
+            // );
             this._snackBar.open('Configurazione salvata con successo', 'Undo', {
                 duration: 3000,
             });
@@ -159,7 +159,7 @@ export class ConfigureOpeningComponent implements OnInit {
     }
 
     openEditLabelsDialog() {
-        this._matDialog.open(DayhoursComponent, {autoFocus: false});
+        // this._matDialog.open(DayhoursComponent, {autoFocus: false});
     }
 
     getTime(timeRanges: Array<TimeRange>) {
@@ -196,11 +196,11 @@ export class ConfigureOpeningComponent implements OnInit {
     }
 
     editHour(timeRange: BranchTimeRangeDTO) {
-        this._dataProvideService.setBranchTimeRangeDTOToUpdate(timeRange)
-        this._matDialog.open(EdithoursComponent, {autoFocus: false});
+        // this._dataProvideService.setBranchTimeRangeDTOToUpdate(timeRange)
+        // this._matDialog.open(EdithoursComponent, {autoFocus: false});
     }
 
     switchClosedStatus(timeRangeDTO: BranchTimeRangeDTO, formCode: string) {
-        this._dataProvideService.switchClosedStatus(timeRangeDTO, formCode);
+        // this._dataProvideService.switchClosedStatus(timeRangeDTO, formCode);
     }
 }

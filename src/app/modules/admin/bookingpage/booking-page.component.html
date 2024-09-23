@@ -15,8 +15,8 @@
             <div class="flex-auto">
                 <div class="flex flex-col sm:flex-row md:flex-col flex-auto justify-between py-8 px-6 md:px-8 border-b">
                     <div>
-                        <div class="text-4xl font-extrabold tracking-tight leading-none">Prenotazioni {{currentBranch.name}}</div>
-                        <div class="ml-0.5 font-medium text-secondary">
+                        <div class="text-4xl font-extrabold tracking-tight leading-none">Prenotazioni {{currentBranch?.name}}</div>
+                        <div class="ml-0.5 font-sans text-secondary">
                             <ng-container *ngIf="bookingCount > 0">
                                 {{bookingCount}}
                             </ng-container>
@@ -25,6 +25,9 @@
                             '=1'   : 'prenotazione',
                             'other': 'prenotazioni'
                         } }}
+                            in data {{
+                            selectedDate | date: 'dd/MM/yyyy':'it-IT'
+                            }}
                         </div>
                     </div>
                     <div class="flex items-center mt-4 sm:mt-0 md:mt-4">
@@ -51,7 +54,7 @@
                             [color]="'accent'"
                             (click)="createBooking()">
                             <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
-                            <span class="ml-2 mr-1">Crea prenotazione</span>
+                            <span class="ml-2 mr-1">Crea</span>
                         </button>
                         <button
                             class="ml-4"
@@ -60,8 +63,22 @@
                             [matMenuTriggerFor]="previousStatementMenu">
                             <mat-icon [svgIcon]="'heroicons_outline:arrows-up-down'"></mat-icon>
                         </button>
+                        <button
+                            class="ml-4"
+                            mat-flat-button
+                            [color]="'primary'"
+                            (click)="picker.open()">
+                            <input
+                                matInput
+                                [matDatepicker]="picker"
+                                [ngModel]="selectedDate"
+                                placeholder="Seleziona data"
+                                (dateChange)="onDateChange($event)">
+                            <mat-datepicker #picker></mat-datepicker>
+                            <mat-icon class="pr-1.5" [svgIcon]="'heroicons_outline:calendar-days'"></mat-icon>
+                        </button>
                         <mat-menu #previousStatementMenu="matMenu">
-                            <button mat-menu-item>
+                            <button mat-menu-item (click)="changeMenuSort('name')">
                                     <span class="flex items-center">
                                         <mat-icon
                                             class="icon-size-5 mr-3"
@@ -69,7 +86,7 @@
                                         <span>Ordina per nome</span>
                                     </span>
                             </button>
-                            <button mat-menu-item>
+                            <button mat-menu-item (click)="changeMenuSort('ora')">
                                     <span class="flex items-center">
                                         <mat-icon
                                             class="icon-size-5 mr-3"
@@ -77,7 +94,7 @@
                                         <span>Ordina per ora di arrivo</span>
                                     </span>
                             </button>
-                            <button mat-menu-item>
+                            <button mat-menu-item (click)="changeMenuSort('data')">
                                     <span class="flex items-center">
                                         <mat-icon
                                             class="icon-size-5 mr-3"
@@ -89,6 +106,8 @@
                         </mat-menu>
                     </div>
                 </div>
+
+<!--                <booking></booking>-->
 <!--                <div class="relative">-->
 <!--                    <ng-container *ngIf="bookings">-->
 <!--                        <ng-container *ngIf="bookings.length; else noContacts">-->
