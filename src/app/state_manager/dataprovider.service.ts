@@ -184,6 +184,7 @@ export class DataproviderService {
     getBookingData() {
         this.getDashData();
         let branchCodeRetrieved = localStorage.getItem("branchCode") ?? '';
+        console.log('Branch code r: ' + branchCodeRetrieved);
         // if(branchCodeRetrieved != '') {
         //     this._bookingControllerService.retrieveBookingsByBranchCode(branchCodeRetrieved, '2024-02-02','').subscribe(
         //         (retrievedBooking: BookingDTO[])=>{
@@ -192,6 +193,10 @@ export class DataproviderService {
         //         }
         //     );
         // }
+    }
+
+    getOpeningBranchDetails(){
+        this.getDashData();
     }
     //
     // sortBookingsByCustomerName(bookings: BookingDTO[]): BookingDTO[] {

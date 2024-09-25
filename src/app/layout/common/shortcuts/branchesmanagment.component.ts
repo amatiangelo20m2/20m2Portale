@@ -19,13 +19,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RouterLink } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {catchError, Subject, throwError} from 'rxjs';
 import {DataproviderService} from "../../../state_manager/dataprovider.service";
 import {User} from "../../../core/user/user.types";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 import {BranchCreationEntity, BranchResponseEntity, BranchControllerService} from "../../../core/dashboard";
+import Swal from "sweetalert2";
 
 @Component({
     selector       : 'branches-managment',
@@ -67,6 +68,7 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
     user : User;
 
     constructor(
+        private router: Router,
         private _formBuilder: UntypedFormBuilder,
         private _overlay: Overlay,
         private _viewContainerRef: ViewContainerRef,
@@ -301,8 +303,16 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
     selectBranch(branch: BranchResponseEntity) {
         this._dashboardService.selectBranch(branch);
         this.closePanel();
-        this._snackBar.open('Ora stai lavorando su ' + branch.name , 'Undo', {
-            duration: 3000,
+
+        Swal.fire({
+            icon: "success",
+            timer: 2000,
+            title: '',
+            text: 'Ora stai lavorando su ' + branch.name,
         });
+
+        this.router.navigate(['/']);
+
+
     }
 }
