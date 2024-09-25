@@ -18,7 +18,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatListModule} from "@angular/material/list";
-import {DataproviderService} from "../dataprovider.service";
+import {DataproviderService} from "../../../state_manager/dataprovider.service";
 import {BranchResponseEntity} from "../../../core/dashboard";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDatepickerInputEvent, MatDatepickerModule} from "@angular/material/datepicker";

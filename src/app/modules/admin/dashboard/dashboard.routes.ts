@@ -1,7 +1,7 @@
 import {Routes} from '@angular/router';
 import {DashboardComponent} from "./dashboard.component";
 import {inject} from "@angular/core";
-import {DataproviderService} from "../dataprovider.service";
+import {DataproviderService} from "../../../state_manager/dataprovider.service";
 
 export default [
     {

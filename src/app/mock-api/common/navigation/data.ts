@@ -3,31 +3,31 @@ import { FuseNavigationItem } from '@fuse/components/navigation';
 
 
 export const defaultNavigation: FuseNavigationItem[] = [
-
     {
-        id      : 'generale',
-        title   : 'Dashboard',
+        id: 'dashboard',
+        title: 'Dashboard',
+        type: 'basic',
+        icon: 'heroicons_outline:home',
+        link: '/dashboard/managment',
+    },
+    {
+        id      : 'prenotazioni',
+        title   : 'Prenotazioni',
         type    : 'group',
-        icon    : 'heroicons_outline:currency-euro',
+        icon    : 'heroicons_outline:clipboard',
         children: [
             {
-                id   : 'dashboard',
-                title: 'Home',
+                id   : 'booking',
+                title: 'Prenotazioni',
                 type : 'basic',
-                icon : 'heroicons_outline:home',
-                link : '/dashboard/managment',
+                icon : 'heroicons_outline:clipboard',
+                link : '/dashboard/bookings',
             },{
                 id   : 'settings',
                 title: 'Configura Apertura',
                 type : 'basic',
                 icon : 'heroicons_outline:wrench-screwdriver',
                 link : '/dashboard/configure',
-            },{
-                id   : 'booking',
-                title: 'Prenotazioni',
-                type : 'basic',
-                icon : 'heroicons_outline:clipboard',
-                link : '/dashboard/bookings',
             },
             {
                 id   : 'customers',
@@ -36,48 +36,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 icon : 'heroicons_outline:user-group',
                 link : '/dashboard/customers',
             },
-            // {
-            //     id   : 'catering',
-            //     title: 'Catering',
-            //     type : 'basic',
-            //     icon : 'heroicons_outline:globe-asia-australia',
-            //     link : '/dashboard/catering',
-            // },
-            // {
-            //     id   : 'foodcost',
-            //     title: 'Food Cost',
-            //     type : 'basic',
-            //     icon : 'heroicons_outline:currency-euro',
-            //     link : '/dashboard/foodcost',
-            // },
-            // {
-            //     id   : 'iva',
-            //     title: 'Iva',
-            //     type : 'basic',
-            //     icon : 'heroicons_outline:circle-stack',
-            //     link : '/dashboard/vat',
-            // },{
-            //     id   : 'supplier',
-            //     title: 'Fornitori e Prodotti',
-            //     type : 'basic',
-            //     icon : 'heroicons_outline:truck',
-            //     link : '/dashboard/suppliers',
-            // },
         ],
     },
     {
-        id      : 'settings',
-        title   : 'Settings',
-        type    : 'group',
-        icon    : 'heroicons_outline:currency-euro',
-        children: [
-            {
-                id   : 'pages.settings',
-                title: 'Settings',
-                type : 'basic',
-                icon : 'heroicons_outline:cog-8-tooth',
-                link : '/dashboard/settings',
-            },
-        ],
-    },
+        id: 'settings',
+        title: 'Settings',
+        type: 'basic',
+        icon: 'heroicons_outline:cog-8-tooth',
+        link: '/dashboard/settings',
+    }
 ];

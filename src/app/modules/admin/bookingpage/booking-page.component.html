@@ -47,6 +47,13 @@
                                     [placeholder]="'Cerca prenotazioni per nome cliente o codice prenotazione'">
                             </mat-form-field>
                         </div>
+                        <button
+                            class="ml-4"
+                            mat-flat-button
+                            style="background: white"
+                            [matMenuTriggerFor]="previousStatementMenu">
+                            <img class="w-6 ml-2" [src]="'assets/images/others/excel.svg'">
+                        </button>
                         <!-- Add contact button -->
                         <button
                             class="ml-4"
@@ -63,6 +70,7 @@
                             [matMenuTriggerFor]="previousStatementMenu">
                             <mat-icon [svgIcon]="'heroicons_outline:arrows-up-down'"></mat-icon>
                         </button>
+
                         <button
                             class="ml-4"
                             mat-flat-button

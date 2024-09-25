@@ -10,7 +10,7 @@ import {
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {Subject, takeUntil} from "rxjs";
-import {DataproviderService} from "../dataprovider.service";
+import {DataproviderService} from "../../../state_manager/dataprovider.service";
 import {NgClass, NgFor, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {User} from "../../../core/user/user.types";
 import {BranchResponseEntity} from "../../../core/dashboard";
@@ -81,39 +81,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
 
     readonly panelOpenState = signal(false);
+    sadfjkdfs: string = 'sadfdfsdfssdfsdfsfddfs';
     ngOnInit(): void {
-        this.panels = [
-            {
-                id         : 'branchsetting',
-                icon       : 'mat_outline:app_settings_alt',
-                title      : 'Configura Attività',
-                description: 'Aperture - Form - Strategia',
-            },
-            {
-                id         : 'booking',
-                icon       : 'heroicons_outline:calendar-days',
-                title      : 'Prenotazioni',
-                description: 'Booking',
-            },
-            {
-                id         : 'advertising',
-                icon       : 'heroicons_outline:device-phone-mobile',
-                title      : 'Campagne Pubblicitarie',
-                description: 'Advertising Campaigns',
-            },
-            {
-                id         : 'catering',
-                icon       : 'mat_outline:local_bar',
-                title      : 'Catering ed Eventi',
-                description: 'Catering and Events',
-            },
-            {
-                id         : 'team',
-                icon       : 'heroicons_outline:user-group',
-                title      : 'Team',
-                description: 'Manage your existing team and change roles/permissions',
-            },
-        ];
+
 
         this._fuseMediaWatcherService.onMediaChange$
             .pipe(takeUntil(this._unsubscribeAll))

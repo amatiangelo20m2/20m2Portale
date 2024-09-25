@@ -1,14 +1,8 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, Observable, of, Subject, takeUntil} from 'rxjs';
-import {UserService} from "../../core/user/user.service";
-import {User} from "../../core/user/user.types";
-import {BranchControllerService, BranchResponseEntity} from "../../core/dashboard";
-// import {
-//     BookingControllerService, BookingDTO,
-//     BranchConfigurationDTO, BranchGeneralConfigurationEditRequest,
-//     BranchTimeRangeDTO, FormTag,
-//     TimeRangeUpdateRequest
-// } from "../../core/booking";
+import {BehaviorSubject, Subject, takeUntil} from 'rxjs';
+import {UserService} from "../core/user/user.service";
+import {User} from "../core/user/user.types";
+import {BranchControllerService, BranchResponseEntity} from "../core/dashboard";
 
 @Injectable({providedIn: 'root'})
 export class DataproviderService {

@@ -5,7 +5,7 @@ import {MatOptionModule} from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
-import {DataproviderService} from "../../dataprovider.service";
+import {DataproviderService} from "../../../../state_manager/dataprovider.service";
 import {BranchResponseEntity} from "../../../../core/dashboard";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {I18nPluralPipe, NgIf} from "@angular/common";
