@@ -18,11 +18,12 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatListModule} from "@angular/material/list";
-import {StateManagerProvider} from "../../../state_manager/state-manager-provider.service";
-import {BranchResponseEntity} from "../../../core/dashboard";
+import {StateManagerProvider} from "../../../../state_manager/state-manager-provider.service";
+import {BranchResponseEntity} from "../../../../core/dashboard";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDatepickerInputEvent, MatDatepickerModule} from "@angular/material/datepicker";
-import {BookingComponent} from "../../pages/booking/booking.component";
+import {BookingComponent} from "../../../pages/booking/booking.component";
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 @Component({
     selector: 'bookingpage',
@@ -49,7 +50,8 @@ import {BookingComponent} from "../../pages/booking/booking.component";
         MatDatepickerModule,
         FormsModule,
         DatePipe,
-        BookingComponent
+        BookingComponent,
+        MatSlideToggleModule
     ],
     standalone: true
 })
@@ -120,7 +122,7 @@ export class BookingPageComponent implements OnInit{
     }
 
     createBooking() {
-
+        console.log('Crea prenotazione');
     }
 
     changeMenuSort(name: string) {
@@ -138,5 +140,9 @@ export class BookingPageComponent implements OnInit{
         this._snackBar.open('Prenotazioni del ' + formattedDate, 'Undo', {
             duration: 3000,
         });
+    }
+
+    openModal() {
+
     }
 }

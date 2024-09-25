@@ -30,6 +30,7 @@ import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {ApexOptions, NgApexchartsModule} from "ng-apexcharts";
 import {MatMenuModule} from "@angular/material/menu";
 import {BookingComponent} from "../../pages/booking/booking.component";
+import {CdkDrag} from "@angular/cdk/drag-drop";
 
 export interface Fruit {
     name: string;
@@ -53,7 +54,7 @@ export interface Fruit {
         MatExpansionModule,
         MatDatepickerModule,
         MatCardModule,
-        MatInputModule, FormsModule, MatDialogModule, MatChipsModule, MatButtonToggleModule, NgApexchartsModule, MatMenuModule, BookingComponent],
+        MatInputModule, FormsModule, MatDialogModule, MatChipsModule, MatButtonToggleModule, NgApexchartsModule, MatMenuModule, BookingComponent, CdkDrag],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 

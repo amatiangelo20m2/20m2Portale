@@ -67,7 +67,9 @@ export const appRoutes: Route[] = [
         },
         children: [
             { path: 'managment', loadChildren: () => import('app/modules/admin/dashboard/dashboard.routes')},
-            { path: 'bookings', loadChildren: () => import('app/modules/admin/bookingpage/bookingpage.routes')},
+            { path: 'bookings', loadChildren: () => import('app/modules/admin/booking/bookingpage/bookingpage.routes')},
+            { path: 'configure', loadChildren: () => import('app/modules/admin/booking/opening_configuration/opening_configuration.routes')},
+            { path: 'customers', loadChildren: () => import('app/modules/admin/booking/customers/customers.routes')},
             { path: 'settings', loadChildren: () => import('app/modules/pages/settings/settings.routes')},
         ]
     }
