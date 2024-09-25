@@ -18,7 +18,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatMenuModule} from "@angular/material/menu";
 import {MatListModule} from "@angular/material/list";
-import {DataproviderService} from "../../../state_manager/dataprovider.service";
+import {StateManagerProvider} from "../../../state_manager/state-manager-provider.service";
 import {BranchResponseEntity} from "../../../core/dashboard";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDatepickerInputEvent, MatDatepickerModule} from "@angular/material/datepicker";
@@ -68,7 +68,7 @@ export class BookingPageComponent implements OnInit{
     // private _unsubscribeAll: Subject<any> = new Subject<any>();
     currentBranch: BranchResponseEntity;
 
-    constructor(private _dataproviderService: DataproviderService,
+    constructor(private _dataproviderService: StateManagerProvider,
                 private _router: Router,
                 private _changeDetectorRef: ChangeDetectorRef,
                 private _activatedRoute: ActivatedRoute,

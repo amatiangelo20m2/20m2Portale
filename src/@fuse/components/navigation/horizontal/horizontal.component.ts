@@ -8,6 +8,8 @@ import { ReplaySubject, Subject } from 'rxjs';
 import { FuseHorizontalNavigationBasicItemComponent } from './components/basic/basic.component';
 import { FuseHorizontalNavigationBranchItemComponent } from './components/branch/branch.component';
 import { FuseHorizontalNavigationSpacerItemComponent } from './components/spacer/spacer.component';
+import {StateManagerProvider} from "../../../../app/state_manager/state-manager-provider.service";
+import {BranchResponseEntity} from "../../../../app/core/dashboard";
 
 @Component({
     selector       : 'fuse-horizontal-navigation',
@@ -27,6 +29,7 @@ export class FuseHorizontalNavigationComponent implements OnChanges, OnInit, OnD
 
     onRefreshed: ReplaySubject<boolean> = new ReplaySubject<boolean>(1);
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    private _currentBranch: BranchResponseEntity;
 
     /**
      * Constructor
@@ -35,8 +38,11 @@ export class FuseHorizontalNavigationComponent implements OnChanges, OnInit, OnD
         private _changeDetectorRef: ChangeDetectorRef,
         private _fuseNavigationService: FuseNavigationService,
         private _fuseUtilsService: FuseUtilsService,
-    )
-    {
+        private _stateManagerProvider : StateManagerProvider) {
+
+        this._stateManagerProvider.branch$.subscribe(branchResponseEntity => {
+            this._currentBranch = branchResponseEntity;
+        });
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -89,6 +95,7 @@ export class FuseHorizontalNavigationComponent implements OnChanges, OnInit, OnD
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+    branchItem: any;
 
     /**
      * Refresh the component to apply the changes

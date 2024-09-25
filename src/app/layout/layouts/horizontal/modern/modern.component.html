@@ -17,6 +17,7 @@
                     class="w-24"
                     src="assets/images/logo/logo-bianco.svg"
                     alt="Logo image">
+
             </div>
         </ng-container>
     </fuse-vertical-navigation>
@@ -42,11 +43,15 @@
                     class="flex lg:hidden w-8"
                     src="assets/images/logo/logo.png">
             </div>
+
             <!-- Horizontal navigation -->
             <fuse-horizontal-navigation
                 class="mr-2"
                 [name]="'mainNavigation'"
-                [navigation]="navigation.horizontal"></fuse-horizontal-navigation>
+                [navigation]="navigation.horizontal"
+
+            ></fuse-horizontal-navigation>
+
         </ng-container>
         <!-- Navigation toggle button -->
         <ng-container *ngIf="isScreenSmall">

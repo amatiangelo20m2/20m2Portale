@@ -17,6 +17,8 @@ import { SearchComponent } from 'app/layout/common/search/search.component';
 import { BranchesmanagmentComponent } from 'app/layout/common/shortcuts/branchesmanagment.component';
 import { UserComponent } from 'app/layout/common/user/user.component';
 import { Subject, takeUntil } from 'rxjs';
+import {StateManagerProvider} from "../../../../state_manager/state-manager-provider.service";
+import {BranchResponseEntity} from "../../../../core/dashboard";
 
 @Component({
     selector     : 'modern-layout',
@@ -39,9 +41,9 @@ export class ModernLayoutComponent implements OnInit, OnDestroy
         private _router: Router,
         private _navigationService: NavigationService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _fuseNavigationService: FuseNavigationService,
-    )
-    {
+        private _fuseNavigationService: FuseNavigationService) {
+
+
     }
 
     // -----------------------------------------------------------------------------------------------------

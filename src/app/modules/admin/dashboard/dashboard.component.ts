@@ -10,7 +10,7 @@ import {
 import {MatIconModule} from "@angular/material/icon";
 import {MatButtonModule} from "@angular/material/button";
 import {Subject, takeUntil} from "rxjs";
-import {DataproviderService} from "../../../state_manager/dataprovider.service";
+import {StateManagerProvider} from "../../../state_manager/state-manager-provider.service";
 import {NgClass, NgFor, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {User} from "../../../core/user/user.types";
 import {BranchResponseEntity} from "../../../core/dashboard";
@@ -29,6 +29,7 @@ import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
 import {ApexOptions, NgApexchartsModule} from "ng-apexcharts";
 import {MatMenuModule} from "@angular/material/menu";
+import {BookingComponent} from "../../pages/booking/booking.component";
 
 export interface Fruit {
     name: string;
@@ -52,7 +53,7 @@ export interface Fruit {
         MatExpansionModule,
         MatDatepickerModule,
         MatCardModule,
-        MatInputModule, FormsModule, MatDialogModule, MatChipsModule, MatButtonToggleModule, NgApexchartsModule, MatMenuModule],
+        MatInputModule, FormsModule, MatDialogModule, MatChipsModule, MatButtonToggleModule, NgApexchartsModule, MatMenuModule, BookingComponent],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
@@ -75,7 +76,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     /**
      * Constructor
      */
-    constructor(private _dataProvideService: DataproviderService,
+    constructor(private _dataProvideService: StateManagerProvider,
                 private _changeDetectorRef: ChangeDetectorRef,
                 private _fuseMediaWatcherService: FuseMediaWatcherService,) {
     }

@@ -13,7 +13,7 @@ import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {MatDialog} from "@angular/material/dialog";
 // import {DayhoursComponent} from "./dayhours/dayhours.component";
 import {BranchResponseEntity} from "../../../../../core/dashboard";
-import {DataproviderService} from "../../../../../state_manager/dataprovider.service";
+import {StateManagerProvider} from "../../../../../state_manager/state-manager-provider.service";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatTableModule} from "@angular/material/table";
 import {MatTooltipModule} from "@angular/material/tooltip";
@@ -84,7 +84,7 @@ export class ConfigureOpeningComponent implements OnInit {
     formConfiguration: FormGroup;
 
     constructor(private _matDialog: MatDialog,
-                private _dataProvideService: DataproviderService,
+                private _dataProvideService: StateManagerProvider,
                 private fb: FormBuilder,
                 private _snackBar: MatSnackBar) {
     }

@@ -21,7 +21,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {Router, RouterLink} from '@angular/router';
 import {catchError, Subject, throwError} from 'rxjs';
-import {DataproviderService} from "../../../state_manager/dataprovider.service";
+import {StateManagerProvider} from "../../../state_manager/state-manager-provider.service";
 import {User} from "../../../core/user/user.types";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
@@ -72,7 +72,7 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
         private _formBuilder: UntypedFormBuilder,
         private _overlay: Overlay,
         private _viewContainerRef: ViewContainerRef,
-        private _dashboardService : DataproviderService,
+        private _dashboardService : StateManagerProvider,
         private _branchControllerService : BranchControllerService,
         private _snackBar: MatSnackBar) {
     }

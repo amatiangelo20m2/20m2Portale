@@ -53,7 +53,7 @@ export const appRoutes: Route[] = [
             layout: 'empty'
         },
         children: [
-            {path: 'home', loadChildren: () => import('app/modules/landing/home/home.routes')},
+
             {path: 'reservation', loadChildren: () => import('app/modules/pages/booking/booking.routes')},
 
         ]
