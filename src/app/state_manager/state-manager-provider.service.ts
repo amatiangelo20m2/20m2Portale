@@ -3,6 +3,7 @@ import {BehaviorSubject, Subject, takeUntil} from 'rxjs';
 import {UserService} from "../core/user/user.service";
 import {User} from "../core/user/user.types";
 import {BranchControllerService, BranchResponseEntity} from "../core/dashboard";
+import {FormControllerService, FormDTO, RestaurantControllerService} from "../core/restaurant_service";
 
 @Injectable({providedIn: 'root'})
 export class StateManagerProvider {
@@ -10,10 +11,15 @@ export class StateManagerProvider {
     private _unsubscribeAll: Subject<any> = new Subject<any>();
     private currentBranch: BehaviorSubject<BranchResponseEntity> = new BehaviorSubject(null);
     private currentBranchesList : BehaviorSubject<BranchResponseEntity[]> = new BehaviorSubject(null);
+
+    private currentFormList : BehaviorSubject<FormDTO[]> = new BehaviorSubject(null);
+
     // private currentBranchConfiguration : BehaviorSubject<BranchConfigurationDTO> = new BehaviorSubject(null);
 
     branch$ = this.currentBranch.asObservable();
     branches$ = this.currentBranchesList.asObservable();
+
+    formDtos$ = this.currentFormList.asObservable();
 
     // branchConfiguration$ = this.currentBranchConfiguration.asObservable();
 
@@ -21,6 +27,7 @@ export class StateManagerProvider {
 
     constructor(
         private _branchControllerService: BranchControllerService,
+        private _formController : FormControllerService,
         // private _bookingControllerService: BookingControllerService,
         private _userService: UserService) {
     }
@@ -68,8 +75,6 @@ export class StateManagerProvider {
         this.currentBranch.next(branch);
         // this.retrieveBookingConfiguration(branch?.branchCode);
     }
-
-
     addBranch(branch: BranchResponseEntity) {
 
         this.currentBranchesList.value.push(branch);
@@ -79,7 +84,15 @@ export class StateManagerProvider {
         this.currentBranchesList.next(this.currentBranchesList.value);
     }
 
+    retrieveFormByBranchCode(){
 
+        let branchCodeRetrieved = localStorage.getItem("branchCode") ?? '';
+
+        this._formController.retrieveByBranchCode(branchCodeRetrieved).subscribe(formList => {
+            return formList;
+        });
+
+    }
     // retrieveBookingConfiguration(branchCode: string){
     //     this._bookingControllerService.checkWaApiStatus(branchCode)
     //         .subscribe((bookingConfDTO) =>{

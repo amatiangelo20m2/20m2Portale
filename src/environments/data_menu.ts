@@ -20,7 +20,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 id   : 'booking',
                 title: 'Prenotazioni',
                 type : 'basic',
-                icon : 'heroicons_outline:clipboard',
+                icon : 'heroicons_mini:calendar-days',
                 link : '/dashboard/bookings',
             },{
                 id   : 'settings',
@@ -30,13 +30,27 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 link : '/dashboard/configure',
             },
             {
-                id   : 'customers',
-                title: 'I miei clienti',
+                id   : 'forms',
+                title: 'Form',
                 type : 'basic',
-                icon : 'heroicons_outline:user-group',
-                link : '/dashboard/customers',
+                icon : 'heroicons_outline:clipboard-document-list',
+                link : '/dashboard/forms',
             },
+            {
+                id   : 'whatsapp',
+                title: 'Configura What\'s App',
+                type : 'basic',
+                icon : 'heroicons_outline:clipboard-document-list',
+                link : '/dashboard/whatsapp',
+            }
         ],
+    },
+    {
+        id   : 'customers',
+        title: 'I miei clienti',
+        type : 'basic',
+        icon : 'heroicons_outline:user-group',
+        link : '/dashboard/customers',
     },
     {
         id: 'settings',

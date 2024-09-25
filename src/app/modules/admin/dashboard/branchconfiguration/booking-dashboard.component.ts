@@ -59,10 +59,10 @@ export class BookingDashboardComponent implements OnInit {
             this.cdr.detectChanges();
         });
 
-        this._dataProvideService.branchConfiguration$.subscribe((restaurantConfiguration)=>{
-            this.branchConfigurationDTO = restaurantConfiguration;
-            this.cdr.detectChanges();
-        });
+        // this._dataProvideService.branchConfiguration$.subscribe((restaurantConfiguration)=>{
+        //     this.branchConfigurationDTO = restaurantConfiguration;
+        //     this.cdr.detectChanges();
+        // });
     }
 
 

@@ -70,6 +70,8 @@ export const appRoutes: Route[] = [
             { path: 'bookings', loadChildren: () => import('app/modules/admin/booking/bookingpage/bookingpage.routes')},
             { path: 'configure', loadChildren: () => import('app/modules/admin/booking/opening_configuration/opening_configuration.routes')},
             { path: 'customers', loadChildren: () => import('app/modules/admin/booking/customers/customers.routes')},
+            { path: 'forms', loadChildren: () => import('app/modules/admin/booking/forms/forms.routes')},
+            { path: 'whatsapp', loadChildren: () => import('app/modules/admin/booking/whatsappconf/whats-app-conf.routes')},
             { path: 'settings', loadChildren: () => import('app/modules/pages/settings/settings.routes')},
         ]
     }
