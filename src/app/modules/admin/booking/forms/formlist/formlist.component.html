@@ -1,0 +1,159 @@
+<div
+    class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto" cdkScrollable style="background: white">
+
+    <!-- Main -->
+    <div class="flex flex-auto p-6 sm:p-10">
+        <div class="mx-auto flex w-full max-w-xs flex-auto flex-col sm:max-w-5xl">
+            <!-- Filters -->
+            <div class="flex w-full max-w-xs flex-col items-center justify-between sm:max-w-none sm:flex-row">
+
+                <div class="text-2xl font-normal">Form {{branchName}}</div>
+
+                <mat-form-field
+                    class="w-full sm:w-36"
+                    [subscriptSizing]="'dynamic'">
+                    <mat-select
+                        [value]="'TUTTI'"
+                        (selectionChange)="filterByStatus($event)">
+                        <mat-option [value]="'TUTTI'">TUTTI</mat-option>
+                        <mat-option *ngFor="let status of formStatus" [value]="status">
+                            {{ status }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field
+                    class="mt-4 w-full sm:ml-4 sm:mt-0 sm:w-72"
+                    [subscriptSizing]="'dynamic'">
+                    <mat-icon
+                        matPrefix
+                        class="icon-size-5"
+                        [svgIcon]="'heroicons_solid:magnifying-glass'"
+                    ></mat-icon>
+                    <input
+                        (input)="filterByQuery(query.value)"
+                        placeholder="Ricerca per nome form o codice"
+                        matInput
+                        #query
+                    />
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="flex flex-auto p-6 sm:p-10">
+        <div class="mx-auto w-full">
+            <!-- Grid Layout -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-10"> <!-- Adjust the columns for responsiveness -->
+                <ng-container *ngFor="let form of forms | formpipe: choosedStatus">
+                    <!-- Card -->
+                    <div class="bg-card h-70 flex flex-col overflow-hidden rounded-2xl shadow">
+                        <div class="flex flex-col p-6">
+                            <div class="flex items-center justify-between">
+                                <div
+                                    class="rounded-full px-3 py-0.5 text-sm font-semibold"
+                                    [ngClass]="{
+                                    'bg-green-100 text-green-800 dark:bg-green-500 dark:text-green-50': form.formStatus == FormStatusEnum.ATTIVO,
+                                    'bg-pink-100 text-pink-800 dark:bg-pink-500 dark:text-pink-50': form.formStatus == FormStatusEnum.CANCELLATO,
+                                    'bg-amber-100 text-amber-800 dark:bg-amber-500 dark:text-amber-50': form.formStatus == FormStatusEnum.SOSPESO,
+                                }"
+                                >
+                                    {{ form.formStatus }}
+                                </div>
+                            </div>
+                            <div class="mt-4 text-lg font-medium">
+                                {{ form.formName }}
+                            </div>
+
+                            <div class="my-6 h-1 w-12 border-t-2"></div>
+                            <div class="text-secondary flex items-center text-md leading-5">
+                                <mat-icon
+                                    class="text-sm icon-size-5"
+                                    [svgIcon]="'heroicons_solid:clock'"
+                                ></mat-icon>
+                                <div class="ml-0.5">
+                                    Creato il {{ form.creationDate }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pl-2">
+                            Url Form
+                        </div>
+                        <div class="flex items-center mt-0.5 p-2">
+                            <input
+                                type="text"
+                                [value]="getFormUrl(form.formCode)"
+                                [disabled]="true"
+                                class="text-secondary line-clamp-2 border rounded px-2 py-1 w-full"
+                            />
+                            <button
+                                [matTooltip]="tooltip || 'Copia URL'"
+                                (click)="copyToClipboard(form.formCode)"
+                                class="ml-2 bg-white text rounded px-3 py-1">
+                                <mat-icon [svgIcon]="'heroicons_outline:clipboard-document-check'"></mat-icon>
+                            </button>
+                        </div>
+                        <div class="pl-2">
+                            Url Form integrato in Iframe
+                        </div>
+                        <div class="flex items-center mt-0.5 p-2">
+                            <input
+                                type="text"
+                                [value]="getIframeUrl(form.formCode)"
+                                [disabled]="true"
+                                class="text-secondary line-clamp-2 border rounded px-2 py-1 w-full"
+                            />
+                            <button
+                                [matTooltip]="tooltip || 'Copia codice Iframe'"
+                                (click)="copyToClipboard(form.formCode)"
+                                class="ml-2 bg-white text rounded px-3 py-1">
+                                <mat-icon [svgIcon]="'heroicons_outline:clipboard-document-check'"></mat-icon>
+                            </button>
+                        </div>
+                        <div class="pl-2">
+                            Redirect Page
+                        </div>
+                        <div class="flex items-center mt-0.5 p-2">
+                            <input type="text" [(ngModel)]="form.redirectPage" class="text-secondary line-clamp-2 border rounded px-2 py-1 w-full"/>
+                            <button
+                                [matTooltip]="tooltip || 'Aggiorna redirect/thank you page'"
+                                (click)="updateRedirectPage(form)" class="ml-2 bg-white text-white rounded px-3 py-1">
+                                <mat-icon [svgIcon]="'heroicons_outline:check-circle'" style="color: green;"></mat-icon>
+                            </button>
+                        </div>
+                        <!-- Footer -->
+                        <div class="mt-auto flex w-full flex-col">
+                            <div class="relative h-0.5">
+
+                                <div *ngIf="form.formStatus == FormStatusEnum.ATTIVO">
+                                    <mat-progress-bar class="h-0.5" style="background: forestgreen" [value]="0"></mat-progress-bar>
+                                </div>
+                                <div *ngIf="form.formStatus == FormStatusEnum.SOSPESO">
+                                    <mat-progress-bar class="h-0.5" style="background: orange" [value]="0"></mat-progress-bar>
+                                </div>
+                                <div *ngIf="form.formStatus == FormStatusEnum.CANCELLATO">
+                                    <mat-progress-bar class="h-0.5" style="background: red" [value]="0"></mat-progress-bar>
+                                </div>
+
+                            </div>
+                            <div class="bg-gray-50 px-6 py-4 text-right dark:bg-transparent">
+                                <a mat-stroked-button [routerLink]="[form.formId]">
+                                <span class="inline-flex items-center">
+                                    <mat-icon
+                                        [matTooltip]="tooltip || 'Mostra anteprima'"
+                                        class="ml-1.5 icon-size-5"
+                                        [svgIcon]="'heroicons_solid:arrow-small-right'"
+                                    ></mat-icon>
+                                </span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>

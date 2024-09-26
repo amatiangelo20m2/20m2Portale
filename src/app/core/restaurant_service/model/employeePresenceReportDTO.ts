@@ -18,9 +18,9 @@ export interface EmployeePresenceReportDTO {
     date?: Date;
     workedHours?: number;
     note?: string;
-    holiday?: boolean;
-    presentAtDinner?: boolean;
-    illness?: boolean;
     presentAtLunch?: boolean;
+    presentAtDinner?: boolean;
+    holiday?: boolean;
+    illness?: boolean;
     rest?: boolean;
 }

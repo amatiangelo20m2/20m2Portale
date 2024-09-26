@@ -16,8 +16,7 @@ import {FormControllerService, FormDTO} from "../../../../core/restaurant_servic
 import FormStatusEnum = FormDTO.FormStatusEnum;
 import {catchError, throwError} from "rxjs";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {BranchResponseEntity} from "../../../../core/dashboard";
-import {DateTime} from "luxon";
+import {FormlistComponent} from "./formlist/formlist.component";
 
 @Component({
     selector: 'app-forms',
@@ -33,7 +32,8 @@ import {DateTime} from "luxon";
         ReactiveFormsModule,
         MatTooltipModule,
         MatSelectModule,
-        NgForOf
+        NgForOf,
+        FormlistComponent
     ],
     standalone: true
 })

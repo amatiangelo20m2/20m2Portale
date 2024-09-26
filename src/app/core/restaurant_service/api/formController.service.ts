@@ -105,22 +105,17 @@ export class FormControllerService {
     /**
      *
      *
-     * @param formDTO
+     * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public editForm(formDTO: FormDTO, observe?: 'body', reportProgress?: boolean): Observable<FormDTO>;
-    public editForm(formDTO: FormDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FormDTO>>;
-    public editForm(formDTO: FormDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FormDTO>>;
-    public editForm(formDTO: FormDTO, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public editForm(body: FormDTO, observe?: 'body', reportProgress?: boolean): Observable<FormDTO>;
+    public editForm(body: FormDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FormDTO>>;
+    public editForm(body: FormDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FormDTO>>;
+    public editForm(body: FormDTO, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (formDTO === null || formDTO === undefined) {
-            throw new Error('Required parameter formDTO was null or undefined when calling editForm.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (formDTO !== undefined && formDTO !== null) {
-            queryParameters = queryParameters.set('formDTO', <any>formDTO);
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling editForm.');
         }
 
         let headers = this.defaultHeaders;
@@ -136,11 +131,16 @@ export class FormControllerService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json'
         ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
 
         return this.httpClient.request<FormDTO>('put',`${this.basePath}/api/form/editform`,
             {
-                params: queryParameters,
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,
