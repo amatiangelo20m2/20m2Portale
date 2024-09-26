@@ -26,7 +26,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({providedIn: 'root'})
 export class FormControllerService {
 
-    protected basePath = 'http://localhost:8080/restaurantservice';
+    protected basePath = 'http://localhost:8088/restaurantservice';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 
@@ -58,22 +58,17 @@ export class FormControllerService {
     /**
      *
      *
-     * @param formDTO
+     * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public createForm(formDTO: FormDTO, observe?: 'body', reportProgress?: boolean): Observable<FormDTO>;
-    public createForm(formDTO: FormDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FormDTO>>;
-    public createForm(formDTO: FormDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FormDTO>>;
-    public createForm(formDTO: FormDTO, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public createForm(body: FormDTO, observe?: 'body', reportProgress?: boolean): Observable<FormDTO>;
+    public createForm(body: FormDTO, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FormDTO>>;
+    public createForm(body: FormDTO, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FormDTO>>;
+    public createForm(body: FormDTO, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (formDTO === null || formDTO === undefined) {
-            throw new Error('Required parameter formDTO was null or undefined when calling createForm.');
-        }
-
-        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
-        if (formDTO !== undefined && formDTO !== null) {
-            queryParameters = queryParameters.set('formDTO', <any>formDTO);
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling createForm.');
         }
 
         let headers = this.defaultHeaders;
@@ -89,11 +84,16 @@ export class FormControllerService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json'
         ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
 
         return this.httpClient.request<FormDTO>('post',`${this.basePath}/api/form/create`,
             {
-                params: queryParameters,
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

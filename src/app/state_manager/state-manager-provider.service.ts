@@ -3,7 +3,7 @@ import {BehaviorSubject, Subject, takeUntil} from 'rxjs';
 import {UserService} from "../core/user/user.service";
 import {User} from "../core/user/user.types";
 import {BranchControllerService, BranchResponseEntity} from "../core/dashboard";
-import {FormControllerService, FormDTO, RestaurantControllerService} from "../core/restaurant_service";
+import {FormControllerService, FormDTO} from "../core/restaurant_service";
 
 @Injectable({providedIn: 'root'})
 export class StateManagerProvider {
@@ -27,9 +27,9 @@ export class StateManagerProvider {
 
     constructor(
         private _branchControllerService: BranchControllerService,
-        private _formController : FormControllerService,
         // private _bookingControllerService: BookingControllerService,
-        private _userService: UserService) {
+        private _userService: UserService,
+        private _formController : FormControllerService) {
     }
 
     getDashData(){
@@ -84,14 +84,19 @@ export class StateManagerProvider {
         this.currentBranchesList.next(this.currentBranchesList.value);
     }
 
-    retrieveFormByBranchCode(){
+    retrieveFormByBranchCode() {
 
+        this.getDashData();
         let branchCodeRetrieved = localStorage.getItem("branchCode") ?? '';
 
-        this._formController.retrieveByBranchCode(branchCodeRetrieved).subscribe(formList => {
-            return formList;
-        });
+        console.log("Retrieve form for branch with code " + branchCodeRetrieved);
 
+        this._formController
+            .retrieveByBranchCode(branchCodeRetrieved)
+            .subscribe(formList => {
+            console.log('Form retrieved: ' + formList.toString());
+            this.currentFormList.next(formList);
+        });
     }
     // retrieveBookingConfiguration(branchCode: string){
     //     this._bookingControllerService.checkWaApiStatus(branchCode)
@@ -208,9 +213,6 @@ export class StateManagerProvider {
         // }
     }
 
-    getOpeningBranchDetails(){
-        this.getDashData();
-    }
     //
     // sortBookingsByCustomerName(bookings: BookingDTO[]): BookingDTO[] {
     //     return bookings.sort((a, b) => {

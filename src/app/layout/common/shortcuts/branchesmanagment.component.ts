@@ -27,6 +27,8 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 import {BranchCreationEntity, BranchResponseEntity, BranchControllerService} from "../../../core/dashboard";
 import Swal from "sweetalert2";
+import {MatOptionModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
 
 @Component({
     selector       : 'branches-managment',
@@ -49,7 +51,7 @@ import Swal from "sweetalert2";
         MatInputModule,
         MatSlideToggleModule,
         MatRadioModule,
-        MatSnackBarModule],
+        MatSnackBarModule, MatOptionModule, MatSelectModule],
 })
 export class BranchesmanagmentComponent implements OnInit, OnDestroy
 {
@@ -66,6 +68,8 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
     currentBranch : BranchResponseEntity;
     currentBranchList : BranchResponseEntity[];
     user : User;
+
+    branchTypes: BranchResponseEntity.TypeEnum[] = Object.values(BranchResponseEntity.TypeEnum);
 
     constructor(
         private router: Router,
@@ -98,7 +102,7 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
             address : ['', Validators.required],
             city: ['', Validators.required],
             cap: ['', Validators.required],
-            type: ['RESTAURANT']
+            type: [BranchResponseEntity.TypeEnum.RISTORANTE]
         });
 
     }

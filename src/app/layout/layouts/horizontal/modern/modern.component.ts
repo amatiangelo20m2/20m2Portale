@@ -43,7 +43,6 @@ export class ModernLayoutComponent implements OnInit, OnDestroy
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseNavigationService: FuseNavigationService) {
 
-
     }
 
     // -----------------------------------------------------------------------------------------------------

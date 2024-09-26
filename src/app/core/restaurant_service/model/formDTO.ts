@@ -19,6 +19,7 @@ export interface FormDTO {
     branchCode?: string;
     formStatus?: FormDTO.FormStatusEnum;
     tag?: Array<string>;
+    formType?: FormDTO.FormTypeEnum;
 }
 export namespace FormDTO {
     export type FormStatusEnum = 'ATTIVO' | 'SOSPESO' | 'CANCELLATO';
@@ -26,5 +27,10 @@ export namespace FormDTO {
         ATTIVO: 'ATTIVO' as FormStatusEnum,
         SOSPESO: 'SOSPESO' as FormStatusEnum,
         CANCELLATO: 'CANCELLATO' as FormStatusEnum
+    };
+    export type FormTypeEnum = 'BOOKING' | 'REDIRECT';
+    export const FormTypeEnum = {
+        BOOKING: 'BOOKING' as FormTypeEnum,
+        REDIRECT: 'REDIRECT' as FormTypeEnum
     };
 }

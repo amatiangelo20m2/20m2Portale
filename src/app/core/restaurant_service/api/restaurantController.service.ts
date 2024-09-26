@@ -29,7 +29,7 @@ import { Configuration }                                     from '../configurat
 @Injectable({providedIn: 'root'})
 export class RestaurantControllerService {
 
-    protected basePath = 'http://localhost:60117/restaurantservice';
+    protected basePath = 'http://localhost:8088/restaurantservice';
     public defaultHeaders = new HttpHeaders();
     public configuration = new Configuration();
 

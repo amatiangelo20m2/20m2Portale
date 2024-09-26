@@ -196,11 +196,19 @@
                             [formControlName]="'cap'"
                             required>
                     </mat-form-field>
-                    <div class="flex">
-                        <mat-radio-group [formControlName]="'type'">
-                            <mat-radio-button value="RESTAURANT" [checked]="true">Ristorante</mat-radio-button>
-                            <mat-radio-button value="SUPPLIER">Fornitore</mat-radio-button>
-                        </mat-radio-group>
+
+                    <div class="w-full">
+                        <mat-label>
+                            Tipo
+                        </mat-label>
+
+                        <mat-form-field class="w-full">
+                            <mat-select [formControlName]="'type'">
+                                <mat-option *ngFor="let type of branchTypes" [value]="type">
+                                    {{ type }}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
                     </div>
 
                     <div class="flex items-center justify-end mt-4">
