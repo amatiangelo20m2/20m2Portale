@@ -2,13 +2,13 @@
     class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto" cdkScrollable style="background: white">
 
     <!-- Main -->
-    <div class="flex flex-auto p-6 sm:p-10">
-        <div class="mx-auto flex w-full max-w-xs flex-auto flex-col sm:max-w-5xl">
-            <!-- Filters -->
-            <div class="flex w-full max-w-xs flex-col items-center justify-between sm:max-w-none sm:flex-row">
+    <div class="flex flex-auto p-2 sm:p-10">
+        <!-- Filters -->
+        <div class="flex w-full justify-between h-12">
 
-                <div class="text-2xl font-normal">Form {{branchName}}</div>
+            <div class="text-2xl font-normal">Form {{branchName}}</div>
 
+            <div class="flex">
                 <mat-form-field
                     class="w-full sm:w-36"
                     [subscriptSizing]="'dynamic'">
@@ -37,6 +37,7 @@
                     />
                 </mat-form-field>
             </div>
+
         </div>
     </div>
 

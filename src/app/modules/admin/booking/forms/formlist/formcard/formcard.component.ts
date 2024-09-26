@@ -15,6 +15,8 @@ import {MatInputModule} from "@angular/material/input";
 import FormStatusEnum = FormDTO.FormStatusEnum;
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
+import Swal from "sweetalert2";
+import {MatSlideToggleChange, MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 @Component({
     selector: 'app-formcard',
@@ -31,7 +33,8 @@ import {COMMA, ENTER} from "@angular/cdk/keycodes";
         MatAutocompleteModule,
         MatInputModule,
         NgForOf,
-        NgIf
+        NgIf,
+        MatSlideToggleModule
     ],
     standalone: true
 })
@@ -60,7 +63,7 @@ export class FormcardComponent {
     }
 
     getFormUrl(formCode: string) {
-        return environment.formUrl + formCode;
+        return environment.formUrl + '/' +  formCode;
     }
 
     getIframeUrl(formCode: string) {
@@ -138,5 +141,32 @@ export class FormcardComponent {
 
     trackByFn(index: number, item: string): number {
         return index; // or return item.id if your items have unique ids
+    }
+
+    onFileSelected($event: Event) {
+
+    }
+
+    onToggle($event: MatSlideToggleChange) {
+
+        if(this.form.formStatus == FormStatusEnum.ATTIVO){
+            this.form.formStatus = FormStatusEnum.SOSPESO;
+        }else{
+            this.form.formStatus = FormStatusEnum.ATTIVO;
+        }
+
+
+        this._formController.editForm(this.form).subscribe(
+            formDto => {
+                this._snackBar.open(formDto.formName + ' è ora in stato ' + formDto.formStatus + '', 'Undo', {
+                    duration: 3000,
+                });
+            },
+            error => {
+                this._snackBar.open('error: ' + error.toString(), 'Undo', {
+                    duration: 3000,
+                });
+            }
+        );
     }
 }

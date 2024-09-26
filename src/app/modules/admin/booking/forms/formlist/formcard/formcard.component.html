@@ -1,21 +1,47 @@
 <div class="bg-card h-70 flex flex-col overflow-hidden rounded-2xl shadow">
-    <div class="flex flex-col p-2">
-        <div class="flex items-center justify-between">
-            <div class="rounded-full px-3 py-0.5 text-sm font-semibold"
-                 [ngClass]="{
+
+    <div class="flex justify-between p-4">
+        <div class="flex flex-col">
+            <div class="flex items-center justify-between">
+                <div class="rounded-full px-3 py-0.5 text-sm font-semibold"
+                     [ngClass]="{
                     'bg-green-100 text-green-800 dark:bg-green-500 dark:text-green-50': form.formStatus == FormStatusEnum.ATTIVO,
                     'bg-pink-100 text-pink-800 dark:bg-pink-500 dark:text-pink-50': form.formStatus == FormStatusEnum.CANCELLATO,
                     'bg-amber-100 text-amber-800 dark:bg-amber-500 dark:text-amber-50': form.formStatus == FormStatusEnum.SOSPESO,
                 }">
-                {{ form.formStatus }}
+                    {{ form.formStatus }}
+                </div>
+                <div class="pl-3"><p><mat-slide-toggle [checked]="form.formStatus == FormStatusEnum.ATTIVO" (change)="onToggle($event)"></mat-slide-toggle></p></div>
+
             </div>
+            <div class="mt-4 text-lg font-medium pl-2">
+                {{ form.formName }}
+            </div>
+            <div class="my-6 h-1 border-t-2"></div>
         </div>
-        <div class="mt-4 text-lg font-medium pl-2">
-            {{ form.formName }}
+        <div [matTooltip]="tooltip || 'Carica immagine per form'"
+             class="relative items-center justify-center w-16 h-16 rounded-full border-2 border-grey-700 overflow-hidden group">
+
+            <!-- Profile Image -->
+            <img [src]="'assets/images/logo/logo.png'" alt="Profile Image" class="w-full h-full object-cover">
+
+            <ng-container>
+                <!-- Default Icon (if no image available) -->
+                <div class="flex items-center justify-center w-full h-full bg-gray-100">
+                    <mat-icon class="text-gray-500 text-4xl">photo</mat-icon>
+                </div>
+            </ng-container>
+
+            <!-- Upload Button Overlay -->
+            <button class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity">
+                <mat-icon class="text-white text-3xl">add_a_photo</mat-icon>
+                <input type="file" class="absolute inset-0 opacity-0 cursor-pointer" (change)="onFileSelected($event)">
+            </button>
         </div>
 
-        <div class="my-6 h-1 border-t-2"></div>
+
     </div>
+
     <div class="pl-2">
         Url Form
     </div>
@@ -86,8 +112,11 @@
                 </span>
             </a>
         </div>
+
     </div>
     <div class="mt-auto flex w-full flex-col">
+
+
         <div class="relative h-0.5">
             <div *ngIf="form.formStatus == FormStatusEnum.ATTIVO">
                 <mat-progress-bar class="h-0.5" style="background: forestgreen" [value]="0"></mat-progress-bar>
@@ -99,12 +128,23 @@
                 <mat-progress-bar class="h-0.5" style="background: red" [value]="0"></mat-progress-bar>
             </div>
         </div>
-        <div class="bg-gray-50 px-6 py-4 text-right dark:bg-transparent">
-            <a mat-stroked-button [routerLink]="[form.formId]">
+
+        <div class="flex end-0.5">
+            <div class="px-6 py-4 text-right">
+                <a mat-stroked-button [routerLink]="[form.formId]">
                 <span class="inline-flex items-center">
                     <mat-icon [matTooltip]="tooltip || 'Mostra anteprima'" class="icon-size-5" [svgIcon]="'heroicons_outline:computer-desktop'"></mat-icon>
                 </span>
-            </a>
+                </a>
+            </div>
+            <div class="px-6 py-4 text-right dark:bg-transparent">
+                <a mat-stroked-button [routerLink]="[form.formId]">
+                <span class="inline-flex items-center">
+                    <mat-icon [matTooltip]="tooltip || 'Cancella'" class="icon-size-5" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                </span>
+                </a>
+            </div>
         </div>
+
     </div>
 </div>
