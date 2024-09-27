@@ -7,7 +7,18 @@
                     <mat-vertical-stepper [linear]="true" #horizontalStepper>
                         <mat-step [formGroupName]="'step1'" [stepControl]="horizontalStepperForm.get('step1')" #horizontalStepperStep1>
                             <ng-template matStepLabel>Trova il tavolo</ng-template>
-                            <div class="flex pt-4">
+                            <div class="flex">
+                                <mat-form-field [ngClass]="formFieldHelpers" class="flex-auto">
+                                    <input matInput [matDatepicker]="picker2" [placeholder]="'Seleziona data'"/>
+                                    <mat-datepicker-toggle
+                                        matSuffix
+                                        [for]="picker2"
+                                    ></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="flex">
+
                                 <mat-form-field class="flex-auto">
                                     <input
                                         matInput
@@ -62,20 +73,20 @@
 
                                 <!-- Name field -->
 
-<!--                                <button-->
-<!--                                    class="fuse-mat-button-large w-full mt-6"-->
-<!--                                    mat-flat-button-->
-<!--                                    [color]="'accent'"-->
-<!--                                    [disabled]="phoneValidationForm.invalid"-->
-<!--                                    (click)="insertPhone()">-->
-<!--                                        <span *ngIf="!phoneValidationForm.disabled">-->
-<!--                                        AVANTI-->
-<!--                                    </span>-->
-<!--                                    <mat-progress-spinner-->
-<!--                                        *ngIf="phoneValidationForm.disabled"-->
-<!--                                        [diameter]="24"-->
-<!--                                        [mode]="'indeterminate'"></mat-progress-spinner>-->
-<!--                                </button>-->
+                                <!--                                <button-->
+                                <!--                                    class="fuse-mat-button-large w-full mt-6"-->
+                                <!--                                    mat-flat-button-->
+                                <!--                                    [color]="'accent'"-->
+                                <!--                                    [disabled]="phoneValidationForm.invalid"-->
+                                <!--                                    (click)="insertPhone()">-->
+                                <!--                                        <span *ngIf="!phoneValidationForm.disabled">-->
+                                <!--                                        AVANTI-->
+                                <!--                                    </span>-->
+                                <!--                                    <mat-progress-spinner-->
+                                <!--                                        *ngIf="phoneValidationForm.disabled"-->
+                                <!--                                        [diameter]="24"-->
+                                <!--                                        [mode]="'indeterminate'"></mat-progress-spinner>-->
+                                <!--                                </button>-->
                             </form>
                             <div class="flex justify-end">
                                 <button
@@ -94,7 +105,7 @@
                             [stepControl]="horizontalStepperForm.get('step2')"
                             #horizontalStepperStep2
                         >
-                            <ng-template matStepLabel>Profile</ng-template>
+                            <ng-template matStepLabel>Dati Personali</ng-template>
                             <p class="my-6 font-medium">
                                 People here will get to know you with this
                                 information

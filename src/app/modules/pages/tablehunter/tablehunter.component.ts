@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, LOCALE_ID, OnInit} from '@angular/core';
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {FuseAlertComponent, FuseAlertType} from "../../../../@fuse/components/alert";
 import {MatButtonModule} from "@angular/material/button";
@@ -7,10 +7,10 @@ import {MatDatepickerInputEvent, MatDatepickerModule} from "@angular/material/da
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
-import {MatOptionModule} from "@angular/material/core";
+import {MAT_DATE_LOCALE, MatOptionModule} from "@angular/material/core";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatSelectModule} from "@angular/material/select";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf, NgIf, registerLocaleData} from "@angular/common";
 import {FormGroup, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import {MatTabsModule} from "@angular/material/tabs";
 import Swal from "sweetalert2";
@@ -18,10 +18,17 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {DateTime} from "luxon";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatStepperModule} from "@angular/material/stepper";
+import localeIt from '@angular/common/locales/it';
+
+registerLocaleData(localeIt);
 
 @Component({
     selector: 'tablehunter',
     templateUrl: './tablehunter.component.html',
+    providers: [
+        { provide: LOCALE_ID, useValue: 'it-IT' },
+        { provide: MAT_DATE_LOCALE, useValue: 'it-IT' }
+    ],
     imports: [
         FuseAlertComponent,
         MatButtonModule,
