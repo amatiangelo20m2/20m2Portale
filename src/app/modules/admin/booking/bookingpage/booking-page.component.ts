@@ -22,7 +22,6 @@ import {StateManagerProvider} from "../../../../state_manager/state-manager-prov
 import {BranchResponseEntity} from "../../../../core/dashboard";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDatepickerInputEvent, MatDatepickerModule} from "@angular/material/datepicker";
-import {BookingComponent} from "../../../pages/booking/booking.component";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 @Component({
@@ -50,7 +49,6 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
         MatDatepickerModule,
         FormsModule,
         DatePipe,
-        BookingComponent,
         MatSlideToggleModule
     ],
     standalone: true

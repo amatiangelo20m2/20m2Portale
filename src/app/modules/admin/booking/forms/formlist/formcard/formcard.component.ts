@@ -16,6 +16,8 @@ import FormStatusEnum = FormDTO.FormStatusEnum;
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatSlideToggleChange, MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {BookingFormDto} from "../../../../../../core/booking";
+import FormTypeEnum = BookingFormDto.FormTypeEnum;
 
 @Component({
     selector: 'app-formcard',
@@ -186,4 +188,8 @@ export class FormcardComponent {
             }
         );
     }
+
+    protected readonly BookingFormDto = BookingFormDto;
+    protected readonly FormTypeEnum = FormTypeEnum;
+    protected readonly FormDTO = FormDTO;
 }

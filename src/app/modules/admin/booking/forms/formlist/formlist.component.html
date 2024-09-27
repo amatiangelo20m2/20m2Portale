@@ -13,12 +13,13 @@
                     class="w-full sm:w-36"
                     [subscriptSizing]="'dynamic'">
                     <mat-select
-                        [value]="'TUTTI'"
+                        [value]="'ATTIVO'"
                         (selectionChange)="filterByStatus($event)">
-                        <mat-option [value]="'TUTTI'">TUTTI</mat-option>
                         <mat-option *ngFor="let status of formStatus" [value]="status">
                             {{ status }}
                         </mat-option>
+                        <mat-option [value]="'TUTTI'">TUTTI</mat-option>
+
                     </mat-select>
                 </mat-form-field>
                 <mat-form-field

@@ -23,13 +23,10 @@ import {MatCardModule} from "@angular/material/card";
 import {MatInputModule} from "@angular/material/input";
 import {FormsModule} from "@angular/forms";
 import {MatDialogModule} from "@angular/material/dialog";
-import {MatChipEditedEvent, MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
-import {LiveAnnouncer} from "@angular/cdk/a11y";
-import {COMMA, ENTER} from "@angular/cdk/keycodes";
+import { MatChipsModule} from "@angular/material/chips";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
-import {ApexOptions, NgApexchartsModule} from "ng-apexcharts";
+import { NgApexchartsModule} from "ng-apexcharts";
 import {MatMenuModule} from "@angular/material/menu";
-import {BookingComponent} from "../../pages/booking/booking.component";
 import {CdkDrag} from "@angular/cdk/drag-drop";
 
 export interface Fruit {
@@ -54,7 +51,7 @@ export interface Fruit {
         MatExpansionModule,
         MatDatepickerModule,
         MatCardModule,
-        MatInputModule, FormsModule, MatDialogModule, MatChipsModule, MatButtonToggleModule, NgApexchartsModule, MatMenuModule, BookingComponent, CdkDrag],
+        MatInputModule, FormsModule, MatDialogModule, MatChipsModule, MatButtonToggleModule, NgApexchartsModule, MatMenuModule, CdkDrag],
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 

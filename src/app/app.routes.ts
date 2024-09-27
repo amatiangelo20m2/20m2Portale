@@ -19,13 +19,13 @@ export const appRoutes: Route[] = [
             layout: 'empty'
         },
         children: [
-            {path: 'confirmation-required', loadChildren: () => import('app/modules/auth/confirmation-required/confirmation-required.routes')},
-            {path: 'forgot-password', loadChildren: () => import('app/modules/auth/forgot-password/forgot-password.routes')},
-            {path: 'reset-password', loadChildren: () => import('app/modules/auth/reset-password/reset-password.routes')},
-            {path: 'sign-in', loadChildren: () => import('app/modules/auth/sign-in/sign-in.routes')},
+            { path: 'confirmation-required', loadChildren: () => import('app/modules/auth/confirmation-required/confirmation-required.routes')},
+            { path: 'forgot-password', loadChildren: () => import('app/modules/auth/forgot-password/forgot-password.routes')},
+            { path: 'reset-password', loadChildren: () => import('app/modules/auth/reset-password/reset-password.routes')},
+            { path: 'sign-in', loadChildren: () => import('app/modules/auth/sign-in/sign-in.routes')},
             // {path: 'sign-up', loadChildren: () => import('app/modules/auth/sign-up/sign-up.routes')},
             // {path: 'reservotp', loadChildren: () => import('app/modules/pages/booking/booking.routes')},
-            // {path: 'reservation', loadChildren: () => import('app/modules/pages/tablehunter/tablehunters.routes')},
+            { path: 'reservation', loadChildren: () => import('app/modules/pages/tablehunter/tablehunters.routes')},
         ]
     },
 
@@ -54,7 +54,7 @@ export const appRoutes: Route[] = [
         },
         children: [
 
-            {path: 'reservation', loadChildren: () => import('app/modules/pages/booking/booking.routes')},
+            // {path: 'reservation', loadChildren: () => import('app/modules/pages/booking/booking.routes')},
 
         ]
     }, {
@@ -73,6 +73,12 @@ export const appRoutes: Route[] = [
             { path: 'forms', loadChildren: () => import('app/modules/admin/booking/forms/forms.routes')},
             { path: 'whatsapp', loadChildren: () => import('app/modules/admin/booking/whatsappconf/whats-app-conf.routes')},
             { path: 'settings', loadChildren: () => import('app/modules/pages/settings/settings.routes')},
+            // { path: 'reservation', loadChildren: () => import('app/modules/pages/tablehunter/tablehunters.routes')},
         ]
+    },{
+        path: '**',
+        redirectTo: '/'
     }
+
+
 ];

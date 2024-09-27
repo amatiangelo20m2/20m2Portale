@@ -20,6 +20,7 @@ import {MatChipsModule} from "@angular/material/chips";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
 import {FormcardComponent} from "./formcard/formcard.component";
 import {FormDTO} from "../../../../../core/restaurant_service";
+import FormStatusEnum = FormDTO.FormStatusEnum;
 
 
 @Component({
@@ -91,6 +92,8 @@ export class FormlistComponent implements OnInit, OnDestroy {
                 this.forms = formDTOS;
                 this._changeDetectorRef.markForCheck();
             });
+
+        this.choosedStatus = FormStatusEnum.ATTIVO;
     }
 
     ngOnDestroy(): void {
