@@ -4,7 +4,7 @@
         <div class="flex-auto">
             <div class="max-w-3xl">
                 <form class="bg-card overflow-hidden rounded p-4 shadow" [formGroup]="horizontalStepperForm">
-                    <mat-horizontal-stepper [linear]="true" #horizontalStepper>
+                    <mat-vertical-stepper [linear]="true" #horizontalStepper>
                         <mat-step [formGroupName]="'step1'" [stepControl]="horizontalStepperForm.get('step1')" #horizontalStepperStep1>
                             <ng-template matStepLabel>Trova il tavolo</ng-template>
                             <div class="flex">
@@ -333,7 +333,7 @@
                         </mat-step>
 
 
-                    </mat-horizontal-stepper>
+                    </mat-vertical-stepper>
                 </form>
             </div>
         </div>
