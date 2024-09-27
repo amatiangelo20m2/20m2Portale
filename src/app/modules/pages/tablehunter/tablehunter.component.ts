@@ -16,6 +16,8 @@ import {MatTabsModule} from "@angular/material/tabs";
 import Swal from "sweetalert2";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {DateTime} from "luxon";
+import {MatRadioModule} from "@angular/material/radio";
+import {MatStepperModule} from "@angular/material/stepper";
 
 @Component({
     selector: 'tablehunter',
@@ -37,14 +39,15 @@ import {DateTime} from "luxon";
         NgForOf,
         MatTooltipModule,
         NgClass,
-        RouterLink
+        RouterLink,
+        MatRadioModule,
+        MatStepperModule
     ],
     standalone: true
 })
 export class TablehunterComponent implements OnInit{
     formCode: any;
 
-    phoneValidationForm: FormGroup;
     showAlert: boolean = false;
 
     alert: { type: FuseAlertType; message: string } = {
@@ -59,13 +62,30 @@ export class TablehunterComponent implements OnInit{
 
     ngOnInit(): void {
 
+        this.horizontalStepperForm = this._formBuilder.group({
+            step1: this._formBuilder.group({
+                email: ['', [Validators.required, Validators.email]],
+                country: ['', Validators.required],
+                language: ['', Validators.required],
 
-        this.phoneValidationForm = this._formBuilder.group({
+            }),
+            step2: this._formBuilder.group({
                 mobilePhone      : ['', [Validators.required, Validators.minLength(10), Validators.pattern(/^\d{10,}$/)]],
                 selectedCountry      : ['39', Validators.required],
-            },
-        );
+                firstName: ['', Validators.required],
+                lastName: ['', Validators.required],
+                cap: ['', Validators.required],
 
+            }),
+            step3: this._formBuilder.group({
+                byEmail: this._formBuilder.group({
+                    companyNews: [true],
+                    featuredProducts: [false],
+                    messages: [true],
+                }),
+                pushNotifications: ['everything', Validators.required],
+            }),
+        });
         this.formReservationDetails = this._formBuilder.group({
             dogsAllowed     : ['0'],
             particularRequest  : ['']
@@ -82,7 +102,7 @@ export class TablehunterComponent implements OnInit{
     }
 
     constructor(private route: ActivatedRoute,
-                private _formBuilder: UntypedFormBuilder) {
+                private _formBuilder: UntypedFormBuilder, ) {
 
         this.route.queryParams.subscribe((params) => {
             this.formCode = params['form'];
@@ -132,53 +152,6 @@ export class TablehunterComponent implements OnInit{
         }
     }
 
-    registerCustomerAndGoToReservationPage() {
-        if (this.registerCustomerForm.invalid ) {
-            return;
-        }
-        this.showAlert = false;
+    horizontalStepperForm: UntypedFormGroup;
 
-        // name: string, lastname: string, email: string, prefix: string, phone: string, dob: string, treatmentPersonalData:
-        // this._bookingService.registerCustomer(
-        //     this.branchCode,
-        //     this.registerCustomerForm.get('name').value,
-        //     this.registerCustomerForm.get('lastname').value,
-        //     this.registerCustomerForm.get('email').value,
-        //     this.phoneValidationForm.get('selectedCountry').value,
-        //     this.phoneValidationForm.get('mobilePhone').value,
-        //     this.registerCustomerForm.get('dob').value,
-        //     true,
-        //     '').subscribe((customer : Customer)=>{
-        //     this.customerResult.customer = customer;
-        //     this.reservation_status = 'CHOOSE_BOOKING_DETAILS';
-        // });
-    }
-
-    performBooking() {
-        // this._bookingService.createBooking({
-        //     branchCode: this.customerFormData.branchCode,
-        //     formCode: this.customerFormData.formCode,
-        //     customerId: this.customerResult.customer.customerId,
-        //     date: this.bookingData.selectedDate,
-        //     guests: this.bookingData.selectedGuests,
-        //     time: this.bookingData.selectedTime,
-        //     particularRequests: this.formReservationDetails.get('particularRequest').value,
-        //     dogsAllowed: this.formReservationDetails.get('dogsAllowed').value,
-        //     branchAddress: this.customerFormData.address,
-        //     branchName: this.customerFormData.branchName,
-        //     child: 0
-        // }).subscribe((reservation)=>{
-        //     console.log("reservation registered");
-        //     Swal.fire({
-        //         title: "Prenotazione registrata con successo",
-        //         text: "A breve riceverai un messaggio con tutti i dettagli. Grazie mille! 😎",
-        //         showConfirmButton: true,
-        //         icon: "success"
-        //     });
-        // });
-    }
-
-    insertPhone() {
-
-    }
 }

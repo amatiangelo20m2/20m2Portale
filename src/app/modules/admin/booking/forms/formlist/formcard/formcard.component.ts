@@ -52,7 +52,7 @@ export class FormcardComponent {
 
     copyToClipboard(formCode: string) {
         const textarea = document.createElement('textarea');
-        textarea.value = this.getFormUrl(formCode);
+        textarea.value = this.getIframeUrl(formCode);
         document.body.appendChild(textarea);
         textarea.select();
         document.execCommand('copy');
@@ -64,14 +64,12 @@ export class FormcardComponent {
     }
 
     getFormUrl(formCode: string) {
-        return environment.formUrl + '/' +  formCode;
+        return environment.formUrl + '/reservation?formCode=' +  formCode;
     }
 
     getIframeUrl(formCode: string) {
         return `<div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%;">
-                    <iframe
-                        src="${this.getFormUrl(formCode)}"
-                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                    <iframe src="${this.getFormUrl(formCode)}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
                     </iframe>
                 </div>`;
     }
@@ -192,4 +190,5 @@ export class FormcardComponent {
     protected readonly BookingFormDto = BookingFormDto;
     protected readonly FormTypeEnum = FormTypeEnum;
     protected readonly FormDTO = FormDTO;
+
 }

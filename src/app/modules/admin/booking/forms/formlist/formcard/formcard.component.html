@@ -116,9 +116,12 @@
         </div>
 
         <div class=" text-right dark:bg-transparent">
-            <a mat-stroked-button [routerLink]="[form.formId]">
+            <a mat-stroked-button>
                 <span class="inline-flex items-center">
-                    <mat-icon [matTooltip]="tooltip || 'Mostra anteprima'" class="ml-1.5 icon-size-5" [svgIcon]="'heroicons_outline:arrow-small-right'"></mat-icon>
+
+                    <mat-icon [matTooltip]="tooltip || 'Mostra anteprima'"
+                              class="ml-1.5 icon-size-5"
+                              [svgIcon]="'heroicons_outline:arrow-small-right'"></mat-icon>
                 </span>
             </a>
         </div>
