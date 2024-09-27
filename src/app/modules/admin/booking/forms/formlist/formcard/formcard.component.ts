@@ -15,7 +15,6 @@ import {MatInputModule} from "@angular/material/input";
 import FormStatusEnum = FormDTO.FormStatusEnum;
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
-import Swal from "sweetalert2";
 import {MatSlideToggleChange, MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 @Component({
@@ -39,13 +38,13 @@ import {MatSlideToggleChange, MatSlideToggleModule} from "@angular/material/slid
     standalone: true
 })
 export class FormcardComponent {
+
     @Input() form: FormDTO;
     @Input() tooltip: string;
 
     constructor(
         private _snackBar: MatSnackBar,
-        private _formController: FormControllerService,
-    ) {
+        private _formController: FormControllerService) {
 
     }
 
@@ -155,6 +154,24 @@ export class FormcardComponent {
             this.form.formStatus = FormStatusEnum.ATTIVO;
         }
 
+
+        this._formController.editForm(this.form).subscribe(
+            formDto => {
+                this._snackBar.open(formDto.formName + ' è ora in stato ' + formDto.formStatus + '', 'Undo', {
+                    duration: 3000,
+                });
+            },
+            error => {
+                this._snackBar.open('error: ' + error.toString(), 'Undo', {
+                    duration: 3000,
+                });
+            }
+        );
+    }
+
+    deleteForm() {
+
+        this.form.formStatus = FormStatusEnum.CANCELLATO;
 
         this._formController.editForm(this.form).subscribe(
             formDto => {
