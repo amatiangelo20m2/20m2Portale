@@ -52,7 +52,7 @@ export const appRoutes: Route[] = [
         },
         children: [
             // Reservation route available for both signed-in and signed-out users
-            { path: 'reservation', loadChildren: () => import('app/modules/pages/tablehunter/tablehunters.routes')},
+            { path: 'reservation', loadChildren: () => import('app/modules/customer/forms/form.routes')},
         ]
     },
 
@@ -79,17 +79,14 @@ export const appRoutes: Route[] = [
         },
         children: [
             { path: 'managment', loadChildren: () => import('app/modules/admin/dashboard/dashboard.routes')},
-            { path: 'bookings', loadChildren: () => import('app/modules/admin/booking/bookingpage/bookingpage.routes')},
-            { path: 'configure', loadChildren: () => import('app/modules/admin/booking/opening_configuration/opening_configuration.routes')},
-            { path: 'customers', loadChildren: () => import('app/modules/admin/booking/customers/customers.routes')},
-            { path: 'forms', loadChildren: () => import('app/modules/admin/booking/forms/forms.routes')},
-            { path: 'whatsapp', loadChildren: () => import('app/modules/admin/booking/whatsappconf/whats-app-conf.routes')},
+            { path: 'bookings', loadChildren: () => import('app/modules/admin/restaurant/bookingpage/bookingpage.routes')},
+            { path: 'customers', loadChildren: () => import('app/modules/admin/restaurant/customers/customers.routes')},
+            { path: 'forms', loadChildren: () => import('app/modules/admin/restaurant/form/forms.routes')},
+            { path: 'whatsapp', loadChildren: () => import('app/modules/admin/restaurant/whatsappconf/whats-app-conf.routes')},
             { path: 'settings', loadChildren: () => import('app/modules/pages/settings/settings.routes')},
         ]
     },{
         path: '**',
         redirectTo: '/'
     }
-
-
 ];

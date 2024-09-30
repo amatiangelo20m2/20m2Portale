@@ -1,0 +1,13 @@
+<!-- Error Message -->
+<div *ngIf="isError" class="error-message">
+    <app-error500></app-error500>
+</div>
+
+<!-- Booking Form -->
+<div *ngIf="!isError && formDTO && formDTO.formType == FormDTO.FormTypeEnum.BOOKING" class="flex flex-col flex-auto items-center sm:justify-center min-w-0">
+    <app-booking-form [formDTO]="formDTO"></app-booking-form>
+</div>
+<!-- Redirect Fom -->
+<div *ngIf="!isError && formDTO && formDTO.formType == FormDTO.FormTypeEnum.REDIRECT" class="flex flex-col flex-auto items-center sm:justify-center min-w-0" style="background: transparent">
+    <app-redirect-form [formDTO]="formDTO"></app-redirect-form>
+</div>

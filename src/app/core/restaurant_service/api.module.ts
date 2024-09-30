@@ -3,6 +3,7 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 
+import { CustomerControllerService } from './api/customerController.service';
 import { FormControllerService } from './api/formController.service';
 import { RestaurantControllerService } from './api/restaurantController.service';
 
@@ -11,6 +12,7 @@ import { RestaurantControllerService } from './api/restaurantController.service'
   declarations: [],
   exports:      [],
   providers: [
+    CustomerControllerService,
     FormControllerService,
     RestaurantControllerService ]
 })

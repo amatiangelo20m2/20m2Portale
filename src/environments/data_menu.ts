@@ -22,12 +22,6 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type : 'basic',
                 icon : 'heroicons_mini:calendar-days',
                 link : '/dashboard/bookings',
-            },{
-                id   : 'settings',
-                title: 'Configura Apertura',
-                type : 'basic',
-                icon : 'heroicons_outline:wrench-screwdriver',
-                link : '/dashboard/configure',
             },
             {
                 id   : 'forms',
@@ -40,7 +34,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 id   : 'whatsapp',
                 title: 'Configura What\'s App',
                 type : 'basic',
-                icon : 'heroicons_outline:clipboard-document-list',
+                icon : 'heroicons_outline:device-phone-mobile',
                 link : '/dashboard/whatsapp',
             }
         ],

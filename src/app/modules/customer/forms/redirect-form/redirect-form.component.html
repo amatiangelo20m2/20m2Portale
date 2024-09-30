@@ -1,0 +1,133 @@
+
+<form
+    class="bg-card mt-4 flex flex-col overflow-hidden rounded px-8 pt-10 shadow "
+    [formGroup]="formRedirect">
+    <p class="text-lg font-medium">{{ formDTO.formName }}</p>
+    <p class="text-secondary mb-6">
+        Inserisci il tuo numero di cellulare per continuare
+    </p>
+    <div class="gt-xs:flex-row flex flex-col">
+        <mat-form-field  class="w-full" [ngClass]="{ 'error-border': formRedirect.get('phone')?.invalid && formRedirect.get('phone')?.touched }">
+            <input
+                [disabled]="showCustomerForm"
+                id="phone"
+                matInput
+                placeholder="Cellulare"
+                formControlName="phone"
+                (blur)="onPhoneBlur()"
+            />
+            <mat-select formControlName="prefix" matPrefix>
+                <!-- Europe -->
+                <mat-option value="93">Afghanistan (+93)</mat-option>
+                <mat-option value="355">Albania (+355)</mat-option>
+                <mat-option value="376">Andorra (+376)</mat-option>
+                <mat-option value="374">Armenia (+374)</mat-option>
+                <mat-option value="43">Austria (+43)</mat-option>
+                <mat-option value="994">Azerbaijan (+994)</mat-option>
+                <mat-option value="32">Belgium (+32)</mat-option>
+                <mat-option value="387">Bosnia and Herzegovina (+387)</mat-option>
+                <mat-option value="359">Bulgaria (+359)</mat-option>
+                <mat-option value="385">Croatia (+385)</mat-option>
+                <mat-option value="357">Cyprus (+357)</mat-option>
+                <mat-option value="420">Czech Republic (+420)</mat-option>
+                <mat-option value="45">Denmark (+45)</mat-option>
+                <mat-option value="372">Estonia (+372)</mat-option>
+                <mat-option value="358">Finland (+358)</mat-option>
+                <mat-option value="33">France (+33)</mat-option>
+                <mat-option value="49">Germany (+49)</mat-option>
+                <mat-option value="30">Greece (+30)</mat-option>
+                <mat-option value="36">Hungary (+36)</mat-option>
+                <mat-option value="354">Iceland (+354)</mat-option>
+                <mat-option value="353">Ireland (+353)</mat-option>
+                <mat-option value="39">Italia (+39)</mat-option>
+                <mat-option value="371">Latvia (+371)</mat-option>
+                <mat-option value="423">Liechtenstein (+423)</mat-option>
+                <mat-option value="370">Lithuania (+370)</mat-option>
+                <mat-option value="352">Luxembourg (+352)</mat-option>
+                <mat-option value="356">Malta (+356)</mat-option>
+                <mat-option value="377">Monaco (+377)</mat-option>
+                <mat-option value="382">Montenegro (+382)</mat-option>
+                <mat-option value="31">Netherlands (+31)</mat-option>
+                <mat-option value="47">Norway (+47)</mat-option>
+                <mat-option value="48">Poland (+48)</mat-option>
+                <mat-option value="351">Portugal (+351)</mat-option>
+                <mat-option value="40">Romania (+40)</mat-option>
+                <mat-option value="7">Russia (+7)</mat-option>
+                <mat-option value="378">San Marino (+378)</mat-option>
+                <mat-option value="381">Serbia (+381)</mat-option>
+                <mat-option value="421">Slovakia (+421)</mat-option>
+                <mat-option value="386">Slovenia (+386)</mat-option>
+                <mat-option value="34">Spain (+34)</mat-option>
+                <mat-option value="46">Sweden (+46)</mat-option>
+                <mat-option value="41">Switzerland (+41)</mat-option>
+                <mat-option value="90">Turkey (+90)</mat-option>
+                <mat-option value="380">Ukraine (+380)</mat-option>
+                <mat-option value="44">United Kingdom (+44)</mat-option>
+                <!-- North America -->
+                <mat-option value="1">Canada (+1)</mat-option>
+                <mat-option value="1">United States (+1)</mat-option>
+                <mat-option value="52">Mexico (+52)</mat-option>
+                <!-- China -->
+                <mat-option value="86">China (+86)</mat-option>
+            </mat-select>
+            <mat-error *ngIf="formRedirect.get('phone').hasError('required')">
+                Inserisci il numero di cellulare
+            </mat-error>
+            <mat-error *ngIf="formRedirect.get('phone').hasError('minLength')">
+                Numero non valido
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <mat-divider class="mb-2 mt-2" *ngIf="showCustomerForm"></mat-divider>
+
+    <div *ngIf="showCustomerForm">
+        <p class="text-lg font-medium pb-5">Info personali</p>
+        <div class="gt-xs:flex-row flex flex-col">
+            <mat-form-field class="gt-xs:pr-3 flex-auto" [ngClass]="{ 'error-border': formRedirect.get('firstName')?.invalid && formRedirect.get('firstName')?.touched }">
+                <input matInput placeholder="Nome" formControlName="firstName" />
+                <mat-icon matPrefix [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+            </mat-form-field>
+            <mat-form-field class="gt-xs:pl-3 flex-auto" [ngClass]="{ 'error-border': formRedirect.get('lastName')?.invalid && formRedirect.get('lastName')?.touched }">
+                <input matInput placeholder="Cognome" formControlName="lastName" />
+                <mat-icon matPrefix [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+            </mat-form-field>
+        </div>
+
+        <div class="flex">
+            <mat-form-field class="flex-auto" [ngClass]="{ 'error-border': formRedirect.get('email')?.invalid && formRedirect.get('email')?.touched }">
+                <input matInput placeholder="Email" formControlName="email" />
+                <mat-icon matPrefix [svgIcon]="'heroicons_outline:envelope'"></mat-icon>
+                <mat-error *ngIf="formRedirect.get('email')?.hasError('email')">
+                    Indirizzo email non valido
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="flex">
+            <mat-form-field class="flex-auto" [ngClass]="{ 'error-border': formRedirect.get('postalCode')?.invalid && formRedirect.get('postalCode')?.touched }">
+                <input matInput placeholder="CAP" formControlName="postalCode" />
+                <mat-icon matPrefix [svgIcon]="'heroicons_outline:map-pin'"></mat-icon>
+                <mat-error *ngIf="formRedirect.get('email')?.hasError('postalCode')">
+                    Indirizzo email non valido
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <mat-checkbox class="-ml-2" color="accent" formControlName="privacyConsent">
+            Acconsento al trattamento dei dati personali
+        </mat-checkbox>
+    </div>
+
+    <mat-divider class="mb-2 mt-2"></mat-divider>
+
+    <div class="-mx-8 mt-8 flex items-center justify-end border-t bg-gray-50 px-8 py-5 dark:bg-gray-700">
+        <button
+            class="ml-3 px-6"
+            mat-flat-button [disabled]="formRedirect.invalid"
+            (click)="saveCustomerAndOpenNewTab(formDTO.redirectPage)"
+            color="accent">
+            Prosegui
+        </button>
+    </div>
+</form>

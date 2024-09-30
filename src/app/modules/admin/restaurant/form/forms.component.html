@@ -1,0 +1,86 @@
+<div *ngIf="forms != null; else elseBlock">
+    <app-formlist></app-formlist>
+</div>
+<ng-template #elseBlock>
+    Nessun form trovato
+</ng-template>
+
+<div class="fixed bottom-3 right-5 z-50">
+    <button mat-fab
+            [matTooltip]="tooltip || 'Crea form'"
+            style="background: #450a0a"
+            #shortcutsOrigin
+            (click)="openCreateFormPanel()">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>
+<ng-template #shortcutsPanel>
+    <div style="background: white" class="fixed inset-0 sm:static sm:inset-auto flex flex-col sm:min-w-90 sm:w-90 sm:rounded-2xl overflow-hidden shadow-lg">
+        <div class="flex shrink-0 items-center py-4 pr-4 pl-6 bg-accent text-on-primary">
+            <div class="sm:hidden -ml-1 mr-3">
+                <button
+                    mat-icon-button
+                    (click)="closePanel()">
+                    <mat-icon
+                        class="icon-size-5 text-current"
+                        [svgIcon]="'heroicons_solid:x-mark'"></mat-icon>
+                </button>
+            </div>
+
+            <div class="flex items-center text-lg font-medium leading-10">
+                <ng-container>
+                    <span class="ml-1">
+                        <ng-container>Crea nuovo form</ng-container>
+                    </span>
+                </ng-container>
+            </div>
+        </div>
+
+        <ng-container>
+        <form
+            class="p-6"
+            [formGroup]="formForm">
+            <mat-form-field class="w-full">
+                <mat-label>Nome Form Prenotazione</mat-label>
+                <input
+                    matInput
+                    [formControlName]="'name'"
+                    required>
+            </mat-form-field>
+            <mat-label>Questo nome verrò</mat-label>
+            <div class="w-full">
+                <mat-label>
+                    Tipo
+                </mat-label>
+
+                <mat-form-field class="w-full">
+                    <mat-select [formControlName]="'type'">
+                        <mat-option *ngFor="let type of formTypes" [value]="type">
+                            {{ type }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <mat-form-field class="w-full">
+                <mat-label>Redirect/Thank you page</mat-label>
+                <input
+                    matInput
+                    [formControlName]="'redirectpage'">
+            </mat-form-field>
+            <div class="flex items-center justify-end mt-4">
+
+                <button
+                    mat-flat-button
+                    [color]="'primary'"
+                    [disabled]="!formForm.valid"
+                    type="button"
+                    (click)="saveForm()">
+                    <ng-container>Crea</ng-container>
+
+                </button>
+            </div>
+        </form>
+    </ng-container>
+</div>
+</ng-template>
+

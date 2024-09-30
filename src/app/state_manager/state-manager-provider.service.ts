@@ -4,6 +4,7 @@ import {UserService} from "../core/user/user.service";
 import {User} from "../core/user/user.types";
 import {BranchControllerService, BranchResponseEntity} from "../core/dashboard";
 import {FormControllerService, FormDTO} from "../core/restaurant_service";
+import Swal, {SweetAlertIcon} from "sweetalert2";
 
 @Injectable({providedIn: 'root'})
 export class StateManagerProvider {
@@ -12,14 +13,10 @@ export class StateManagerProvider {
     private currentBranch: BehaviorSubject<BranchResponseEntity> = new BehaviorSubject(null);
     private currentBranchesList : BehaviorSubject<BranchResponseEntity[]> = new BehaviorSubject(null);
 
-    private currentFormList : BehaviorSubject<FormDTO[]> = new BehaviorSubject(null);
-
-    // private currentBranchConfiguration : BehaviorSubject<BranchConfigurationDTO> = new BehaviorSubject(null);
-
     branch$ = this.currentBranch.asObservable();
+
     branches$ = this.currentBranchesList.asObservable();
 
-    formDtos$ = this.currentFormList.asObservable();
 
     // branchConfiguration$ = this.currentBranchConfiguration.asObservable();
 
@@ -28,8 +25,7 @@ export class StateManagerProvider {
     constructor(
         private _branchControllerService: BranchControllerService,
         // private _bookingControllerService: BookingControllerService,
-        private _userService: UserService,
-        private _formController : FormControllerService) {
+        private _userService: UserService) {
     }
 
     getDashData(){
@@ -84,18 +80,24 @@ export class StateManagerProvider {
         this.currentBranchesList.next(this.currentBranchesList.value);
     }
 
-    retrieveFormByBranchCode() {
+    showToast(message: string, iconType : SweetAlertIcon, color: string){
+        const toast = Swal.mixin({
+            background: color,
+            toast: true,
+            position: 'bottom',
+            showConfirmButton: false,
+            timer: 3000,
+            padding: '3px',
+            customClass: {
+                container: 'sweet-alerts',
+                title: 'toast-title',
+            },
+        });
+        toast.fire({
+            icon: iconType,
+            title: message,
+            padding: '3px',
 
-        this.getDashData();
-        let branchCodeRetrieved = localStorage.getItem("branchCode") ?? '';
-
-        console.log("Retrieve form for branch with code " + branchCodeRetrieved);
-
-        this._formController
-            .retrieveByBranchCode(branchCodeRetrieved)
-            .subscribe(formList => {
-            console.log('Form retrieved: ' + formList.toString());
-            this.currentFormList.next(formList);
         });
     }
     // retrieveBookingConfiguration(branchCode: string){
