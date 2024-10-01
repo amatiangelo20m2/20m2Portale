@@ -2,7 +2,7 @@ import { BooleanInput } from '@angular/cdk/coercion';
 import { NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { MatMenu, MatMenuModule } from '@angular/material/menu';
+import {MatMenu, MatMenuModule, MatMenuTrigger} from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { FuseHorizontalNavigationBasicItemComponent } from '@fuse/components/navigation/horizontal/components/basic/basic.component';
 import { FuseHorizontalNavigationDividerItemComponent } from '@fuse/components/navigation/horizontal/components/divider/divider.component';
@@ -23,11 +23,12 @@ export class FuseHorizontalNavigationBranchItemComponent implements OnInit, OnDe
     /* eslint-disable @typescript-eslint/naming-convention */
     static ngAcceptInputType_child: BooleanInput;
     /* eslint-enable @typescript-eslint/naming-convention */
-
+    @ViewChild(MatMenuTrigger) branchMenuTrigger: MatMenuTrigger;
     @Input() child: boolean = false;
     @Input() item: FuseNavigationItem;
     @Input() name: string;
     @ViewChild('matMenu', {static: true}) matMenu: MatMenu;
+
 
     private _fuseHorizontalNavigationComponent: FuseHorizontalNavigationComponent;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
