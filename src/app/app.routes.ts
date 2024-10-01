@@ -2,7 +2,7 @@ import { Route } from '@angular/router';
 import { initialDataResolver } from 'app/app.resolvers';
 import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
-import { LayoutComponent } from 'app/layout/layout.component';
+import {LayoutComponent} from "./layout/layout.component";
 
 export const appRoutes: Route[] = [
 
@@ -81,7 +81,8 @@ export const appRoutes: Route[] = [
             { path: 'managment', loadChildren: () => import('app/modules/admin/dashboard/dashboard.routes')},
             { path: 'bookings', loadChildren: () => import('app/modules/admin/restaurant/bookingpage/bookingpage.routes')},
             { path: 'customers', loadChildren: () => import('app/modules/admin/restaurant/customers/customers.routes')},
-            { path: 'forms', loadChildren: () => import('app/modules/admin/restaurant/form/forms.routes')},
+            { path: 'forms', loadChildren: () => import('app/modules/admin/restaurant/form/formlist/formlist.routes')},
+            { path: 'tags', loadChildren: () => import('app/modules/admin/restaurant/tag/tag.routes')},
             { path: 'whatsapp', loadChildren: () => import('app/modules/admin/restaurant/whatsappconf/whats-app-conf.routes')},
             { path: 'settings', loadChildren: () => import('app/modules/pages/settings/settings.routes')},
         ]

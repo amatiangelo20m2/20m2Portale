@@ -57,6 +57,7 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
 {
     @ViewChild('shortcutsOrigin') private _shortcutsOrigin: MatButton;
     @ViewChild('shortcutsPanel') private _shortcutsPanel: TemplateRef<any>;
+
     @Input() tooltip: string;
 
     mode: 'view' | 'modify' | 'add' | 'edit' = 'view';
@@ -76,23 +77,22 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
         private _formBuilder: UntypedFormBuilder,
         private _overlay: Overlay,
         private _viewContainerRef: ViewContainerRef,
-        private _dashboardService : StateManagerProvider,
+        private _stateManagerProvider : StateManagerProvider,
         private _branchControllerService : BranchControllerService,
         private _snackBar: MatSnackBar) {
     }
 
     ngOnInit(): void {
-        this.user = this._dashboardService.user;
+        this.user = this._stateManagerProvider.user;
 
-        this._dashboardService.branches$.subscribe((branches) => {
-
+        this._stateManagerProvider.branches$.subscribe((branches) => {
             this.currentBranchList = branches;
             if(this.currentBranchList?.length == 0){
                 this.openPanel();
             }
         });
 
-        this._dashboardService.branch$.subscribe((branch) => {
+        this._stateManagerProvider.branch$.subscribe((branch) => {
             this.currentBranch = branch;
         });
 
@@ -218,8 +218,7 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
                     duration: 3000,
                 });
 
-                console.log('valeria' + branchResponseEntity.branchCode);
-                this._dashboardService.addBranch(branchResponseEntity);
+                this._stateManagerProvider.addBranch(branchResponseEntity);
 
                 this.closePanel();
             }
@@ -305,17 +304,11 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
     }
 
     selectBranch(branch: BranchResponseEntity) {
-        this._dashboardService.selectBranch(branch);
+        this._stateManagerProvider.selectBranch(branch);
         this.closePanel();
 
-        Swal.fire({
-            icon: "success",
-            timer: 2000,
-            title: '',
-            text: 'Ora stai lavorando su ' + branch.name,
-        });
-
-        this.router.navigate(['/']);
+        this._stateManagerProvider.showToast('Ora stai lavorando su ' + branch.name, 'success', '#3B3F5C');
+        this.router.navigate(['/']).then(r => true);
 
 
     }

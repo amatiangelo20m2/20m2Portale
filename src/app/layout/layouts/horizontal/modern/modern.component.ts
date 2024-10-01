@@ -32,18 +32,19 @@ export class ModernLayoutComponent implements OnInit, OnDestroy
     isScreenSmall: boolean;
     navigation: Navigation;
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+    branchName: string;
 
     /**
      * Constructor
      */
     constructor(
-        private _activatedRoute: ActivatedRoute,
-        private _router: Router,
+        private _stateManagerProvider : StateManagerProvider,
         private _navigationService: NavigationService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseNavigationService: FuseNavigationService) {
 
     }
+
 
     // -----------------------------------------------------------------------------------------------------
     // @ Accessors
@@ -82,6 +83,10 @@ export class ModernLayoutComponent implements OnInit, OnDestroy
                 // Check if the screen is small
                 this.isScreenSmall = !matchingAliases.includes('md');
             });
+
+        this._stateManagerProvider.branch$.subscribe(value => {
+            this.branchName = value.name;
+        });
     }
 
     /**

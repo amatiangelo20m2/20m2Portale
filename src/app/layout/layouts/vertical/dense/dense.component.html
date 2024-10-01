@@ -40,6 +40,13 @@
                 (click)="toggleNavigationAppearance()">
                 <mat-icon [svgIcon]="'heroicons_outline:arrows-right-left'"></mat-icon>
             </button>
+            <button
+                    [matTooltip]="'Prenotazioni'"
+                    class="hidden md:inline-flex"
+                    mat-icon-button
+                    [routerLink]="['/dashboard/bookings']">
+                <mat-icon [svgIcon]="'heroicons_outline:calendar-days'"></mat-icon>
+            </button>
         </div>
         <!-- Components -->
         <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
@@ -66,8 +73,9 @@
         <router-outlet *ngIf="true"></router-outlet>
     </div>
 
-    <!-- Footer -->
-<!--    <div class="relative flex flex-0 items-center justify-start w-full h-5 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">-->
+<!--    &lt;!&ndash; Footer &ndash;&gt;-->
+<!--    <div class="relative flex flex-0 items-center justify-between w-full h-5 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">-->
+<!--        <span class="font-medium text-secondary">{{branchName}}</span>-->
 <!--        <span class="text-sm">20M2Consulting &copy; {{currentYear}}</span>-->
 <!--    </div>-->
 

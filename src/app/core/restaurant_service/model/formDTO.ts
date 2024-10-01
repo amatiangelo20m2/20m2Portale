@@ -28,9 +28,9 @@ export namespace FormDTO {
         SOSPESO: 'SOSPESO' as FormStatusEnum,
         CANCELLATO: 'CANCELLATO' as FormStatusEnum
     };
-    export type FormTypeEnum = 'BOOKING' | 'REDIRECT';
+    export type FormTypeEnum = 'PRENOTAZIONE' | 'RACCOLTA_DATI';
     export const FormTypeEnum = {
-        BOOKING: 'BOOKING' as FormTypeEnum,
-        REDIRECT: 'REDIRECT' as FormTypeEnum
+        PRENOTAZIONE: 'PRENOTAZIONE' as FormTypeEnum,
+        RACCOLTADATI: 'RACCOLTA_DATI' as FormTypeEnum
     };
 }

@@ -2,7 +2,7 @@ import { NgIf } from '@angular/common';
 import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
+import {ActivatedRoute, Router, RouterLink, RouterOutlet} from '@angular/router';
 import { FuseFullscreenComponent } from '@fuse/components/fullscreen';
 import { FuseLoadingBarComponent } from '@fuse/components/loading-bar';
 import { FuseNavigationService, FuseVerticalNavigationComponent } from '@fuse/components/navigation';
@@ -17,13 +17,15 @@ import { SearchComponent } from 'app/layout/common/search/search.component';
 import { BranchesmanagmentComponent } from 'app/layout/common/shortcuts/branchesmanagment.component';
 import { UserComponent } from 'app/layout/common/user/user.component';
 import { Subject, takeUntil } from 'rxjs';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {StateManagerProvider} from "../../../../state_manager/state-manager-provider.service";
 
 @Component({
     selector     : 'dense-layout',
     templateUrl  : './dense.component.html',
     encapsulation: ViewEncapsulation.None,
     standalone   : true,
-    imports      : [FuseLoadingBarComponent, FuseVerticalNavigationComponent, MatButtonModule, MatIconModule, LanguagesComponent, FuseFullscreenComponent, SearchComponent, BranchesmanagmentComponent, MessagesComponent, NotificationsComponent, UserComponent, NgIf, RouterOutlet, QuickChatComponent],
+    imports: [FuseLoadingBarComponent, FuseVerticalNavigationComponent, MatButtonModule, MatIconModule, LanguagesComponent, FuseFullscreenComponent, SearchComponent, BranchesmanagmentComponent, MessagesComponent, NotificationsComponent, UserComponent, NgIf, RouterOutlet, QuickChatComponent, RouterLink, MatTooltipModule],
 })
 export class DenseLayoutComponent implements OnInit, OnDestroy
 {
@@ -31,13 +33,12 @@ export class DenseLayoutComponent implements OnInit, OnDestroy
     navigation: Navigation;
     navigationAppearance: 'default' | 'dense' = 'dense';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
-
+    branchName: string;
     /**
      * Constructor
      */
     constructor(
-        private _activatedRoute: ActivatedRoute,
-        private _router: Router,
+        private _stateManagerProvider : StateManagerProvider,
         private _navigationService: NavigationService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseNavigationService: FuseNavigationService,
@@ -85,6 +86,11 @@ export class DenseLayoutComponent implements OnInit, OnDestroy
                 // Change the navigation appearance
                 this.navigationAppearance = this.isScreenSmall ? 'default' : 'dense';
             });
+
+        this._stateManagerProvider.branch$.subscribe(value => {
+            if(value != null)
+                this.branchName = value.name;
+        });
     }
 
     /**

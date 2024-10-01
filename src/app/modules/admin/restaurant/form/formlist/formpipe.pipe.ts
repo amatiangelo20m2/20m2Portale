@@ -12,7 +12,7 @@ export class FormpipePipe implements PipeTransform {
         if (!forms || !status) {
             return forms;
         }
-        return forms.filter(form => form.formStatus === status);
+        return forms.filter(form => form.formStatus != status);
     }
 
 

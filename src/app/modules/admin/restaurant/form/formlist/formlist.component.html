@@ -1,58 +1,72 @@
-<div
-    class="absolute inset-0 flex min-w-0 flex-col overflow-y-auto" cdkScrollable style="background: white">
+<div class="absolute justify-start items-stretch inset-0 flex flex-col overflow-y-auto" cdkScrollable style="background: white">
 
-    <!-- Main -->
-    <div class="flex flex-auto p-2 sm:p-10">
-        <!-- Filters -->
-        <div class="flex w-full justify-between h-12">
+    <div>
+        <div class="flex flex-auto p-2 sm:p-10">
+            <!-- Filters -->
+            <div class="flex w-full justify-between h-12">
 
-            <div class="text-2xl font-normal">Form {{branchName}}</div>
-
-            <div class="flex">
-                <mat-form-field
-                    class="w-full sm:w-36"
-                    [subscriptSizing]="'dynamic'">
-                    <mat-select
-                        [value]="'ATTIVO'"
-                        (selectionChange)="filterByStatus($event)">
-                        <mat-option *ngFor="let status of formStatus" [value]="status">
-                            {{ status }}
-                        </mat-option>
-                        <mat-option [value]="'TUTTI'">TUTTI</mat-option>
-
-                    </mat-select>
-                </mat-form-field>
-                <mat-form-field
-                    class="mt-4 w-full sm:ml-4 sm:mt-0 sm:w-72"
-                    [subscriptSizing]="'dynamic'">
-                    <mat-icon
-                        matPrefix
-                        class="icon-size-5"
-                        [svgIcon]="'heroicons_solid:magnifying-glass'"
-                    ></mat-icon>
-                    <input
-                        (input)="filterByQuery(query.value)"
-                        placeholder="Ricerca per nome form o codice"
-                        matInput
-                        #query
-                    />
-                </mat-form-field>
-            </div>
-
-        </div>
-    </div>
-
-
-    <div class="flex flex-auto p-6 sm:p-10">
-        <div class="mx-auto w-full">
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-10">
-                <ng-container *ngFor="let form of forms | formpipe: choosedStatus">
-                    <app-formcard [form]="form" [tooltip]="tooltip"></app-formcard>
-                </ng-container>
+                <div class="text-2xl font-normal">Form {{branchName}}</div>
+                <app-create-form-component></app-create-form-component>
             </div>
         </div>
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+            <tr>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome Form</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">URL</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pagina Atterraggio</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Form Status</th>
+                <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tags</th>
+                <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">View</th>
+                <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Form Type</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+            </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+            <tr *ngFor="let form of forms | formpipe : currentStatusToExclude" >
+                <td class="px-6 py-4 whitespace-nowrap">{{ form.formName }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ getFormUrl(form.formCode) }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">{{ form.redirectPage }}</td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <div class="flex items-center space-x-2">
+                        <div class="pl-3"><p><mat-slide-toggle [checked]="form.formStatus == FormDTO.FormStatusEnum.ATTIVO" (change)="changeStatus($event, form)"></mat-slide-toggle></p></div>
+                        <div class="rounded-full px-3 py-0.5 text-sm font-semibold" [ngClass]="{
+                    'bg-green-100 text-green-800 dark:bg-green-500 dark:text-green-50': form.formStatus == FormDTO.FormStatusEnum.ATTIVO,
+                    'bg-pink-100 text-pink-800 dark:bg-pink-500 dark:text-pink-50': form.formStatus == FormDTO.FormStatusEnum.CANCELLATO,
+                    'bg-amber-100 text-amber-800 dark:bg-amber-500 dark:text-amber-50': form.formStatus == FormDTO.FormStatusEnum.SOSPESO}">
+                            {{ form.formStatus }}
+                        </div>
+                    </div>
+                </td>
+                <td class="px-1 py-1 whitespace-nowrap"><button [matTooltip]="tooltip || 'Tags'" mat-mini-fab><mat-icon  [svgIcon]="'heroicons_outline:list-bullet'"></mat-icon></button></td>
+                <td class="px-1 py-1 whitespace-nowrap"><button [matTooltip]="tooltip || 'Anteprima'" mat-mini-fab><mat-icon  [svgIcon]="'heroicons_outline:computer-desktop'"></mat-icon></button></td>
+                <td class="px-1 py-1 whitespace-nowrap">
+                    <div class="rounded-full px-3 py-0.5 text-sm font-semibold"
+                         [ngClass]="{
+                    'bg-blue-100 text-blue-800 dark:bg-blue-500 dark:text-blue-50': form.formType == FormDTO.FormTypeEnum.PRENOTAZIONE,
+                    'bg-teal-100 text-teal-800 dark:bg-teal-500 dark:text-teal-50': form.formType == FormDTO.FormTypeEnum.RACCOLTADATI,
+                }">
+                        FORM {{ form.formType }}
+                    </div>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap">
+                    <button (click)="openModal(form)"
+                            [matTooltip]="tooltip || 'Aggiorna'" mat-mini-fab style="background: dodgerblue">
+                        <mat-icon [svgIcon]="'heroicons_outline:pencil-square'"></mat-icon>
+                    </button>
+                    <button (click)="duplicateForm(form)" [matTooltip]="tooltip
+                || 'Duplica'" mat-mini-fab style="background: #0f172a">
+                        <mat-icon [svgIcon]="'heroicons_outline:document-duplicate'"></mat-icon>
+                    </button>
+                    <button (click)="delete(form)" [matTooltip]="tooltip
+                || 'Cancella'" mat-mini-fab style="background: red">
+                        <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
+    </div>
 
-
-</div>

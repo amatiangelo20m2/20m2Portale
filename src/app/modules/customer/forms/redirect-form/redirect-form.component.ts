@@ -14,14 +14,13 @@ import {
     Validators,
 } from '@angular/forms';
 import {NgClass, NgIf} from '@angular/common';
-import { CustomerControllerService, FormDTO } from '../../../../core/restaurant_service';
 import {catchError, debounceTime, distinctUntilChanged, filter, throwError} from 'rxjs';
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatStepperModule} from "@angular/material/stepper";
-import {DateTime, Duration} from "luxon";
 import {StateManagerProvider} from "../../../../state_manager/state-manager-provider.service";
 import Swal from "sweetalert2";
 import {HttpErrorResponse} from "@angular/common/http";
+import {CustomerControllerService, FormDTO} from "../../../../core/restaurant_service";
 
 @Component({
     selector: 'app-redirect-form',
