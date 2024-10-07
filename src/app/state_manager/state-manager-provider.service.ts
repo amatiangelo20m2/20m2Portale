@@ -27,7 +27,7 @@ export class StateManagerProvider {
         private _userService: UserService) {
     }
 
-    getDashData(){
+    getDashboardData(){
         this._userService.user$
             .pipe((takeUntil(this._unsubscribeAll)))
             .subscribe((user: User) => {
@@ -201,7 +201,7 @@ export class StateManagerProvider {
     // private _originalBookings: BookingDTO[] = [];
     //
     getBookingData() {
-        this.getDashData();
+        this.getDashboardData();
         let branchCodeRetrieved = localStorage.getItem("branchCode") ?? '';
         console.log('Branch code r: ' + branchCodeRetrieved);
         // if(branchCodeRetrieved != '') {

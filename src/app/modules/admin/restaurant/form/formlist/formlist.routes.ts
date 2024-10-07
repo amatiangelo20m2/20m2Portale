@@ -9,7 +9,7 @@ export default [
         path     : '',
         component: FormlistComponent,
         resolve  : {
-            data: () => inject(StateManagerProvider).getDashData(),
+            data: () => inject(StateManagerProvider).getDashboardData(),
             dataForm: () => inject(RestaurantStateManagerProvider).retrieveFormByBranchCode(),
         },
     },

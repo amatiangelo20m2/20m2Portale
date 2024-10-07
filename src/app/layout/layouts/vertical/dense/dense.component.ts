@@ -19,6 +19,8 @@ import { UserComponent } from 'app/layout/common/user/user.component';
 import { Subject, takeUntil } from 'rxjs';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {StateManagerProvider} from "../../../../state_manager/state-manager-provider.service";
+import {CommunicationStateManagerProvider} from "../../../../state_manager/communication-state-manager-provider";
+import {WhatsAppConfigurationDTO} from "../../../../core/communication_service";
 
 @Component({
     selector     : 'dense-layout',
@@ -33,17 +35,19 @@ export class DenseLayoutComponent implements OnInit, OnDestroy
     navigation: Navigation;
     navigationAppearance: 'default' | 'dense' = 'dense';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
+
     branchName: string;
+    branchCode: string;
+
+    whatAppConf: WhatsAppConfigurationDTO;
     /**
      * Constructor
      */
     constructor(
-        private _stateManagerProvider : StateManagerProvider,
         private _navigationService: NavigationService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseNavigationService: FuseNavigationService,
-    )
-    {
+        private _communicationService : CommunicationStateManagerProvider) {
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -87,9 +91,11 @@ export class DenseLayoutComponent implements OnInit, OnDestroy
                 this.navigationAppearance = this.isScreenSmall ? 'default' : 'dense';
             });
 
-        this._stateManagerProvider.branch$.subscribe(value => {
-            if(value != null)
-                this.branchName = value.name;
+        this.branchName = localStorage.getItem("branchName") ?? '';
+        this.branchCode = localStorage.getItem("branchCode") ?? '';
+
+        this._communicationService.whatsAppConf$.subscribe(wsConfDTO => {
+            this.whatAppConf = wsConfDTO;
         });
     }
 

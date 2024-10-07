@@ -29,6 +29,7 @@ import {BranchCreationEntity, BranchResponseEntity, BranchControllerService} fro
 import Swal from "sweetalert2";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
+import {MatBadgeModule} from "@angular/material/badge";
 
 @Component({
     selector       : 'branches-managment',
@@ -51,7 +52,7 @@ import {MatSelectModule} from "@angular/material/select";
         MatInputModule,
         MatSlideToggleModule,
         MatRadioModule,
-        MatSnackBarModule, MatOptionModule, MatSelectModule],
+        MatSnackBarModule, MatOptionModule, MatSelectModule, MatBadgeModule],
 })
 export class BranchesmanagmentComponent implements OnInit, OnDestroy
 {

@@ -41,10 +41,10 @@
                 <mat-icon [svgIcon]="'heroicons_outline:arrows-right-left'"></mat-icon>
             </button>
             <button
-                    [matTooltip]="'Prenotazioni'"
-                    class="hidden md:inline-flex"
-                    mat-icon-button
-                    [routerLink]="['/dashboard/bookings']">
+                [matTooltip]="'Prenotazioni'"
+                class="hidden md:inline-flex"
+                mat-icon-button
+                [routerLink]="['/dashboard/bookings']">
                 <mat-icon [svgIcon]="'heroicons_outline:calendar-days'"></mat-icon>
             </button>
         </div>
@@ -52,16 +52,16 @@
         <div class="flex items-center pl-2 ml-auto space-x-0.5 sm:space-x-2">
             <languages></languages>
             <fuse-fullscreen class="hidden md:block"></fuse-fullscreen>
-<!--            <search [appearance]="'bar'"></search>-->
+            <!--            <search [appearance]="'bar'"></search>-->
             <branches-managment></branches-managment>
-<!--            <messages></messages>-->
-<!--            <notifications></notifications>-->
-<!--            <button-->
-<!--                class="lg:hidden"-->
-<!--                mat-icon-button-->
-<!--                (click)="quickChat.toggle()">-->
-<!--                <mat-icon [svgIcon]="'heroicons_outline:chat-bubble-left-right'"></mat-icon>-->
-<!--            </button>-->
+            <!--            <messages></messages>-->
+            <!--            <notifications></notifications>-->
+            <button
+                class="lg:hidden"
+                mat-icon-button
+                (click)="quickChat.toggle()">
+                <mat-icon [svgIcon]="'heroicons_outline:whatsapp-colored'"></mat-icon>
+            </button>
             <user></user>
         </div>
     </div>
@@ -73,13 +73,15 @@
         <router-outlet *ngIf="true"></router-outlet>
     </div>
 
-<!--    &lt;!&ndash; Footer &ndash;&gt;-->
-<!--    <div class="relative flex flex-0 items-center justify-between w-full h-5 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">-->
-<!--        <span class="font-medium text-secondary">{{branchName}}</span>-->
-<!--        <span class="text-sm">20M2Consulting &copy; {{currentYear}}</span>-->
-<!--    </div>-->
+    <!-- Footer -->
+    <div class="relative flex flex-0 items-center justify-between w-full h-5 px-4 md:px-6 z-49 border-t bg-card dark:bg-transparent print:hidden">
+        <span class="font-medium text-secondary">{{branchName}}</span>
+        <span class="text-sm">20M2Consulting &copy; {{currentYear}}</span>
+    </div>
 
 </div>
 
 <!-- Quick chat -->
-<!--<quick-chat #quickChat="quickChat"></quick-chat>-->
+
+<quick-chat #quickChat="quickChat"></quick-chat>
+

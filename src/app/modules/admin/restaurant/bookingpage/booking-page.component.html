@@ -1,9 +1,5 @@
 <div class="absolute inset-0 flex flex-col min-w-0 overflow-hidden">
-    <div class="fixed bottom-5 right-5 z-50">
-        <button mat-fab aria-label="Example icon button with a delete icon" (click)="createBooking()">
-            <mat-icon>add</mat-icon>
-        </button>
-    </div>
+
     <mat-drawer-container
         class="flex-auto h-full bg-card dark:bg-transparent"
         (backdropClick)="onBackdropClicked()">
@@ -20,22 +16,27 @@
         <mat-drawer-content class="flex flex-col">
             <div class="flex-auto">
                 <div class="flex flex-col sm:flex-row md:flex-col flex-auto justify-between py-8 px-6 md:px-8 border-b">
-                    <div>
-                        <div class="text-4xl font-extrabold tracking-tight leading-none">Prenotazioni {{currentBranch?.name}}</div>
-                        <div class="ml-0.5 font-sans text-secondary">
-                            <ng-container *ngIf="bookingCount > 0">
-                                {{bookingCount}}
-                            </ng-container>
-                            {{bookingCount | i18nPlural: {
-                            '=0'   : 'Nessuna prenotazione',
-                            '=1'   : 'prenotazione',
-                            'other': 'prenotazioni'
-                        } }}
-                            in data {{
-                            selectedDate | date: 'dd/MM/yyyy':'it-IT'
-                            }}
+                    <div class="flex w-full justify-between h-12">
+                        <div>
+                            <div class="text-3xl font-extrabold tracking-tight leading-none">Prenotazioni {{currentBranch?.name}}</div>
+                            <div class="ml-0.5 font-sans text-secondary">
+                                <ng-container *ngIf="bookingCount > 0">
+                                    {{bookingCount}}
+                                </ng-container>
+                                {{bookingCount | i18nPlural: {
+                                '=0'   : 'Nessuna prenotazione',
+                                '=1'   : 'prenotazione',
+                                'other': 'prenotazioni'
+                            } }}
+                                in data {{
+                                selectedDate | date: 'dd/MM/yyyy':'it-IT'
+                                }}
+                            </div>
                         </div>
+                        <app-create-booking-component></app-create-booking-component>
                     </div>
+
+
                     <div class="flex items-center mt-4 sm:mt-0 md:mt-4">
                         <!-- Search -->
                         <div class="flex-auto">
@@ -113,72 +114,72 @@
                     </div>
                 </div>
 
-<!--                <booking></booking>-->
-<!--                <div class="relative">-->
-<!--                    <ng-container *ngIf="bookings">-->
-<!--                        <ng-container *ngIf="bookings.length; else noContacts">-->
-<!--                            <ng-container *ngFor="let booking of bookings; let i = index; trackBy: trackByFn">-->
-<!--                                <ng-container *ngIf="i === 0 || booking.customer.name.charAt(0) !== bookings[i - 1].customer.name.charAt(0)">-->
-<!--                                    <div class="z-10 sticky top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-medium uppercase text-secondary bg-gray-50 dark:bg-gray-900">-->
-<!--                                        {{booking.customer.name.charAt(0)}}-->
-<!--                                    </div>-->
-<!--                                </ng-container>-->
+                <!--                <booking></booking>-->
+                <!--                <div class="relative">-->
+                <!--                    <ng-container *ngIf="bookings">-->
+                <!--                        <ng-container *ngIf="bookings.length; else noContacts">-->
+                <!--                            <ng-container *ngFor="let booking of bookings; let i = index; trackBy: trackByFn">-->
+                <!--                                <ng-container *ngIf="i === 0 || booking.customer.name.charAt(0) !== bookings[i - 1].customer.name.charAt(0)">-->
+                <!--                                    <div class="z-10 sticky top-0 -mt-px px-6 py-1 md:px-8 border-t border-b font-medium uppercase text-secondary bg-gray-50 dark:bg-gray-900">-->
+                <!--                                        {{booking.customer.name.charAt(0)}}-->
+                <!--                                    </div>-->
+                <!--                                </ng-container>-->
 
-<!--                                <div style="display: flex; justify-content: space-between; padding-left: 14px; padding-bottom: 3px; padding-top: 3px" [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover': !selectedBooking || selectedBooking.bookingId !== booking.bookingId, 'bg-primary-50 dark:bg-hover': selectedBooking && selectedBooking.bookingId === booking.bookingId}"-->
-<!--                                     [routerLink]="['./', booking.bookingId]">-->
-<!--                                    <div style="flex-basis: 1%; display: flex; align-items: center;">-->
-<!--                                        <div class="flex flex-0 items-center justify-center w-13 rounded-full overflow-hidden">-->
-<!--                                            <ng-container *ngIf="booking.customer.imageProfile">-->
-<!--                                                <img-->
-<!--                                                    class="object-cover w-full h-full"-->
-<!--                                                    [src]="booking.customer.imageProfile"-->
-<!--                                                    alt="Contact avatar"/>-->
-<!--                                            </ng-container>-->
-<!--                                            <ng-container *ngIf="!booking.customer.imageProfile">-->
-<!--                                                <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">-->
-<!--                                                    {{booking.customer.name.charAt(0)}}-->
-<!--                                                </div>-->
-<!--                                            </ng-container>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div style="flex-basis: 10%; display: flex; align-items: center;">-->
-<!--                                        <div class="min-w-0 ml-4">-->
-<!--                                            <div class="leading-5 truncate font-bold">{{booking.customer.name}} {{booking.customer.lastname}}</div>-->
-<!--                                            <div class="leading-5 truncate text-secondary">{{booking.bookingCode}}</div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div style="flex-basis: 5%; display: flex; align-items: center;" class="font-bold" [matTooltip]="booking.child > 0 ? (tooltip || booking.guest.toString() +' Adulti + ' + booking.child.toString() +' Bambini') : null">-->
-<!--                                        {{booking.guest}}-->
-<!--                                        {{booking.child > 0 ? ' +' : '' }} {{booking.child > 0 ? booking.child : '' }}-->
-<!--                                    </div>-->
-<!--                                    <div style="flex-basis: 16%; display: flex; align-items: center;" class="font-bold">{{booking.time}}</div>-->
-<!--                                    <div style="flex-basis: 30%; display: flex; align-items: center;" class="font-bold">+{{booking.customer.prefix}} {{booking.customer.phone}}-->
-<!--                                        <img class="w-6 ml-2" [src]="'assets/images/others/whatsapp.svg'">-->
-<!--                                    </div>-->
+                <!--                                <div style="display: flex; justify-content: space-between; padding-left: 14px; padding-bottom: 3px; padding-top: 3px" [ngClass]="{'hover:bg-gray-100 dark:hover:bg-hover': !selectedBooking || selectedBooking.bookingId !== booking.bookingId, 'bg-primary-50 dark:bg-hover': selectedBooking && selectedBooking.bookingId === booking.bookingId}"-->
+                <!--                                     [routerLink]="['./', booking.bookingId]">-->
+                <!--                                    <div style="flex-basis: 1%; display: flex; align-items: center;">-->
+                <!--                                        <div class="flex flex-0 items-center justify-center w-13 rounded-full overflow-hidden">-->
+                <!--                                            <ng-container *ngIf="booking.customer.imageProfile">-->
+                <!--                                                <img-->
+                <!--                                                    class="object-cover w-full h-full"-->
+                <!--                                                    [src]="booking.customer.imageProfile"-->
+                <!--                                                    alt="Contact avatar"/>-->
+                <!--                                            </ng-container>-->
+                <!--                                            <ng-container *ngIf="!booking.customer.imageProfile">-->
+                <!--                                                <div class="flex items-center justify-center w-full h-full rounded-full text-lg uppercase bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200">-->
+                <!--                                                    {{booking.customer.name.charAt(0)}}-->
+                <!--                                                </div>-->
+                <!--                                            </ng-container>-->
+                <!--                                        </div>-->
+                <!--                                    </div>-->
+                <!--                                    <div style="flex-basis: 10%; display: flex; align-items: center;">-->
+                <!--                                        <div class="min-w-0 ml-4">-->
+                <!--                                            <div class="leading-5 truncate font-bold">{{booking.customer.name}} {{booking.customer.lastname}}</div>-->
+                <!--                                            <div class="leading-5 truncate text-secondary">{{booking.bookingCode}}</div>-->
+                <!--                                        </div>-->
+                <!--                                    </div>-->
+                <!--                                    <div style="flex-basis: 5%; display: flex; align-items: center;" class="font-bold" [matTooltip]="booking.child > 0 ? (tooltip || booking.guest.toString() +' Adulti + ' + booking.child.toString() +' Bambini') : null">-->
+                <!--                                        {{booking.guest}}-->
+                <!--                                        {{booking.child > 0 ? ' +' : '' }} {{booking.child > 0 ? booking.child : '' }}-->
+                <!--                                    </div>-->
+                <!--                                    <div style="flex-basis: 16%; display: flex; align-items: center;" class="font-bold">{{booking.time}}</div>-->
+                <!--                                    <div style="flex-basis: 30%; display: flex; align-items: center;" class="font-bold">+{{booking.customer.prefix}} {{booking.customer.phone}}-->
+                <!--                                        <img class="w-6 ml-2" [src]="'assets/images/others/whatsapp.svg'">-->
+                <!--                                    </div>-->
 
-<!--                                    <div style="flex-basis: 5%; display: flex; align-items: center;">-->
-<!--                                        <div>-->
-<!--                                            <img class="w-6 ml-2" [src]="'assets/images/others/penny.svg'" *ngIf="booking.allowedDogs > 0">-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div style="flex-basis: 5%; display: flex; align-items: center;">-->
-<!--                                        <div>-->
-<!--                                            <mat-icon [svgIcon]="'heroicons_outline:document-text'" [matTooltip]="tooltip || booking.requests" *ngIf="booking.requests"></mat-icon>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                    <div style="flex-basis: 5%; display: flex; align-items: center;" >-->
-<!--                                        <img class="w-6 ml-2" [src]="'assets/images/others/clessidra.svg'" [matTooltip]="tooltip || booking.bookingStatus"></div>-->
-<!--                                </div>-->
-<!--                            </ng-container>-->
-<!--                        </ng-container>-->
-<!--                    </ng-container>-->
+                <!--                                    <div style="flex-basis: 5%; display: flex; align-items: center;">-->
+                <!--                                        <div>-->
+                <!--                                            <img class="w-6 ml-2" [src]="'assets/images/others/penny.svg'" *ngIf="booking.allowedDogs > 0">-->
+                <!--                                        </div>-->
+                <!--                                    </div>-->
+                <!--                                    <div style="flex-basis: 5%; display: flex; align-items: center;">-->
+                <!--                                        <div>-->
+                <!--                                            <mat-icon [svgIcon]="'heroicons_outline:document-text'" [matTooltip]="tooltip || booking.requests" *ngIf="booking.requests"></mat-icon>-->
+                <!--                                        </div>-->
+                <!--                                    </div>-->
+                <!--                                    <div style="flex-basis: 5%; display: flex; align-items: center;" >-->
+                <!--                                        <img class="w-6 ml-2" [src]="'assets/images/others/clessidra.svg'" [matTooltip]="tooltip || booking.bookingStatus"></div>-->
+                <!--                                </div>-->
+                <!--                            </ng-container>-->
+                <!--                        </ng-container>-->
+                <!--                    </ng-container>-->
 
-<!--                    &lt;!&ndash; No contacts &ndash;&gt;-->
-<!--                    <ng-template #noContacts>-->
-<!--                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">Non ci sono prenotazioni</div>-->
-<!--                    </ng-template>-->
+                <!--                    &lt;!&ndash; No contacts &ndash;&gt;-->
+                <!--                    <ng-template #noContacts>-->
+                <!--                        <div class="p-8 sm:p-16 border-t text-4xl font-semibold tracking-tight text-center">Non ci sono prenotazioni</div>-->
+                <!--                    </ng-template>-->
 
-<!--                </div>-->
+                <!--                </div>-->
 
 
             </div>

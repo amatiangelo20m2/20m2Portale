@@ -1,7 +1,21 @@
 import { ScrollStrategy, ScrollStrategyOptions } from '@angular/cdk/overlay';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { DatePipe, DOCUMENT, NgClass, NgFor, NgIf, NgTemplateOutlet } from '@angular/common';
-import { AfterViewInit, Component, ElementRef, HostBinding, HostListener, Inject, NgZone, OnDestroy, OnInit, Renderer2, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    HostBinding,
+    HostListener,
+    Inject,
+    Input,
+    NgZone,
+    OnDestroy,
+    OnInit,
+    Renderer2,
+    ViewChild,
+    ViewEncapsulation
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -10,6 +24,8 @@ import { FuseScrollbarDirective } from '@fuse/directives/scrollbar';
 import { QuickChatService } from 'app/layout/common/quick-chat/quick-chat.service';
 import { Chat } from 'app/layout/common/quick-chat/quick-chat.types';
 import { Subject, takeUntil } from 'rxjs';
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {StateManagerProvider} from "../../../state_manager/state-manager-provider.service";
 
 @Component({
     selector     : 'quick-chat',
@@ -18,10 +34,11 @@ import { Subject, takeUntil } from 'rxjs';
     encapsulation: ViewEncapsulation.None,
     exportAs     : 'quickChat',
     standalone   : true,
-    imports      : [NgClass, NgIf, MatIconModule, MatButtonModule, FuseScrollbarDirective, NgFor, NgTemplateOutlet, MatFormFieldModule, MatInputModule, TextFieldModule, DatePipe],
+    imports: [NgClass, NgIf, MatIconModule, MatButtonModule, FuseScrollbarDirective, NgFor, NgTemplateOutlet, MatFormFieldModule, MatInputModule, TextFieldModule, DatePipe, MatTooltipModule],
 })
 export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy
 {
+    @Input() tooltip: string;
     @ViewChild('messageInput') messageInput: ElementRef;
     chat: Chat;
     chats: Chat[];
@@ -42,10 +59,11 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy
         private _ngZone: NgZone,
         private _quickChatService: QuickChatService,
         private _scrollStrategyOptions: ScrollStrategyOptions,
-    )
-    {
+        private _stateManagerProvider : StateManagerProvider
+    ) {
     }
 
+    branchName : string;
     // -----------------------------------------------------------------------------------------------------
     // @ Decorated methods
     // -----------------------------------------------------------------------------------------------------
@@ -90,8 +108,7 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy
     /**
      * On init
      */
-    ngOnInit(): void
-    {
+    ngOnInit(): void {
         // Chat
         this._quickChatService.chat$
             .pipe(takeUntil(this._unsubscribeAll))
@@ -115,6 +132,12 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy
             {
                 this.selectedChat = chat;
             });
+
+        this._stateManagerProvider.branch$.subscribe(branch => {
+           if(branch != null){
+               this.branchName = branch.name;
+           }
+        });
     }
 
     /**

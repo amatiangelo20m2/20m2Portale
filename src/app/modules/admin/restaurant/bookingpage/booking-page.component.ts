@@ -23,6 +23,7 @@ import {BranchResponseEntity} from "../../../../core/dashboard";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {MatDatepickerInputEvent, MatDatepickerModule} from "@angular/material/datepicker";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {CreateBookingComponentComponent} from "./create-booking-component/create-booking-component.component";
 
 @Component({
     selector: 'bookingpage',
@@ -49,7 +50,8 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
         MatDatepickerModule,
         FormsModule,
         DatePipe,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        CreateBookingComponentComponent
     ],
     standalone: true
 })

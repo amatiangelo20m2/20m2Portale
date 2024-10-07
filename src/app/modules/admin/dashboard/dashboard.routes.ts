@@ -8,7 +8,7 @@ export default [
         path     : '',
         component: DashboardComponent,
         resolve  : {
-            data: () => inject(StateManagerProvider).getDashData(),
+            data: () => inject(StateManagerProvider).getDashboardData(),
         },
     },
 ] as Routes;
