@@ -1,19 +1,83 @@
-<div class="w-full max-w-3xl">
+<div class="w-full">
+    <div class="w-full h-[60%] border rounded-lg shadow-md flex flex-col" style="background: white">
+        <!-- Top Section: Instance Information -->
+        <div *ngIf="!wsConf" class="flex justify-end p-3">
 
-    <button mat-fab extended (click)="configureMessagingWhatsapp()">
-            <mat-icon [svgIcon]="'heroicons_outline:whatsapp-colored'"></mat-icon>
-            Configura Messaggistica Whats's App
-        </button>
+            <button mat-fab extended (click)="configureMessagingWhatsapp()">
+                Configura
+                <mat-icon [svgIcon]="'heroicons_outline:whatsapp-colored'"></mat-icon>
+            </button>
 
-        <button mat-fab extended (click)="retrieveQR()">
-            <mat-icon [svgIcon]="'heroicons_outline:qr-code'"></mat-icon>
-            Retrieve QR
-        </button>
+        </div>
+
+        <div class="w-full h-[50%] flex flex-row" *ngIf="wsConf">
+            <!-- Section 1 -->
+            <div class="flex-1 p-4 border-r">
+                <p>Instance ID</p>
+                <span class="font-bold text-green-500">
+                    {{ wsConf.waApiInstanceId }}
+                </span>
+                <div class="flex items-center">
+                    <img src="{{ wsConf.photoUrl }}" alt="User Avatar" class="w-10 h-10 rounded-full object-cover" />
+                    <span class="font-bold text-green-500">{{ wsConf.displayName }}</span>
+                </div>
+
+            </div>
+
+            <!-- Section 2 -->
+            <div class="flex-1 p-4 border-r">
+                <p>Stato corrente</p>
+                <span class="font-bold text-green-500">
+                    {{wsConf.waApiState}}
+                </span>
 
 
-    <div *ngIf="wsConf" class="flex p-4">
-        <img [src]="wsConf.qrCode" alt="Base64 Image" class="w-50 h-50 object-cover rounded shadow-md" />
+            </div>
+
+            <!-- Section 3 -->
+            <div class="flex-1 p-4 border-r">
+                <p>Numero collegato</p>
+                <span class="font-bold text-green-500">
+                    {{wsConf.phone}}
+                </span>
+            </div>
+            <!-- Section 4 -->
+            <div class="flex-1 p-4">
+                <p>Creata il</p>
+                <span class="text-green-500">
+                    {{wsConf.creationDate}}
+                </span>
+
+            </div>
+            <div class="flex-1 p-4">
+                <button mat-fab extended (click)="retrieveQR()">
+                    <mat-icon [svgIcon]="'heroicons_outline:qr-code'"></mat-icon>
+                    Ottieni QR
+                </button>
+                <button
+                    [matTooltip]="tooltip || 'Cancella Configurazione'"
+                    class="fuse-alert-dismiss-button"
+                    mat-icon-button
+                    (click)="deleteInstance()">
+                    <mat-icon [svgIcon]="'heroicons_outline:trash'" color="warn"></mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <!-- Bottom Section: QR Code and GIF -->
+        <div *ngIf="wsConf && wsConf.qrCode.length > 0" class="w-full h-[50%] p-4 flex">
+            <div class="flex-1 p-8">
+                <img [src]="gifUrlScanQr" alt="GIF" class="object-cover rounded shadow-md p-3"/>
+            </div>
+            <div class="flex-1 p-8">
+                <img [src]="wsConf.qrCode" alt="Base64 Image" class="w-60 h-60 min-h-2.5 min-w-2.5 object-cover rounded shadow-md" />
+            </div>
+
+
+        </div>
     </div>
+
+
 
     <!-- Form -->
     <!--    <form [formGroup]="accountForm">-->

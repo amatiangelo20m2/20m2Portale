@@ -30,6 +30,7 @@ import Swal from "sweetalert2";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import {MatBadgeModule} from "@angular/material/badge";
+import {CommunicationStateManagerProvider} from "../../../state_manager/communication-state-manager-provider";
 
 @Component({
     selector       : 'branches-managment',
@@ -80,6 +81,7 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
         private _viewContainerRef: ViewContainerRef,
         private _stateManagerProvider : StateManagerProvider,
         private _branchControllerService : BranchControllerService,
+        private _communicationStateManager : CommunicationStateManagerProvider,
         private _snackBar: MatSnackBar) {
     }
 
@@ -305,7 +307,9 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
     }
 
     selectBranch(branch: BranchResponseEntity) {
+
         this._stateManagerProvider.selectBranch(branch);
+        this._communicationStateManager.resetConf();
         this.closePanel();
 
         this._stateManagerProvider.showToast('Ora stai lavorando su ' + branch.name, 'success', '#3B3F5C');

@@ -13,14 +13,16 @@ import {FuseMediaWatcherService} from "../../../../../@fuse/services/media-watch
 import {WhatsappsettingsComponent} from "./whatsappsettings/whatsappsettings.component";
 import {WhatsAppConfigurationControllerService} from "../../../../core/communication_service";
 import {CommunicationStateManagerProvider} from "../../../../state_manager/communication-state-manager-provider";
+import Swal from "sweetalert2";
+import {MessagingComponent} from "./messaging/messaging.component";
 
 @Component({
     selector       : 'whatsappconfig',
     templateUrl    : 'whats-app-conf.component.html',
     encapsulation  : ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
+    changeDetection: ChangeDetectionStrategy.Default,
     standalone     : true,
-    imports: [MatSidenavModule, MatButtonModule, MatIconModule, NgFor, NgClass, NgSwitch, NgSwitchCase, SettingsAccountComponent, SettingsSecurityComponent, SettingsPlanBillingComponent, SettingsNotificationsComponent, SettingsTeamComponent, WhatsappsettingsComponent],
+    imports: [MatSidenavModule, MatButtonModule, MatIconModule, NgFor, NgClass, NgSwitch, NgSwitchCase, SettingsAccountComponent, SettingsSecurityComponent, SettingsPlanBillingComponent, SettingsNotificationsComponent, SettingsTeamComponent, WhatsappsettingsComponent, MessagingComponent],
 })
 export class WhatsAppConfComponent {
     @ViewChild('drawer') drawer: MatDrawer;
@@ -29,16 +31,12 @@ export class WhatsAppConfComponent {
     panels: any[] = [];
     selectedPanel: string = 'wsconf';
     private _unsubscribeAll: Subject<any> = new Subject<any>();
-
     /**
      * Constructor
      */
     constructor(
         private _changeDetectorRef: ChangeDetectorRef,
-        private _fuseMediaWatcherService: FuseMediaWatcherService,
-        private _whatsAppService : WhatsAppConfigurationControllerService,
-        private _communicationStateManagerProvider : CommunicationStateManagerProvider
-    )
+        private _fuseMediaWatcherService: FuseMediaWatcherService)
     {
     }
     ngOnInit(): void
@@ -131,15 +129,5 @@ export class WhatsAppConfComponent {
     trackByFn(index: number, item: any): any
     {
         return item.id || index;
-    }
-
-    deleteInstance() {
-        let branchCodeRetrieved = localStorage.getItem("branchCode") ?? '';
-        this._whatsAppService.deleteConfWaApi(branchCodeRetrieved, 'response').subscribe(
-            value => {
-                this._communicationStateManagerProvider.clearConf();
-                console.log("deleted");
-            }
-        );
     }
 }

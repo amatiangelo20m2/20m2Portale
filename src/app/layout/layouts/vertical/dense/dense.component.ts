@@ -21,6 +21,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {StateManagerProvider} from "../../../../state_manager/state-manager-provider.service";
 import {CommunicationStateManagerProvider} from "../../../../state_manager/communication-state-manager-provider";
 import {WhatsAppConfigurationDTO} from "../../../../core/communication_service";
+import WaApiStateEnum = WhatsAppConfigurationDTO.WaApiStateEnum;
 
 @Component({
     selector     : 'dense-layout',
@@ -38,7 +39,7 @@ export class DenseLayoutComponent implements OnInit, OnDestroy
 
     branchName: string;
     branchCode: string;
-
+    showQuickChat: boolean = false;
     whatAppConf: WhatsAppConfigurationDTO;
     /**
      * Constructor
@@ -47,7 +48,8 @@ export class DenseLayoutComponent implements OnInit, OnDestroy
         private _navigationService: NavigationService,
         private _fuseMediaWatcherService: FuseMediaWatcherService,
         private _fuseNavigationService: FuseNavigationService,
-        private _communicationService : CommunicationStateManagerProvider) {
+        private _communicationService : CommunicationStateManagerProvider,
+        private _stateManagerDashboard: StateManagerProvider) {
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -91,11 +93,20 @@ export class DenseLayoutComponent implements OnInit, OnDestroy
                 this.navigationAppearance = this.isScreenSmall ? 'default' : 'dense';
             });
 
-        this.branchName = localStorage.getItem("branchName") ?? '';
-        this.branchCode = localStorage.getItem("branchCode") ?? '';
+        this._stateManagerDashboard.branch$.subscribe(value => {
+            if(value){
+                this.branchName = value.name;
+                this.branchCode = value.branchCode;
+            }
+
+
+        });
 
         this._communicationService.whatsAppConf$.subscribe(wsConfDTO => {
             this.whatAppConf = wsConfDTO;
+            if(wsConfDTO.waApiState == WaApiStateEnum.READY){
+                this.showQuickChat = true;
+            }
         });
     }
 
@@ -112,6 +123,7 @@ export class DenseLayoutComponent implements OnInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     // @ Public methods
     // -----------------------------------------------------------------------------------------------------
+
 
     /**
      * Toggle navigation

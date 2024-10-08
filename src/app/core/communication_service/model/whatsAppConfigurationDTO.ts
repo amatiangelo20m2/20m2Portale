@@ -19,14 +19,14 @@ export interface WhatsAppConfigurationDTO {
     lastError?: string;
     creationDate?: Date;
     qrCode?: string;
+    photoUrl?: string;
+    displayName?: string;
 }
 export namespace WhatsAppConfigurationDTO {
-    export type WaApiStateEnum = 'NEW' | 'INSTANCE_CREATED' | 'INSTANCE_NOT_CREATED' | 'QR' | 'READY' | 'NOT_READY';
+    export type WaApiStateEnum = 'NEW' | 'INSTANCE_CREATED' | 'READY' | 'NOT_READY';
     export const WaApiStateEnum = {
         NEW: 'NEW' as WaApiStateEnum,
         INSTANCECREATED: 'INSTANCE_CREATED' as WaApiStateEnum,
-        INSTANCENOTCREATED: 'INSTANCE_NOT_CREATED' as WaApiStateEnum,
-        QR: 'QR' as WaApiStateEnum,
         READY: 'READY' as WaApiStateEnum,
         NOTREADY: 'NOT_READY' as WaApiStateEnum
     };

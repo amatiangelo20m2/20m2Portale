@@ -53,10 +53,10 @@
         <mat-drawer-content class="flex flex-col">
 
             <!-- Main -->
-            <div class="flex-auto px-6 pt-9 pb-12 md:p-8 md:pb-12 lg:p-12">
+            <div class="flex-auto px-2 pt-2 pb-2 md:p-2 md:pb-2 lg:p-2">
 
                 <!-- Panel header -->
-                <div class="flex items-center">
+                <div class="flex items-center pt-5 pl-4">
 
                     <!-- Drawer toggle -->
                     <button
@@ -71,12 +71,7 @@
                         {{getPanelInfo(selectedPanel).title}}
                     </div>
 
-                    <button
-                        class="fuse-alert-dismiss-button"
-                        mat-icon-button
-                        (click)="deleteInstance()">
-                        <mat-icon [svgIcon]="'heroicons_solid:x-mark'"></mat-icon>
-                    </button>
+
                 </div>
 
                 <!-- Load settings panel -->
@@ -87,8 +82,8 @@
                             <app-whatsappsettings></app-whatsappsettings>
                         </ng-container>
                         <!-- Security -->
-                        <ng-container *ngSwitchCase="'security'">
-                            <settings-security1></settings-security1>
+                        <ng-container *ngSwitchCase="'massivemsg'">
+                           <app-messaging></app-messaging>
                         </ng-container>
                     </ng-container>
                 </div>

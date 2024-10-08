@@ -95,7 +95,7 @@ export class StateManagerProvider {
         toast.fire({
             icon: iconType,
             title: message,
-            padding: '3px',
+            padding: '7px',
 
         });
     }

@@ -1,4 +1,4 @@
-<div class="flex flex-col flex-auto items-center sm:justify-center min-w-0" style="background: white">
+<div class="flex flex-col flex-auto items-center sm:justify-center min-w-10" style="background: white">
     <div class="w-full sm:w-auto py-6 px-3 sm:p-10 sm:rounded-2xl sm:shadow sm:bg-card">
         <div class="w-full mx-auto sm:mx-0">
 
@@ -12,7 +12,7 @@
                     <input
                         id="email"
                         matInput
-                        [formControlName]="'userCode'" [maxLength]="10">
+                        [formControlName]="'userCode'" [maxLength]="10" class="">
                     <mat-error *ngIf="signInForm.get('userCode').hasError('required')">
                         Inserisci il codice utente
                     </mat-error>
@@ -74,7 +74,7 @@
                 </fuse-alert>
                 <!-- Submit button -->
                 <button
-                    class="fuse-mat-button-large w-full mt-6"
+                    class="w-full mt-6 rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     mat-flat-button
                     [color]="'accent'"
                     [disabled]="signInForm.disabled"

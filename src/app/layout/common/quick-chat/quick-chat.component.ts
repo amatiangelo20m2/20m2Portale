@@ -266,6 +266,7 @@ export class QuickChatComponent implements OnInit, AfterViewInit, OnDestroy
     // -----------------------------------------------------------------------------------------------------
     // @ Private methods
     // -----------------------------------------------------------------------------------------------------
+    gifUrl: string = 'assets/gif/wha.gif';
 
     /**
      * Show the backdrop

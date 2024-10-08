@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, ViewEncapsulation} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {FormsModule, ReactiveFormsModule, UntypedFormBuilder} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
@@ -14,44 +14,88 @@ import {
     WhatsAppConfigurationControllerService,
     WhatsAppConfigurationDTO
 } from "../../../../../core/communication_service";
-
+import {interval, Observable, Subject, switchMap, takeUntil, takeWhile} from "rxjs";
+import { HttpClient } from '@angular/common/http';
+import WaApiStateEnum = WhatsAppConfigurationDTO.WaApiStateEnum;
+import {MatTooltipModule} from "@angular/material/tooltip";
 @Component({
     selector: 'app-whatsappsettings',
     templateUrl: './whatsappsettings.component.html',
     standalone: true,
     encapsulation  : ViewEncapsulation.None,
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatIconModule, MatInputModule, TextFieldModule, MatSelectModule, MatOptionModule, MatButtonModule, NgIf],
+    changeDetection: ChangeDetectionStrategy.Default,
+    imports: [FormsModule, ReactiveFormsModule, MatFormFieldModule, MatIconModule, MatInputModule, TextFieldModule, MatSelectModule, MatOptionModule, MatButtonModule, NgIf, MatTooltipModule],
 })
-export class WhatsappsettingsComponent {
+export class WhatsappsettingsComponent implements OnInit, OnDestroy {
+
+    @Input() tooltip: string;
     private branchCode: string;
-    public wsConf: WhatsAppConfigurationDTO;
+    public wsConf: WhatsAppConfigurationDTO | null = null;
+    private _unsubscribeAll: Subject<void> = new Subject<void>();
+    private shouldContinueLoop: boolean = true;
 
     /**
      * Constructor
      */
     constructor(
-        private _formBuilder: UntypedFormBuilder,
         private _communicationStateManagerProvider: CommunicationStateManagerProvider,
-        private _whatsappControllerService : WhatsAppConfigurationControllerService)
+        private _whatsappControllerService : WhatsAppConfigurationControllerService,
+        private _whatsAppService : WhatsAppConfigurationControllerService)
     {
+    }
+
+    ngOnDestroy(): void {
+        this._unsubscribeAll.next();
+        this._unsubscribeAll.complete();
+        this.shouldContinueLoop = false;
+    }
+
+    ngOnInit(): void {
+        this.branchCode = localStorage.getItem("branchCode") ?? '';
+        this._communicationStateManagerProvider
+            .whatsAppConf$.subscribe(whatsAppConfDTO => {
+            if(whatsAppConfDTO){
+                console.log("whatsAppConfDTO: " + whatsAppConfDTO);
+                this.wsConf = whatsAppConfDTO;
+                if(this.wsConf.waApiState == WhatsAppConfigurationDTO.WaApiStateEnum.INSTANCECREATED){
+                    this.startRequestLoop();
+                }
+            }
+        });
+    }
+
+    startRequestLoop(): void {
+        const durationInMinutes = 1;  // The loop duration in minutes
+        const startTime = Date.now(); // Record the start time
+
+        interval(3000)  // Emit every 2000 milliseconds (2 seconds)
+            .pipe(
+                takeWhile(() => this.shouldContinueLoop && ((Date.now() - startTime) < durationInMinutes * 30 * 1000)),
+                switchMap(() => this.retrieveConf())
+            )
+            .subscribe(
+                (response) => {
+                    console.log('Response:', response);
+                    if(response.waApiState == WaApiStateEnum.READY){
+                        this._communicationStateManagerProvider.setCurrentWhatsAppConf(response);
+                        this.shouldContinueLoop = false;
+                    }
+                },
+                (error) => {
+                    console.error('Error:', error);
+                }
+            );
+    }
+
+
+    retrieveConf()  {
+        return this._whatsappControllerService.retrieveWaApiConfStatus(this.branchCode);
     }
 
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
-
-    /**
-     * On init
-     */
-    ngOnInit(): void {
-        let branchCodeRetrieved = localStorage.getItem("branchCode") ?? '';
-        this.branchCode = branchCodeRetrieved;
-        this._communicationStateManagerProvider.whatsAppConf$.subscribe(value => {
-            this.wsConf = value;
-            console.log("XXX:" + value.qrCode);
-        });
-    }
+    gifUrlScanQr: string = 'assets/gif/scan-wa.gif';
 
     configureMessagingWhatsapp() {
         let timerInterval;
@@ -60,10 +104,10 @@ export class WhatsappsettingsComponent {
             title: "CONFIGURAZIONI IN CORSO",
             html: "Attendi, sto configurando il numero <b></b>",  // Placeholder for the dots animation
             timerProgressBar: true,
-            allowOutsideClick: false,  // Prevent closing by clicking outside
-            allowEscapeKey: false,     // Prevent closing by pressing escape
-            allowEnterKey: false,      // Prevent closing by pressing enter
-            showConfirmButton: false,  // Hide the confirm button
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            showConfirmButton: false,
 
             didOpen: () => {
                 Swal.showLoading();
@@ -84,21 +128,25 @@ export class WhatsappsettingsComponent {
         this._whatsappControllerService.createConfWaApi(this.branchCode).subscribe({
             next: (value) => {
 
+                console.log('Configuration created: ' + value)
                 this._communicationStateManagerProvider.setCurrentWhatsAppConf(value);
 
                 Swal.fire({
                     icon: "success",
+                    timer: 1600,
                     title: "Completato",
                     text: "Numero configurato con successo!",
                     showConfirmButton: true,
                 });
+
+                this.retrieveQR();
             },
             error: (err) => {
                 // Handle the error and close Swal with an error message
                 Swal.fire({
                     icon: "error",
                     title: "Errore",
-                    text: err.toString(),
+                    text: err.textContent,
                     showConfirmButton: true,
                 });
             },
@@ -109,7 +157,6 @@ export class WhatsappsettingsComponent {
         });
 
     }
-
     retrieveQR() {
         let timerInterval;
         Swal.fire({
@@ -143,8 +190,9 @@ export class WhatsappsettingsComponent {
                 this._communicationStateManagerProvider.setCurrentWhatsAppConf(value);
                 Swal.fire({
                     icon: "success",
+                    timer: 1500,
                     title: "Qr code trovato",
-                    text: "E' una festa!",
+                    text: "Scannerizza il qr code per agganciare il cellulare",
                     showConfirmButton: true,
                 });
             },
@@ -153,7 +201,7 @@ export class WhatsappsettingsComponent {
                 Swal.fire({
                     icon: "error",
                     title: "Errore",
-                    text: err.toString(),
+                    text: err.textContent,
                     showConfirmButton: true,
                 });
             },
@@ -163,4 +211,33 @@ export class WhatsappsettingsComponent {
             }
         });
     }
+
+    deleteInstance() {
+        Swal.fire({
+            title: "Eliminare configurazione What's App?",
+            text: "Puoi effettuare una nuova configurazione in qualsiasi momento",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, cancella!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let branchCodeRetrieved = localStorage.getItem("branchCode") ?? '';
+                this._whatsAppService.deleteConfWaApi(branchCodeRetrieved, 'response').subscribe(
+                    value => {
+                        this._communicationStateManagerProvider.resetConf();
+                        console.log("deleted");
+                    }
+                );
+                Swal.fire({
+                    timer: 1600,
+                    title: "Configurazione cancellata",
+                    text: "Istanza cancellata con successo",
+                    icon: "success"
+                });
+            }
+        });
+    }
+
 }

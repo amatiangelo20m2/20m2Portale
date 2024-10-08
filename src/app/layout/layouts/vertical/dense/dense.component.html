@@ -56,12 +56,12 @@
             <branches-managment></branches-managment>
             <!--            <messages></messages>-->
             <!--            <notifications></notifications>-->
-            <button
-                class="lg:hidden"
-                mat-icon-button
-                (click)="quickChat.toggle()">
-                <mat-icon [svgIcon]="'heroicons_outline:whatsapp-colored'"></mat-icon>
-            </button>
+<!--            <button-->
+<!--                class="lg:hidden"-->
+<!--                mat-icon-button-->
+<!--                (click)="quickChat.toggle()">-->
+<!--                <mat-icon [svgIcon]="'heroicons_outline:whatsapp-colored'"></mat-icon>-->
+<!--            </button>-->
             <user></user>
         </div>
     </div>
@@ -83,5 +83,5 @@
 
 <!-- Quick chat -->
 
-<quick-chat #quickChat="quickChat"></quick-chat>
+<quick-chat *ngIf="showQuickChat" #quickChat="quickChat"></quick-chat>
 

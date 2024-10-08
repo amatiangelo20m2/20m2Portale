@@ -13,18 +13,20 @@ export class CommunicationStateManagerProvider {
 
     constructor(private _whatsappControllerService : WhatsAppConfigurationControllerService) {
     }
-
     retrieveData() {
 
         let branchCode = localStorage.getItem("branchCode") ?? '';
         console.log('Retrieve what\'s app configuration for branch with code ' + branchCode + '..')
 
+        this.currentBranchWhatsAppConfiguration.next(null);
+
         this._whatsappControllerService.retrieveWaApiConfStatus(branchCode, 'response').subscribe(whatsappconf => {
             if(whatsappconf.status == 200){
 
+                console.log('Branch code: ' + branchCode + ', retrieved whats app conf: ' + whatsappconf.body);
+
                 this.currentBranchWhatsAppConfiguration.next(whatsappconf.body);
 
-                console.log('Angelo Amatiiii: ' + whatsappconf.status);
                 const toast = Swal.mixin({
                     background: '#3B3F5C',
                     toast: true,
@@ -46,6 +48,7 @@ export class CommunicationStateManagerProvider {
 
             }else{
                 console.log('Response: ' + whatsappconf.status);
+                this.currentBranchWhatsAppConfiguration.next(null);
                 const toast = Swal.mixin({
                     background: '#3B3F5C',
                     toast: true,
@@ -70,10 +73,14 @@ export class CommunicationStateManagerProvider {
     }
 
     setCurrentWhatsAppConf(value: WhatsAppConfigurationDTO) {
+        console.log('Set new conf');
+        this.currentBranchWhatsAppConfiguration.next(null);
         this.currentBranchWhatsAppConfiguration.next(value);
     }
 
-    clearConf() {
+    resetConf() {
         this.currentBranchWhatsAppConfiguration.next(null);
+
+        this.retrieveData();
     }
 }
