@@ -253,7 +253,8 @@ export class WhatsappsettingsComponent implements OnInit, OnDestroy {
     sendWhatsAppMessage() {
 
         let buildedNumber : string = this.formTrySendMessageWhatsApp.get('prefix').value
-            + this.formTrySendMessageWhatsApp.get('phone').value;
+            + this.formTrySendMessageWhatsApp
+                .get('phone').value;
 
         let message : string = this.formTrySendMessageWhatsApp.get('message').value;
         this._whatsappControllerService

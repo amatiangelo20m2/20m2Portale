@@ -21,7 +21,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         id: 'apps',
         title: 'Calendario',
         subtitle: 'Prenotazioni e form',
-        type: 'group',
+        type: 'collapsable',
         icon: 'heroicons_outline:calendar-days',
         children: [
             {
@@ -51,7 +51,7 @@ export const defaultNavigation: FuseNavigationItem[] = [
         id: 'marketing',
         title: 'Marketing',
         subtitle: 'Messaggistica e promozioni',
-        type: 'group',
+        type: 'collapsable',
         icon: 'heroicons_outline:chart-bar-square',
         children: [
 
@@ -89,6 +89,49 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 link : '/dashboard/customers',
             },
 
+        ],
+    }, {
+        id: 'discal',
+        title: 'Fiscalizzazione',
+        subtitle: 'Chiusura e iva',
+        type: 'collapsable',
+        icon: 'heroicons_outline:currency-euro',
+        children: [
+            {
+                id   : 'app.whatsapp',
+                title: 'Real Time',
+                type : 'basic',
+                icon : 'heroicons_outline:device-phone-mobile',
+                link : '/dashboard/whatsapxxxxp',
+            }, {
+                id   : 'app.whatsapp',
+                title: 'Report',
+                type : 'basic',
+                icon : 'heroicons_outline:device-phone-mobile',
+                link : '/dashboard/whatsapxxxxp',
+            },
+
+            {
+                id   : 'app.whatsapp',
+                title: 'Chiusura di Giornata',
+                type : 'basic',
+                icon : 'heroicons_outline:device-phone-mobile',
+                link : '/dashboard/whatsapxxxxp',
+            },
+            {
+                id   : 'app.promo',
+                title: 'Fatture',
+                type : 'basic',
+                icon : 'heroicons_outline:gift',
+                link : '/dashboard/promox',
+            },
+            {
+                id   : 'app.promo',
+                title: 'Iva',
+                type : 'basic',
+                icon : 'heroicons_outline:gift',
+                link : '/dashboard/promoxx',
+            },
         ],
     },
     {
