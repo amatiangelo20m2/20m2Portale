@@ -1,5 +1,5 @@
 import {ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
-import {FormsModule, ReactiveFormsModule, UntypedFormBuilder} from "@angular/forms";
+import {FormBuilder, FormsModule, ReactiveFormsModule, UntypedFormGroup, Validators} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatIconModule} from "@angular/material/icon";
 import {MatInputModule} from "@angular/material/input";
@@ -10,14 +10,14 @@ import {MatButtonModule} from "@angular/material/button";
 import Swal from "sweetalert2";
 import {CommunicationStateManagerProvider} from "../../../../../state_manager/communication-state-manager-provider";
 import {NgIf} from "@angular/common";
+import {interval, Subject, switchMap, takeWhile} from "rxjs";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import WaApiStateEnum = WhatsAppConfigurationDTO.WaApiStateEnum;
 import {
     WhatsAppConfigurationControllerService,
     WhatsAppConfigurationDTO
 } from "../../../../../core/communication_service";
-import {interval, Observable, Subject, switchMap, takeUntil, takeWhile} from "rxjs";
-import { HttpClient } from '@angular/common/http';
-import WaApiStateEnum = WhatsAppConfigurationDTO.WaApiStateEnum;
-import {MatTooltipModule} from "@angular/material/tooltip";
+
 @Component({
     selector: 'app-whatsappsettings',
     templateUrl: './whatsappsettings.component.html',
@@ -32,6 +32,8 @@ export class WhatsappsettingsComponent implements OnInit, OnDestroy {
     private branchCode: string;
     public wsConf: WhatsAppConfigurationDTO | null = null;
     private _unsubscribeAll: Subject<void> = new Subject<void>();
+    formTrySendMessageWhatsApp: UntypedFormGroup;
+
     private shouldContinueLoop: boolean = true;
 
     /**
@@ -40,7 +42,8 @@ export class WhatsappsettingsComponent implements OnInit, OnDestroy {
     constructor(
         private _communicationStateManagerProvider: CommunicationStateManagerProvider,
         private _whatsappControllerService : WhatsAppConfigurationControllerService,
-        private _whatsAppService : WhatsAppConfigurationControllerService)
+        private _whatsAppService : WhatsAppConfigurationControllerService,
+        private _formBuilder: FormBuilder,)
     {
     }
 
@@ -51,6 +54,14 @@ export class WhatsappsettingsComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+
+        this.formTrySendMessageWhatsApp = this._formBuilder.group({
+            message: ['', [Validators.required]], // Assuming no validation for ID
+            phone: ['', [Validators.minLength(10), Validators.pattern(/^\d{8,}$/)]],
+            prefix: ['39', [Validators.required]],
+
+        });
+
         this.branchCode = localStorage.getItem("branchCode") ?? '';
         this._communicationStateManagerProvider
             .whatsAppConf$.subscribe(whatsAppConfDTO => {
@@ -63,6 +74,7 @@ export class WhatsappsettingsComponent implements OnInit, OnDestroy {
             }
         });
     }
+
 
     startRequestLoop(): void {
         const durationInMinutes = 1;  // The loop duration in minutes
@@ -87,11 +99,9 @@ export class WhatsappsettingsComponent implements OnInit, OnDestroy {
             );
     }
 
-
     retrieveConf()  {
         return this._whatsappControllerService.retrieveWaApiConfStatus(this.branchCode);
     }
-
     // -----------------------------------------------------------------------------------------------------
     // @ Lifecycle hooks
     // -----------------------------------------------------------------------------------------------------
@@ -240,4 +250,42 @@ export class WhatsappsettingsComponent implements OnInit, OnDestroy {
         });
     }
 
+    sendWhatsAppMessage() {
+
+        let buildedNumber : string = this.formTrySendMessageWhatsApp.get('prefix').value
+            + this.formTrySendMessageWhatsApp.get('phone').value;
+
+        let message : string = this.formTrySendMessageWhatsApp.get('message').value;
+        this._whatsappControllerService
+            .sendMessage(this.wsConf.waApiInstanceId, message, buildedNumber,  'response')
+            .subscribe(value => {
+                if(value.status == 200) {
+
+                    Swal.fire({
+                        icon: "success",
+                        timer: 1500,
+                        title: "Ottimo 😎",
+                        text: "Hai inviato il messaggio di prova correttamente",
+                        showConfirmButton: true,
+                    });
+                }else{
+                    Swal.fire({
+                        icon: "error",
+                        timer: 1500,
+                        title: "Oh cazzo",
+                        text: "Qualcosa non ha funzionato",
+                        showConfirmButton: true,
+                    });
+                }
+            });
+
+        this.formTrySendMessageWhatsApp.reset();
+        this.formTrySendMessageWhatsApp = this._formBuilder.group({
+            message: ['', [Validators.required]], // Assuming no validation for ID
+            phone: ['', [Validators.minLength(10), Validators.pattern(/^\d{8,}$/)]],
+            prefix: ['39', [Validators.required]],
+
+        });
+
+    }
 }

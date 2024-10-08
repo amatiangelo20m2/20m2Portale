@@ -219,4 +219,63 @@ export class WhatsAppConfigurationControllerService {
         );
     }
 
+    /**
+     *
+     *
+     * @param instanceId
+     * @param message
+     * @param number
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public sendMessage(instanceId: string, message: string, number: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public sendMessage(instanceId: string, message: string, number: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public sendMessage(instanceId: string, message: string, number: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public sendMessage(instanceId: string, message: string, number: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (instanceId === null || instanceId === undefined) {
+            throw new Error('Required parameter instanceId was null or undefined when calling sendMessage.');
+        }
+
+        if (message === null || message === undefined) {
+            throw new Error('Required parameter message was null or undefined when calling sendMessage.');
+        }
+
+        if (number === null || number === undefined) {
+            throw new Error('Required parameter number was null or undefined when calling sendMessage.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (message !== undefined && message !== null) {
+            queryParameters = queryParameters.set('message', <any>message);
+        }
+        if (number !== undefined && number !== null) {
+            queryParameters = queryParameters.set('number', <any>number);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('post',`${this.basePath}/api/wsapicontroller/sendmessage/${encodeURIComponent(String(instanceId))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
 }
