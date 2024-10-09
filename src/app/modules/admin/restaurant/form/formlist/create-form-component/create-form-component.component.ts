@@ -55,6 +55,8 @@ export class CreateFormComponentComponent implements OnInit, OnDestroy{
 
   formType: FormDTO.FormTypeEnum[] = Object.values(FormDTO.FormTypeEnum);
   branchCode: string;
+  branchName: string;
+  branchAddress: string;
 
   constructor(
       private router: Router,
@@ -73,6 +75,8 @@ export class CreateFormComponentComponent implements OnInit, OnDestroy{
     this._stateManagerProvider.branch$.subscribe((branch) => {
       if(branch != null)
         this.branchCode = branch.branchCode;
+        this.branchName = branch.name;
+        this.branchAddress = branch.address;
     });
 
     this.formForm = this._formBuilder.group({
@@ -141,6 +145,8 @@ export class CreateFormComponentComponent implements OnInit, OnDestroy{
       formType: this.formForm.get('formType').value,
       formName: this.formForm.get('formName').value,
       redirectPage: this.formForm.get('redirectPage').value,
+      branchAddress: this.branchAddress,
+      branchName: this.branchName,
       formCode: '',
       branchCode: this.branchCode,
       formStatus: FormStatusEnum.ATTIVO,

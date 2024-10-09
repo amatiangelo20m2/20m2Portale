@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core';
 import {MatButtonModule} from "@angular/material/button";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDatepickerInputEvent, MatDatepickerModule} from "@angular/material/datepicker";
@@ -11,10 +11,10 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatStepperModule} from "@angular/material/stepper";
 import {NgClass, NgIf} from "@angular/common";
 import {ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
 import Swal from "sweetalert2";
 import {DateTime} from "luxon";
 import {FormControllerService, FormDTO} from 'app/core/restaurant_service';
+import {MatCardModule} from "@angular/material/card";
 
 @Component({
     selector: 'app-booking-form',
@@ -32,9 +32,11 @@ import {FormControllerService, FormDTO} from 'app/core/restaurant_service';
         MatStepperModule,
         NgIf,
         ReactiveFormsModule,
-        NgClass
+        NgClass,
+        MatCardModule
     ],
-    standalone: true
+    standalone: true,
+    encapsulation: ViewEncapsulation.None
 })
 export class BookingFormComponent implements OnInit {
 
@@ -110,5 +112,6 @@ export class BookingFormComponent implements OnInit {
     }
 
     protected readonly FormDTO = FormDTO;
+    dateSelected = Date;
 
 }

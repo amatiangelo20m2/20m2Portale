@@ -1,133 +1,254 @@
+<div class="w-30 mx-auto">
+    <img src="assets/images/logo/logo.png">
+</div>
+<div>
+    <form
+        class="bg-card mt-4 flex flex-col overflow-hidden rounded px-8 pt-10 shadow justify-center"
+        [formGroup]="formRedirect">
 
-<form
-    class="bg-card mt-4 flex flex-col overflow-hidden rounded px-8 pt-10 shadow "
-    [formGroup]="formRedirect">
-    <p class="text-lg font-medium">{{ formDTO.formName }}</p>
-    <p class="text-secondary mb-6">
-        Inserisci il tuo numero di cellulare per continuare
-    </p>
-    <div class="gt-xs:flex-row flex flex-col">
-        <mat-form-field  class="w-full" [ngClass]="{ 'error-border': formRedirect.get('phone')?.invalid && formRedirect.get('phone')?.touched }">
-            <input
-                [disabled]="showCustomerForm"
-                id="phone"
-                matInput
-                placeholder="Cellulare"
-                formControlName="phone"
-                (blur)="onPhoneBlur()"
-            />
-            <mat-select formControlName="prefix" matPrefix>
-                <!-- Europe -->
-                <mat-option value="93">Afghanistan (+93)</mat-option>
-                <mat-option value="355">Albania (+355)</mat-option>
-                <mat-option value="376">Andorra (+376)</mat-option>
-                <mat-option value="374">Armenia (+374)</mat-option>
-                <mat-option value="43">Austria (+43)</mat-option>
-                <mat-option value="994">Azerbaijan (+994)</mat-option>
-                <mat-option value="32">Belgium (+32)</mat-option>
-                <mat-option value="387">Bosnia and Herzegovina (+387)</mat-option>
-                <mat-option value="359">Bulgaria (+359)</mat-option>
-                <mat-option value="385">Croatia (+385)</mat-option>
-                <mat-option value="357">Cyprus (+357)</mat-option>
-                <mat-option value="420">Czech Republic (+420)</mat-option>
-                <mat-option value="45">Denmark (+45)</mat-option>
-                <mat-option value="372">Estonia (+372)</mat-option>
-                <mat-option value="358">Finland (+358)</mat-option>
-                <mat-option value="33">France (+33)</mat-option>
-                <mat-option value="49">Germany (+49)</mat-option>
-                <mat-option value="30">Greece (+30)</mat-option>
-                <mat-option value="36">Hungary (+36)</mat-option>
-                <mat-option value="354">Iceland (+354)</mat-option>
-                <mat-option value="353">Ireland (+353)</mat-option>
-                <mat-option value="39">Italia (+39)</mat-option>
-                <mat-option value="371">Latvia (+371)</mat-option>
-                <mat-option value="423">Liechtenstein (+423)</mat-option>
-                <mat-option value="370">Lithuania (+370)</mat-option>
-                <mat-option value="352">Luxembourg (+352)</mat-option>
-                <mat-option value="356">Malta (+356)</mat-option>
-                <mat-option value="377">Monaco (+377)</mat-option>
-                <mat-option value="382">Montenegro (+382)</mat-option>
-                <mat-option value="31">Netherlands (+31)</mat-option>
-                <mat-option value="47">Norway (+47)</mat-option>
-                <mat-option value="48">Poland (+48)</mat-option>
-                <mat-option value="351">Portugal (+351)</mat-option>
-                <mat-option value="40">Romania (+40)</mat-option>
-                <mat-option value="7">Russia (+7)</mat-option>
-                <mat-option value="378">San Marino (+378)</mat-option>
-                <mat-option value="381">Serbia (+381)</mat-option>
-                <mat-option value="421">Slovakia (+421)</mat-option>
-                <mat-option value="386">Slovenia (+386)</mat-option>
-                <mat-option value="34">Spain (+34)</mat-option>
-                <mat-option value="46">Sweden (+46)</mat-option>
-                <mat-option value="41">Switzerland (+41)</mat-option>
-                <mat-option value="90">Turkey (+90)</mat-option>
-                <mat-option value="380">Ukraine (+380)</mat-option>
-                <mat-option value="44">United Kingdom (+44)</mat-option>
-                <!-- North America -->
-                <mat-option value="1">Canada (+1)</mat-option>
-                <mat-option value="1">United States (+1)</mat-option>
-                <mat-option value="52">Mexico (+52)</mat-option>
-                <!-- China -->
-                <mat-option value="86">China (+86)</mat-option>
-            </mat-select>
-            <mat-error *ngIf="formRedirect.get('phone').hasError('required')">
-                Inserisci il numero di cellulare
-            </mat-error>
-            <mat-error *ngIf="formRedirect.get('phone').hasError('minLength')">
-                Numero non valido
-            </mat-error>
-        </mat-form-field>
-    </div>
-
-    <mat-divider class="mb-2 mt-2" *ngIf="showCustomerForm"></mat-divider>
-
-    <div *ngIf="showCustomerForm">
-        <p class="text-lg font-medium pb-5">Info personali</p>
+        <p class="text-lg font-medium">{{ formDTO.formName }}</p>
+        <p class="text-secondary mb-6">
+            Inserisci il tuo numero di cellulare per continuare
+        </p>
         <div class="gt-xs:flex-row flex flex-col">
-            <mat-form-field class="gt-xs:pr-3 flex-auto" [ngClass]="{ 'error-border': formRedirect.get('firstName')?.invalid && formRedirect.get('firstName')?.touched }">
-                <input matInput placeholder="Nome" formControlName="firstName" />
-                <mat-icon matPrefix [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
-            </mat-form-field>
-            <mat-form-field class="gt-xs:pl-3 flex-auto" [ngClass]="{ 'error-border': formRedirect.get('lastName')?.invalid && formRedirect.get('lastName')?.touched }">
-                <input matInput placeholder="Cognome" formControlName="lastName" />
-                <mat-icon matPrefix [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
-            </mat-form-field>
-        </div>
-
-        <div class="flex">
-            <mat-form-field class="flex-auto" [ngClass]="{ 'error-border': formRedirect.get('email')?.invalid && formRedirect.get('email')?.touched }">
-                <input matInput placeholder="Email" formControlName="email" />
-                <mat-icon matPrefix [svgIcon]="'heroicons_outline:envelope'"></mat-icon>
-                <mat-error *ngIf="formRedirect.get('email')?.hasError('email')">
-                    Indirizzo email non valido
+            <mat-form-field  class="w-full" [ngClass]="{ 'error-border': formRedirect.get('phone')?.invalid && formRedirect.get('phone')?.touched }">
+                <input
+                    [disabled]="showCustomerForm"
+                    id="phone"
+                    matInput
+                    placeholder="Cellulare"
+                    formControlName="phone"
+                    (blur)="onPhoneBlur()"
+                />
+                <mat-select formControlName="prefix" matPrefix>
+                    <!-- Europe -->
+                    <mat-option value="93">Afghanistan (+93)</mat-option>
+                    <mat-option value="355">Albania (+355)</mat-option>
+                    <mat-option value="376">Andorra (+376)</mat-option>
+                    <mat-option value="374">Armenia (+374)</mat-option>
+                    <mat-option value="43">Austria (+43)</mat-option>
+                    <mat-option value="994">Azerbaijan (+994)</mat-option>
+                    <mat-option value="32">Belgium (+32)</mat-option>
+                    <mat-option value="387">Bosnia and Herzegovina (+387)</mat-option>
+                    <mat-option value="359">Bulgaria (+359)</mat-option>
+                    <mat-option value="385">Croatia (+385)</mat-option>
+                    <mat-option value="357">Cyprus (+357)</mat-option>
+                    <mat-option value="420">Czech Republic (+420)</mat-option>
+                    <mat-option value="45">Denmark (+45)</mat-option>
+                    <mat-option value="372">Estonia (+372)</mat-option>
+                    <mat-option value="358">Finland (+358)</mat-option>
+                    <mat-option value="33">France (+33)</mat-option>
+                    <mat-option value="49">Germany (+49)</mat-option>
+                    <mat-option value="30">Greece (+30)</mat-option>
+                    <mat-option value="36">Hungary (+36)</mat-option>
+                    <mat-option value="354">Iceland (+354)</mat-option>
+                    <mat-option value="353">Ireland (+353)</mat-option>
+                    <mat-option value="39">Italia (+39)</mat-option>
+                    <mat-option value="371">Latvia (+371)</mat-option>
+                    <mat-option value="423">Liechtenstein (+423)</mat-option>
+                    <mat-option value="370">Lithuania (+370)</mat-option>
+                    <mat-option value="352">Luxembourg (+352)</mat-option>
+                    <mat-option value="356">Malta (+356)</mat-option>
+                    <mat-option value="377">Monaco (+377)</mat-option>
+                    <mat-option value="382">Montenegro (+382)</mat-option>
+                    <mat-option value="31">Netherlands (+31)</mat-option>
+                    <mat-option value="47">Norway (+47)</mat-option>
+                    <mat-option value="48">Poland (+48)</mat-option>
+                    <mat-option value="351">Portugal (+351)</mat-option>
+                    <mat-option value="40">Romania (+40)</mat-option>
+                    <mat-option value="7">Russia (+7)</mat-option>
+                    <mat-option value="378">San Marino (+378)</mat-option>
+                    <mat-option value="381">Serbia (+381)</mat-option>
+                    <mat-option value="421">Slovakia (+421)</mat-option>
+                    <mat-option value="386">Slovenia (+386)</mat-option>
+                    <mat-option value="34">Spain (+34)</mat-option>
+                    <mat-option value="46">Sweden (+46)</mat-option>
+                    <mat-option value="41">Switzerland (+41)</mat-option>
+                    <mat-option value="90">Turkey (+90)</mat-option>
+                    <mat-option value="380">Ukraine (+380)</mat-option>
+                    <mat-option value="44">United Kingdom (+44)</mat-option>
+                    <!-- North America -->
+                    <mat-option value="1">Canada (+1)</mat-option>
+                    <mat-option value="1">United States (+1)</mat-option>
+                    <mat-option value="52">Mexico (+52)</mat-option>
+                    <!-- China -->
+                    <mat-option value="86">China (+86)</mat-option>
+                </mat-select>
+                <mat-error *ngIf="formRedirect.get('phone').hasError('required')">
+                    Inserisci il numero di cellulare
+                </mat-error>
+                <mat-error *ngIf="formRedirect.get('phone').hasError('minLength')">
+                    Numero non valido
                 </mat-error>
             </mat-form-field>
         </div>
 
-        <div class="flex">
-            <mat-form-field class="flex-auto" [ngClass]="{ 'error-border': formRedirect.get('postalCode')?.invalid && formRedirect.get('postalCode')?.touched }">
-                <input matInput placeholder="CAP" formControlName="postalCode" />
-                <mat-icon matPrefix [svgIcon]="'heroicons_outline:map-pin'"></mat-icon>
-                <mat-error *ngIf="formRedirect.get('email')?.hasError('postalCode')">
-                    Indirizzo email non valido
-                </mat-error>
-            </mat-form-field>
+        <mat-divider class="mb-2 mt-2" *ngIf="showCustomerForm"></mat-divider>
+
+        <div *ngIf="showCustomerForm">
+<!--        <div>-->
+            <p class="text-lg font-medium pb-4">Info personali</p>
+            <div class="gt-xs:flex-row flex flex-col">
+                <mat-form-field class="gt-xs:pr-3 flex-auto" [ngClass]="{ 'error-border': formRedirect.get('firstName')?.invalid && formRedirect.get('firstName')?.touched }">
+                    <input matInput placeholder="Nome" formControlName="firstName" />
+                    <mat-icon matPrefix [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+                </mat-form-field>
+                <mat-form-field class="gt-xs:pl-3 flex-auto" [ngClass]="{ 'error-border': formRedirect.get('lastName')?.invalid && formRedirect.get('lastName')?.touched }">
+                    <input matInput placeholder="Cognome" formControlName="lastName" />
+                    <mat-icon matPrefix [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+                </mat-form-field>
+            </div>
+            <div class="flex">
+                <mat-form-field class="flex-auto" [ngClass]="{ 'error-border': formRedirect.get('email')?.invalid && formRedirect.get('email')?.touched }">
+                    <input matInput placeholder="Email" formControlName="email" />
+                    <mat-icon matPrefix [svgIcon]="'heroicons_outline:envelope'"></mat-icon>
+                    <mat-error *ngIf="formRedirect.get('email')?.hasError('email')">
+                        Indirizzo email non valido
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="flex">
+                <mat-form-field class="flex-auto" [ngClass]="{ 'error-border': formRedirect.get('postalCode')?.invalid && formRedirect.get('postalCode')?.touched }">
+                    <input matInput placeholder="CAP" formControlName="postalCode" />
+                    <mat-icon matPrefix [svgIcon]="'heroicons_outline:map-pin'"></mat-icon>
+                    <mat-error *ngIf="formRedirect.get('email')?.hasError('postalCode')">
+                        Indirizzo email non valido
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="gt-xs:flex-row flex flex-col">
+                <div class="text-sm ">Acconsento al trattamento dei dati personali</div>
+                <mat-checkbox class="-ml-2" color="accent" formControlName="privacyConsent">
+                    Privacy e trattamento dati<a class="text-blue-400 text-sm font-bold" href="https://20m2official.it/wp-content/uploads/2024/10/informativa_clienti_2024_1.pdf.html">Dettaglio</a>*
+                </mat-checkbox>
+                <mat-checkbox class="-ml-2" color="accent" formControlName="marketingConsent">
+                    Consenso Marketing e comunicazione <a class="text-blue-400 text-sm font-bold" href="https://20m2official.it/wp-content/uploads/2024/10/informativa_clienti_2024_1.pdf.html">Dettaglio</a>
+                </mat-checkbox>
+                <mat-checkbox class="-ml-2" color="accent" formControlName="profilingConsent">
+                    Consenso profilazione <a class="text-blue-400 text-sm font-bold" href="https://20m2official.it/wp-content/uploads/2024/10/informativa_clienti_2024_1.pdf.html">Dettaglio</a>
+                </mat-checkbox>
+
+                <mat-checkbox class="-ml-2" color="accent" (change)="selectAll()">
+                    Seleziona tutto
+                </mat-checkbox>
+            </div>
         </div>
 
-        <mat-checkbox class="-ml-2" color="accent" formControlName="privacyConsent">
-            Acconsento al trattamento dei dati personali
-        </mat-checkbox>
-    </div>
 
-    <mat-divider class="mb-2 mt-2"></mat-divider>
 
-    <div class="-mx-8 mt-8 flex items-center justify-end border-t bg-gray-50 px-8 py-5 dark:bg-gray-700">
-        <button
-            class="ml-3 px-6"
-            mat-flat-button [disabled]="formRedirect.invalid"
-            (click)="saveCustomerAndOpenNewTab(formDTO.redirectPage)"
-            color="accent">
-            Prosegui
-        </button>
-    </div>
-</form>
+        <div class="-mx-8 mt-8 flex items-center justify-center border-t bg-white px-8 py-5 dark:bg-gray-700">
+            <button
+                class="ml-3 px-6"
+                mat-flat-button [disabled]="formRedirect.invalid"
+                (click)="saveCustomerAndOpenNewTab(formDTO.redirectPage)"
+                color="accent">
+                Prosegui
+            </button>
+        </div>
+    </form>
+</div>
+<!--<div class="relative flex w-full max-w-[50rem] flex-col rounded-lg bg-white border border-slate-200 shadow-sm">-->
+<!--    <div class="relative m-2.5 items-center flex flex-col justify-center text-white h-32 rounded-md bg-slate-800">-->
+
+<!--        <h5 class="text-white text-xl pb-6">-->
+<!--            Sign In-->
+<!--        </h5>-->
+<!--    </div>-->
+<!--    <div class="p-6">-->
+<!--        <div class="block overflow-visible">-->
+<!--            <div class="w-full">-->
+<!--                <div class="relative right-0">-->
+<!--                    <ul class="relative flex flex-wrap px-1.5 py-1.5 list-none rounded-md bg-slate-100" data-tabs="tabs" role="tablist">-->
+<!--                        <li class="z-30 flex-auto text-center">-->
+<!--                            <a class="z-30 flex items-center justify-center w-full px-0 py-2 text-sm mb-0 transition-all ease-in-out border-0 rounded-md cursor-pointer text-slate-600 bg-inherit"-->
+<!--                               data-tab-target="" role="tab" aria-selected="true">-->
+<!--                                Pay with Card-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                        <li class="z-30 flex-auto text-center">-->
+<!--                            <a class="z-30 flex items-center justify-center w-full px-0 py-2 mb-0 text-sm transition-all ease-in-out border-0 rounded-lg cursor-pointer text-slate-600 bg-inherit"-->
+<!--                               data-tab-target="" role="tab" aria-selected="false">-->
+<!--                                Pay with PayPal-->
+<!--                            </a>-->
+<!--                        </li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="relative block w-full overflow-hidden !overflow-x-hidden !overflow-y-visible bg-transparent">-->
+<!--                <div-->
+<!--                    role="tabpanel"-->
+<!--                    data-value="card"-->
+<!--                >-->
+<!--                    <form class="mt-8 flex flex-col">-->
+<!--                        <div class="w-full max-w-sm min-w-[200px]">-->
+<!--                            <label class="block mb-2 text-sm text-slate-600">-->
+<!--                                Email-->
+<!--                            </label>-->
+<!--                            <input type="email" class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow" placeholder="Your Email" />-->
+<!--                        </div>-->
+
+<!--                        <label class="block mb-1 text-sm text-slate-600 mt-4">-->
+<!--                            Card Details-->
+<!--                        </label>-->
+<!--                        <input-->
+<!--                            type="text"-->
+<!--                            class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-20 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"-->
+<!--                            placeholder="1234 5678 9012 3456"-->
+<!--                        />-->
+
+<!--                        <div class="flex">-->
+<!--                            <div class="w-full md:w-8/12 mr-4">-->
+<!--                                <label class="block mb-1 text-sm text-slate-600 mt-4">-->
+<!--                                    Expiration Date-->
+<!--                                </label>-->
+<!--                                <input-->
+<!--                                    type="text"-->
+<!--                                    class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-20 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"-->
+<!--                                    placeholder="MM/YY"-->
+<!--                                />-->
+<!--                            </div>-->
+<!--                            <div class="w-full md:w-4/12">-->
+<!--                                <label class="block mb-1 text-sm text-slate-600 mt-4">-->
+<!--                                    CVV-->
+<!--                                </label>-->
+<!--                                <input-->
+<!--                                    type="text"-->
+<!--                                    class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md px-3 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"-->
+<!--                                    placeholder="123"-->
+<!--                                />-->
+<!--                            </div>-->
+<!--                        </div>-->
+
+<!--                        <label class="mt-4 block mb-1 text-sm text-slate-600">-->
+<!--                            Holder Name-->
+<!--                        </label>-->
+<!--                        <input-->
+<!--                            type="text"-->
+<!--                            class="w-full bg-transparent placeholder:text-slate-400 text-slate-700 text-sm border border-slate-200 rounded-md pl-3 pr-20 py-2 transition duration-300 ease focus:outline-none focus:border-slate-400 hover:border-slate-300 shadow-sm focus:shadow"-->
+<!--                            placeholder="e.g John Doe"-->
+<!--                        />-->
+
+
+<!--                        <button class="w-full mt-6 rounded-md bg-slate-800 py-2 px-4 border border-transparent text-center text-sm text-white transition-all shadow-md hover:shadow-lg focus:bg-slate-700 focus:shadow-none active:bg-slate-700 hover:bg-slate-700 active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">Pay Now</button>-->
+<!--                        <p class="mt-4 flex items-center justify-center gap-2 text-sm text-slate-500 font-light">-->
+<!--                            <svg-->
+<!--                                xmlns="http://www.w3.org/2000/svg"-->
+<!--                                viewBox="0 0 24 24"-->
+<!--                                fill="currentColor"-->
+<!--                                aria-hidden="true"-->
+<!--                                class="-mt-0.5 h-4 w-4"-->
+<!--                            >-->
+<!--                                <path-->
+<!--                                    fill-rule="evenodd"-->
+<!--                                    d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z"-->
+<!--                                    clip-rule="evenodd"-->
+<!--                                ></path>-->
+<!--                            </svg>-->
+<!--                            Payments are secure and encrypted-->
+<!--                        </p>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->

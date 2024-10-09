@@ -196,6 +196,9 @@ export class FormlistComponent implements OnInit, OnDestroy {
     protected readonly FormStatusEnum = FormStatusEnum;
 
 
+    openTabWithFormUrl(formCode: string) {
 
+        window.open(this.getFormUrl(formCode), '_blank');
+    }
 }
 

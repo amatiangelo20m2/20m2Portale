@@ -17,6 +17,8 @@ export interface FormDTO {
     redirectPage?: string;
     creationDate?: Date;
     branchCode?: string;
+    branchName?: string;
+    branchAddress?: string;
     formStatus?: FormDTO.FormStatusEnum;
     tag?: Array<string>;
     formType?: FormDTO.FormTypeEnum;

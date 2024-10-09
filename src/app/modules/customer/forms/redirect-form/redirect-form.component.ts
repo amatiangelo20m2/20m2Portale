@@ -69,7 +69,7 @@ export class RedirectFormComponent implements OnInit {
             prefix: ['39', [Validators.required]],
             birthDate: [null],
             presenceCount: [null],
-            origin: [''],
+            origin: [this.formDTO.formCode],
             lastPresence: [null],
             flames: [null],
             address: [''],
@@ -201,5 +201,14 @@ export class RedirectFormComponent implements OnInit {
         } else {
             console.log('Form is invalid, please fill all required fields');
         }
+    }
+
+    selectAll() {
+
+        this.formRedirect.patchValue({
+            privacyConsent: true,
+            marketingConsent: true,
+            profilingConsent: true,
+        });
     }
 }
