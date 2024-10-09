@@ -46,7 +46,6 @@ export const defaultNavigation: FuseNavigationItem[] = [
             }
         ],
     },
-
     {
         id: 'marketing',
         title: 'Marketing',

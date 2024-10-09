@@ -260,6 +260,7 @@ export class WhatsappsettingsComponent implements OnInit, OnDestroy {
         this._whatsappControllerService
             .sendMessage(this.wsConf.waApiInstanceId, message, buildedNumber,  'response')
             .subscribe(value => {
+
                 if(value.status == 200) {
 
                     Swal.fire({
@@ -269,7 +270,9 @@ export class WhatsappsettingsComponent implements OnInit, OnDestroy {
                         text: "Hai inviato il messaggio di prova correttamente",
                         showConfirmButton: true,
                     });
+
                 }else{
+
                     Swal.fire({
                         icon: "error",
                         timer: 1500,
@@ -277,6 +280,7 @@ export class WhatsappsettingsComponent implements OnInit, OnDestroy {
                         text: "Qualcosa non ha funzionato",
                         showConfirmButton: true,
                     });
+
                 }
             });
 

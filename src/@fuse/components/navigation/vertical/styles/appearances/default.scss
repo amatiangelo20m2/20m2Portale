@@ -562,8 +562,10 @@ fuse-vertical-navigation-collapsable-item {
 
             .fuse-vertical-navigation-item {
 
+                /* ANGELO AMATI CODE */
                 .fuse-vertical-navigation-item-icon {
                     @apply opacity-100;
+                    color: #3B82F6;
                 }
 
                 .fuse-vertical-navigation-item-title,
