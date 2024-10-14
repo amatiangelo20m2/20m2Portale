@@ -13,12 +13,10 @@
             <thead class="bg-gray-50">
             <tr>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome Form</th>
-<!--                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">URL</th>-->
-<!--                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pagina Atterraggio</th>-->
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Form Status</th>
-                <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tags</th>
-                <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">View</th>
-                <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Form Type</th>
+                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stato</th>
+                <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QR CODE</th>
+                <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Anteprima</th>
+                <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo Form</th>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
             </tr>
             </thead>
@@ -38,7 +36,7 @@
                         </div>
                     </div>
                 </td>
-                <td class="px-1 py-1 whitespace-nowrap"><button [matTooltip]="tooltip || 'Tags'" mat-mini-fab><mat-icon  [svgIcon]="'heroicons_outline:list-bullet'"></mat-icon></button></td>
+                <td class="px-1 py-1 whitespace-nowrap"><button [matTooltip]="tooltip || 'QR CODE'" mat-mini-fab><mat-icon  [svgIcon]="'heroicons_outline:qr-code'"></mat-icon></button></td>
                 <td class="px-1 py-1 whitespace-nowrap"><button [matTooltip]="tooltip || 'Mostra anteprima'" mat-mini-fab style="background: dodgerblue" (click)="openTabWithFormUrl(form.formCode)">
                     <mat-icon  [svgIcon]="'heroicons_outline:computer-desktop'">
 
