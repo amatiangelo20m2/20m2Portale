@@ -24,9 +24,10 @@ import {RestaurantStateManagerProvider} from "../../../../../state_manager/resta
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {BranchesmanagmentComponent} from "../../../../../layout/common/shortcuts/branchesmanagment.component";
 import {CreateFormComponentComponent} from "./create-form-component/create-form-component.component";
-import FormStatusEnum = FormDTO.FormStatusEnum;
 import {environment} from "../../../../../../environments/environment";
 import {clone} from "lodash-es";
+import {QRCodeComponentModal} from "../qrcode/q-r-code-component-modal.component";
+import FormStatusEnum = FormDTO.FormStatusEnum;
 
 
 @Component({
@@ -199,6 +200,13 @@ export class FormlistComponent implements OnInit, OnDestroy {
     openTabWithFormUrl(formCode: string) {
 
         window.open(this.getFormUrl(formCode), '_blank');
+    }
+
+    openQrCodeModal(formCode : string) {
+        this.dialog.open(QRCodeComponentModal, {
+            data: { url: this.getFormUrl(formCode) },
+            width: '400px' // Adjust width as necessary
+        });
     }
 }
 

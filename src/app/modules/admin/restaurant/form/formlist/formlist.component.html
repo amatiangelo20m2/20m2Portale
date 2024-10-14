@@ -23,8 +23,8 @@
             <tbody class="bg-white divide-y divide-gray-200">
             <tr *ngFor="let form of forms | formpipe : currentStatusToExclude" >
                 <td class="px-6 py-4 whitespace-nowrap">{{ form.formName }}</td>
-<!--                <td class="px-6 py-4 whitespace-nowrap">{{ getFormUrl(form.formCode) }}</td>-->
-<!--                <td class="px-6 py-4 whitespace-nowrap">{{ form.redirectPage }}</td>-->
+                <!--                <td class="px-6 py-4 whitespace-nowrap">{{ getFormUrl(form.formCode) }}</td>-->
+                <!--                <td class="px-6 py-4 whitespace-nowrap">{{ form.redirectPage }}</td>-->
                 <td class="px-6 py-4 whitespace-nowrap">
                     <div class="flex items-center space-x-2">
                         <div class="pl-3"><p><mat-slide-toggle [checked]="form.formStatus == FormDTO.FormStatusEnum.ATTIVO" (change)="changeStatus($event, form)"></mat-slide-toggle></p></div>
@@ -36,7 +36,10 @@
                         </div>
                     </div>
                 </td>
-                <td class="px-1 py-1 whitespace-nowrap"><button [matTooltip]="tooltip || 'QR CODE'" mat-mini-fab><mat-icon  [svgIcon]="'heroicons_outline:qr-code'"></mat-icon></button></td>
+                <td class="px-1 py-1 whitespace-nowrap"><button (click)="openQrCodeModal(form.formCode)" [matTooltip]="tooltip || 'QR CODE'" mat-mini-fab>
+                    <mat-icon  [svgIcon]="'heroicons_outline:qr-code'">
+
+                    </mat-icon></button></td>
                 <td class="px-1 py-1 whitespace-nowrap"><button [matTooltip]="tooltip || 'Mostra anteprima'" mat-mini-fab style="background: dodgerblue" (click)="openTabWithFormUrl(form.formCode)">
                     <mat-icon  [svgIcon]="'heroicons_outline:computer-desktop'">
 
@@ -68,5 +71,5 @@
         </table>
     </div>
 
-    </div>
+</div>
 
