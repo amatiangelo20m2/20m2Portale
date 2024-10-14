@@ -8,6 +8,12 @@
     "booking": "Prenotazione",
     "guests": "Ospiti",
     "choose_table": "Scegli tavolo",
+    "insert_number_to_continue" : "Inserisci il tuo numero di cellulare per continuare",
+    "privacy_and_data_treatment": "Trattamento della privacy e dei dati",
+    "marketing_consensus": "Consenso marketing e comunicazione",
+    "profiling_consent": "Consenso al profiling",
+    "select_all": "Seleziona tutto",
+    "complete_reservation" : "Completa prenotazione",
 
 
     "days": {

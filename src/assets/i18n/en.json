@@ -8,6 +8,12 @@
     "booking": "Booking",
     "guests": "Guests",
     "choose_table": "Choose table",
+    "insert_number_to_continue": "Insert phone number to continue",
+    "privacy_and_data_treatment" : "Privacy and data treatment",
+    "marketing_consensus" : "Marketing and communication consensus",
+    "profiling_consent" : "Profiling consent",
+    "select_all" : "Select all",
+    "complete_reservation" : "Complete reservation",
 
     "days": {
         "monday": "Monday",

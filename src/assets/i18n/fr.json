@@ -8,7 +8,12 @@
     "booking": "Réservation",
     "guests": "Invités",
     "choose_table": "Choisir une table",
-
+    "insert_number_to_continue": "Insérez le numéro de téléphone pour continuer",
+    "privacy_and_data_treatment": "Traitement de la confidentialité et des données",
+    "marketing_consensus": "Consentement pour marketing et communication",
+    "profiling_consent": "Consentement au profilage",
+    "select_all": "Tout sélectionner",
+    "complete_reservation": "Terminer la réservation",
 
     "days": {
         "monday": "Lundi",
