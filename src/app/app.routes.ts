@@ -51,7 +51,7 @@ export const appRoutes: Route[] = [
         },
         children: [
             // Reservation route available for both signed-in and signed-out users
-            { path: 'reservation', loadChildren: () => import('app/modules/customer/forms/form.routes')},
+            { path: 'bfrm', loadChildren: () => import('app/modules/customer/forms/form.routes')},
         ]
     },
 

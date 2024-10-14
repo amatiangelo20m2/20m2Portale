@@ -59,8 +59,6 @@ export class BookingFormComponent implements OnInit {
 
     @Input() formDTO : FormDTO;
 
-
-
     currentState = BookingStatus.CALENDAR;
 
     bookingForm: UntypedFormGroup;

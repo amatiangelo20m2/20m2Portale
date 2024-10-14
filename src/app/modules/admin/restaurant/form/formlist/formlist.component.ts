@@ -28,6 +28,7 @@ import {environment} from "../../../../../../environments/environment";
 import {clone} from "lodash-es";
 import {QRCodeComponentModal} from "../qrcode/q-r-code-component-modal.component";
 import FormStatusEnum = FormDTO.FormStatusEnum;
+import {UtilityForm} from "./utility";
 
 
 @Component({
@@ -145,17 +146,6 @@ export class FormlistComponent implements OnInit, OnDestroy {
 
     navigateToFormEditComponent(form: FormDTO): void {
         this.router.navigate([`/dashboard/forms/${form.formCode}`]);
-        // const dialogRef = this
-        //     .dialog.open(FormEditComponent, {
-        //         data:{ formData: form},
-        //     width: '90%',
-        //     height: '100%',
-        //     position: { right: '0' }, // Open from the left side
-        // });
-        //
-        // dialogRef.afterClosed().subscribe(result => {
-        //     console.log('The dialog was closed');
-        // });
     }
 
     protected readonly FormDTO = FormDTO;
@@ -163,9 +153,9 @@ export class FormlistComponent implements OnInit, OnDestroy {
     copyToClipboard(formCode: string, type: number) {
         const textarea = document.createElement('textarea');
         if(type == 0){
-            textarea.value = this.getIframeUrl(formCode);
+            textarea.value = UtilityForm.getIframeUrl(formCode);
         }else{
-            textarea.value = this.getFormUrl(formCode);
+            textarea.value = UtilityForm.getFormUrl(formCode);
         }
 
         document.body.appendChild(textarea);
@@ -175,16 +165,6 @@ export class FormlistComponent implements OnInit, OnDestroy {
         this._stateManagerProvider.showToast('Testo copiato', 'success', '#3B3F5C');
     }
 
-    getFormUrl(formCode: string) {
-        return environment.formUrl + '/reservation?form=' +  formCode;
-    }
-
-    getIframeUrl(formCode: string) {
-        return `<div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%;">
-                    <iframe src="${this.getFormUrl(formCode)}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-                    </iframe>
-                </div>`;
-    }
 
     duplicateForm(form: FormDTO) {
         let formCopied = clone(form);
@@ -199,12 +179,11 @@ export class FormlistComponent implements OnInit, OnDestroy {
     protected readonly FormStatusEnum = FormStatusEnum;
 
     openTabWithFormUrl(formCode: string) {
-
-        window.open(this.getFormUrl(formCode), '_blank');
+        window.open(UtilityForm.getFormUrl(formCode), '_blank');
     }
     openQrCodeModal(formCode : string) {
         this.dialog.open(QRCodeComponentModal, {
-            data: { url: this.getFormUrl(formCode) },
+            data: { url: UtilityForm.getFormUrl(formCode) },
             width: '400px' // Adjust width as necessary
         });
     }

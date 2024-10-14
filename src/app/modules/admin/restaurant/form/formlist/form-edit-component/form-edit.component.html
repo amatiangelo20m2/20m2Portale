@@ -25,173 +25,183 @@
     </div>
 
 
-<!--    <div class="flex justify-between p-4">-->
-<!--        <div class="flex flex-col">-->
-<!--            <div class="flex items-center justify-between">-->
-<!--                <div class="rounded-full px-3 py-0.5 text-sm font-semibold"-->
-<!--                     [ngClass]="{-->
-<!--                    'bg-blue-100 text-blue-800 dark:bg-blue-500 dark:text-blue-50': form.formType == FormDTO.FormTypeEnum.PRENOTAZIONE,-->
-<!--                    'bg-teal-100 text-teal-800 dark:bg-teal-500 dark:text-teal-50': form.formType == FormDTO.FormTypeEnum.RACCOLTADATI,-->
-<!--                }">-->
-<!--                    {{ form.formType }} FORM-->
-<!--                </div>-->
-<!--                <div class="pr-1"></div>-->
-<!--                <div class="rounded-full px-3 py-0.5 text-sm font-semibold"-->
-<!--                     [ngClass]="{-->
-<!--                    'bg-green-100 text-green-800 dark:bg-green-500 dark:text-green-50': form.formStatus == FormStatusEnum.ATTIVO,-->
-<!--                    'bg-pink-100 text-pink-800 dark:bg-pink-500 dark:text-pink-50': form.formStatus == FormStatusEnum.CANCELLATO,-->
-<!--                    'bg-amber-100 text-amber-800 dark:bg-amber-500 dark:text-amber-50': form.formStatus == FormStatusEnum.SOSPESO,-->
-<!--                }">-->
-<!--                    {{ form.formStatus }}-->
-<!--                </div>-->
-<!--                <div class="pl-3"><p><mat-slide-toggle [checked]="form.formStatus == FormStatusEnum.ATTIVO" (change)="onToggle($event)"></mat-slide-toggle></p></div>-->
+    <!--    <div class="flex justify-between p-4">-->
+    <!--        <div class="flex flex-col">-->
+    <!--            <div class="flex items-center justify-between">-->
+    <!--                <div class="rounded-full px-3 py-0.5 text-sm font-semibold"-->
+    <!--                     [ngClass]="{-->
+    <!--                    'bg-blue-100 text-blue-800 dark:bg-blue-500 dark:text-blue-50': form.formType == FormDTO.FormTypeEnum.PRENOTAZIONE,-->
+    <!--                    'bg-teal-100 text-teal-800 dark:bg-teal-500 dark:text-teal-50': form.formType == FormDTO.FormTypeEnum.RACCOLTADATI,-->
+    <!--                }">-->
+    <!--                    {{ form.formType }} FORM-->
+    <!--                </div>-->
+    <!--                <div class="pr-1"></div>-->
+    <!--                <div class="rounded-full px-3 py-0.5 text-sm font-semibold"-->
+    <!--                     [ngClass]="{-->
+    <!--                    'bg-green-100 text-green-800 dark:bg-green-500 dark:text-green-50': form.formStatus == FormStatusEnum.ATTIVO,-->
+    <!--                    'bg-pink-100 text-pink-800 dark:bg-pink-500 dark:text-pink-50': form.formStatus == FormStatusEnum.CANCELLATO,-->
+    <!--                    'bg-amber-100 text-amber-800 dark:bg-amber-500 dark:text-amber-50': form.formStatus == FormStatusEnum.SOSPESO,-->
+    <!--                }">-->
+    <!--                    {{ form.formStatus }}-->
+    <!--                </div>-->
+    <!--                <div class="pl-3"><p><mat-slide-toggle [checked]="form.formStatus == FormStatusEnum.ATTIVO" (change)="onToggle($event)"></mat-slide-toggle></p></div>-->
 
 
 
-<!--            </div>-->
-<!--            <div class="mt-4 text-lg font-medium pl-2">-->
-<!--                {{ form.formName }}-->
-<!--            </div>-->
-<!--            <div class="my-6 h-1 border-t-2"></div>-->
-<!--        </div>-->
+    <!--            </div>-->
+    <!--            <div class="mt-4 text-lg font-medium pl-2">-->
+    <!--                {{ form.formName }}-->
+    <!--            </div>-->
+    <!--            <div class="my-6 h-1 border-t-2"></div>-->
+    <!--        </div>-->
 
 
-<!--    </div>-->
+    <!--    </div>-->
 
-<!--    <div class="pl-2">-->
-<!--        Url Form-->
-<!--    </div>-->
-<!--    <div class="flex items-center mt-0.5 p-2">-->
-<!--        <input type="text" [value]="getFormUrl(form.formCode)" [disabled]="true" class="text-secondary line-clamp-2 border rounded px-2 py-1 w-full" />-->
-<!--        <button [matTooltip]="tooltip || 'Copia URL'" (click)="copyToClipboard(form.formCode,1)" class="ml-2 bg-white text rounded px-3 py-1">-->
-<!--            <mat-icon [svgIcon]="'heroicons_outline:clipboard-document-check'"></mat-icon>-->
-<!--        </button>-->
-<!--    </div>-->
-<!--    <div class="pl-2">-->
-<!--        Url Form integrato in Iframe-->
-<!--    </div>-->
-<!--    <div class="flex items-center mt-0.5 p-2">-->
-<!--        <input type="text" [value]="getIframeUrl(form.formCode)" [disabled]="true" class="text-secondary line-clamp-2 border rounded px-2 py-1 w-full" />-->
-<!--        <button [matTooltip]="tooltip || 'Copia codice Iframe'" (click)="copyToClipboard(form.formCode, 0)" class="ml-2 bg-white text rounded px-3 py-1">-->
-<!--            <mat-icon [svgIcon]="'heroicons_outline:clipboard-document-check'"></mat-icon>-->
-<!--        </button>-->
-<!--    </div>-->
-<!--    <div class="pl-2">-->
-<!--        Redirect Page-->
-<!--    </div>-->
-<!--    <div class="flex items-center mt-0.5 p-2">-->
-<!--        <input type="text" [(ngModel)]="form.redirectPage" class="text-secondary line-clamp-2 border rounded px-2 py-1 w-full" />-->
-<!--        <button [matTooltip]="tooltip || 'Aggiorna redirect/thank you page'" (click)="updateRedirectPage(form)" class="ml-2 bg-white text-white rounded px-3 py-1">-->
-<!--            <mat-icon [svgIcon]="'heroicons_outline:check-circle'" style="color: green;"></mat-icon>-->
-<!--        </button>-->
-<!--    </div>-->
+    <!--    <div class="pl-2">-->
+    <!--        Url Form-->
+    <!--    </div>-->
+    <!--    <div class="flex items-center mt-0.5 p-2">-->
+    <!--        <input type="text" [value]="getFormUrl(form.formCode)" [disabled]="true" class="text-secondary line-clamp-2 border rounded px-2 py-1 w-full" />-->
+    <!--        <button [matTooltip]="tooltip || 'Copia URL'" (click)="copyToClipboard(form.formCode,1)" class="ml-2 bg-white text rounded px-3 py-1">-->
+    <!--            <mat-icon [svgIcon]="'heroicons_outline:clipboard-document-check'"></mat-icon>-->
+    <!--        </button>-->
+    <!--    </div>-->
+    <!--    <div class="pl-2">-->
+    <!--        Url Form integrato in Iframe-->
+    <!--    </div>-->
+    <!--    <div class="flex items-center mt-0.5 p-2">-->
+    <!--        <input type="text" [value]="getIframeUrl(form.formCode)" [disabled]="true" class="text-secondary line-clamp-2 border rounded px-2 py-1 w-full" />-->
+    <!--        <button [matTooltip]="tooltip || 'Copia codice Iframe'" (click)="copyToClipboard(form.formCode, 0)" class="ml-2 bg-white text rounded px-3 py-1">-->
+    <!--            <mat-icon [svgIcon]="'heroicons_outline:clipboard-document-check'"></mat-icon>-->
+    <!--        </button>-->
+    <!--    </div>-->
+    <!--    <div class="pl-2">-->
+    <!--        Redirect Page-->
+    <!--    </div>-->
+    <!--    <div class="flex items-center mt-0.5 p-2">-->
+    <!--        <input type="text" [(ngModel)]="form.redirectPage" class="text-secondary line-clamp-2 border rounded px-2 py-1 w-full" />-->
+    <!--        <button [matTooltip]="tooltip || 'Aggiorna redirect/thank you page'" (click)="updateRedirectPage(form)" class="ml-2 bg-white text-white rounded px-3 py-1">-->
+    <!--            <mat-icon [svgIcon]="'heroicons_outline:check-circle'" style="color: green;"></mat-icon>-->
+    <!--        </button>-->
+    <!--    </div>-->
 
-<!--    <div class="pl-2 pb-2">Tags</div>-->
-<!--    <form class="p-2">-->
-<!--        <mat-form-field class="w-full">-->
+    <!--    <div class="pl-2 pb-2">Tags</div>-->
+    <!--    <form class="p-2">-->
+    <!--        <mat-form-field class="w-full">-->
 
-<!--            <mat-chip-grid #chipGrid aria-label="Inserisci form tag">-->
-<!--                <mat-chip-row *ngFor="let tagDefault of tags; trackBy: trackByFn" (removed)="remove(tagDefault)">-->
-<!--                    {{tagDefault}}-->
-<!--                    <button matChipRemove [attr.aria-label]="'remove ' + tagDefault">-->
-<!--                        <mat-icon>cancel</mat-icon>-->
-<!--                    </button>-->
-<!--                </mat-chip-row>-->
-<!--            </mat-chip-grid>-->
-<!--            <input-->
-<!--                name="currentTag"-->
-<!--                placeholder="Nuovo tag.."-->
-<!--                #fruitInput-->
-<!--                [(ngModel)]="currentTag"-->
-<!--                [matChipInputFor]="chipGrid"-->
-<!--                [matAutocomplete]="auto"-->
-<!--                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
-<!--                (matChipInputTokenEnd)="add($event)"-->
-<!--            />-->
-<!--            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">-->
-<!--                <mat-option *ngFor="let fruit of filteredFruits; trackBy: trackByFn" [value]="fruit">{{fruit}}</mat-option>-->
-<!--            </mat-autocomplete>-->
-<!--        </mat-form-field>-->
-<!--    </form>-->
-<!--    <div class="text-secondary flex justify-between text-md leading-5 pl-2 pt-5 pb-5">-->
-<!--        <div class="flex">-->
-<!--            <mat-icon class="text-sm icon-size-5" [svgIcon]="'heroicons_outline:clock'"></mat-icon>-->
-<!--            <div class="ml-0.5">-->
-<!--                Creato il {{ form.creationDate }}-->
-<!--            </div>-->
-<!--        </div>-->
-
-
-<!--    </div>-->
-<!--    <div class="mt-auto flex w-full flex-col">-->
+    <!--            <mat-chip-grid #chipGrid aria-label="Inserisci form tag">-->
+    <!--                <mat-chip-row *ngFor="let tagDefault of tags; trackBy: trackByFn" (removed)="remove(tagDefault)">-->
+    <!--                    {{tagDefault}}-->
+    <!--                    <button matChipRemove [attr.aria-label]="'remove ' + tagDefault">-->
+    <!--                        <mat-icon>cancel</mat-icon>-->
+    <!--                    </button>-->
+    <!--                </mat-chip-row>-->
+    <!--            </mat-chip-grid>-->
+    <!--            <input-->
+    <!--                name="currentTag"-->
+    <!--                placeholder="Nuovo tag.."-->
+    <!--                #fruitInput-->
+    <!--                [(ngModel)]="currentTag"-->
+    <!--                [matChipInputFor]="chipGrid"-->
+    <!--                [matAutocomplete]="auto"-->
+    <!--                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
+    <!--                (matChipInputTokenEnd)="add($event)"-->
+    <!--            />-->
+    <!--            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">-->
+    <!--                <mat-option *ngFor="let fruit of filteredFruits; trackBy: trackByFn" [value]="fruit">{{fruit}}</mat-option>-->
+    <!--            </mat-autocomplete>-->
+    <!--        </mat-form-field>-->
+    <!--    </form>-->
+    <!--    <div class="text-secondary flex justify-between text-md leading-5 pl-2 pt-5 pb-5">-->
+    <!--        <div class="flex">-->
+    <!--            <mat-icon class="text-sm icon-size-5" [svgIcon]="'heroicons_outline:clock'"></mat-icon>-->
+    <!--            <div class="ml-0.5">-->
+    <!--                Creato il {{ form.creationDate }}-->
+    <!--            </div>-->
+    <!--        </div>-->
 
 
-<!--        <div class="relative h-0.5">-->
-<!--            <div *ngIf="form.formStatus == FormStatusEnum.ATTIVO">-->
-<!--                <mat-progress-bar class="h-0.5" style="background: forestgreen" [value]="0"></mat-progress-bar>-->
-<!--            </div>-->
-<!--            <div *ngIf="form.formStatus == FormStatusEnum.SOSPESO">-->
-<!--                <mat-progress-bar class="h-0.5" style="background: orange" [value]="0"></mat-progress-bar>-->
-<!--            </div>-->
-<!--            <div *ngIf="form.formStatus == FormStatusEnum.CANCELLATO">-->
-<!--                <mat-progress-bar class="h-0.5" style="background: red" [value]="0"></mat-progress-bar>-->
-<!--            </div>-->
-<!--        </div>-->
+    <!--    </div>-->
+    <!--    <div class="mt-auto flex w-full flex-col">-->
 
-<!--        <div class="flex justify-between">-->
-<!--            <div class="px-6 py-4 text-right">-->
-<!--                <a mat-stroked-button [routerLink]="[form.formId]">-->
-<!--                <span class="inline-flex items-center">-->
-<!--                    <mat-icon [matTooltip]="tooltip || 'Mostra anteprima'" class="icon-size-5" [svgIcon]="'heroicons_outline:computer-desktop'"></mat-icon>-->
-<!--                </span>-->
-<!--                </a>-->
-<!--            </div>-->
-<!--            <div class="px-6 py-4 text-right dark:bg-transparent">-->
-<!--                <a mat-stroked-button (click)="deleteForm()">-->
-<!--                <span class="inline-flex items-center">-->
-<!--                    <mat-icon [matTooltip]="tooltip || 'Cancella'" class="icon-size-5" style="color: red;" [svgIcon]="'heroicons_outline:trash'"></mat-icon>-->
-<!--                </span>-->
-<!--                </a>-->
-<!--            </div>-->
-<!--        </div>-->
 
-<!--    </div>-->
+    <!--        <div class="relative h-0.5">-->
+    <!--            <div *ngIf="form.formStatus == FormStatusEnum.ATTIVO">-->
+    <!--                <mat-progress-bar class="h-0.5" style="background: forestgreen" [value]="0"></mat-progress-bar>-->
+    <!--            </div>-->
+    <!--            <div *ngIf="form.formStatus == FormStatusEnum.SOSPESO">-->
+    <!--                <mat-progress-bar class="h-0.5" style="background: orange" [value]="0"></mat-progress-bar>-->
+    <!--            </div>-->
+    <!--            <div *ngIf="form.formStatus == FormStatusEnum.CANCELLATO">-->
+    <!--                <mat-progress-bar class="h-0.5" style="background: red" [value]="0"></mat-progress-bar>-->
+    <!--            </div>-->
+    <!--        </div>-->
+
+    <!--        <div class="flex justify-between">-->
+    <!--            <div class="px-6 py-4 text-right">-->
+    <!--                <a mat-stroked-button [routerLink]="[form.formId]">-->
+    <!--                <span class="inline-flex items-center">-->
+    <!--                    <mat-icon [matTooltip]="tooltip || 'Mostra anteprima'" class="icon-size-5" [svgIcon]="'heroicons_outline:computer-desktop'"></mat-icon>-->
+    <!--                </span>-->
+    <!--                </a>-->
+    <!--            </div>-->
+    <!--            <div class="px-6 py-4 text-right dark:bg-transparent">-->
+    <!--                <a mat-stroked-button (click)="deleteForm()">-->
+    <!--                <span class="inline-flex items-center">-->
+    <!--                    <mat-icon [matTooltip]="tooltip || 'Cancella'" class="icon-size-5" style="color: red;" [svgIcon]="'heroicons_outline:trash'"></mat-icon>-->
+    <!--                </span>-->
+    <!--                </a>-->
+    <!--            </div>-->
+    <!--        </div>-->
+
+    <!--    </div>-->
     <!-- component -->
     <body class="bg-cream text-charcoal min-h-screen leading-normal overflow-x-hidden lg:overflow-auto">
     <main>
         <section class="bg-cream-lighter p-4 shadow"  style="background: white">
             <div class="md:flex">
-                <h2 class="md:w-1/3 uppercase tracking-wide text-sm sm:text-lg mb-6">Modifica form {{form.formCode}}</h2>
+                <h2 class="tracking-wide text-3xl lg:text-3xl mb-6 font-bold">Modifica {{form.formName}} (#{{form.formCode}})</h2>
             </div>
             <form>
                 <div class="md:flex mb-8">
-                    <div class="md:w-1/3">
+                    <div class="md:w-1/4">
                         <div class="uppercase tracking-wide text-sm">Dettagli form</div>
-                        <p class="text-xs font-light text-red">This entire section is required.</p>
+                        <p class="text-xs font-light text-red">Configurazioni generali</p>
                     </div>
                     <div class="md:flex-1 mt-2 mb:mt-0 md:px-3">
+
                         <div class="mb-4">
                             <label class="block uppercase tracking-wide text-xs font-bold">Nome</label>
-                            <input class="w-full shadow-inner p-4 border-0" type="text" name="name" placeholder="Ex: Form Prenotazione">
+                            <input [(ngModel)]="form.formName" class="w-full shadow-inner p-2 border border-grey-300" type="text" name="name" placeholder="Ex: Form Prenotazione">
                         </div>
                         <div class="mb-4">
-                            <label class="block uppercase tracking-wide text-xs font-bold">Url</label>
-                            <input class="w-full shadow-inner p-4 border-0" type="text" name="name" placeholder="Acme Mfg. Co.">
+                            <label class="block uppercase tracking-wide text-xs font-bold">Link</label>
+                            <input class="w-full shadow-inner p-2 border border-grey-300" type="text">
                         </div>
-                        <div class="md:flex mb-4">
-                            <div class="md:flex-1 md:pr-3">
-                                <label class="block uppercase tracking-wide text-charcoal-darker text-xs font-bold">Latitude</label>
-                                <input class="w-full shadow-inner p-4 border-0" type="text" name="lat" placeholder="30.0455542">
-                            </div>
-                            <div class="md:flex-1 md:pl-3">
-                                <label class="block uppercase tracking-wide text-charcoal-darker text-xs font-bold">Longitude</label>
-                                <input class="w-full shadow-inner p-4 border-0" type="text" name="lon" placeholder="-99.1405168">
-                            </div>
+                        <div class="mb-4">
+                            <label class="block uppercase tracking-wide text-xs font-bold">Thank you page personalizzata</label>
+                            <input [(ngModel)]="form.redirectPage" class="w-full shadow-inner p-2 border border-grey-300" type="text" name="name" placeholder="https://www.archimedia.it/blog/thank-you-page-cos%C3%A8-perch%C3%A9-farla-ed-esempi-per-trovare-ispirazione">
                         </div>
+                        <div class="mb-4">
+                            <label class="block uppercase tracking-wide text-xs font-bold">Titolo personalizzato</label>
+                            <input class="w-full shadow-inner p-2 border border-grey-300" type="text" name="name" placeholder="Ex: Form Prenotazione">
+                        </div>
+
+                        <!--                        <div class="md:flex mb-4">-->
+                        <!--                            <div class="md:flex-1 md:pr-3">-->
+                        <!--                                <label class="block uppercase tracking-wide text-charcoal-darker text-xs font-bold"></label>-->
+                        <!--                                <input class="w-full shadow-inner p-4 border-0" type="text" name="lat" placeholder="30.0455542">-->
+                        <!--                            </div>-->
+                        <!--                            <div class="md:flex-1 md:pl-3">-->
+                        <!--                                <label class="block uppercase tracking-wide text-charcoal-darker text-xs font-bold"></label>-->
+                        <!--                                <input class="w-full shadow-inner p-4 border-0" type="text" name="lon" placeholder="-99.1405168">-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
                     </div>
                 </div>
                 <div class="md:flex mb-6">
-                    <div class="md:w-1/3">
+                    <div class="md:w-1/4">
                         <legend class="uppercase tracking-wide text-sm">Immagine/Logo form</legend>
                     </div>
                     <div class="flex justify-center bold">
@@ -217,29 +227,145 @@
                     </div>
                 </div>
                 <div class="md:flex mb-8">
-                    <div class="md:w-1/3">
-                        <legend class="uppercase tracking-wide text-sm">Configura Apertura</legend>
+                    <div class="md:w-1/4">
+                        <div class="uppercase tracking-wide text-sm">Configura Apertura</div>
+                        <p class="text-xs font-light text-red">Configura apertura dal lunedi alla domenica creando fasce orarie, slot di prenotazione e chiusure</p>
                     </div>
                     <div class="md:flex-1 mt-2 mb:mt-0 md:px-3">
-                        <div class="mb-4">
-                            <label class="block uppercase tracking-wide text-xs font-bold">Phone</label>
-                            <input class="w-full shadow-inner p-4 border-0" type="tel" name="phone" placeholder="(555) 555-5555">
-                        </div>
-                        <div class="mb-4">
-                            <label class="block uppercase tracking-wide text-charcoal-darker text-xs font-bold">URL</label>
-                            <input class="w-full shadow-inner p-4 border-0" type="url" name="url" placeholder="acme.co">
-                        </div>
-                        <div class="mb-4">
-                            <label class="block uppercase tracking-wide text-charcoal-darker text-xs font-bold">Email</label>
-                            <input class="w-full shadow-inner p-4 border-0" type="email" name="email" placeholder="contact@acme.co">
-                        </div>
+                        <table class="table-auto w-full">
+                            <thead>
+                            <tr>
+                                <th class="w-1/7 text-left p-2">Giorno</th>
+                                <th class="w-1/7 text-left p-2"></th>
+                                <th class="w-5/7 text-left p-2"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="p-2">Lunedi</td>
+                                <td class="p-2">
+                                    <mat-slide-toggle color="primary"></mat-slide-toggle>
+                                </td>
+                                <td class="p-2"><div class="flex items-center mb-4">
+                                    <div class="relative">
+                                        <select id="ho2ur12121123333s17564" [(ngModel)]="selectedHour"
+                                                class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                                            <option *ngFor="let hour of this.generateTimeSlots()" [value]="hour">{{ hour }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="relative">
+                                        <select id="ho2323122urs15" [(ngModel)]="selectedHour"
+                                                class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                                            <option *ngFor="let hour of this.generateTimeSlots()" [value]="hour">{{ hour }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="p-2">Martedi</td>
+                                <td class="p-2">
+                                    <mat-slide-toggle color="primary"></mat-slide-toggle>
+                                </td>
+                                <td class="p-2"><div class="flex items-center mb-4">
+                                    <div class="relative">
+                                        <select id="ho2ur3656333s17564" [(ngModel)]="selectedHour"
+                                                class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                                            <option *ngFor="let hour of this.generateTimeSlots()" [value]="hour">{{ hour }}</option>
+                                        </select>
+                                    </div>
+                                    <div class="relative">
+                                        <select id="ho23232urs15" [(ngModel)]="selectedHour"
+                                                class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                                            <option *ngFor="let hour of this.generateTimeSlots()" [value]="hour">{{ hour }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="p-2">Mercoledi</td>
+                                <td class="p-2">
+                                    <mat-slide-toggle color="primary"></mat-slide-toggle>
+                                </td>
+                                <td class="p-2">
+                                    <div class="flex items-center mb-4">
+                                        <div class="relative">
+                                            <select id="hours1" [(ngModel)]="selectedHour"
+                                                    class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                                                <option *ngFor="let hour of this.generateTimeSlots()" [value]="hour">{{ hour }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center mb-4">
+                                        <div class="relative">
+                                            <select id="ho2urs17564" [(ngModel)]="selectedHour"
+                                                    class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                                                <option *ngFor="let hour of this.generateTimeSlots()" [value]="hour">{{ hour }}</option>
+                                            </select>
+                                        </div>
+                                        <div class="relative">
+                                            <select id="ho2urs15" [(ngModel)]="selectedHour"
+                                                    class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                                                <option *ngFor="let hour of this.generateTimeSlots()" [value]="hour">{{ hour }}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </td>
+                            <tr>
+                                <td class="p-2">Giovedi</td>
+                                <td class="p-2">
+                                    <mat-slide-toggle color="primary"></mat-slide-toggle>
+                                </td>
+                                <td class="p-2">Config</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2">Venerdi</td>
+                                <td class="p-2">
+                                    <mat-slide-toggle color="primary"></mat-slide-toggle>
+                                </td>
+                                <td class="p-2">Config</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2">Sabato</td>
+                                <td class="p-2">
+                                    <mat-slide-toggle color="primary"></mat-slide-toggle>
+                                </td>
+                                <td class="p-2">Config</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2" >Domenica</td>
+                                <td class="p-2">
+                                    <mat-slide-toggle color="primary"></mat-slide-toggle>
+                                </td>
+                                <td class="p-2">Config</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+                <div class="md:flex mb-8">
+                    <div class="md:w-1/4">
+                        <div class="uppercase tracking-wide text-sm">Aperture e Chiusure eccezionali</div>
+                        <p class="text-xs font-light text-red">Configura aperture per giornate festive o chiusure programmate per periodi particolari. Le configurazioni in questa sezione avranno priorità sulla normale configurazione di apertura e chiusura</p>
+                    </div>
+                    <div class="md:flex-1 mt-2 mb:mt-0 md:px-3">
+                        <app-tablehoursconf [form]="form"></app-tablehoursconf>
+                    </div>
+                </div>
+                <div class="md:flex mb-8">
+                    <div class="md:w-1/4">
+                        <div class="uppercase tracking-wide text-sm">Ferie</div>
+                        <p class="text-xs font-light text-red">Configura qui i periodi di ferie</p>
+                    </div>
+                    <div class="md:flex-1 mt-2 mb:mt-0 md:px-3">
 
+                    </div>
+
+                </div>
                 <div class="md:flex mb-6 border border-t-1 border-b-0 border-x-0 border-cream-dark pt-5">
                     <div class="md:flex-1 px-3 text-center md:text-right">
                         <button mat-fab extended>
-
                             Salva modifiche
                         </button>
                     </div>

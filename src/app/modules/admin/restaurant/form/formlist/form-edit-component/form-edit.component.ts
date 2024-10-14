@@ -7,7 +7,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatIconModule} from "@angular/material/icon";
-import {FormsModule} from "@angular/forms";
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
 import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
@@ -20,6 +20,11 @@ import {StateManagerProvider} from "../../../../../../state_manager/state-manage
 import {RestaurantStateManagerProvider} from "../../../../../../state_manager/restaurant-state-manager";
 import FormStatusEnum = FormDTO.FormStatusEnum;
 import FormTypeEnum = BookingFormDto.FormTypeEnum;
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatListModule} from "@angular/material/list";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatGridListModule} from "@angular/material/grid-list";
+import {TablehoursconfComponent} from "./tablehoursconf/tablehoursconf.component";
 
 @Component({
     selector: 'form-edit-component',
@@ -37,7 +42,13 @@ import FormTypeEnum = BookingFormDto.FormTypeEnum;
         MatInputModule,
         NgForOf,
         NgIf,
-        MatSlideToggleModule
+        MatSlideToggleModule,
+        MatDatepickerModule,
+        ReactiveFormsModule,
+        MatListModule,
+        MatCheckboxModule,
+        MatGridListModule,
+        TablehoursconfComponent
     ],
     standalone: true
 })
@@ -56,7 +67,28 @@ export class FormEditComponent implements OnInit{
         private _restaurantStateManager : RestaurantStateManagerProvider,
         private route: ActivatedRoute) {
 
+
     }
+
+    generateTimeSlots(): string[] {
+        const timeSlots: string[] = [];
+
+        for (let hour = 0; hour < 24; hour++) {
+            // Format hour to always be two digits
+            const formattedHour = hour.toString().padStart(2, '0');
+
+            // Loop through minutes (0, 15, 30, 45)
+            for (let minute = 0; minute < 60; minute += 15) {
+                // Format minute to always be two digits
+                const formattedMinute = minute.toString().padStart(2, '0');
+                // Push the formatted time to the timeSlots array
+                timeSlots.push(`${formattedHour}:${formattedMinute}`);
+            }
+        }
+
+        return timeSlots;
+    }
+
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
@@ -72,7 +104,7 @@ export class FormEditComponent implements OnInit{
     }
 
     copyToClipboard(formCode: string, type: number) {
-        const textarea = document.createElement('textarea');
+        let textarea = document.createElement('textarea');
         if(type == 0){
             textarea.value = this.getIframeUrl(formCode);
         }else{
@@ -226,5 +258,15 @@ export class FormEditComponent implements OnInit{
     protected readonly BookingFormDto = BookingFormDto;
     protected readonly FormTypeEnum = FormTypeEnum;
     protected readonly FormDTO = FormDTO;
+    selectedHour: any;
+    days: string[] = [
+        'Lunedi',
+        'Martedi',
+        'Mercoldi',
+        'Giovedi',
+        'Venerdi',
+        'Sabato',
+        'Domenica'
+    ];
 
 }

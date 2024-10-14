@@ -1,14 +1,16 @@
+<div *ngIf="!wsConf" class="flex justify-end p-3">
+
+    <button mat-fab extended (click)="configureMessagingWhatsapp()">
+        Configura
+        <mat-icon [svgIcon]="'heroicons_outline:whatsapp-colored'"></mat-icon>
+    </button>
+
+</div>
 <div class="w-full" *ngIf="wsConf">
+
     <div class="w-full h-[60%] border rounded-lg shadow-md flex flex-col" style="background: white">
         <!-- Top Section: Instance Information -->
-        <div *ngIf="!wsConf" class="flex justify-end p-3">
 
-            <button mat-fab extended (click)="configureMessagingWhatsapp()">
-                Configura
-                <mat-icon [svgIcon]="'heroicons_outline:whatsapp-colored'"></mat-icon>
-            </button>
-
-        </div>
 
         <div class="w-full h-[50%] flex flex-row">
             <!-- Section 1 -->
