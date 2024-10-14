@@ -1,0 +1,37 @@
+{
+    "welcome": "Willkommen bei",
+    "Branch": "Filiale",
+    "Project": "Projekt",
+    "Analytics": "Analytik",
+    "select": "Auswählen",
+    "still-available-hours": "Verfügbare Zeitspanne",
+    "booking": "Buchung",
+    "guests": "Gäste",
+    "choose_table": "Tisch auswählen",
+
+
+    "days": {
+        "monday": "Montag",
+        "tuesday": "Dienstag",
+        "wednesday": "Mittwoch",
+        "thursday": "Donnerstag",
+        "friday": "Freitag",
+        "saturday": "Samstag",
+        "sunday": "Sonntag"
+    },
+
+    "months": {
+        "january": "Januar",
+        "february": "Februar",
+        "march": "März",
+        "april": "April",
+        "may": "Mai",
+        "june": "Juni",
+        "july": "Juli",
+        "august": "August",
+        "september": "September",
+        "october": "Oktober",
+        "november": "November",
+        "december": "Dezember"
+    }
+}

@@ -1,13 +1,8 @@
 
 <div class="p-2">
-    <div class="relative mx-auto bg-white rounded-xl p-1.5">
-        <div class="w-22 mx-auto pt-2">
-            <img src="assets/images/logo/logo.png">
-        </div>
-        <div class="text-1xl font-bold p-3" style="text-align: center">{{formDTO.formName}}</div>
-        <div class="text-2xl font-bold" style="text-align: center">⭐{{formDTO.branchName}}⭐</div>
-        <div style="font-size: 9px; text-align: center" >📍{{formDTO.branchAddress}}</div>
-        <div class="w-26 text-white rounded-sm font-semibold tracking-wider text-sm uppercase aspect-square absolute -top-1.5 -right-1.5 overflow-hidden">
+
+    <div class="relative items-center mx-auto bg-white rounded-xl px-2 w-min-100" *transloco="let t">
+        <div class="w-24 text-white rounded-sm font-semibold tracking-wider text-sm uppercase aspect-square absolute -top-1.5 -right-1.5 overflow-hidden">
             <div class="absolute h-1.5 w-1.5 top-0 left-0 bg-grey-900"></div>
             <div class="absolute h-1.5 w-1.5 bottom-0 right-0 bg-grey-900"></div>
 
@@ -18,11 +13,254 @@
                 <div><div class="font-semibold pb-2" style="font-size: 3px">{{formDTO.formCode}}</div></div>
             </a>
         </div>
-        <div class="font-normal p-3" style="text-align: center" >📅Seleziona il giorno</div>
-        <mat-card class="demo-inline-calendar-card min-w-80">
-            <mat-calendar [(selected)]="dateSelected"></mat-calendar>
-        </mat-card>
+        <languages></languages>
+        <div class="w-18 mx-auto">
+            <img src="assets/images/logo/logo.png">
+        </div>
+
+        <div style="font-size: 11px; text-align: center" >{{ t('welcome') }}</div>
+        <div class="text-2xl font-bold" style="text-align: center">{{formDTO.branchName}}</div>
+        <div style="font-size: 9px; text-align: center" >📍{{formDTO.branchAddress}}</div>
+        <div class="text-1xl font-bold p-1" style="text-align: center">{{formDTO.formName}}</div>
 
 
+
+        <ol class="w-full flex px-3.5">
+            <li (click)="changeState(BookingStatus.CALENDAR)"
+                class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block dark:after:border-gray-700">
+                 <span [ngClass]="{'bg-blue-500 dark:bg-blue-100': currentState === BookingStatus.CALENDAR, 'bg-gray-100 dark:bg-gray-700': currentState !== BookingStatus.CALENDAR}"
+                       class="flex items-center justify-center w-10 h-10 rounded-full lg:h-12 lg:w-12 shrink-0">
+            <mat-icon [svgIcon]="'heroicons_outline:calendar-days'" [style.color]="currentState === BookingStatus.CALENDAR ? 'white' : 'black'"></mat-icon>
+        </span>
+            </li>
+            <li (click)="changeState(BookingStatus.HOUR)" class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block dark:after:border-gray-700">
+                <span [ngClass]="{'bg-blue-500 dark:bg-blue-100': currentState === BookingStatus.HOUR, 'bg-gray-100 dark:bg-gray-700': currentState !== BookingStatus.HOUR}"
+                      class="flex items-center justify-center w-10 h-10 rounded-full lg:h-12 lg:w-12 shrink-0">
+            <mat-icon [svgIcon]="'heroicons_outline:clock'" [style.color]="currentState === BookingStatus.HOUR ? 'white' : 'black'"></mat-icon>
+        </span>
+            </li>
+            <li (click)="changeState(BookingStatus.DETAILS)">
+                <span [ngClass]="{'bg-blue-500 dark:bg-blue-100': currentState === BookingStatus.DETAILS, 'bg-gray-100 dark:bg-gray-700': currentState !== BookingStatus.DETAILS}"
+                      class="flex items-center justify-center w-10 h-10 rounded-full lg:h-12 lg:w-12 shrink-0">
+            <mat-icon [svgIcon]="'heroicons_outline:user'" [style.color]="currentState === BookingStatus.DETAILS ? 'white' : 'black'"></mat-icon>
+        </span>
+            </li>
+        </ol>
+        <div class="min-w-80">
+            <div [ngSwitch]="currentState">
+                <div *ngSwitchCase="BookingStatus.CALENDAR">
+                    <mat-calendar [(selected)]="dateSelected" (selectedChange)="setSelectedDate($event)"></mat-calendar>
+                </div>
+                <div *ngSwitchCase="BookingStatus.HOUR">
+                    <h5 class="text-base
+                            font-semibold text-gray-900 md:text-xl
+                            dark:text-white" style="text-align: center">
+                        {{ dateSelected | dateformatita }}
+                    </h5>
+                    <div class="w-full max-w-sm p-4 bg-white ">
+                        <form class="max-w-xs mx-auto">
+                            <div class="relative flex items-center w-full">
+                                <button (click)="addGuest(-1)" type="button" id="decrement-button" data-input-counter-decrement="bedrooms-input" class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                                    <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
+                                    </svg>
+                                </button>
+                                <input [(ngModel)]="guestCounter" [ngModelOptions]="{standalone: true}" type="text" id="bedrooms-input" data-input-counter data-input-counter-min="1" data-input-counter-max="5" aria-describedby="helper-text-explanation" class="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6 dark:bg-gray-700
+                                dark:border-gray-600 dark:placeholder-gray-400 dark:text-white pt-2 dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="" required />
+                                <div class="absolute bottom-1 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 flex items-center text-xs text-gray-400 space-x-1 rtl:space-x-reverse">
+                                    <mat-icon [svgIcon]="'heroicons_outline:users'" class="icon-size-4" style="color: slategrey;"></mat-icon>
+                                    <span>{{ t('guests') }}</span>
+                                </div>
+                                <button (click)="addGuest(1)" type="button" id="increment-button" data-input-counter-increment="bedrooms-input" class="bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none">
+                                    <svg class="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </form>
+
+                        <div *ngIf="!loadingData">
+                            <ul class="my-4 space-y-3">
+                                <li (click)="changeState(BookingStatus.DETAILS)">
+                                    <a class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+                                        <span class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-black bg-blue-200 rounded dark:bg-gray-700 dark:text-green-400">{{guestCounter}}</span>
+                                        <span class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-black bg-yellow-100 rounded dark:bg-gray-700 dark:text-green-400">
+                                            <mat-icon [svgIcon]="'heroicons_outline:sun'" class="icon-size-4" style="color: darkorange"></mat-icon>
+                                        </span>
+
+                                        <span class="flex-1 ms-3 whitespace-nowrap">12:30</span>
+                                        <span class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-black bg-green-200 rounded dark:bg-gray-700 dark:text-green-400"> {{ t('select') }}</span>
+                                    </a>
+                                </li>
+                                <li (click)="changeState(BookingStatus.DETAILS)">
+                                    <a class="flex items-center p-3 text-base font-bold text-gray-900 rounded-lg bg-gray-50 hover:bg-gray-100 group hover:shadow dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white">
+
+                                        <span class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-black bg-blue-200 rounded dark:bg-gray-700 dark:text-green-400">{{guestCounter}}</span>
+                                        <span class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-black bg-blue-950 rounded dark:bg-gray-700 dark:text-green-400">
+                                            <mat-icon [svgIcon]="'heroicons_outline:moon'" class="icon-size-4" style="color: white;"></mat-icon>
+                                        </span>
+
+                                        <span class="flex-1 ms-3 whitespace-nowrap">22:30</span>
+                                        <span class="inline-flex items-center justify-center px-2 py-0.5 ms-3 text-xs font-medium text-black bg-green-200 rounded dark:bg-gray-700 dark:text-green-400"> {{ t('select') }}</span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <div>
+                                <a href="#" class="inline-flex items-center text-xs font-normal text-gray-500 hover:underline dark:text-gray-400">
+                                    <svg class="w-3 h-3 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.529 7.988a2.502 2.502 0 0 1 5 .191A2.441 2.441 0 0 1 10 10.582V12m-.01 3.008H10M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                    </svg>
+                                    {{ t('still-available-hours') }}</a>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+                <div *ngSwitchCase="BookingStatus.DETAILS">
+                    <form
+                        class="mt-4 flex flex-col overflow-hidden justify-center px-2"
+                        [formGroup]="bookingForm">
+                        <p class="text-secondary mb-6">
+                            Inserisci il tuo numero di cellulare per continuare
+                        </p>
+                        <div class="gt-xs:flex-row flex flex-col">
+                            <mat-form-field  class="w-full" [ngClass]="{ 'error-border': bookingForm.get('phone')?.invalid && bookingForm.get('phone')?.touched }">
+                                <input
+                                    id="phone"
+                                    matInput
+                                    placeholder="Cellulare"
+                                    formControlName="phone"
+                                    (blur)="onPhoneBlur()"
+                                />
+                                <mat-select formControlName="prefix" matPrefix>
+                                    <!-- Europe -->
+                                    <mat-option value="93">Afghanistan (+93)</mat-option>
+                                    <mat-option value="355">Albania (+355)</mat-option>
+                                    <mat-option value="376">Andorra (+376)</mat-option>
+                                    <mat-option value="374">Armenia (+374)</mat-option>
+                                    <mat-option value="43">Austria (+43)</mat-option>
+                                    <mat-option value="994">Azerbaijan (+994)</mat-option>
+                                    <mat-option value="32">Belgium (+32)</mat-option>
+                                    <mat-option value="387">Bosnia and Herzegovina (+387)</mat-option>
+                                    <mat-option value="359">Bulgaria (+359)</mat-option>
+                                    <mat-option value="385">Croatia (+385)</mat-option>
+                                    <mat-option value="357">Cyprus (+357)</mat-option>
+                                    <mat-option value="420">Czech Republic (+420)</mat-option>
+                                    <mat-option value="45">Denmark (+45)</mat-option>
+                                    <mat-option value="372">Estonia (+372)</mat-option>
+                                    <mat-option value="358">Finland (+358)</mat-option>
+                                    <mat-option value="33">France (+33)</mat-option>
+                                    <mat-option value="49">Germany (+49)</mat-option>
+                                    <mat-option value="30">Greece (+30)</mat-option>
+                                    <mat-option value="36">Hungary (+36)</mat-option>
+                                    <mat-option value="354">Iceland (+354)</mat-option>
+                                    <mat-option value="353">Ireland (+353)</mat-option>
+                                    <mat-option value="39">Italia (+39)</mat-option>
+                                    <mat-option value="371">Latvia (+371)</mat-option>
+                                    <mat-option value="423">Liechtenstein (+423)</mat-option>
+                                    <mat-option value="370">Lithuania (+370)</mat-option>
+                                    <mat-option value="352">Luxembourg (+352)</mat-option>
+                                    <mat-option value="356">Malta (+356)</mat-option>
+                                    <mat-option value="377">Monaco (+377)</mat-option>
+                                    <mat-option value="382">Montenegro (+382)</mat-option>
+                                    <mat-option value="31">Netherlands (+31)</mat-option>
+                                    <mat-option value="47">Norway (+47)</mat-option>
+                                    <mat-option value="48">Poland (+48)</mat-option>
+                                    <mat-option value="351">Portugal (+351)</mat-option>
+                                    <mat-option value="40">Romania (+40)</mat-option>
+                                    <mat-option value="7">Russia (+7)</mat-option>
+                                    <mat-option value="378">San Marino (+378)</mat-option>
+                                    <mat-option value="381">Serbia (+381)</mat-option>
+                                    <mat-option value="421">Slovakia (+421)</mat-option>
+                                    <mat-option value="386">Slovenia (+386)</mat-option>
+                                    <mat-option value="34">Spain (+34)</mat-option>
+                                    <mat-option value="46">Sweden (+46)</mat-option>
+                                    <mat-option value="41">Switzerland (+41)</mat-option>
+                                    <mat-option value="90">Turkey (+90)</mat-option>
+                                    <mat-option value="380">Ukraine (+380)</mat-option>
+                                    <mat-option value="44">United Kingdom (+44)</mat-option>
+                                    <!-- North America -->
+                                    <mat-option value="1">Canada (+1)</mat-option>
+                                    <mat-option value="1">United States (+1)</mat-option>
+                                    <mat-option value="52">Mexico (+52)</mat-option>
+                                    <!-- China -->
+                                    <mat-option value="86">China (+86)</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="bookingForm.get('phone').hasError('required')">
+                                    Inserisci il numero di cellulare
+                                </mat-error>
+                                <mat-error *ngIf="bookingForm.get('phone').hasError('minLength')">
+                                    Numero non valido
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <mat-divider class="mb-2 mt-2"></mat-divider>
+
+                        <div>
+                            <!--        <div>-->
+                            <p class="text-lg font-medium pb-4">Info personali</p>
+                            <div class="gt-xs:flex-row flex flex-col">
+                                <mat-form-field class="gt-xs:pr-3 flex-auto" [ngClass]="{ 'error-border': bookingForm.get('firstName')?.invalid && bookingForm.get('firstName')?.touched }">
+                                    <input matInput placeholder="Nome" formControlName="firstName" />
+                                    <mat-icon matPrefix [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+                                </mat-form-field>
+                                <mat-form-field class="gt-xs:pl-3 flex-auto" [ngClass]="{ 'error-border': bookingForm.get('lastName')?.invalid && bookingForm.get('lastName')?.touched }">
+                                    <input matInput placeholder="Cognome" formControlName="lastName" />
+                                    <mat-icon matPrefix [svgIcon]="'heroicons_outline:user-circle'"></mat-icon>
+                                </mat-form-field>
+                            </div>
+                            <div class="flex">
+                                <mat-form-field class="flex-auto" [ngClass]="{ 'error-border': bookingForm.get('email')?.invalid && bookingForm.get('email')?.touched }">
+                                    <input matInput placeholder="Email" formControlName="email" />
+                                    <mat-icon matPrefix [svgIcon]="'heroicons_outline:envelope'"></mat-icon>
+                                    <mat-error *ngIf="bookingForm.get('email')?.hasError('email')">
+                                        Indirizzo email non valido
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="flex">
+                                <mat-form-field class="flex-auto" [ngClass]="{ 'error-border': bookingForm.get('postalCode')?.invalid && bookingForm.get('postalCode')?.touched }">
+                                    <input matInput placeholder="CAP" formControlName="postalCode" />
+                                    <mat-icon matPrefix [svgIcon]="'heroicons_outline:map-pin'"></mat-icon>
+                                    <mat-error *ngIf="bookingForm.get('email')?.hasError('postalCode')">
+                                        Indirizzo email non valido
+                                    </mat-error>
+                                </mat-form-field>
+                            </div>
+                            <div class="gt-xs:flex-row flex flex-col">
+                                <div class="text-sm ">Acconsento al trattamento dei dati personali</div>
+                                <mat-checkbox class="-ml-2" color="accent" formControlName="privacyConsent">
+                                    Privacy e trattamento dati<a class="text-blue-400 text-sm font-bold pr-1" href="https://20m2official.it/wp-content/uploads/2024/10/informativa_clienti_2024_1.pdf.html">Dettaglio</a>*
+                                </mat-checkbox>
+                                <mat-checkbox class="-ml-2" color="accent" formControlName="marketingConsent">
+                                    Consenso Marketing e comunicazione <a class="text-blue-400 text-sm font-bold" href="https://20m2official.it/wp-content/uploads/2024/10/informativa_clienti_2024_1.pdf.html">Dettaglio</a>
+                                </mat-checkbox>
+                                <mat-checkbox class="-ml-2" color="accent" formControlName="profilingConsent">
+                                    Consenso profilazione <a class="text-blue-400 text-sm font-bold" href="https://20m2official.it/wp-content/uploads/2024/10/informativa_clienti_2024_1.pdf.html">Dettaglio</a>
+                                </mat-checkbox>
+
+                                <mat-checkbox class="-ml-2" color="accent">
+                                    Seleziona tutto
+                                </mat-checkbox>
+                            </div>
+                        </div>
+
+
+
+                        <div class="-mx-8 mt-8 flex items-center justify-center border-t bg-white px-8 py-5 dark:bg-gray-700">
+                            <button
+                                class="ml-3 px-6"
+                                mat-flat-button [disabled]="bookingForm.invalid"
+                                (click)="saveCustomerAndOpenNewTab(formDTO.redirectPage)"
+                                color="accent">
+                                Prosegui
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

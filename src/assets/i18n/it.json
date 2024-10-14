@@ -1,6 +1,37 @@
 {
-  "welcome": "Benvenuto",
-  "Project": "Progetto",
-  "Analytics": "Analisi",
-  "Customers" : "Customers"
+    "welcome": "Benvenuto a",
+    "Branch": "Filiale",
+    "Project": "Progetto",
+    "Analytics": "Analitica",
+    "select": "Seleziona",
+    "still-available-hours": "Fascia oraria disponibile",
+    "booking": "Prenotazione",
+    "guests": "Ospiti",
+    "choose_table": "Scegli tavolo",
+
+
+    "days": {
+        "monday": "Lunedì",
+        "tuesday": "Martedì",
+        "wednesday": "Mercoledì",
+        "thursday": "Giovedì",
+        "friday": "Venerdì",
+        "saturday": "Sabato",
+        "sunday": "Domenica"
+    },
+
+    "months": {
+        "january": "Gennaio",
+        "february": "Febbraio",
+        "march": "Marzo",
+        "april": "Aprile",
+        "may": "Maggio",
+        "june": "Giugno",
+        "july": "Luglio",
+        "august": "Agosto",
+        "september": "Settembre",
+        "october": "Ottobre",
+        "november": "Novembre",
+        "december": "Dicembre"
+    }
 }

@@ -1,6 +1,36 @@
 {
-    "welcome": "Welcome",
-    "Branch" : "Branch",
+    "welcome": "Welcome to",
+    "Branch": "Branch",
     "Project": "Project",
-    "Analytics": "Analytics"
+    "Analytics": "Analytics",
+    "select": "Select",
+    "still-available-hours": "Available hour slot",
+    "booking": "Booking",
+    "guests": "Guests",
+    "choose_table": "Choose table",
+
+    "days": {
+        "monday": "Monday",
+        "tuesday": "Tuesday",
+        "wednesday": "Wednesday",
+        "thursday": "Thursday",
+        "friday": "Friday",
+        "saturday": "Saturday",
+        "sunday": "Sunday"
+    },
+
+    "months": {
+        "january": "January",
+        "february": "February",
+        "march": "March",
+        "april": "April",
+        "may": "May",
+        "june": "June",
+        "july": "July",
+        "august": "August",
+        "september": "September",
+        "october": "October",
+        "november": "November",
+        "december": "December"
+    }
 }

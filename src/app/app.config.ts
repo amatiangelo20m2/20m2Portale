@@ -70,14 +70,6 @@ export const appConfig: ApplicationConfig = {
                         name: 'Teal',
                     },
                     {
-                        id: 'theme-rose',
-                        name: 'Rose',
-                    },
-                    {
-                        id: 'theme-purple',
-                        name: 'Purple',
-                    },
-                    {
                         id: 'theme-amber',
                         name: 'Amber',
                     },
