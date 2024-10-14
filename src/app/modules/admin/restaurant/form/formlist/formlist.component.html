@@ -1,31 +1,23 @@
 <div class="absolute justify-start items-stretch inset-0 flex flex-col overflow-y-auto" cdkScrollable style="background: white">
-
     <div>
-        <div class="flex flex-auto p-2 sm:p-10">
-            <!-- Filters -->
-            <div class="flex w-full justify-between h-12">
-
-                <div class="text-2xl font-normal">Form {{branchName}}</div>
-                <app-create-form-component></app-create-form-component>
-            </div>
-        </div>
         <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
             <tr>
                 <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nome Form</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stato</th>
+                <th class="px-1 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stato</th>
+                <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Url</th>
                 <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">QR CODE</th>
                 <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Anteprima</th>
                 <th class="px-1 py-1 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tipo Form</th>
-                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                <th class="px-4 py-1 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"><app-create-form-component></app-create-form-component></th>
             </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
             <tr *ngFor="let form of forms | formpipe : currentStatusToExclude" >
-                <td class="px-6 py-4 whitespace-nowrap">{{ form.formName }}</td>
+                <td class="px-6 py-4 whitespace-nowrap font-bold"><a [routerLink]="['/dashboard/forms', form.formCode]">{{ form.formName }}</a></td>
                 <!--                <td class="px-6 py-4 whitespace-nowrap">{{ getFormUrl(form.formCode) }}</td>-->
                 <!--                <td class="px-6 py-4 whitespace-nowrap">{{ form.redirectPage }}</td>-->
-                <td class="px-6 py-4 whitespace-nowrap">
+                <td class="px-1 py-4 whitespace-nowrap">
                     <div class="flex items-center space-x-2">
                         <div class="pl-3"><p><mat-slide-toggle [checked]="form.formStatus == FormDTO.FormStatusEnum.ATTIVO" (change)="changeStatus($event, form)"></mat-slide-toggle></p></div>
                         <div class="rounded-full px-3 py-0.5 text-sm font-semibold" [ngClass]="{
@@ -36,34 +28,26 @@
                         </div>
                     </div>
                 </td>
-                <td class="px-1 py-1 whitespace-nowrap"><button (click)="openQrCodeModal(form.formCode)" [matTooltip]="tooltip || 'QR CODE'" mat-mini-fab>
-                    <mat-icon  [svgIcon]="'heroicons_outline:qr-code'">
-
-                    </mat-icon></button></td>
-                <td class="px-1 py-1 whitespace-nowrap"><button [matTooltip]="tooltip || 'Mostra anteprima'" mat-mini-fab style="background: dodgerblue" (click)="openTabWithFormUrl(form.formCode)">
-                    <mat-icon  [svgIcon]="'heroicons_outline:computer-desktop'">
-
-                    </mat-icon></button></td>
+                <td class="whitespace-nowrap">
+                    <mat-icon style="cursor: pointer;" (click)="openQrCodeModal(form.formCode)" [matTooltip]="tooltip || 'Copia url'" [svgIcon]="'heroicons_outline:clipboard-document-list'"></mat-icon></td>
+                <td class="px-1 py-1 whitespace-nowrap">
+                    <mat-icon style="cursor: pointer;" (click)="openQrCodeModal(form.formCode)" [matTooltip]="tooltip || 'QR CODE'" [svgIcon]="'heroicons_outline:qr-code'"></mat-icon></td>
+                <td class="px-1 py-1 whitespace-nowrap">
+                    <mat-icon style="cursor: pointer;" [svgIcon]="'heroicons_outline:computer-desktop'" [matTooltip]="tooltip || 'Mostra anteprima'" (click)="openTabWithFormUrl(form.formCode)"></mat-icon>
+                </td>
                 <td class="px-1 py-1 whitespace-nowrap">
                     <div class="rounded-full px-3 py-0.5 text-sm font-semibold"
                          [ngClass]="{
                     'bg-blue-100 text-blue-800 dark:bg-blue-500 dark:text-blue-50': form.formType == FormDTO.FormTypeEnum.PRENOTAZIONE,
-                    'bg-teal-100 text-teal-800 dark:bg-teal-500 dark:text-teal-50': form.formType == FormDTO.FormTypeEnum.RACCOLTADATI,
+                    'bg-red-100 text-red-800 dark:bg-red-500 dark:text-red-50': form.formType == FormDTO.FormTypeEnum.RACCOLTADATI,
                 }">
                         FORM {{ form.formType }}
                     </div>
                 </td>
                 <td class="px-6 py-4">
-                    <button (click)="openModal(form)"
-                            [matTooltip]="tooltip || 'Aggiorna'" mat-mini-fab style="background: dodgerblue; margin-right: 2px;">
-                        <mat-icon [svgIcon]="'heroicons_outline:pencil-square'"></mat-icon>
-                    </button>
-                    <button (click)="duplicateForm(form)" [matTooltip]="tooltip || 'Duplica'" mat-mini-fab style="background: #0f172a; margin-right: 2px;">
-                        <mat-icon [svgIcon]="'heroicons_outline:document-duplicate'"></mat-icon>
-                    </button>
-                    <button (click)="delete(form)" [matTooltip]="tooltip || 'Cancella'" mat-mini-fab style="background: red;">
-                        <mat-icon [svgIcon]="'heroicons_outline:trash'"></mat-icon>
-                    </button>
+                    <mat-icon style="cursor: pointer;" [matTooltip]="tooltip || 'Aggiorna'" (click)="navigateToFormEditComponent(form)" [svgIcon]="'heroicons_outline:pencil-square'"></mat-icon>
+                    <mat-icon style="cursor: pointer;" (click)="duplicateForm(form)" [matTooltip]="tooltip || 'Duplica'" [svgIcon]="'heroicons_outline:document-duplicate'"></mat-icon>
+                    <mat-icon style="cursor: pointer;" (click)="delete(form)" [matTooltip]="tooltip || 'Cancella'" [svgIcon]="'heroicons_outline:trash'"></mat-icon>
                 </td>
 
             </tr>

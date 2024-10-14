@@ -3,6 +3,7 @@ import { initialDataResolver } from 'app/app.resolvers';
 import { AuthGuard } from 'app/core/auth/guards/auth.guard';
 import { NoAuthGuard } from 'app/core/auth/guards/noAuth.guard';
 import {LayoutComponent} from "./layout/layout.component";
+import {FormEditComponent} from "./modules/admin/restaurant/form/formlist/form-edit-component/form-edit.component";
 
 export const appRoutes: Route[] = [
 
@@ -23,8 +24,6 @@ export const appRoutes: Route[] = [
             { path: 'forgot-password', loadChildren: () => import('app/modules/auth/forgot-password/forgot-password.routes')},
             { path: 'reset-password', loadChildren: () => import('app/modules/auth/reset-password/reset-password.routes')},
             { path: 'sign-in', loadChildren: () => import('app/modules/auth/sign-in/sign-in.routes')},
-            // {path: 'sign-up', loadChildren: () => import('app/modules/auth/sign-up/sign-up.routes')},
-            // {path: 'reservotp', loadChildren: () => import('app/modules/pages/booking/booking.routes')},
         ]
     },
 
@@ -85,6 +84,11 @@ export const appRoutes: Route[] = [
             { path: 'tags', loadChildren: () => import('app/modules/admin/restaurant/tag/tag.routes')},
             { path: 'whatsapp', loadChildren: () => import('app/modules/admin/restaurant/whatsappconf/whats-app-conf.routes')},
             { path: 'settings', loadChildren: () => import('app/modules/pages/settings/settings.routes')},
+            {
+                path: 'forms/:formCode',
+                canActivate: [AuthGuard],
+                component: FormEditComponent
+            }
         ]
     },{
         path: '**',

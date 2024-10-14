@@ -3,7 +3,7 @@ import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {Subject, takeUntil} from "rxjs";
-import {RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {StateManagerProvider} from "../../../../../state_manager/state-manager-provider.service";
 import {MatSlideToggleChange, MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {MatIconModule} from "@angular/material/icon";
@@ -18,7 +18,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {FormpipePipe} from "./formpipe.pipe";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {FormEditComponentComponent} from "./form_edit_component/form-edit-component.component";
+import {FormEditComponent} from "./form-edit-component/form-edit.component";
 import {FormControllerService, FormDTO} from "../../../../../core/restaurant_service";
 import {RestaurantStateManagerProvider} from "../../../../../state_manager/restaurant-state-manager";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
@@ -55,7 +55,7 @@ import FormStatusEnum = FormDTO.FormStatusEnum;
         FormpipePipe,
         MatChipsModule,
         MatAutocompleteModule,
-        FormEditComponentComponent,
+        FormEditComponent,
         MatDialogModule,
         NgTemplateOutlet,
         BranchesmanagmentComponent,
@@ -81,7 +81,8 @@ export class FormlistComponent implements OnInit, OnDestroy {
         private _restaurantStateManagerProvider: RestaurantStateManagerProvider,
         private _stateManagerProvider: StateManagerProvider,
         private _formController: FormControllerService,
-        private dialog: MatDialog
+        private dialog: MatDialog,
+        private router: Router
     ) {}
     ngOnInit(): void {
         this._stateManagerProvider.branch$.subscribe(value => {
@@ -142,18 +143,19 @@ export class FormlistComponent implements OnInit, OnDestroy {
         );
     }
 
-    openModal(form: FormDTO): void {
-        const dialogRef = this
-            .dialog.open(FormEditComponentComponent, {
-                data:{ formData: form},
-            width: '90%',
-            height: '100%',
-            position: { right: '0' }, // Open from the left side
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed');
-        });
+    navigateToFormEditComponent(form: FormDTO): void {
+        this.router.navigate([`/dashboard/forms/${form.formCode}`]);
+        // const dialogRef = this
+        //     .dialog.open(FormEditComponent, {
+        //         data:{ formData: form},
+        //     width: '90%',
+        //     height: '100%',
+        //     position: { right: '0' }, // Open from the left side
+        // });
+        //
+        // dialogRef.afterClosed().subscribe(result => {
+        //     console.log('The dialog was closed');
+        // });
     }
 
     protected readonly FormDTO = FormDTO;

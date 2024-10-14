@@ -1,10 +1,10 @@
-import {Component, Inject, inject, Input} from '@angular/core';
+import {Component, inject, Input, OnInit} from '@angular/core';
 import {FormControllerService, FormDTO} from "../../../../../../core/restaurant_service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {environment} from "../../../../../../../environments/environment";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatButtonModule} from "@angular/material/button";
-import {RouterLink} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatIconModule} from "@angular/material/icon";
 import {FormsModule} from "@angular/forms";
@@ -12,19 +12,18 @@ import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
 import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {MatInputModule} from "@angular/material/input";
-import FormStatusEnum = FormDTO.FormStatusEnum;
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatSlideToggleChange, MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {BookingFormDto} from "../../../../../../core/booking";
-import FormTypeEnum = BookingFormDto.FormTypeEnum;
 import {StateManagerProvider} from "../../../../../../state_manager/state-manager-provider.service";
-import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {RestaurantStateManagerProvider} from "../../../../../../state_manager/restaurant-state-manager";
+import FormStatusEnum = FormDTO.FormStatusEnum;
+import FormTypeEnum = BookingFormDto.FormTypeEnum;
 
 @Component({
-    selector: 'app-edit-component',
-    templateUrl: './form-edit-component.component.html',
+    selector: 'form-edit-component',
+    templateUrl: './form-edit.component.html',
     imports: [
         MatProgressBarModule,
         MatButtonModule,
@@ -42,9 +41,11 @@ import {RestaurantStateManagerProvider} from "../../../../../../state_manager/re
     ],
     standalone: true
 })
-export class FormEditComponentComponent {
+export class FormEditComponent implements OnInit{
 
     form: FormDTO;
+
+    formCode: string;
 
     @Input() tooltip: string;
 
@@ -53,9 +54,21 @@ export class FormEditComponentComponent {
         private _formController: FormControllerService,
         private _stateManager : StateManagerProvider,
         private _restaurantStateManager : RestaurantStateManagerProvider,
-        @Inject(MAT_DIALOG_DATA) private data: any, // Inject the data
-        private dialogRef: MatDialogRef<FormEditComponentComponent>) {
-        this.form = data.formData;
+        private route: ActivatedRoute) {
+
+    }
+
+    ngOnInit(): void {
+        this.route.params.subscribe(params => {
+            this.formCode = params['formCode'];
+            console.log('Form Code:', this.formCode);
+            this._formController.retrieveByFormCode(this.formCode).subscribe(
+                value => {
+                    this.form = value;
+                }
+            );
+            // Additional logic to fetch form details using formCode
+        });
     }
 
     copyToClipboard(formCode: string, type: number) {
