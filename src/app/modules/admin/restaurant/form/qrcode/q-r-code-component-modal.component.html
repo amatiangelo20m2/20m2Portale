@@ -1,0 +1,8 @@
+<h2 mat-dialog-title>QR Code</h2>
+<mat-dialog-content>
+    <qrcode [qrdata]="data.url"></qrcode>
+    <p>Scan Qr code accedere a : {{ data.url }}</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="onClose()">Close</button>
+</mat-dialog-actions>
