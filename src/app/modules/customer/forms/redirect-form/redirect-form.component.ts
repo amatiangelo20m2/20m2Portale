@@ -47,7 +47,6 @@ export class RedirectFormComponent implements OnInit {
     formRedirect: UntypedFormGroup;
     showCustomerForm: boolean = false;
 
-
     constructor(
         private _customerControllerService: CustomerControllerService,
         private _formBuilder: FormBuilder,

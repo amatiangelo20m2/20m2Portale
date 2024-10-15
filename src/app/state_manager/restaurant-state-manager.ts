@@ -5,13 +5,11 @@ import {FormControllerService, FormDTO} from "../core/restaurant_service";
 @Injectable({providedIn: 'root'})
 export class RestaurantStateManagerProvider {
 
-
     constructor(private _formController : FormControllerService) {
     }
 
     private currentFormList : BehaviorSubject<FormDTO[]> = new BehaviorSubject(null);
     formDtos$ = this.currentFormList.asObservable();
-
     retrieveFormByBranchCode() {
 
         let branchCodeRetrieved = localStorage.getItem("branchCode") ?? '';
@@ -25,5 +23,4 @@ export class RestaurantStateManagerProvider {
                 this.currentFormList.next(formList);
             });
     }
-
 }

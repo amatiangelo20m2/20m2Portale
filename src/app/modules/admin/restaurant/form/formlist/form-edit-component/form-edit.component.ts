@@ -1,4 +1,4 @@
-import {Component, inject, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, Input, OnInit} from '@angular/core';
 import {FormControllerService, FormDTO} from "../../../../../../core/restaurant_service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {environment} from "../../../../../../../environments/environment";
@@ -7,7 +7,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatIconModule} from "@angular/material/icon";
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
 import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
@@ -18,13 +18,14 @@ import {MatSlideToggleChange, MatSlideToggleModule} from "@angular/material/slid
 import {BookingFormDto} from "../../../../../../core/booking";
 import {StateManagerProvider} from "../../../../../../state_manager/state-manager-provider.service";
 import {RestaurantStateManagerProvider} from "../../../../../../state_manager/restaurant-state-manager";
-import FormStatusEnum = FormDTO.FormStatusEnum;
-import FormTypeEnum = BookingFormDto.FormTypeEnum;
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatListModule} from "@angular/material/list";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {TablehoursconfComponent} from "./tablehoursconf/tablehoursconf.component";
+import {SpecialdayscomponentComponent} from "./specialdayscomponent/specialdayscomponent.component";
+import FormStatusEnum = FormDTO.FormStatusEnum;
+import FormTypeEnum = BookingFormDto.FormTypeEnum;
 
 @Component({
     selector: 'form-edit-component',
@@ -48,9 +49,11 @@ import {TablehoursconfComponent} from "./tablehoursconf/tablehoursconf.component
         MatListModule,
         MatCheckboxModule,
         MatGridListModule,
-        TablehoursconfComponent
+        TablehoursconfComponent,
+        SpecialdayscomponentComponent
     ],
-    standalone: true
+    standalone: true,
+    changeDetection: ChangeDetectionStrategy.Default
 })
 export class FormEditComponent implements OnInit{
 
@@ -69,26 +72,6 @@ export class FormEditComponent implements OnInit{
 
 
     }
-
-    generateTimeSlots(): string[] {
-        const timeSlots: string[] = [];
-
-        for (let hour = 0; hour < 24; hour++) {
-            // Format hour to always be two digits
-            const formattedHour = hour.toString().padStart(2, '0');
-
-            // Loop through minutes (0, 15, 30, 45)
-            for (let minute = 0; minute < 60; minute += 15) {
-                // Format minute to always be two digits
-                const formattedMinute = minute.toString().padStart(2, '0');
-                // Push the formatted time to the timeSlots array
-                timeSlots.push(`${formattedHour}:${formattedMinute}`);
-            }
-        }
-
-        return timeSlots;
-    }
-
 
     ngOnInit(): void {
         this.route.params.subscribe(params => {
@@ -258,15 +241,6 @@ export class FormEditComponent implements OnInit{
     protected readonly BookingFormDto = BookingFormDto;
     protected readonly FormTypeEnum = FormTypeEnum;
     protected readonly FormDTO = FormDTO;
-    selectedHour: any;
-    days: string[] = [
-        'Lunedi',
-        'Martedi',
-        'Mercoldi',
-        'Giovedi',
-        'Venerdi',
-        'Sabato',
-        'Domenica'
-    ];
+
 
 }

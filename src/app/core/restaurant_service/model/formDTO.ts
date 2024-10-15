@@ -9,30 +9,38 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { HolidaysDTO } from './holidaysDTO';
+import { OpeningHoursDTO } from './openingHoursDTO';
+import { SpecialDayDTO } from './specialDayDTO';
 
 export interface FormDTO { 
     formId?: number;
     formCode?: string;
     formName?: string;
-    redirectPage?: string;
-    creationDate?: Date;
+    outputNameForCustomer?: string;
     branchCode?: string;
     branchName?: string;
     branchAddress?: string;
-    formStatus?: FormDTO.FormStatusEnum;
-    tag?: Array<string>;
+    redirectPage?: string;
+    creationDate?: Date;
     formType?: FormDTO.FormTypeEnum;
+    formStatus?: FormDTO.FormStatusEnum;
+    logo?: Array<string>;
+    regularOpeningHours?: Array<OpeningHoursDTO>;
+    specialDays?: Array<SpecialDayDTO>;
+    holidays?: Array<HolidaysDTO>;
+    tag?: Array<string>;
 }
 export namespace FormDTO {
+    export type FormTypeEnum = 'PRENOTAZIONE' | 'RACCOLTA_DATI';
+    export const FormTypeEnum = {
+        PRENOTAZIONE: 'PRENOTAZIONE' as FormTypeEnum,
+        RACCOLTADATI: 'RACCOLTA_DATI' as FormTypeEnum
+    };
     export type FormStatusEnum = 'ATTIVO' | 'SOSPESO' | 'CANCELLATO';
     export const FormStatusEnum = {
         ATTIVO: 'ATTIVO' as FormStatusEnum,
         SOSPESO: 'SOSPESO' as FormStatusEnum,
         CANCELLATO: 'CANCELLATO' as FormStatusEnum
-    };
-    export type FormTypeEnum = 'PRENOTAZIONE' | 'RACCOLTA_DATI';
-    export const FormTypeEnum = {
-        PRENOTAZIONE: 'PRENOTAZIONE' as FormTypeEnum,
-        RACCOLTADATI: 'RACCOLTA_DATI' as FormTypeEnum
     };
 }

@@ -569,34 +569,34 @@ export const demoCourseContent = `
 </p>
 <table class="table table-striped table-bordered">
     <thead>
-        <tr>
+        <tr class="border-b">
             <th>Wrestler</th>
             <th>Origin</th>
             <th>Finisher</th>
         </tr>
     </thead>
     <tbody>
-        <tr>
+        <tr class="border-b">
             <td>Bret “The Hitman” Hart</td>
             <td>Calgary, AB</td>
             <td>Sharpshooter</td>
         </tr>
-        <tr>
+        <tr class="border-b">
             <td>Stone Cold Steve Austin</td>
             <td>Austin, TX</td>
             <td>Stone Cold Stunner</td>
         </tr>
-        <tr>
+        <tr class="border-b">
             <td>Randy Savage</td>
             <td>Sarasota, FL</td>
             <td>Elbow Drop</td>
         </tr>
-        <tr>
+        <tr class="border-b">
             <td>Vader</td>
             <td>Boulder, CO</td>
             <td>Vader Bomb</td>
         </tr>
-        <tr>
+        <tr class="border-b">
             <td>Razor Ramon</td>
             <td>Chuluota, FL</td>
             <td>Razor’s Edge</td>
