@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, inject, Input, OnInit} from '@angular/core';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {NgForOf, NgIf, NgStyle} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -7,6 +7,9 @@ import {StateManagerProvider} from "../../../../../../../state_manager/state-man
 import {TranslocoModule} from "@ngneat/transloco";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatButtonModule} from "@angular/material/button";
+import {MatDialog} from "@angular/material/dialog";
+import {AddGeneralTimeRangeComponent} from "./add-general-time-range/add-general-time-range.component";
+import {UtilityForm} from "../../utility";
 import {FormControllerService, FormDTO, OpeningHoursDTO, TimeRange} from "../../../../../../../core/restaurant_service";
 
 @Component({
@@ -30,38 +33,19 @@ export class RegularopeningconfComponent implements OnInit {
 
     timeSlot: string[];
     constructor(private _formControllerService : FormControllerService,
-                private _stateManagerProvider : StateManagerProvider) {
+                private _stateManagerProvider : StateManagerProvider,
+                private dialog: MatDialog) {
     }
 
     @Input() form: FormDTO;
 
     ngOnInit(): void {
         this.form.regularOpeningHours = this.form.regularOpeningHours.sort((a, b) => a.id - b.id);
-        this.timeSlot = this.generateTimeSlots();
+        this.timeSlot = UtilityForm.generateTimeSlots();
         this.timeSlotMap.clear();
     }
 
     @Input() tooltip: string;
-
-    generateTimeSlots(): string[] {
-        const timeSlots: string[] = [];
-
-        for (let hour = 0; hour < 24; hour++) {
-            // Format hour to always be two digits
-            const formattedHour = hour.toString().padStart(2, '0');
-
-            // Loop through minutes (0, 15, 30, 45)
-            for (let minute = 0; minute < 60; minute += 15) {
-                // Format minute to always be two digits
-                const formattedMinute = minute.toString().padStart(2, '0');
-
-                // Push the formatted time to the timeSlots array
-                timeSlots.push(`${formattedHour}:${formattedMinute}`);
-            }
-        }
-
-        return timeSlots;
-    }
 
     changeStatusOfCurrentDay(formCode: string,
                              dayOfWeek: "MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY" | "SUNDAY") {
@@ -190,7 +174,8 @@ export class RegularopeningconfComponent implements OnInit {
 
     }
 
-    saveConfiguration(formCode: string, timeSlotMap: Map<string, TimeRange>) {
+    saveConfiguration(formCode: string,
+                      timeSlotMap: Map<string, TimeRange>) {
 
         //i take the list from the map and i'll use to send to the update method
         this._formControllerService.updateTimeRange(Array.from(timeSlotMap.values()), formCode, 'body').subscribe(
@@ -198,6 +183,17 @@ export class RegularopeningconfComponent implements OnInit {
             this._stateManagerProvider.showToast('Configurazione oraria modificata con successo', 'success');
             this.timeSlotMap.clear();
             this.form = formDTO;
+            this.form.regularOpeningHours = this.form.regularOpeningHours.sort((a, b) => a.id - b.id);
+        });
+    }
+    createGeneralConf() {
+        const dialogReference = this.dialog.open(AddGeneralTimeRangeComponent, {
+            data:{form: this.form},
+            width: '550px',
+        });
+
+        dialogReference.componentInstance.formUpdated.subscribe((modifiedForm: FormDTO) => {
+            this.form = modifiedForm;
             this.form.regularOpeningHours = this.form.regularOpeningHours.sort((a, b) => a.id - b.id);
         });
     }

@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Crea configurazione per {{form.formName}}</h2>
+<mat-dialog-content>
+    <div class="flex items-center">
+        <div class="relative pr-2">
+            <select id="1" (change)="onSelectChange($event, 0)" class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                <option *ngFor="let hour of timeSlot">
+                    {{ hour }}
+                </option>
+            </select>
+        </div>
+        <div class="relative">
+            <select id="2" (change)="onSelectChange($event, 1)" class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                <option *ngFor="let hour of timeSlot">
+                    {{ hour }}
+                </option>
+            </select>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>No</button>
+    <button mat-button mat-dialog-close (click)="createDateRange()" [disabled]="!isDisabled()">Crea</button>
+</mat-dialog-actions>
