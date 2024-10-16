@@ -74,7 +74,7 @@ export class AuthSignInComponent implements OnInit {
         this._authService.signInWithUserCode(this.signInForm.value).subscribe(
             () => {
 
-                this._stateManager.showToast('Accesso eseguito 😎', 'success', '#3B3F5C');
+                this._stateManager.showToast('Accesso eseguito 😎', 'success');
 
                 const redirectURL = this._activatedRoute.snapshot.queryParamMap.get('redirectURL') || '/signed-in-redirect';
                 this._router.navigateByUrl(redirectURL);

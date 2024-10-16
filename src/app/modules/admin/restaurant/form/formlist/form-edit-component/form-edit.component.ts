@@ -1,5 +1,4 @@
 import {ChangeDetectionStrategy, Component, inject, Input, OnInit} from '@angular/core';
-import {FormControllerService, FormDTO} from "../../../../../../core/restaurant_service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {environment} from "../../../../../../../environments/environment";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
@@ -22,10 +21,12 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatListModule} from "@angular/material/list";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatGridListModule} from "@angular/material/grid-list";
-import {TablehoursconfComponent} from "./tablehoursconf/tablehoursconf.component";
+import {RegularopeningconfComponent} from "./regular-opening-cong/regularopeningconf.component";
 import {SpecialdayscomponentComponent} from "./specialdayscomponent/specialdayscomponent.component";
-import FormStatusEnum = FormDTO.FormStatusEnum;
 import FormTypeEnum = BookingFormDto.FormTypeEnum;
+
+import FormStatusEnum = FormDTO.FormStatusEnum;
+import {FormControllerService, FormDTO} from "../../../../../../core/restaurant_service";
 
 @Component({
     selector: 'form-edit-component',
@@ -49,7 +50,7 @@ import FormTypeEnum = BookingFormDto.FormTypeEnum;
         MatListModule,
         MatCheckboxModule,
         MatGridListModule,
-        TablehoursconfComponent,
+        RegularopeningconfComponent,
         SpecialdayscomponentComponent
     ],
     standalone: true,
@@ -98,7 +99,7 @@ export class FormEditComponent implements OnInit{
         textarea.select();
         document.execCommand('copy');
         document.body.removeChild(textarea);
-        this._stateManager.showToast('Testo copiato', 'success', '#3B3F5C');
+        this._stateManager.showToast('Testo copiato', 'success');
     }
 
     getFormUrl(formCode: string) {
@@ -121,8 +122,7 @@ export class FormEditComponent implements OnInit{
 
                 this._stateManager
                     .showToast('Redirect page aggiornata [' + formDto.redirectPage + ']',
-                        'success',
-                        '#3B3F5C');
+                        'success');
 
                 this._restaurantStateManager.retrieveFormByBranchCode();
 

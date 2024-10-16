@@ -125,7 +125,7 @@ export class BookingPageComponent implements OnInit{
     }
 
     changeMenuSort(name: string) {
-        this._dataproviderService.showToast('Prenotazioni ordinate per ' + name ,'info', '#3B3F5C' )
+        this._dataproviderService.showToast('Prenotazioni ordinate per ' + name ,'info')
     }
 
     onDateChange(event: MatDatepickerInputEvent<Date>): void {
@@ -133,7 +133,7 @@ export class BookingPageComponent implements OnInit{
 
         // Format the selected date to Italian format 'dd/MM/yyyy'
         const formattedDate = this._datePipe.transform(this.selectedDate, 'dd/MM/yyyy', 'it-IT');
-        this._dataproviderService.showToast('Prenotazioni del ' + formattedDate,'success', '#3B3F5C' );
+        this._dataproviderService.showToast('Prenotazioni del ' + formattedDate,'success');
     }
 
     openModal() {

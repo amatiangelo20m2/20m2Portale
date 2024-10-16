@@ -3,9 +3,9 @@ import {MatIconModule} from "@angular/material/icon";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {NgForOf} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {FormDTO} from "../../../../../../../core/restaurant_service";
 import {MatButtonModule} from "@angular/material/button";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {FormDTO} from "../../../../../../../core/restaurant_service";
 
 @Component({
     selector: 'app-specialdayscomponent',

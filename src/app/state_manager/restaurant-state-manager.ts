@@ -15,7 +15,6 @@ export class RestaurantStateManagerProvider {
         let branchCodeRetrieved = localStorage.getItem("branchCode") ?? '';
 
         console.log("Retrieve form for branch with code " + branchCodeRetrieved);
-
         this._formController
             .retrieveByBranchCode(branchCodeRetrieved)
             .subscribe(formList => {

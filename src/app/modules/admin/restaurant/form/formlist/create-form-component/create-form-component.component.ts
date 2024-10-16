@@ -164,7 +164,7 @@ export class CreateFormComponentComponent implements OnInit, OnDestroy{
         })
     ).subscribe(
         (branchResponseEntity) => {
-          this._stateManagerProvider.showToast('Form creato con successo', 'success', '#3B3F5C');
+          this._stateManagerProvider.showToast('Form creato con successo', 'success');
           this._restaurantStateManager.retrieveFormByBranchCode();
 
           this.closePanel();

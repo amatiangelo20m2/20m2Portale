@@ -137,9 +137,9 @@ export class FormControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addTimeRange(body: TimeRange, formCode: string, dayOfWeek: string, observe?: 'body', reportProgress?: boolean): Observable<FormDTO>;
-    public addTimeRange(body: TimeRange, formCode: string, dayOfWeek: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FormDTO>>;
-    public addTimeRange(body: TimeRange, formCode: string, dayOfWeek: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FormDTO>>;
+    public addTimeRange(body: TimeRange, formCode: string, dayOfWeek: string, observe?: 'body', reportProgress?: boolean): Observable<TimeRange>;
+    public addTimeRange(body: TimeRange, formCode: string, dayOfWeek: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<TimeRange>>;
+    public addTimeRange(body: TimeRange, formCode: string, dayOfWeek: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<TimeRange>>;
     public addTimeRange(body: TimeRange, formCode: string, dayOfWeek: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
@@ -174,7 +174,7 @@ export class FormControllerService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.request<FormDTO>('put',`${this.basePath}/api/form/add/timerange/${encodeURIComponent(String(formCode))}/${encodeURIComponent(String(dayOfWeek))}`,
+        return this.httpClient.request<TimeRange>('put',`${this.basePath}/api/form/add/timerange/${encodeURIComponent(String(formCode))}/${encodeURIComponent(String(dayOfWeek))}`,
             {
                 body: body,
                 withCredentials: this.configuration.withCredentials,
@@ -240,17 +240,17 @@ export class FormControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteOpeningHourConfById(formCode: string, timeRangeCode: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteOpeningHourConfById(formCode: string, timeRangeCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteOpeningHourConfById(formCode: string, timeRangeCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteOpeningHourConfById(formCode: string, timeRangeCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteOpeningHourConfByCode(formCode: string, timeRangeCode: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteOpeningHourConfByCode(formCode: string, timeRangeCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteOpeningHourConfByCode(formCode: string, timeRangeCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteOpeningHourConfByCode(formCode: string, timeRangeCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (formCode === null || formCode === undefined) {
-            throw new Error('Required parameter formCode was null or undefined when calling deleteOpeningHourConfById.');
+            throw new Error('Required parameter formCode was null or undefined when calling deleteOpeningHourConfByCode.');
         }
 
         if (timeRangeCode === null || timeRangeCode === undefined) {
-            throw new Error('Required parameter timeRangeCode was null or undefined when calling deleteOpeningHourConfById.');
+            throw new Error('Required parameter timeRangeCode was null or undefined when calling deleteOpeningHourConfByCode.');
         }
 
         let headers = this.defaultHeaders;
@@ -547,6 +547,114 @@ export class FormControllerService {
 
         return this.httpClient.request<any>('put',`${this.basePath}/api/form/switchOpeningStatus/${encodeURIComponent(String(formCode))}/${encodeURIComponent(String(dayOfWeek))}`,
             {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param formCode
+     * @param timeRangeCode
+     * @param timeRange
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateOpeningHourConfByCode(formCode: string, timeRangeCode: string, timeRange: TimeRange, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public updateOpeningHourConfByCode(formCode: string, timeRangeCode: string, timeRange: TimeRange, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public updateOpeningHourConfByCode(formCode: string, timeRangeCode: string, timeRange: TimeRange, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public updateOpeningHourConfByCode(formCode: string, timeRangeCode: string, timeRange: TimeRange, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (formCode === null || formCode === undefined) {
+            throw new Error('Required parameter formCode was null or undefined when calling updateOpeningHourConfByCode.');
+        }
+
+        if (timeRangeCode === null || timeRangeCode === undefined) {
+            throw new Error('Required parameter timeRangeCode was null or undefined when calling updateOpeningHourConfByCode.');
+        }
+
+        if (timeRange === null || timeRange === undefined) {
+            throw new Error('Required parameter timeRange was null or undefined when calling updateOpeningHourConfByCode.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (timeRange !== undefined && timeRange !== null) {
+            queryParameters = queryParameters.set('timeRange', <any>timeRange);
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<any>('put',`${this.basePath}/api/form/update/openinghourconf/${encodeURIComponent(String(formCode))}/${encodeURIComponent(String(timeRangeCode))}`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param body
+     * @param formCode
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public updateTimeRange(body: Array<TimeRange>, formCode: string, observe?: 'body', reportProgress?: boolean): Observable<FormDTO>;
+    public updateTimeRange(body: Array<TimeRange>, formCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FormDTO>>;
+    public updateTimeRange(body: Array<TimeRange>, formCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FormDTO>>;
+    public updateTimeRange(body: Array<TimeRange>, formCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (body === null || body === undefined) {
+            throw new Error('Required parameter body was null or undefined when calling updateTimeRange.');
+        }
+
+        if (formCode === null || formCode === undefined) {
+            throw new Error('Required parameter formCode was null or undefined when calling updateTimeRange.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected != undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.request<FormDTO>('put',`${this.basePath}/api/form/update/timerange/${encodeURIComponent(String(formCode))}`,
+            {
+                body: body,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

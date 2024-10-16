@@ -107,7 +107,7 @@ export class RedirectFormComponent implements OnInit {
                 .findcustomerByPhoneAndPrefix(country, phone)
                 .subscribe((customer) => {
                     if (customer) {
-                        this._stateManager.showToast('Bentornato ' + customer.firstName, 'success', '#3B3F5C');
+                        this._stateManager.showToast('Bentornato ' + customer.firstName, 'success');
                         this.showCustomerForm = true;
                         this.formRedirect.patchValue({
                             postalCode: customer.postalCode,

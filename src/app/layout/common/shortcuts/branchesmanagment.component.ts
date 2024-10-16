@@ -312,7 +312,7 @@ export class BranchesmanagmentComponent implements OnInit, OnDestroy
         this._communicationStateManager.resetConf();
         this.closePanel();
 
-        this._stateManagerProvider.showToast('Ora stai lavorando su ' + branch.name, 'success', '#3B3F5C');
+        this._stateManagerProvider.showToast('Ora stai lavorando su ' + branch.name, 'success');
         this.router.navigate(['/']).then(r => true);
 
 

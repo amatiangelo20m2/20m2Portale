@@ -79,9 +79,10 @@ export class StateManagerProvider {
         this.currentBranchesList.next(this.currentBranchesList.value);
     }
 
-    showToast(message: string, iconType : SweetAlertIcon, color: string){
+    showToast(message: string,
+              iconType : SweetAlertIcon){
         const toast = Swal.mixin({
-            background: color,
+            background: '#3B3F5C',
             toast: true,
             position: 'bottom',
             showConfirmButton: false,

@@ -120,11 +120,11 @@ export class FormlistComponent implements OnInit, OnDestroy {
         this._formController.editForm(form).subscribe(
             formDto => {
 
-                this._stateManagerProvider.showToast(formDto.formName + ' è ora in stato ' + formDto.formStatus, 'success', '#3B3F5C');
+                this._stateManagerProvider.showToast(formDto.formName + ' è ora in stato ' + formDto.formStatus, 'success');
 
             },
             error => {
-                this._stateManagerProvider.showToast('error: ' + error.toString(), 'success', '#3B3F5C');
+                this._stateManagerProvider.showToast('error: ' + error.toString(), 'success');
 
             }
         );
@@ -134,11 +134,11 @@ export class FormlistComponent implements OnInit, OnDestroy {
         form.formStatus = FormStatusEnum.CANCELLATO;
         this._formController.editForm(form).subscribe(
             formDto => {
-                this._stateManagerProvider.showToast(formDto.formName + ' è ora in stato ' + formDto.formStatus, 'success', '#3B3F5C');
+                this._stateManagerProvider.showToast(formDto.formName + ' è ora in stato ' + formDto.formStatus, 'success');
                 this._restaurantStateManagerProvider.retrieveFormByBranchCode();
             },
             error => {
-                this._stateManagerProvider.showToast('error: ' + error.toString(), 'success', '#3B3F5C');
+                this._stateManagerProvider.showToast('error: ' + error.toString(), 'success');
 
             }
         );
@@ -162,7 +162,7 @@ export class FormlistComponent implements OnInit, OnDestroy {
         textarea.select();
         document.execCommand('copy');
         document.body.removeChild(textarea);
-        this._stateManagerProvider.showToast('Testo copiato', 'success', '#3B3F5C');
+        this._stateManagerProvider.showToast('Testo copiato', 'success');
     }
 
 
@@ -171,7 +171,7 @@ export class FormlistComponent implements OnInit, OnDestroy {
         formCopied.formId = 0;
         formCopied.formName = formCopied.formName + '_copia';
         this._formController.createForm(formCopied).subscribe(value => {
-            this._stateManagerProvider.showToast('Form duplicato con successo', 'success', '#3B3F5C');
+            this._stateManagerProvider.showToast('Form duplicato con successo', 'success');
             this._restaurantStateManagerProvider.retrieveFormByBranchCode();
         });
     }
