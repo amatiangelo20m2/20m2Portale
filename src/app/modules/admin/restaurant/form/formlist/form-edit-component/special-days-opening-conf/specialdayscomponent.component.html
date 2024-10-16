@@ -1,0 +1,182 @@
+
+<div class="bg-card w-60 rounded border shadow-md">
+    <!-- Tags panel header -->
+    <!--    <div class="m-3 mr-2 flex items-center">-->
+    <!--        <div class="flex items-center">-->
+    <!--            <mat-icon-->
+    <!--                    class="icon-size-5"-->
+    <!--                    [svgIcon]="-->
+    <!--                                            'heroicons_solid:magnifying-glass'-->
+    <!--                                        "-->
+    <!--            ></mat-icon>-->
+    <!--            <div class="ml-2">-->
+    <!--                <input-->
+    <!--                        class="w-full min-w-0 border-0 py-1"-->
+    <!--                        type="text"-->
+    <!--                        placeholder="Enter tag name"-->
+    <!--                        (input)="filterTags($event)"-->
+    <!--                        (keydown)="filterTagsInputKeyDown($event)"-->
+    <!--                        [maxLength]="30"-->
+    <!--                        #newTagInput-->
+    <!--                />-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--        <button-->
+    <!--                class="ml-1"-->
+    <!--                mat-icon-button-->
+    <!--                (click)="toggleTagsEditMode()"-->
+    <!--        >-->
+    <!--            @if (!tagsEditMode) {{-->
+    <!--            <mat-icon-->
+    <!--                class="icon-size-5"-->
+    <!--                [svgIcon]="-->
+    <!--                    'heroicons_solid:pencil-square'-->
+    <!--                "-->
+    <!--            ></mat-icon>-->
+    <!--            }}-->
+    <!--            @if (tagsEditMode) {{-->
+    <!--            <mat-icon-->
+    <!--                class="icon-size-5"-->
+    <!--                [svgIcon]="'heroicons_solid:check'"-->
+    <!--            ></mat-icon>-->
+    <!--            }}-->
+    <!--        </button>-->
+    <!--    </div>-->
+    <!--    <div-->
+    <!--            class="flex max-h-64 flex-col overflow-y-auto border-t py-2"-->
+    <!--    >-->
+    <!--        &lt;!&ndash; Tags &ndash;&gt;-->
+    <!--        @if (!tagsEditMode) {{-->
+    <!--        @for (-->
+    <!--            tag of filteredTags;-->
+    <!--            track trackByFn($index, tag)-->
+    <!--        ) {{-->
+    <!--        <div-->
+    <!--                class="flex h-10 min-h-10 cursor-pointer items-center pl-1 pr-4 hover:bg-hover"-->
+    <!--                (click)="toggleTaskTag(tag)"-->
+    <!--                matRipple-->
+    <!--        >-->
+    <!--            <mat-checkbox-->
+    <!--                    class="pointer-events-none flex h-10 min-h-10 items-center"-->
+    <!--                    [checked]="true"-->
+    <!--                    [color]="'primary'"-->
+    <!--                    [disableRipple]="true"-->
+    <!--            >-->
+    <!--            </mat-checkbox>-->
+    <!--            <div class="ml-1">-->
+    <!--                {{ tag.title }}-->
+    <!--            </div>-->
+    <!--        </div>-->
+    <!--        }}-->
+    <!--        }}-->
+    <!--        &lt;!&ndash; Tags editing &ndash;&gt;-->
+    <!--        @if (tagsEditMode) {{        <div class="space-y-2 py-2">-->
+    <!--            @for (-->
+    <!--                tag of filteredTags;-->
+    <!--                track trackByFn($index, tag)-->
+    <!--            ) {{-->
+    <!--        <div class="flex items-center">-->
+    <!--            <mat-form-field-->
+    <!--                    class="fuse-mat-dense mx-4 w-full"-->
+    <!--                    [subscriptSizing]="-->
+    <!--                                                        'dynamic'-->
+    <!--                                                    "-->
+    <!--            >-->
+    <!--                <input-->
+    <!--                        matInput-->
+    <!--                        [value]="tag.title"-->
+    <!--                        (input)="updateTagTitle(tag,$event)"-->
+    <!--                />-->
+    <!--                <button-->
+    <!--                        mat-icon-button-->
+    <!--                        (click)="deleteTag(tag)"-->
+    <!--                        matSuffix-->
+    <!--                >-->
+    <!--                    <mat-icon-->
+    <!--                            class="ml-2 icon-size-5"-->
+    <!--                            [svgIcon]="-->
+    <!--                                                                'heroicons_solid:trash'-->
+    <!--                                                            "-->
+    <!--                    ></mat-icon>-->
+    <!--                </button>-->
+    <!--            </mat-form-field>-->
+    <!--        </div>-->
+    <!--        }}-->
+    <!--        </div>-->
+    <!--        }}-->
+    <!--        &lt;!&ndash; Create tag &ndash;&gt;-->
+    <!--        @if ( shouldShowCreateTagButton(newTagInput.value) ) {{-->
+    <!--        <div-->
+    <!--            class="-ml-0.5 flex h-10 min-h-10 cursor-pointer items-center pl-4 pr-3 leading-none hover:bg-hover"-->
+    <!--            (click)="-->
+    <!--                createTag(newTagInput.value);-->
+    <!--                newTagInput.value = ''-->
+    <!--            "-->
+    <!--            matRipple-->
+    <!--        >-->
+    <!--            <mat-icon-->
+    <!--                class="mr-2 icon-size-5"-->
+    <!--                [svgIcon]="-->
+    <!--                    'heroicons_solid:plus-circle'-->
+    <!--                "-->
+    <!--            ></mat-icon>-->
+    <!--            <div class="break-all">-->
+    <!--                Create "<b>{{-->
+    <!--        newTagInput.value-->
+    <!--        }}</b-->
+    <!--                                            >"-->
+    <!--                                        </div>-->
+    <!--                                    </div>-->
+    <!--        }}-->
+    <!--    </div>-->
+</div>
+<table class="table-auto w-full">
+    <thead>
+    <tr class="border-b">
+        <th class="w-1/7 text-left p-2">Giorno</th>
+        <th class="w-1/7 text-left p-2"></th>
+        <th class="w-1/7 text-left p-2">Ora Apertura/Ora Chiusura</th>
+        <th class="w-4/7 text-left text-sm">Descrizione</th>
+        <th class="w-1/7 text-left text-sm"><app-create-special-day-component></app-create-special-day-component></th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="border-b">
+        <td class="p-2">12/12/2024</td>
+        <td class="p-2"><mat-icon style="cursor: pointer;"
+                                  [svgIcon]="'heroicons_outline:plus'"
+                                  [matTooltip]="tooltip || 'Aggiungi fascia oraria'"></mat-icon></td>
+
+        <td class="p-2">
+            <div class="flex items-center mb-4">
+                <div class="relative pr-2">
+                    <select id="1"
+                            class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                        <option *ngFor="let hour of timeSlot" [value]="hour">{{ hour }}</option>
+                    </select>
+                </div>
+
+                <div class="relative">
+                    <select id="2"
+                            class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                        <option *ngFor="let hour of timeSlot" [value]="hour">{{ hour }}</option>
+                    </select>
+                </div>
+                <span class="inline-flex items-center justify-center px-2 py-1.5 ms-3 text-xs font-medium text-black bg-blue-950 rounded dark:bg-gray-700 dark:text-green-400">
+                                            <mat-icon [svgIcon]="'heroicons_outline:moon'" class="icon-size-4" style="color: white;"></mat-icon>
+                                        </span>
+                <mat-icon style="cursor: pointer;" [svgIcon]="'heroicons_outline:trash'"
+                          [matTooltip]="tooltip || 'Cancella'"
+                          (click)="deleteTimeRange(form.formCode)"></mat-icon>
+
+
+            </div>
+        </td>
+        <td>
+            sdaf
+        </td>
+
+    </tr>
+    </tbody>
+</table>

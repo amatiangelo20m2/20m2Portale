@@ -22,11 +22,13 @@ import {MatListModule} from "@angular/material/list";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {RegularopeningconfComponent} from "./regular-opening-cong/regularopeningconf.component";
-import {SpecialdayscomponentComponent} from "./specialdayscomponent/specialdayscomponent.component";
+import {SpecialdayscomponentComponent} from "./special-days-opening-conf/specialdayscomponent.component";
 import FormTypeEnum = BookingFormDto.FormTypeEnum;
 
 import FormStatusEnum = FormDTO.FormStatusEnum;
 import {FormControllerService, FormDTO} from "../../../../../../core/restaurant_service";
+import {MatCardModule} from "@angular/material/card";
+import {DateTime} from "luxon";
 
 @Component({
     selector: 'form-edit-component',
@@ -51,7 +53,8 @@ import {FormControllerService, FormDTO} from "../../../../../../core/restaurant_
         MatCheckboxModule,
         MatGridListModule,
         RegularopeningconfComponent,
-        SpecialdayscomponentComponent
+        SpecialdayscomponentComponent,
+        MatCardModule
     ],
     standalone: true,
     changeDetection: ChangeDetectionStrategy.Default
@@ -243,4 +246,8 @@ export class FormEditComponent implements OnInit{
     protected readonly FormDTO = FormDTO;
 
 
+    dateTime : DateTime = DateTime.now();
+    getMonth(number: number) {
+        return this.dateTime.month + number;
+    }
 }

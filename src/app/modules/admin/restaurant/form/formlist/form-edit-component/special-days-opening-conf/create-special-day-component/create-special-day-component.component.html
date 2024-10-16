@@ -1,0 +1,70 @@
+<button
+        mat-icon-button
+        [matTooltip]="tooltip || 'Crea Prenotazione'"
+        (click)="openPanel()"
+        #shortcutsOrigin>
+    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+</button>
+
+<ng-template #shortcutsPanel>
+    <div class="fixed inset-0 sm:static sm:inset-auto flex flex-col sm:min-w-90 sm:w-90 sm:rounded-2xl overflow-hidden shadow-lg" style="background: white">
+
+        <!-- Header -->
+        <div class="flex shrink-0 items-center py-4 pr-4 pl-6 bg-accent text-on-primary">
+            <div class="sm:hidden -ml-1 mr-3">
+                <button  (click)="close()" mat-icon-button>
+                    <mat-icon
+
+                            class="icon-size-5 text-current"
+                            [svgIcon]="'heroicons_solid:x-mark'"></mat-icon>
+                </button>
+            </div>
+            <div class="flex items-center text-sm font-medium leading-10">
+                <span class="">Configura apertura/chiusura straordinaria</span>
+            </div>
+            <div class="ml-auto">
+
+            </div>
+
+        </div>
+
+        <ng-container>
+            <form class="px-6 pt-1 pb-6" [formGroup]="specialDayForm">
+
+                <mat-calendar class="w-full"></mat-calendar>
+<!--                <mat-form-field class="w-full">-->
+<!--                    <mat-label>Tipologia</mat-label>-->
+<!--                    <mat-select [formControlName]="'formType'">-->
+<!--                        <mat-option *ngFor="let type of formType" [value]="type">-->
+<!--                            {{ type }}-->
+<!--                        </mat-option>-->
+<!--                    </mat-select>-->
+<!--                </mat-form-field>-->
+                <mat-form-field class="w-full">
+                    <mat-label>Descrizione</mat-label>
+                    <input
+                            matInput
+                            [formControlName]="'description'"
+                            required>
+                </mat-form-field>
+                <mat-slide-toggle class="pl-6">Aperto</mat-slide-toggle>
+                <div class="flex items-center justify-end mt-4">
+                    <button
+                            class="mr-2"
+                            mat-flat-button
+                            type="button"
+                            (click)="close()">
+                        Chiudi
+                    </button>
+                    <button
+                            mat-flat-button
+                            [color]="'primary'"
+                            type="button"
+                            (click)="createConf()">
+                        Crea
+                    </button>
+                </div>
+            </form>
+        </ng-container>
+    </div>
+</ng-template>

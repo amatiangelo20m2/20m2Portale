@@ -7,8 +7,12 @@
                 (click)="createGeneralConf()"
                 mat-button [matTooltip]="tooltip || 'Configura apertura generale'" >
             <mat-icon [svgIcon]="'heroicons_outline:clock'" style="color: #1e88dc"></mat-icon></button></th>
-        <th class="w-1/10 text-left text-sm items-center"><button (click)="saveConfiguration(form.formCode, timeSlotMap)" mat-button [matTooltip]="tooltip || 'Salva configurazione'" >
-            <mat-icon [svgIcon]="'feather:save'" [ngStyle]="{'color': timeSlotMap.size > 0 ? '#1e88dc' : '#898989'}"></mat-icon></button></th>
+
+        <th class="w-1/10 text-left text-sm items-center">
+            <button (click)="saveConfiguration(form.formCode, timeSlotMap)" mat-button [matTooltip]="tooltip || 'Salva configurazione'" [ngClass]="{ 'animate-bounce': timeSlotMap.size > 0 }">
+            <mat-icon [svgIcon]="'feather:save'" [ngStyle]="{'color': timeSlotMap.size > 0 ? '#1e88dc' : '#898989'}"></mat-icon>
+            </button>
+        </th>
     </tr>
     </thead>
     <tbody *ngFor="let regOpeningDay of form.regularOpeningHours" >

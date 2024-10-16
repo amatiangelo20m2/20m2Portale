@@ -1,6 +1,6 @@
-import {Component, inject, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {NgForOf, NgIf, NgStyle} from "@angular/common";
+import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
 import {StateManagerProvider} from "../../../../../../../state_manager/state-manager-provider.service";
@@ -10,7 +10,10 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatDialog} from "@angular/material/dialog";
 import {AddGeneralTimeRangeComponent} from "./add-general-time-range/add-general-time-range.component";
 import {UtilityForm} from "../../utility";
-import {FormControllerService, FormDTO, OpeningHoursDTO, TimeRange} from "../../../../../../../core/restaurant_service";
+import { FormControllerService,
+    FormDTO,
+    OpeningHoursDTO,
+    TimeRange } from "../../../../../../../core/restaurant_service";
 
 @Component({
     selector: 'app-regularopeningconf',
@@ -25,7 +28,8 @@ import {FormControllerService, FormDTO, OpeningHoursDTO, TimeRange} from "../../
         NgIf,
         MatTooltipModule,
         MatButtonModule,
-        NgStyle
+        NgStyle,
+        NgClass
     ],
     standalone: true
 })
