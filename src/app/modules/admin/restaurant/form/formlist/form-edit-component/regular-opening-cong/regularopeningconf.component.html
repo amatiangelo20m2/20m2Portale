@@ -2,21 +2,20 @@
     <thead>
     <tr class="border-b">
         <th class="w-2/10 text-left p-2">Giorno</th>
-        <th class="w-1/10 text-left p-2"></th>
         <th class="w-1/10 text-left text-sm"></th>
-        <th class="w-5/10 text-left text-sm">Ora Apertura/Ora Chiusura</th>
+        <th class="w-5/10 text-left text-sm">Ora Apertura/Ora Chiusura<button
+                (click)="saveConfiguration(form.formCode, timeSlotMap)"
+                mat-button [matTooltip]="tooltip || 'Configura apertura generale'" >
+            <mat-icon [svgIcon]="'heroicons_outline:clock'" style="color: #1e88dc"></mat-icon></button></th>
         <th class="w-1/10 text-left text-sm items-center"><button (click)="saveConfiguration(form.formCode, timeSlotMap)" mat-button [matTooltip]="tooltip || 'Salva configurazione'" >
             <mat-icon [svgIcon]="'feather:save'" [ngStyle]="{'color': timeSlotMap.size > 0 ? '#1e88dc' : '#898989'}"></mat-icon></button></th>
     </tr>
     </thead>
     <tbody *ngFor="let regOpeningDay of form.regularOpeningHours" >
     <tr class="border-b">
-        <td class="p-2">{{ t('days.' + regOpeningDay.dayOfWeek.toLowerCase()) }}</td>
-        <td class="p-2">
-            <mat-slide-toggle checked="{{!regOpeningDay.closed}}"
-                              (click)="changeStatusOfCurrentDay(form.formCode, regOpeningDay.dayOfWeek)"
-                              color="primary"></mat-slide-toggle>
-        </td>
+        <td class="p-2"><mat-slide-toggle checked="{{!regOpeningDay.closed}}"
+                                          (click)="changeStatusOfCurrentDay(form.formCode, regOpeningDay.dayOfWeek)"
+                                          color="primary"></mat-slide-toggle>{{ t('days.' + regOpeningDay.dayOfWeek.toLowerCase()) }}</td>
         <td *ngIf="!regOpeningDay.closed"><mat-icon style="cursor: pointer;"
                                                     [svgIcon]="'heroicons_outline:plus'"
                                                     [matTooltip]="tooltip || 'Aggiungi fascia oraria'"

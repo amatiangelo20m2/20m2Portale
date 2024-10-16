@@ -82,9 +82,9 @@ export class RegularopeningconfComponent implements OnInit {
     isCurrentDateTimeGreaterThan18(openingTimeHour: number, timeRangeCode: string) : boolean {
 
         if(this.timeSlotMap.has(timeRangeCode)){
-            return this.timeSlotMap.get(timeRangeCode).openingHour > 17;
+            return this.timeSlotMap.get(timeRangeCode).openingHour > 15;
         }else{
-            return openingTimeHour > 17;
+            return openingTimeHour > 15;
         }
 
 
