@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, TemplateRef, ViewChild, ViewContainerRef} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, TemplateRef, ViewChild, ViewContainerRef} from '@angular/core';
 import {MatButton, MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
 import {FormsModule, ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
@@ -13,11 +13,11 @@ import {Overlay, OverlayRef} from "@angular/cdk/overlay";
 import {Subject} from "rxjs";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {DateTime} from "luxon";
 import {DateformatitaPipe} from "../../../../../../../pages/components/pipe/dateformatita.pipe";
-import {FormControllerService, SpecialdayconfFormCodeBody} from "../../../../../../../../core/restaurant_service";
-import {SpecialdayscomponentComponent} from "../specialdayscomponent.component";
 import {MatListModule} from "@angular/material/list";
+import {FormControllerService, FormDTO} from "../../../../../../../../core/restaurant_service";
+import {DateTime} from "luxon";
+import {StateManagerProvider} from "../../../../../../../../state_manager/state-manager-provider.service";
 
 @Component({
   selector: 'app-create-special-day-component',
@@ -47,18 +47,24 @@ export class CreateSpecialDayComponentComponent implements OnInit {
   @ViewChild('shortcutsOrigin') private _shortcutsOrigin: MatButton;
   @ViewChild('shortcutsPanel') private _shortcutsPanel: TemplateRef<any>;
 
+  @Input() formCode : string;
+  @Output() formUpdated = new EventEmitter<FormDTO>();
 
   private _overlayRef: OverlayRef;
   private _unsubscribeAll: Subject<any> = new Subject<any>();
+
   @Input() tooltip: string;
+
   specialDayForm: UntypedFormGroup;
 
   isClosed : boolean = false;
 
   constructor(private _overlay: Overlay,
+              private _dataServiceManager : StateManagerProvider,
               private _formBuilder: UntypedFormBuilder,
               private _formController : FormControllerService,
               private _viewContainerRef: ViewContainerRef) {
+
   }
 
   ngOnInit(): void {
@@ -67,7 +73,7 @@ export class CreateSpecialDayComponentComponent implements OnInit {
       isOpen: [true]
     });
   }
-  openPanel(): void {
+  openPanelAddSpecialDayConf(): void {
     if ( !this._shortcutsPanel || !this._shortcutsOrigin ) {
       return;
     }
@@ -124,13 +130,20 @@ export class CreateSpecialDayComponentComponent implements OnInit {
 
   createConf() {
 
-
+      console.log('date selected : ' + this.selectedDate);
+      this._formController.addSpecialDayConf(this.formCode,
+          this.selectedDate.toISODate(),
+          this.isClosed,
+          this.specialDayForm.get('description').value, 'body').subscribe(form => {
+            this._dataServiceManager.showToast('Configurazione insertita correttamente', 'success');
+            this.formUpdated.emit(form);
+      });
   }
 
   close(): void {
     this._overlayRef.detach();
   }
 
-  selectedDate: Date;
+  selectedDate: DateTime;
 
 }

@@ -7,5 +7,4 @@ export * from './holidaysDTO';
 export * from './openingHoursDTO';
 export * from './restaurantDTO';
 export * from './specialDayDTO';
-export * from './specialdayconfFormCodeBody';
 export * from './timeRange';

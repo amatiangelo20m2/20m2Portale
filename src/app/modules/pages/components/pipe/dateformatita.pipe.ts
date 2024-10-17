@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import {DateTime} from "luxon";
 
 @Pipe({
   name: 'dateformatita',
@@ -6,13 +7,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class DateformatitaPipe implements PipeTransform {
 
-    transform(value: Date | string): string {
-        if (!value) return '';
+    transform(date: DateTime): string {
+        if (!date) return '';
 
-        const date = new Date(value);
-
-        if (isNaN(date.getTime())) {
-            return ''; // return empty if date is invalid
+        if (!date.isValid) {
+            return ''; // return empty if the date is invalid
         }
 
         const daysOfWeek = [
@@ -26,10 +25,10 @@ export class DateformatitaPipe implements PipeTransform {
             'SETTEMBRE', 'OTTOBRE', 'NOVEMBRE', 'DICEMBRE'
         ];
 
-        const dayOfWeek = daysOfWeek[date.getDay()]; // Get the day of the week
-        const dayNumber = date.getDate(); // Get the day of the month
-        const monthName = months[date.getMonth()]; // Get the month name
-        const year = date.getFullYear(); // Get the year
+        const dayOfWeek = daysOfWeek[date.weekday - 1]; // Luxon weekday is 1-based
+        const dayNumber = date.day; // Day of the month
+        const monthName = months[date.month - 1]; // Month name
+        const year = date.year; // Year
 
         return `${dayOfWeek} ${dayNumber} ${monthName} ${year}`;
     }

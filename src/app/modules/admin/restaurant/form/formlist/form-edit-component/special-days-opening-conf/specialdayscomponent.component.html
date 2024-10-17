@@ -5,46 +5,58 @@
         <th class="w-1/7 text-left p-2"></th>
         <th class="w-1/7 text-left p-2">Ora Apertura/Ora Chiusura</th>
         <th class="w-4/7 text-left text-sm">Descrizione</th>
-        <th class="w-1/7 text-left text-sm"><app-create-special-day-component></app-create-special-day-component></th>
+        <th class="w-1/7 text-left text-sm"><app-create-special-day-component [formCode]="form.formCode"></app-create-special-day-component></th>
 
     </tr>
     </thead>
-    <tbody>
+    <tbody *ngFor="let specialDay of form.specialDays" >
     <tr class="border-b">
-        <td class="p-2">12/12/2024</td>
-        <td class="p-2"><mat-icon style="cursor: pointer;"
-                                  [svgIcon]="'heroicons_outline:plus'"
-                                  [matTooltip]="tooltip || 'Aggiungi fascia oraria'"></mat-icon></td>
-
-        <td class="p-2">
-            <div class="flex items-center mb-4">
+        <td class="p-2"><mat-slide-toggle checked="{{!specialDay.closed}}">
+            <!--                                          (click)="changeStatusOfCurrentDay(form.formCode, specialDay.dayOfWeek)" color="primary">-->
+        </mat-slide-toggle>{{specialDay.specialDate}}</td>
+        <td *ngIf="!specialDay.closed"><mat-icon style="cursor: pointer;"
+                                                 [svgIcon]="'heroicons_outline:plus'"
+                                                 [matTooltip]="tooltip || 'Aggiungi fascia oraria'">
+            <!--                                                    (click)="createTimeRange(form.formCode, regOpeningDay)"-->
+        </mat-icon></td>
+        <td class="flex flex-col p-2" *ngFor="let timeRange of specialDay.timeRanges">
+            <div class="flex items-center" *ngIf="!specialDay.closed">
                 <div class="relative pr-2">
-                    <select id="1"
-                            class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
-                        <option *ngFor="let hour of timeSlot" [value]="hour">{{ hour }}</option>
+                    <select id="1" (change)="onSelectChange(form.formCode, timeRange.timeRangeCode, $event, 0)" class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                        <option *ngFor="let hour of timeSlot" [attr.selected]="hour === getOpeningFormattedTime(timeRange) ? true : null">
+                            {{ hour }}
+                        </option>
                     </select>
                 </div>
-
                 <div class="relative">
-                    <select id="2"
-                            class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
-                        <option *ngFor="let hour of timeSlot" [value]="hour">{{ hour }}</option>
+                    <select id="2" class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                        <!--                            (change)="onSelectChange(form.formCode,timeRange.timeRangeCode,$event,1)" -->
+
+                        <option *ngFor="let hour of timeSlot" [attr.selected]="hour === getClosingFormattedTime(timeRange) ? true : null">
+                            {{ hour }}
+                        </option>
                     </select>
                 </div>
-                <span class="inline-flex items-center justify-center px-2 py-1.5 ms-3 text-xs font-medium text-black bg-blue-950 rounded dark:bg-gray-700 dark:text-green-400">
+                <div *ngIf="isCurrentDateTimeGreaterThan18(timeRange.openingHour, timeRange.timeRangeCode); else elseBlock">
+
+                    <span class="inline-flex items-center justify-center px-2 py-1.5 ms-3 text-xs font-medium text-black bg-blue-950 rounded dark:bg-gray-700 dark:text-green-400">
                                             <mat-icon [svgIcon]="'heroicons_outline:moon'" class="icon-size-4" style="color: white;"></mat-icon>
                                         </span>
-                <mat-icon style="cursor: pointer;" [svgIcon]="'heroicons_outline:trash'"
-                          [matTooltip]="tooltip || 'Cancella'"
-                          (click)="deleteTimeRange(form.formCode)"></mat-icon>
+                </div>
+                <ng-template #elseBlock>
+                    <span class="inline-flex items-center justify-center px-2 py-1.5 ms-3 text-xs font-medium text-black bg-yellow-100 rounded dark:bg-gray-700 dark:text-green-400">
+                                            <mat-icon [svgIcon]="'heroicons_outline:sun'" class="icon-size-4" style="color: red"></mat-icon>
+                                        </span>
 
+                </ng-template>
+                <mat-icon style="cursor: pointer;" [svgIcon]="'heroicons_outline:trash'" (click)="deleteTimeRange(form.formCode, timeRange.timeRangeCode)"
+                          [matTooltip]="tooltip || 'Cancella'"></mat-icon>
 
             </div>
         </td>
-        <td>
-            sdaf
-        </td>
-
+        <td></td>
+        <td>{{ specialDay.description }}</td>
     </tr>
+
     </tbody>
 </table>

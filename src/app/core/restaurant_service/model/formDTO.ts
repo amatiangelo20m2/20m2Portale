@@ -12,6 +12,7 @@
 import { HolidaysDTO } from './holidaysDTO';
 import { OpeningHoursDTO } from './openingHoursDTO';
 import { SpecialDayDTO } from './specialDayDTO';
+import { TimeRange } from './timeRange';
 
 export interface FormDTO { 
     formId?: number;
@@ -29,7 +30,9 @@ export interface FormDTO {
     regularOpeningHours?: Array<OpeningHoursDTO>;
     specialDays?: Array<SpecialDayDTO>;
     holidays?: Array<HolidaysDTO>;
-    tag?: Array<string>;
+    daylyTimeWorkingRange?: TimeRange;
+    nightTimeWorkingRange?: TimeRange;
+    cutterTimeForRanges?: number;
 }
 export namespace FormDTO {
     export type FormTypeEnum = 'PRENOTAZIONE' | 'RACCOLTA_DATI';

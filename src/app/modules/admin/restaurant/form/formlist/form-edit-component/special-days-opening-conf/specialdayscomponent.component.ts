@@ -1,21 +1,20 @@
-import {ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MatIconModule} from "@angular/material/icon";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatButtonModule} from "@angular/material/button";
 import {MatTooltipModule} from "@angular/material/tooltip";
-import {FormDTO} from "../../../../../../../core/restaurant_service";
 import {UtilityForm} from "../../utility";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatInputModule} from "@angular/material/input";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatRippleModule} from "@angular/material/core";
-
-
 import {
     CreateSpecialDayComponentComponent
 } from "./create-special-day-component/create-special-day-component.component";
+import {DateformatitaPipe} from "../../../../../../pages/components/pipe/dateformatita.pipe";
+import {FormControllerService, FormDTO, TimeRange} from "../../../../../../../core/restaurant_service";
 
 @Component({
     selector: 'app-specialdayscomponent',
@@ -32,7 +31,9 @@ import {
         MatInputModule,
         MatCheckboxModule,
         MatRippleModule,
-        CreateSpecialDayComponentComponent
+        CreateSpecialDayComponentComponent,
+        DateformatitaPipe,
+        NgIf
     ],
     standalone: true
 })
@@ -48,14 +49,32 @@ export class SpecialdayscomponentComponent implements OnInit {
     }
 
 
-    constructor() {
+    constructor(private _formControllerService : FormControllerService) {
     }
 
 
+    deleteTimeRange(formCode: string, timeRangeCode: string) {
+        this._formControllerService.deleteConfHoursRangeByCode(formCode, timeRangeCode).subscribe(value => {
+            console.log("Cancellato: " + timeRangeCode);
+            this.form.specialDays.forEach(specialDay => {
+                    specialDay.timeRanges = specialDay.timeRanges.filter(range => range.timeRangeCode !== timeRangeCode);
+            })
+        });
+    }
 
-    selectedDate: Date | null = null;
+    onSelectChange(formCode: string, timeRangeCode: string, $event: Event, number: number) {
 
-    deleteTimeRange(formCode: string) {
+    }
 
+    getOpeningFormattedTime(timeRange: TimeRange) {
+        return "";
+    }
+
+    isCurrentDateTimeGreaterThan18(openingHour: number, timeRangeCode: string) {
+        return false;
+    }
+
+    getClosingFormattedTime(timeRange: TimeRange) {
+        return "";
     }
 }

@@ -1,36 +1,33 @@
 
 <div *ngIf="form" class="w-full" style="background: white">
-    <div class="flex items-center justify-between">
-        <div class="ml-1 flex items-center whitespace-nowrap bg-card p-5">
+    <div class="flex items-center justify-between sticky top-0 bg-white z-10">
+        <div class="md:flex flex-col">
+            <h2 class="tracking-wide text-3xl lg:text-2xl font-bold ml-5">Modifica {{form.formName}} (#{{form.formCode}})</h2>
+            <div class="flex items-center whitespace-nowrap bg-card ml-5">
 
-            <a [routerLink]="['/dashboard']" class="ml-1">dashboard</a>
-            <mat-icon
+                <a [routerLink]="['/dashboard']" class="ml-1">dashboard</a>
+                <mat-icon
                     class="text-secondary icon-size-5"
                     [svgIcon]="'heroicons_mini:chevron-right'"
-            ></mat-icon>
-            <a [routerLink]="['/dashboard/forms']" class="ml-1">forms</a>
-            <mat-icon
+                ></mat-icon>
+                <a [routerLink]="['/dashboard/forms']" class="ml-1">forms</a>
+                <mat-icon
                     class="text-secondary icon-size-5"
                     [svgIcon]="'heroicons_mini:chevron-right'"
-            ></mat-icon>
-            <a class="ml-1 text-primary-500">{{form.formCode}}</a>
-
+                ></mat-icon>
+                <a class="ml-1 text-primary-500">{{form.formCode}}</a>
+            </div>
         </div>
         <button
-                class="fuse-alert-dismiss-button p-10"
-                mat-icon-button
-                [routerLink]="['/dashboard/forms']">
+            class="fuse-alert-dismiss-button p-10"
+            mat-icon-button
+            [routerLink]="['/dashboard/forms']">
             <mat-icon [svgIcon]="'heroicons_solid:x-mark'"></mat-icon>
         </button>
     </div>
-
-
     <body class="bg-cream text-charcoal min-h-screen leading-normal overflow-x-hidden lg:overflow-auto">
     <main>
         <section class="bg-cream-lighter p-4 shadow"  style="background: white">
-            <div class="md:flex">
-                <h2 class="tracking-wide text-3xl lg:text-3xl mb-6 font-bold">Modifica {{form.formName}} (#{{form.formCode}})</h2>
-            </div>
             <form>
                 <div class="md:flex mb-8">
                     <div class="md:w-1/4">
@@ -44,28 +41,19 @@
                             <input [(ngModel)]="form.formName" class="w-full shadow-inner p-2 border border-grey-300" type="text" name="name" placeholder="Ex: Form Prenotazione">
                         </div>
                         <div class="mb-4">
-                            <label class="block uppercase tracking-wide text-xs font-bold">Link</label>
-                            <input class="w-full shadow-inner p-2 border border-grey-300" type="text">
-                        </div>
-                        <div class="mb-4">
-                            <label class="block uppercase tracking-wide text-xs font-bold">Thank you page personalizzata</label>
-                            <input [(ngModel)]="form.redirectPage" class="w-full shadow-inner p-2 border border-grey-300" type="text" name="name" placeholder="https://www.archimedia.it/blog/thank-you-page-cos%C3%A8-perch%C3%A9-farla-ed-esempi-per-trovare-ispirazione">
-                        </div>
-                        <div class="mb-4">
                             <label class="block uppercase tracking-wide text-xs font-bold">Titolo personalizzato</label>
                             <input [(ngModel)]="form.outputNameForCustomer" class="w-full shadow-inner p-2 border border-grey-300" type="text" name="name" placeholder="Ex: Form Prenotazione">
                         </div>
 
-                        <!--                        <div class="md:flex mb-4">-->
-                        <!--                            <div class="md:flex-1 md:pr-3">-->
-                        <!--                                <label class="block uppercase tracking-wide text-charcoal-darker text-xs font-bold"></label>-->
-                        <!--                                <input class="w-full shadow-inner p-4 border-0" type="text" name="lat" placeholder="30.0455542">-->
-                        <!--                            </div>-->
-                        <!--                            <div class="md:flex-1 md:pl-3">-->
-                        <!--                                <label class="block uppercase tracking-wide text-charcoal-darker text-xs font-bold"></label>-->
-                        <!--                                <input class="w-full shadow-inner p-4 border-0" type="text" name="lon" placeholder="-99.1405168">-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
+                        <div class="mb-4">
+                            <label class="block uppercase tracking-wide text-xs font-bold">Thank you page personalizzata</label>
+                            <input [(ngModel)]="form.redirectPage" class="w-full shadow-inner p-2 border border-grey-300" type="text" name="name" placeholder="https://www.archimedia.it/blog/thank-you-page-cos%C3%A8-perch%C3%A9-farla-ed-esempi-per-trovare-ispirazione">
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="block uppercase tracking-wide text-xs font-bold">Link</label>
+                            <input class="w-full shadow-inner p-2 border border-grey-300" type="text" [value]="this.getFormUrl(form.formCode)" disabled>
+                        </div>
                     </div>
                 </div>
                 <mat-divider style="padding: 4px"></mat-divider>
@@ -100,7 +88,61 @@
                     <div class="md:w-1/4">
                         <div class="uppercase tracking-wide text-sm">Configura Apertura</div>
                         <p class="pb-2 text-xs font-light text-red">Configura apertura dal lunedi alla domenica creando fasce orarie, slot di prenotazione e chiusure</p>
+                        <div class="uppercase tracking-wide text-sm">FASCE ORARIE</div>
+                        <p class="pb-2 text-xs font-light text-red">Configura qui quelle che per te saranno le fascie orarie</p>
+
+                        <div class="flex flex-col">
+                            <div class="flex flex-row">
+                                  <span class="inline-flex items-center justify-center px-2 py-1.5 ms-3 text-xs font-medium text-black bg-yellow-100 rounded dark:bg-gray-700 dark:text-green-400">
+                                            <mat-icon [svgIcon]="'heroicons_outline:sun'" class="icon-size-4" style="color: red"></mat-icon>
+                                        </span>
+                                <div class="relative pr-2">
+                                    <select id="1" class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                                        <option *ngFor="let hour of timeSlot">
+                                            {{ hour }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="relative">
+                                    <select id="2" class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                                        <option *ngFor="let hour of timeSlot">
+                                            {{ hour }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flex flex-row">
+                                   <span class="inline-flex items-center justify-center px-2 py-1.5 ms-3 text-xs font-medium text-black bg-blue-950 rounded dark:bg-gray-700 dark:text-green-400">
+                                            <mat-icon [svgIcon]="'heroicons_outline:moon'" class="icon-size-4" style="color: white;"></mat-icon>
+                                        </span>
+                                <div class="relative pr-2">
+                                    <select id="3" class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                                        <option *ngFor="let hour of timeSlot">
+                                            {{ hour }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div class="relative">
+                                    <select id="4" class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                                        <option *ngFor="let hour of timeSlot">
+                                            {{ hour }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="uppercase tracking-wide text-sm">TAGLIO</div>
+                        <p class="pb-2 text-xs font-light text-red">Dividi le fasce orarie in slot temporali predefiniti. Impostando il campo a 0 ogni non verrà effettuata alcuna divisione</p>
+
+                        <div class="relative">
+                            <select id="cutter"  class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                                <option *ngFor="let cutter of cutterValue" [value]="form.cutterTimeForRanges">
+                                    {{ cutter }} min
+                                </option>
+                            </select>
+                        </div>
                     </div>
+
 
                     <div class="md:flex-1 mt-2 mb:mt-0 md:px-3">
                         <app-regularopeningconf [form]="form"></app-regularopeningconf>
@@ -125,13 +167,11 @@
                 </div>
                 <div class="md:flex mb-8">
                     <div class="md:w-1/4">
-                        <div class="uppercase tracking-wide text-sm">Generale</div>
+                        <div class="uppercase tracking-wide text-sm">Anteprima form</div>
                         <p class="text-xs font-light text-red"></p>
                     </div>
-                    <div class="md:flex-1 mt-2 mb:mt-0 md:px-3 lg:w-100">
-                        <mat-card class="demo-inline-calendar-card w-1/2">
-                            <mat-calendar></mat-calendar>
-                        </mat-card>
+                    <div class="flex flex-col flex-auto items-center sm:justify-center min-w-0">
+                        <app-booking-form [formDTO]="form"></app-booking-form>
                     </div>
                 </div>
             </form>

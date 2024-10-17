@@ -13,7 +13,8 @@ import { TimeRange } from './timeRange';
 
 export interface SpecialDayDTO { 
     id?: number;
-    specialDate?: Date;
+    specialDayCode?: string;
+    specialDate?: string;
     timeRanges?: Array<TimeRange>;
     description?: string;
     closed?: boolean;

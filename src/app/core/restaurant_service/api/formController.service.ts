@@ -18,7 +18,6 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { FormDTO } from '../model/formDTO';
-import { SpecialdayconfFormCodeBody } from '../model/specialdayconfFormCodeBody';
 import { TimeRange } from '../model/timeRange';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -112,20 +111,24 @@ export class FormControllerService {
     /**
      *
      *
-     * @param body
+     * @param formCode
+     * @param specialDay
      * @param isClosed
      * @param descriptionSpecialDay
-     * @param formCode
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addSpecialDayConf(body: SpecialdayconfFormCodeBody, isClosed: boolean, descriptionSpecialDay: string, formCode: string, observe?: 'body', reportProgress?: boolean): Observable<FormDTO>;
-    public addSpecialDayConf(body: SpecialdayconfFormCodeBody, isClosed: boolean, descriptionSpecialDay: string, formCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FormDTO>>;
-    public addSpecialDayConf(body: SpecialdayconfFormCodeBody, isClosed: boolean, descriptionSpecialDay: string, formCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FormDTO>>;
-    public addSpecialDayConf(body: SpecialdayconfFormCodeBody, isClosed: boolean, descriptionSpecialDay: string, formCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addSpecialDayConf(formCode: string, specialDay: string, isClosed: boolean, descriptionSpecialDay: string, observe?: 'body', reportProgress?: boolean): Observable<FormDTO>;
+    public addSpecialDayConf(formCode: string, specialDay: string, isClosed: boolean, descriptionSpecialDay: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FormDTO>>;
+    public addSpecialDayConf(formCode: string, specialDay: string, isClosed: boolean, descriptionSpecialDay: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FormDTO>>;
+    public addSpecialDayConf(formCode: string, specialDay: string, isClosed: boolean, descriptionSpecialDay: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling addSpecialDayConf.');
+        if (formCode === null || formCode === undefined) {
+            throw new Error('Required parameter formCode was null or undefined when calling addSpecialDayConf.');
+        }
+
+        if (specialDay === null || specialDay === undefined) {
+            throw new Error('Required parameter specialDay was null or undefined when calling addSpecialDayConf.');
         }
 
         if (isClosed === null || isClosed === undefined) {
@@ -136,11 +139,10 @@ export class FormControllerService {
             throw new Error('Required parameter descriptionSpecialDay was null or undefined when calling addSpecialDayConf.');
         }
 
-        if (formCode === null || formCode === undefined) {
-            throw new Error('Required parameter formCode was null or undefined when calling addSpecialDayConf.');
-        }
-
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+        if (specialDay !== undefined && specialDay !== null) {
+            queryParameters = queryParameters.set('specialDay', <any>specialDay);
+        }
         if (isClosed !== undefined && isClosed !== null) {
             queryParameters = queryParameters.set('isClosed', <any>isClosed);
         }
@@ -161,16 +163,10 @@ export class FormControllerService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
-            'application/json'
         ];
-        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
-        if (httpContentTypeSelected != undefined) {
-            headers = headers.set('Content-Type', httpContentTypeSelected);
-        }
 
         return this.httpClient.request<FormDTO>('put',`${this.basePath}/api/form/add/specialdayconf/${encodeURIComponent(String(formCode))}`,
             {
-                body: body,
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -240,6 +236,52 @@ export class FormControllerService {
     /**
      *
      *
+     * @param formCode
+     * @param specialDayConfCode
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public addTimeRangeSpecialDay(formCode: string, specialDayConfCode: string, observe?: 'body', reportProgress?: boolean): Observable<FormDTO>;
+    public addTimeRangeSpecialDay(formCode: string, specialDayConfCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FormDTO>>;
+    public addTimeRangeSpecialDay(formCode: string, specialDayConfCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FormDTO>>;
+    public addTimeRangeSpecialDay(formCode: string, specialDayConfCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (formCode === null || formCode === undefined) {
+            throw new Error('Required parameter formCode was null or undefined when calling addTimeRangeSpecialDay.');
+        }
+
+        if (specialDayConfCode === null || specialDayConfCode === undefined) {
+            throw new Error('Required parameter specialDayConfCode was null or undefined when calling addTimeRangeSpecialDay.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<FormDTO>('put',`${this.basePath}/api/form/add/timerange/specialday/${encodeURIComponent(String(formCode))}/${encodeURIComponent(String(specialDayConfCode))}`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
      * @param body
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -292,17 +334,17 @@ export class FormControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public deleteOpeningHourConfByCode(formCode: string, timeRangeCode: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public deleteOpeningHourConfByCode(formCode: string, timeRangeCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public deleteOpeningHourConfByCode(formCode: string, timeRangeCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public deleteOpeningHourConfByCode(formCode: string, timeRangeCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public deleteConfHoursRangeByCode(formCode: string, timeRangeCode: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public deleteConfHoursRangeByCode(formCode: string, timeRangeCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public deleteConfHoursRangeByCode(formCode: string, timeRangeCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public deleteConfHoursRangeByCode(formCode: string, timeRangeCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (formCode === null || formCode === undefined) {
-            throw new Error('Required parameter formCode was null or undefined when calling deleteOpeningHourConfByCode.');
+            throw new Error('Required parameter formCode was null or undefined when calling deleteConfHoursRangeByCode.');
         }
 
         if (timeRangeCode === null || timeRangeCode === undefined) {
-            throw new Error('Required parameter timeRangeCode was null or undefined when calling deleteOpeningHourConfByCode.');
+            throw new Error('Required parameter timeRangeCode was null or undefined when calling deleteConfHoursRangeByCode.');
         }
 
         let headers = this.defaultHeaders;
@@ -319,7 +361,7 @@ export class FormControllerService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('delete',`${this.basePath}/api/form/delete/openinghourconf/${encodeURIComponent(String(formCode))}/${encodeURIComponent(String(timeRangeCode))}`,
+        return this.httpClient.request<any>('delete',`${this.basePath}/api/form/delete/configurationrangehours/${encodeURIComponent(String(formCode))}/${encodeURIComponent(String(timeRangeCode))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

@@ -38,20 +38,6 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 icon: 'heroicons_outline:book-open',
                 link: '/dashboard/forms',
             },
-            {
-                id: 'apps.calendar',
-                title: 'Form raccolta dati',
-                type: 'basic',
-                icon: 'heroicons_outline:identification',
-                link: '/dashboard/datacollect',
-            },
-            {
-                id: 'apps.calendar',
-                title: 'Tag',
-                type: 'basic',
-                icon: 'heroicons_outline:tag',
-                link: '/dashboard/tags',
-            }
         ],
     },
     {
@@ -68,6 +54,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 type : 'basic',
                 icon : 'heroicons_outline:device-phone-mobile',
                 link : '/dashboard/whatsapp',
+            },
+            {
+                id: 'apps.datacollect',
+                title: 'Form raccolta dati',
+                type: 'basic',
+                icon: 'heroicons_outline:identification',
+                link: '/dashboard/datacollect',
             },
             {
                 id   : 'app.promo',
@@ -95,6 +88,13 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 icon : 'heroicons_outline:user-group',
                 link : '/dashboard/customers',
             },
+            {
+                id: 'apps.calendar',
+                title: 'Tag',
+                type: 'basic',
+                icon: 'heroicons_outline:tag',
+                link: '/dashboard/tags',
+            }
 
         ],
     }, {

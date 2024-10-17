@@ -141,7 +141,6 @@ export class CreateBookingComponentComponent {
             formCode: '',
             branchCode: this.branchCode,
             formStatus: FormStatusEnum.ATTIVO,
-            tag: [],
         };
 
 

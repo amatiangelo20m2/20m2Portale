@@ -150,7 +150,7 @@ export class CreateFormComponentComponent implements OnInit, OnDestroy{
       formCode: '',
       branchCode: this.branchCode,
       formStatus: FormStatusEnum.ATTIVO,
-      tag: [],
+      cutterTimeForRanges: 0,
     };
 
 

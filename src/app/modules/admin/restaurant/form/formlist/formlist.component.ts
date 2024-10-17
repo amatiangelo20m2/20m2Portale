@@ -18,13 +18,11 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {FormpipePipe} from "./formpipe.pipe";
 import {MatChipsModule} from "@angular/material/chips";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
-import {FormEditComponent} from "./form-edit-component/form-edit.component";
 import {FormControllerService, FormDTO} from "../../../../../core/restaurant_service";
 import {RestaurantStateManagerProvider} from "../../../../../state_manager/restaurant-state-manager";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {BranchesmanagmentComponent} from "../../../../../layout/common/shortcuts/branchesmanagment.component";
 import {CreateFormComponentComponent} from "./create-form-component/create-form-component.component";
-import {environment} from "../../../../../../environments/environment";
 import {clone} from "lodash-es";
 import {QRCodeComponentModal} from "../qrcode/q-r-code-component-modal.component";
 import FormStatusEnum = FormDTO.FormStatusEnum;
@@ -56,7 +54,6 @@ import {UtilityForm} from "./utility";
         FormpipePipe,
         MatChipsModule,
         MatAutocompleteModule,
-        FormEditComponent,
         MatDialogModule,
         NgTemplateOutlet,
         BranchesmanagmentComponent,

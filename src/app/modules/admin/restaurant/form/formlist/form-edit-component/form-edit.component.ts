@@ -14,7 +14,6 @@ import {MatInputModule} from "@angular/material/input";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {MatSlideToggleChange, MatSlideToggleModule} from "@angular/material/slide-toggle";
-import {BookingFormDto} from "../../../../../../core/booking";
 import {StateManagerProvider} from "../../../../../../state_manager/state-manager-provider.service";
 import {RestaurantStateManagerProvider} from "../../../../../../state_manager/restaurant-state-manager";
 import {MatDatepickerModule} from "@angular/material/datepicker";
@@ -26,6 +25,8 @@ import {SpecialdayscomponentComponent} from "./special-days-opening-conf/special
 import {FormControllerService, FormDTO} from "../../../../../../core/restaurant_service";
 import {MatCardModule} from "@angular/material/card";
 import FormStatusEnum = FormDTO.FormStatusEnum;
+import {UtilityForm} from "../utility";
+import {BookingFormComponent} from "../../../../../customer/forms/booking-form/booking-form.component";
 
 @Component({
     selector: 'form-edit-component',
@@ -51,7 +52,8 @@ import FormStatusEnum = FormDTO.FormStatusEnum;
         MatGridListModule,
         RegularopeningconfComponent,
         SpecialdayscomponentComponent,
-        MatCardModule
+        MatCardModule,
+        BookingFormComponent
     ],
     standalone: true,
     changeDetection: ChangeDetectionStrategy.Default
@@ -83,6 +85,8 @@ export class FormEditComponent implements OnInit{
             );
             // Additional logic to fetch form details using formCode
         });
+
+        this.timeSlot = UtilityForm.generateTimeSlots();
     }
 
     copyToClipboard(formCode: string, type: number) {
@@ -212,5 +216,7 @@ export class FormEditComponent implements OnInit{
     }
 
     protected readonly FormDTO = FormDTO;
+    timeSlot: String[] = [];
+    cutterValue: number[] = [0,15,30,45,60,90,120];
 
 }

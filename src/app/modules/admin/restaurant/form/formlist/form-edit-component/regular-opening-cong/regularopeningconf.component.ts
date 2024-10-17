@@ -67,16 +67,6 @@ export class RegularopeningconfComponent implements OnInit {
 
     }
 
-    isCurrentDateTimeGreaterThan18(openingTimeHour: number, timeRangeCode: string) : boolean {
-
-        if(this.timeSlotMap.has(timeRangeCode)){
-            return this.timeSlotMap.get(timeRangeCode).openingHour > 15;
-        }else{
-            return openingTimeHour > 15;
-        }
-
-
-    }
 
     createTimeRange(formCode: string,
                     dayOfWeek: OpeningHoursDTO) {
@@ -107,7 +97,7 @@ export class RegularopeningconfComponent implements OnInit {
     deleteTimeRange(formCode: string,
                     confCode: string,
                     dayOfWeek: "MONDAY" | "TUESDAY" | "WEDNESDAY" | "THURSDAY" | "FRIDAY" | "SATURDAY" | "SUNDAY") {
-        this._formControllerService.deleteOpeningHourConfByCode(formCode, confCode).subscribe(value => {
+        this._formControllerService.deleteConfHoursRangeByCode(formCode, confCode).subscribe(value => {
             console.log("Cancellato: " + confCode);
             this.form.regularOpeningHours.forEach(openingHoursDTO => {
                 if(openingHoursDTO.dayOfWeek == dayOfWeek){
@@ -237,6 +227,15 @@ export class RegularopeningconfComponent implements OnInit {
             this.resetConfiguration(this.form.formCode);
         }
 
+    }
+
+    isCurrentDateTimeGreaterThan18(openingTimeHour: number, timeRangeCode: string) : boolean {
+
+        if(this.timeSlotMap.has(timeRangeCode)){
+            return this.timeSlotMap.get(timeRangeCode).openingHour > 13;
+        }else{
+            return openingTimeHour > 13;
+        }
     }
 
     isThisFormHasAnyConf() {
