@@ -25,138 +25,6 @@
     </div>
 
 
-    <!--    <div class="flex justify-between p-4">-->
-    <!--        <div class="flex flex-col">-->
-    <!--            <div class="flex items-center justify-between">-->
-    <!--                <div class="rounded-full px-3 py-0.5 text-sm font-semibold"-->
-    <!--                     [ngClass]="{-->
-    <!--                    'bg-blue-100 text-blue-800 dark:bg-blue-500 dark:text-blue-50': form.formType == FormDTO.FormTypeEnum.PRENOTAZIONE,-->
-    <!--                    'bg-teal-100 text-teal-800 dark:bg-teal-500 dark:text-teal-50': form.formType == FormDTO.FormTypeEnum.RACCOLTADATI,-->
-    <!--                }">-->
-    <!--                    {{ form.formType }} FORM-->
-    <!--                </div>-->
-    <!--                <div class="pr-1"></div>-->
-    <!--                <div class="rounded-full px-3 py-0.5 text-sm font-semibold"-->
-    <!--                     [ngClass]="{-->
-    <!--                    'bg-green-100 text-green-800 dark:bg-green-500 dark:text-green-50': form.formStatus == FormStatusEnum.ATTIVO,-->
-    <!--                    'bg-pink-100 text-pink-800 dark:bg-pink-500 dark:text-pink-50': form.formStatus == FormStatusEnum.CANCELLATO,-->
-    <!--                    'bg-amber-100 text-amber-800 dark:bg-amber-500 dark:text-amber-50': form.formStatus == FormStatusEnum.SOSPESO,-->
-    <!--                }">-->
-    <!--                    {{ form.formStatus }}-->
-    <!--                </div>-->
-    <!--                <div class="pl-3"><p><mat-slide-toggle [checked]="form.formStatus == FormStatusEnum.ATTIVO" (change)="onToggle($event)"></mat-slide-toggle></p></div>-->
-
-
-
-    <!--            </div>-->
-    <!--            <div class="mt-4 text-lg font-medium pl-2">-->
-    <!--                {{ form.formName }}-->
-    <!--            </div>-->
-    <!--            <div class="my-6 h-1 border-t-2"></div>-->
-    <!--        </div>-->
-
-
-    <!--    </div>-->
-
-    <!--    <div class="pl-2">-->
-    <!--        Url Form-->
-    <!--    </div>-->
-    <!--    <div class="flex items-center mt-0.5 p-2">-->
-    <!--        <input type="text" [value]="getFormUrl(form.formCode)" [disabled]="true" class="text-secondary line-clamp-2 border rounded px-2 py-1 w-full" />-->
-    <!--        <button [matTooltip]="tooltip || 'Copia URL'" (click)="copyToClipboard(form.formCode,1)" class="ml-2 bg-white text rounded px-3 py-1">-->
-    <!--            <mat-icon [svgIcon]="'heroicons_outline:clipboard-document-check'"></mat-icon>-->
-    <!--        </button>-->
-    <!--    </div>-->
-    <!--    <div class="pl-2">-->
-    <!--        Url Form integrato in Iframe-->
-    <!--    </div>-->
-    <!--    <div class="flex items-center mt-0.5 p-2">-->
-    <!--        <input type="text" [value]="getIframeUrl(form.formCode)" [disabled]="true" class="text-secondary line-clamp-2 border rounded px-2 py-1 w-full" />-->
-    <!--        <button [matTooltip]="tooltip || 'Copia codice Iframe'" (click)="copyToClipboard(form.formCode, 0)" class="ml-2 bg-white text rounded px-3 py-1">-->
-    <!--            <mat-icon [svgIcon]="'heroicons_outline:clipboard-document-check'"></mat-icon>-->
-    <!--        </button>-->
-    <!--    </div>-->
-    <!--    <div class="pl-2">-->
-    <!--        Redirect Page-->
-    <!--    </div>-->
-    <!--    <div class="flex items-center mt-0.5 p-2">-->
-    <!--        <input type="text" [(ngModel)]="form.redirectPage" class="text-secondary line-clamp-2 border rounded px-2 py-1 w-full" />-->
-    <!--        <button [matTooltip]="tooltip || 'Aggiorna redirect/thank you page'" (click)="updateRedirectPage(form)" class="ml-2 bg-white text-white rounded px-3 py-1">-->
-    <!--            <mat-icon [svgIcon]="'heroicons_outline:check-circle'" style="color: green;"></mat-icon>-->
-    <!--        </button>-->
-    <!--    </div>-->
-
-    <!--    <div class="pl-2 pb-2">Tags</div>-->
-    <!--    <form class="p-2">-->
-    <!--        <mat-form-field class="w-full">-->
-
-    <!--            <mat-chip-grid #chipGrid aria-label="Inserisci form tag">-->
-    <!--                <mat-chip-row *ngFor="let tagDefault of tags; trackBy: trackByFn" (removed)="remove(tagDefault)">-->
-    <!--                    {{tagDefault}}-->
-    <!--                    <button matChipRemove [attr.aria-label]="'remove ' + tagDefault">-->
-    <!--                        <mat-icon>cancel</mat-icon>-->
-    <!--                    </button>-->
-    <!--                </mat-chip-row>-->
-    <!--            </mat-chip-grid>-->
-    <!--            <input-->
-    <!--                name="currentTag"-->
-    <!--                placeholder="Nuovo tag.."-->
-    <!--                #fruitInput-->
-    <!--                [(ngModel)]="currentTag"-->
-    <!--                [matChipInputFor]="chipGrid"-->
-    <!--                [matAutocomplete]="auto"-->
-    <!--                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
-    <!--                (matChipInputTokenEnd)="add($event)"-->
-    <!--            />-->
-    <!--            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">-->
-    <!--                <mat-option *ngFor="let fruit of filteredFruits; trackBy: trackByFn" [value]="fruit">{{fruit}}</mat-option>-->
-    <!--            </mat-autocomplete>-->
-    <!--        </mat-form-field>-->
-    <!--    </form>-->
-    <!--    <div class="text-secondary flex justify-between text-md leading-5 pl-2 pt-5 pb-5">-->
-    <!--        <div class="flex">-->
-    <!--            <mat-icon class="text-sm icon-size-5" [svgIcon]="'heroicons_outline:clock'"></mat-icon>-->
-    <!--            <div class="ml-0.5">-->
-    <!--                Creato il {{ form.creationDate }}-->
-    <!--            </div>-->
-    <!--        </div>-->
-
-
-    <!--    </div>-->
-    <!--    <div class="mt-auto flex w-full flex-col">-->
-
-
-    <!--        <div class="relative h-0.5">-->
-    <!--            <div *ngIf="form.formStatus == FormStatusEnum.ATTIVO">-->
-    <!--                <mat-progress-bar class="h-0.5" style="background: forestgreen" [value]="0"></mat-progress-bar>-->
-    <!--            </div>-->
-    <!--            <div *ngIf="form.formStatus == FormStatusEnum.SOSPESO">-->
-    <!--                <mat-progress-bar class="h-0.5" style="background: orange" [value]="0"></mat-progress-bar>-->
-    <!--            </div>-->
-    <!--            <div *ngIf="form.formStatus == FormStatusEnum.CANCELLATO">-->
-    <!--                <mat-progress-bar class="h-0.5" style="background: red" [value]="0"></mat-progress-bar>-->
-    <!--            </div>-->
-    <!--        </div>-->
-
-    <!--        <div class="flex justify-between">-->
-    <!--            <div class="px-6 py-4 text-right">-->
-    <!--                <a mat-stroked-button [routerLink]="[form.formId]">-->
-    <!--                <span class="inline-flex items-center">-->
-    <!--                    <mat-icon [matTooltip]="tooltip || 'Mostra anteprima'" class="icon-size-5" [svgIcon]="'heroicons_outline:computer-desktop'"></mat-icon>-->
-    <!--                </span>-->
-    <!--                </a>-->
-    <!--            </div>-->
-    <!--            <div class="px-6 py-4 text-right dark:bg-transparent">-->
-    <!--                <a mat-stroked-button (click)="deleteForm()">-->
-    <!--                <span class="inline-flex items-center">-->
-    <!--                    <mat-icon [matTooltip]="tooltip || 'Cancella'" class="icon-size-5" style="color: red;" [svgIcon]="'heroicons_outline:trash'"></mat-icon>-->
-    <!--                </span>-->
-    <!--                </a>-->
-    <!--            </div>-->
-    <!--        </div>-->
-
-    <!--    </div>-->
-    <!-- component -->
     <body class="bg-cream text-charcoal min-h-screen leading-normal overflow-x-hidden lg:overflow-auto">
     <main>
         <section class="bg-cream-lighter p-4 shadow"  style="background: white">
@@ -200,6 +68,7 @@
                         <!--                        </div>-->
                     </div>
                 </div>
+                <mat-divider style="padding: 4px"></mat-divider>
                 <div class="md:flex mb-6">
                     <div class="md:w-1/4">
                         <legend class="uppercase tracking-wide text-sm">Immagine/Logo form</legend>
@@ -226,19 +95,21 @@
                         </div>
                     </div>
                 </div>
+                <mat-divider style="padding: 4px"></mat-divider>
                 <div class="md:flex mb-8">
                     <div class="md:w-1/4">
                         <div class="uppercase tracking-wide text-sm">Configura Apertura</div>
-                        <p class="text-xs font-light text-red">Configura apertura dal lunedi alla domenica creando fasce orarie, slot di prenotazione e chiusure</p>
+                        <p class="pb-2 text-xs font-light text-red">Configura apertura dal lunedi alla domenica creando fasce orarie, slot di prenotazione e chiusure</p>
                     </div>
+
                     <div class="md:flex-1 mt-2 mb:mt-0 md:px-3">
                         <app-regularopeningconf [form]="form"></app-regularopeningconf>
                     </div>
                 </div>
                 <div class="md:flex mb-8">
                     <div class="md:w-1/4">
-                        <div class="uppercase tracking-wide text-sm">Aperture e Chiusure eccezionali</div>
-                        <p class="text-xs font-light text-red">Configura aperture per giornate festive o chiusure programmate per periodi particolari. Le configurazioni in questa sezione avranno priorità sulla normale configurazione di apertura e chiusura</p>
+                        <div class="uppercase tracking-wide text-sm">Eventi, Aperture e Chiusure eccezionali giornalieri</div>
+                        <p class="text-xs font-light text-red">Configura aperture per giornate festive o chiusure. Schedula eventi specificando il titolo e caricando la locandina promozionale. Le configurazioni in questa sezione avranno priorità sulla normale configurazione di apertura e chiusura</p>
                     </div>
                     <div class="md:flex-1 mt-2 mb:mt-0 md:px-3">
                         <app-specialdayscomponent [form]="form"></app-specialdayscomponent>
@@ -246,8 +117,8 @@
                 </div>
                 <div class="md:flex mb-8">
                     <div class="md:w-1/4">
-                        <div class="uppercase tracking-wide text-sm">Ferie</div>
-                        <p class="text-xs font-light text-red">Configura qui i periodi di ferie</p>
+                        <div class="uppercase tracking-wide text-sm">Chiusure periodiche</div>
+                        <p class="text-xs font-light text-red">Configura qui i periodi di ferie e di chiusure programmate</p>
                     </div>
                     <div class="md:flex-1 mt-2 mb:mt-0 md:px-3">
                     </div>

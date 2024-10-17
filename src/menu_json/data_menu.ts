@@ -33,11 +33,19 @@ export const defaultNavigation: FuseNavigationItem[] = [
             },
             {
                 id: 'apps.calendar',
-                title: 'Form',
+                title: 'Form prenotazioni',
                 type: 'basic',
-                icon: 'heroicons_outline:document-text',
+                icon: 'heroicons_outline:book-open',
                 link: '/dashboard/forms',
-            },{
+            },
+            {
+                id: 'apps.calendar',
+                title: 'Form raccolta dati',
+                type: 'basic',
+                icon: 'heroicons_outline:identification',
+                link: '/dashboard/datacollect',
+            },
+            {
                 id: 'apps.calendar',
                 title: 'Tag',
                 type: 'basic',

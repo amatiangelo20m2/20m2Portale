@@ -65,17 +65,17 @@ export class FormControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addDefaultTimeRangeForEveryday(body: TimeRange, formCode: string, observe?: 'body', reportProgress?: boolean): Observable<FormDTO>;
-    public addDefaultTimeRangeForEveryday(body: TimeRange, formCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FormDTO>>;
-    public addDefaultTimeRangeForEveryday(body: TimeRange, formCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FormDTO>>;
-    public addDefaultTimeRangeForEveryday(body: TimeRange, formCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addDefaultTimeRangeForAllDays(body: TimeRange, formCode: string, observe?: 'body', reportProgress?: boolean): Observable<FormDTO>;
+    public addDefaultTimeRangeForAllDays(body: TimeRange, formCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FormDTO>>;
+    public addDefaultTimeRangeForAllDays(body: TimeRange, formCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FormDTO>>;
+    public addDefaultTimeRangeForAllDays(body: TimeRange, formCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (body === null || body === undefined) {
-            throw new Error('Required parameter body was null or undefined when calling addDefaultTimeRangeForEveryday.');
+            throw new Error('Required parameter body was null or undefined when calling addDefaultTimeRangeForAllDays.');
         }
 
         if (formCode === null || formCode === undefined) {
-            throw new Error('Required parameter formCode was null or undefined when calling addDefaultTimeRangeForEveryday.');
+            throw new Error('Required parameter formCode was null or undefined when calling addDefaultTimeRangeForAllDays.');
         }
 
         let headers = this.defaultHeaders;
@@ -436,6 +436,47 @@ export class FormControllerService {
         return this.httpClient.request<FormDTO>('put',`${this.basePath}/api/form/add/holidays/${encodeURIComponent(String(formCode))}`,
             {
                 params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     *
+     *
+     * @param formCode
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public resetDefaultConfigurationForm(formCode: string, observe?: 'body', reportProgress?: boolean): Observable<FormDTO>;
+    public resetDefaultConfigurationForm(formCode: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<FormDTO>>;
+    public resetDefaultConfigurationForm(formCode: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<FormDTO>>;
+    public resetDefaultConfigurationForm(formCode: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (formCode === null || formCode === undefined) {
+            throw new Error('Required parameter formCode was null or undefined when calling resetDefaultConfigurationForm.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<FormDTO>('delete',`${this.basePath}/api/form/resetconf/${encodeURIComponent(String(formCode))}`,
+            {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

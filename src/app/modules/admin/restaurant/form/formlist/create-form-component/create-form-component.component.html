@@ -1,9 +1,9 @@
 <button
-        mat-icon-button
+    mat-mini-fab
         [matTooltip]="tooltip || 'Crea Form'"
         (click)="openPanel()"
         #shortcutsOrigin>
-    <mat-icon [svgIcon]="'heroicons_outline:plus'"></mat-icon>
+    <mat-icon [svgIcon]="'heroicons_outline:plus'" color="warn"></mat-icon>
 </button>
 
 <ng-template #shortcutsPanel>
@@ -20,7 +20,7 @@
                 </button>
             </div>
             <div class="flex items-center text-lg font-medium leading-10">
-                <span class="">Crea nuovo form</span>
+                <span class="">Crea nuovo form prenotazione</span>
             </div>
             <div class="ml-auto">
 
@@ -37,14 +37,14 @@
                             [formControlName]="'formName'"
                             required>
                 </mat-form-field>
-                <mat-form-field class="w-full">
-                    <mat-label>Tipologia</mat-label>
-                    <mat-select [formControlName]="'formType'">
-                        <mat-option *ngFor="let type of formType" [value]="type">
-                            {{ type }}
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
+<!--                <mat-form-field class="w-full">-->
+<!--                    <mat-label>Tipologia</mat-label>-->
+<!--                    <mat-select [formControlName]="'formType'">-->
+<!--                        <mat-option *ngFor="let type of formType" [value]="type">-->
+<!--                            {{ type }}-->
+<!--                        </mat-option>-->
+<!--                    </mat-select>-->
+<!--                </mat-form-field>-->
                 <div class="flex items-center justify-end mt-4">
                     <button
                             class="mr-2"

@@ -23,12 +23,9 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatGridListModule} from "@angular/material/grid-list";
 import {RegularopeningconfComponent} from "./regular-opening-cong/regularopeningconf.component";
 import {SpecialdayscomponentComponent} from "./special-days-opening-conf/specialdayscomponent.component";
-import FormTypeEnum = BookingFormDto.FormTypeEnum;
-
-import FormStatusEnum = FormDTO.FormStatusEnum;
 import {FormControllerService, FormDTO} from "../../../../../../core/restaurant_service";
 import {MatCardModule} from "@angular/material/card";
-import {DateTime} from "luxon";
+import FormStatusEnum = FormDTO.FormStatusEnum;
 
 @Component({
     selector: 'form-edit-component',
@@ -73,8 +70,6 @@ export class FormEditComponent implements OnInit{
         private _stateManager : StateManagerProvider,
         private _restaurantStateManager : RestaurantStateManagerProvider,
         private route: ActivatedRoute) {
-
-
     }
 
     ngOnInit(): void {
@@ -216,38 +211,6 @@ export class FormEditComponent implements OnInit{
         );
     }
 
-    deleteForm() {
-
-        this.form.formStatus = FormStatusEnum.CANCELLATO;
-
-        this._formController.editForm(this.form).subscribe(
-            formDto => {
-                this._snackBar.open(formDto.formName + ' è ora in stato ' + formDto.formStatus + '', 'Undo', {
-                    duration: 3000,
-                });
-            },
-            error => {
-                this._snackBar.open('error: ' + error.toString(), 'Undo', {
-                    duration: 3000,
-                });
-            }
-        );
-    }
-
-
-
-    openNewTab(formCode: string): void {
-        console.log('redirect to ' + this.getFormUrl(formCode));
-        window.open(this.getFormUrl(formCode), '_blank'); // '_blank' opens the URL in a new tab
-    }
-
-    protected readonly BookingFormDto = BookingFormDto;
-    protected readonly FormTypeEnum = FormTypeEnum;
     protected readonly FormDTO = FormDTO;
 
-
-    dateTime : DateTime = DateTime.now();
-    getMonth(number: number) {
-        return this.dateTime.month + number;
-    }
 }

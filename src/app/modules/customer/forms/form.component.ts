@@ -17,12 +17,11 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatStepperModule} from "@angular/material/stepper";
 import localeIt from '@angular/common/locales/it';
-import {FormControllerService, FormDTO} from "../../../core/restaurant_service";
 import {BookingFormComponent} from "./booking-form/booking-form.component";
 import {RedirectFormComponent} from "./redirect-form/redirect-form.component";
 import {catchError, of} from "rxjs";
 import {Error500Component} from "../../pages/error500/error500.component";
-
+import {FormControllerService, FormDTO} from "../../../core/restaurant_service";
 registerLocaleData(localeIt);
 
 @Component({

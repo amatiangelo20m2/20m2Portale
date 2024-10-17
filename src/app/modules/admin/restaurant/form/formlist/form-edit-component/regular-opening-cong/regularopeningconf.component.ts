@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {MatSlideToggleChange, MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatIconModule} from "@angular/material/icon";
@@ -7,13 +7,12 @@ import {StateManagerProvider} from "../../../../../../../state_manager/state-man
 import {TranslocoModule} from "@ngneat/transloco";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatButtonModule} from "@angular/material/button";
-import {MatDialog} from "@angular/material/dialog";
-import {AddGeneralTimeRangeComponent} from "./add-general-time-range/add-general-time-range.component";
 import {UtilityForm} from "../../utility";
-import { FormControllerService,
-    FormDTO,
-    OpeningHoursDTO,
-    TimeRange } from "../../../../../../../core/restaurant_service";
+import Swal from "sweetalert2";
+import {FormControllerService, FormDTO, OpeningHoursDTO, TimeRange} from "../../../../../../../core/restaurant_service";
+import {AddGeneralTimeRangeComponent} from "./add-general-time-range/add-general-time-range.component";
+import {MatDialog} from "@angular/material/dialog";
+import {MatListModule} from "@angular/material/list";
 
 @Component({
     selector: 'app-regularopeningconf',
@@ -29,7 +28,8 @@ import { FormControllerService,
         MatTooltipModule,
         MatButtonModule,
         NgStyle,
-        NgClass
+        NgClass,
+        MatListModule
     ],
     standalone: true
 })
@@ -190,15 +190,68 @@ export class RegularopeningconfComponent implements OnInit {
             this.form.regularOpeningHours = this.form.regularOpeningHours.sort((a, b) => a.id - b.id);
         });
     }
-    createGeneralConf() {
-        const dialogReference = this.dialog.open(AddGeneralTimeRangeComponent, {
-            data:{form: this.form},
-            width: '550px',
-        });
 
-        dialogReference.componentInstance.formUpdated.subscribe((modifiedForm: FormDTO) => {
-            this.form = modifiedForm;
-            this.form.regularOpeningHours = this.form.regularOpeningHours.sort((a, b) => a.id - b.id);
+
+
+    resetConfiguration(formCode: string) {
+
+        Swal.fire({
+            title: "Eliminare tutte le configurazioni presenti?",
+            showCancelButton: true,
+            cancelButtonColor: '#cbcbcb',
+            confirmButtonColor: '#990000',
+            confirmButtonText: "Procedi",
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                this._formControllerService.resetDefaultConfigurationForm(formCode, 'body').subscribe(formDTO => {
+                    this.form = formDTO;
+                    this.form.regularOpeningHours = this.form.regularOpeningHours.sort((a, b) => a.id - b.id);
+                });
+
+                Swal.fire({
+                    icon: "success",
+                    timer: 1600,
+                    title: "Configurazione eliminata",
+                    text: "",
+                });
+            } else if (result.isDenied) {
+            }
         });
+    }
+
+    //TODO: rifattorizzare funzione per apertura tutti i giorni
+    manageOpeningDaysBasedOnCurrentState() {
+
+        if(!this.isThisFormHasAnyConf()){
+            const dialogReference = this.dialog.open(AddGeneralTimeRangeComponent, {
+                data:{form: this.form},
+                width: '550px',
+            });
+
+            dialogReference.componentInstance.formUpdated.subscribe((modifiedForm: FormDTO) => {
+                this.form = modifiedForm;
+                this.form.regularOpeningHours = this.form.regularOpeningHours.sort((a, b) => a.id - b.id);
+            });
+        }else{
+            this.resetConfiguration(this.form.formCode);
+        }
+
+    }
+
+    isThisFormHasAnyConf() {
+
+        let confFuond : boolean = false;
+
+        this.form.regularOpeningHours.forEach(
+            regOpenConf => {
+                if(regOpenConf.timeRanges.length > 0){
+                    confFuond = true;
+                }
+            }
+        )
+        return confFuond;
+
+
     }
 }

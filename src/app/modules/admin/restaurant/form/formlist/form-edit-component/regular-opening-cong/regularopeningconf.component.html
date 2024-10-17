@@ -3,10 +3,12 @@
     <tr class="border-b">
         <th class="w-2/10 text-left p-2">Giorno</th>
         <th class="w-1/10 text-left text-sm"></th>
-        <th class="w-5/10 text-left text-sm">Ora Apertura/Ora Chiusura<button
-                (click)="createGeneralConf()"
-                mat-button [matTooltip]="tooltip || 'Configura apertura generale'" >
-            <mat-icon [svgIcon]="'heroicons_outline:clock'" style="color: #1e88dc"></mat-icon></button></th>
+        <th class="w-5/10 text-left text-sm">Ora Apertura/Ora Chiusura
+            <button
+                    (click)="resetConfiguration(form.formCode)"
+                    mat-button [matTooltip]="tooltip || 'Reset Configurazione'" >
+                <mat-icon [svgIcon]="'heroicons_outline:trash'" style="color: #b91c1c"></mat-icon></button>
+        </th>
 
         <th class="w-1/10 text-left text-sm items-center">
             <button (click)="saveConfiguration(form.formCode, timeSlotMap)" mat-button [matTooltip]="tooltip || 'Salva configurazione'" [ngClass]="{ 'animate-bounce': timeSlotMap.size > 0 }">
@@ -15,6 +17,11 @@
         </th>
     </tr>
     </thead>
+    <mat-slide-toggle
+        (click)="manageOpeningDaysBasedOnCurrentState()"
+        checked="{{this.isThisFormHasAnyConf()}}"
+        class="pl-2" color="warn">Tutti i giorni
+    </mat-slide-toggle>
     <tbody *ngFor="let regOpeningDay of form.regularOpeningHours" >
     <tr class="border-b">
         <td class="p-2"><mat-slide-toggle checked="{{!regOpeningDay.closed}}"

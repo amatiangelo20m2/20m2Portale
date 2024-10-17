@@ -6,13 +6,18 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
-import {NgForOf} from "@angular/common";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {TemplatePortal} from "@angular/cdk/portal";
 import {Overlay, OverlayRef} from "@angular/cdk/overlay";
 import {Subject} from "rxjs";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import {DateTime} from "luxon";
+import {DateformatitaPipe} from "../../../../../../../pages/components/pipe/dateformatita.pipe";
+import {FormControllerService, SpecialdayconfFormCodeBody} from "../../../../../../../../core/restaurant_service";
+import {SpecialdayscomponentComponent} from "../specialdayscomponent.component";
+import {MatListModule} from "@angular/material/list";
 
 @Component({
   selector: 'app-create-special-day-component',
@@ -29,7 +34,11 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
     MatTooltipModule,
     ReactiveFormsModule,
     MatDatepickerModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    DateformatitaPipe,
+    NgClass,
+    NgIf,
+    MatListModule
   ],
   standalone: true
 })
@@ -44,15 +53,18 @@ export class CreateSpecialDayComponentComponent implements OnInit {
   @Input() tooltip: string;
   specialDayForm: UntypedFormGroup;
 
+  isClosed : boolean = false;
 
   constructor(private _overlay: Overlay,
               private _formBuilder: UntypedFormBuilder,
+              private _formController : FormControllerService,
               private _viewContainerRef: ViewContainerRef) {
   }
 
   ngOnInit(): void {
     this.specialDayForm = this._formBuilder.group({
       description : ['', [Validators.required]],
+      isOpen: [true]
     });
   }
   openPanel(): void {
@@ -112,9 +124,13 @@ export class CreateSpecialDayComponentComponent implements OnInit {
 
   createConf() {
 
+
   }
 
   close(): void {
     this._overlayRef.detach();
   }
+
+  selectedDate: Date;
+
 }
