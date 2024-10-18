@@ -15,9 +15,9 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import {DateformatitaPipe} from "../../../../../../../pages/components/pipe/dateformatita.pipe";
 import {MatListModule} from "@angular/material/list";
-import {FormControllerService, FormDTO} from "../../../../../../../../core/restaurant_service";
 import {DateTime} from "luxon";
 import {StateManagerProvider} from "../../../../../../../../state_manager/state-manager-provider.service";
+import {FormControllerService, FormDTO} from "../../../../../../../../core/restaurant_service";
 
 @Component({
   selector: 'app-create-special-day-component',

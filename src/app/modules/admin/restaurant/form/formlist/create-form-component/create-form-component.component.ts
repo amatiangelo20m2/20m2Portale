@@ -10,14 +10,11 @@ import {NgForOf, NgIf, NgTemplateOutlet} from "@angular/common";
 import {ReactiveFormsModule, UntypedFormBuilder, UntypedFormGroup, Validators} from "@angular/forms";
 import {Overlay, OverlayRef} from "@angular/cdk/overlay";
 import {catchError, Subject, throwError} from "rxjs";
-import {BranchControllerService, BranchCreationEntity, BranchResponseEntity} from "../../../../../../core/dashboard";
-import {User} from "../../../../../../core/user/user.types";
 import {Router} from "@angular/router";
 import {StateManagerProvider} from "../../../../../../state_manager/state-manager-provider.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {TemplatePortal} from "@angular/cdk/portal";
 import {FormControllerService, FormDTO} from "../../../../../../core/restaurant_service";
-import FormTypeEnum = FormDTO.FormTypeEnum;
 import {RestaurantStateManagerProvider} from "../../../../../../state_manager/restaurant-state-manager";
 import FormStatusEnum = FormDTO.FormStatusEnum;
 

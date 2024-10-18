@@ -33,6 +33,8 @@ export interface FormDTO {
     daylyTimeWorkingRange?: TimeRange;
     nightTimeWorkingRange?: TimeRange;
     cutterTimeForRanges?: number;
+    maxGuests?: number;
+    dogSizeThresholdKg?: number;
 }
 export namespace FormDTO {
     export type FormTypeEnum = 'PRENOTAZIONE' | 'RACCOLTA_DATI';

@@ -12,18 +12,28 @@
                 ></mat-icon>
                 <a [routerLink]="['/dashboard/forms']" class="ml-1">forms</a>
                 <mat-icon
-                    class="text-secondary icon-size-5"
+                    class="text-secondary icon-size-5 ml-1"
                     [svgIcon]="'heroicons_mini:chevron-right'"
                 ></mat-icon>
                 <a class="ml-1 text-primary-500">{{form.formCode}}</a>
             </div>
         </div>
-        <button
-            class="fuse-alert-dismiss-button p-10"
-            mat-icon-button
-            [routerLink]="['/dashboard/forms']">
-            <mat-icon [svgIcon]="'heroicons_solid:x-mark'"></mat-icon>
-        </button>
+        <div>
+
+            <button [matTooltip]="tooltip || 'Salva configurazione'"
+                     mat-flat-button
+                     color="primary" class="animate-bounce">
+                <mat-icon [svgIcon]="'feather:save'" class="px-1" [ngStyle]="{'color': true ? '#1e88dc' : '#898989'}">
+
+                </mat-icon>Salva</button>
+            <button
+                class="fuse-alert-dismiss-button p-10"
+                mat-flat-button
+                [routerLink]="['/dashboard/forms']">
+                <mat-icon [svgIcon]="'heroicons_solid:x-mark'"></mat-icon>
+            </button>
+        </div>
+
     </div>
     <body class="bg-cream text-charcoal min-h-screen leading-normal overflow-x-hidden lg:overflow-auto">
     <main>
@@ -31,72 +41,84 @@
             <form>
                 <div class="md:flex mb-8">
                     <div class="md:w-1/4">
-                        <div class="uppercase tracking-wide text-sm">Dettagli form</div>
+                        <div class="uppercase tracking-wide text-sm pt-3 font-bold">Dettagli form</div>
                         <p class="text-xs font-light text-red">Configurazioni generali</p>
                     </div>
                     <div class="md:flex-1 mt-2 mb:mt-0 md:px-3">
+                        <label class="block uppercase tracking-wide text-xs font-bold">Seleziona immagine del form</label>
+                        <div class="flex bold py-5">
+
+                            <div [matTooltip]="tooltip || 'Carica immagine per form'"
+                                 class="relative items-center justify-center w-16 h-16 rounded-full border-2 border-grey-700 overflow-hidden group">
+
+                                <!-- Profile Image -->
+                                <img [src]="'assets/images/logo/logo.png'" alt="Profile Image" class="w-full h-full object-cover">
+
+                                <ng-container>
+                                    <!-- Default Icon (if no image available) -->
+                                    <div class="flex items-center justify-center w-full h-full bg-gray-100">
+                                        <mat-icon class="text-gray-500 text-4xl">photo</mat-icon>
+                                    </div>
+                                </ng-container>
+
+                                <!-- Upload Button Overlay -->
+                                <button class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity">
+                                    <mat-icon class="text-white text-3xl">add_a_photo</mat-icon>
+                                    <input type="file" class="absolute inset-0 opacity-0 cursor-pointer" (change)="onFileSelected($event)">
+                                </button>
+                            </div>
+                        </div>
 
                         <div class="mb-4">
-                            <label class="block uppercase tracking-wide text-xs font-bold">Nome</label>
-                            <input [(ngModel)]="form.formName" class="w-full shadow-inner p-2 border border-grey-300" type="text" name="name" placeholder="Ex: Form Prenotazione">
+                            <label class="block uppercase tracking-wide text-xs font-bold">Nome FORM</label>
+                            <input class="w-full shadow-inner p-2 border border-grey-300" type="text" name="name" placeholder="Ex: Form Prenotazione">
                         </div>
                         <div class="mb-4">
                             <label class="block uppercase tracking-wide text-xs font-bold">Titolo personalizzato</label>
-                            <input [(ngModel)]="form.outputNameForCustomer" class="w-full shadow-inner p-2 border border-grey-300" type="text" name="name" placeholder="Ex: Form Prenotazione">
+                            <input class="w-full shadow-inner p-2 border border-grey-300" type="text" name="name" placeholder="Ex: Prenotazioni nome ristorante">
                         </div>
 
                         <div class="mb-4">
                             <label class="block uppercase tracking-wide text-xs font-bold">Thank you page personalizzata</label>
-                            <input [(ngModel)]="form.redirectPage" class="w-full shadow-inner p-2 border border-grey-300" type="text" name="name" placeholder="https://www.archimedia.it/blog/thank-you-page-cos%C3%A8-perch%C3%A9-farla-ed-esempi-per-trovare-ispirazione">
+                            <input class="w-full shadow-inner p-2 border border-grey-300" type="text">
                         </div>
 
                         <div class="mb-4">
                             <label class="block uppercase tracking-wide text-xs font-bold">Link</label>
-                            <input class="w-full shadow-inner p-2 border border-grey-300" type="text" [value]="this.getFormUrl(form.formCode)" disabled>
-                        </div>
-                    </div>
-                </div>
-                <mat-divider style="padding: 4px"></mat-divider>
-                <div class="md:flex mb-6">
-                    <div class="md:w-1/4">
-                        <legend class="uppercase tracking-wide text-sm">Immagine/Logo form</legend>
-                    </div>
-                    <div class="flex justify-center bold">
-                        <div [matTooltip]="tooltip || 'Carica immagine per form'"
-                             class="relative items-center justify-center w-16 h-16 rounded-full border-2 border-grey-700 overflow-hidden group">
+                            <div class="relative w-full">
+                                <input class="w-full shadow-inner p-2 border border-grey-300 pr-10" type="text" [value]="this.getFormUrl(form.formCode)" disabled>
 
-                            <!-- Profile Image -->
-                            <img [src]="'assets/images/logo/logo.png'" alt="Profile Image" class="w-full h-full object-cover">
-
-                            <ng-container>
-                                <!-- Default Icon (if no image available) -->
-                                <div class="flex items-center justify-center w-full h-full bg-gray-100">
-                                    <mat-icon class="text-gray-500 text-4xl">photo</mat-icon>
+                                <!-- Icon buttons -->
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                    <button mat-icon-button [matTooltip]="tooltip || 'Copia'">
+                                        <mat-icon [svgIcon]="'heroicons_outline:document-duplicate'"></mat-icon>
+                                    </button>
+                                    <button mat-icon-button [matTooltip]="tooltip || 'Scarica qr code'">
+                                        <mat-icon [svgIcon]="'heroicons_outline:qr-code'"></mat-icon>
+                                    </button>
+                                    <button mat-icon-button [matTooltip]="tooltip || 'Anteprima'">
+                                        <mat-icon [svgIcon]="'heroicons_outline:window'"></mat-icon>
+                                    </button>
                                 </div>
-                            </ng-container>
-
-                            <!-- Upload Button Overlay -->
-                            <button class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity">
-                                <mat-icon class="text-white text-3xl">add_a_photo</mat-icon>
-                                <input type="file" class="absolute inset-0 opacity-0 cursor-pointer" (change)="onFileSelected($event)">
-                            </button>
+                            </div>
                         </div>
+
                     </div>
                 </div>
                 <mat-divider style="padding: 4px"></mat-divider>
                 <div class="md:flex mb-8">
                     <div class="md:w-1/4">
-                        <div class="uppercase tracking-wide text-sm">Configura Apertura</div>
+                        <div class="uppercase tracking-wide text-sm pt-3 font-bold">Configura Apertura</div>
                         <p class="pb-2 text-xs font-light text-red">Configura apertura dal lunedi alla domenica creando fasce orarie, slot di prenotazione e chiusure</p>
-                        <div class="uppercase tracking-wide text-sm">FASCE ORARIE</div>
+                        <div class="uppercase tracking-wide text-sm pt-3 font-bold">FASCE ORARIE</div>
                         <p class="pb-2 text-xs font-light text-red">Configura qui quelle che per te saranno le fascie orarie</p>
 
                         <div class="flex flex-col">
-                            <div class="flex flex-row">
+                            <div class="flex flex-row pb-1">
                                   <span class="inline-flex items-center justify-center px-2 py-1.5 ms-3 text-xs font-medium text-black bg-yellow-100 rounded dark:bg-gray-700 dark:text-green-400">
                                             <mat-icon [svgIcon]="'heroicons_outline:sun'" class="icon-size-4" style="color: red"></mat-icon>
                                         </span>
-                                <div class="relative pr-2">
+                                <div class="relative px-2">
                                     <select id="1" class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
                                         <option *ngFor="let hour of timeSlot">
                                             {{ hour }}
@@ -111,11 +133,12 @@
                                     </select>
                                 </div>
                             </div>
+
                             <div class="flex flex-row">
                                    <span class="inline-flex items-center justify-center px-2 py-1.5 ms-3 text-xs font-medium text-black bg-blue-950 rounded dark:bg-gray-700 dark:text-green-400">
                                             <mat-icon [svgIcon]="'heroicons_outline:moon'" class="icon-size-4" style="color: white;"></mat-icon>
                                         </span>
-                                <div class="relative pr-2">
+                                <div class="relative px-2">
                                     <select id="3" class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
                                         <option *ngFor="let hour of timeSlot">
                                             {{ hour }}
@@ -131,26 +154,43 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="uppercase tracking-wide text-sm">TAGLIO</div>
+                        <div class="uppercase tracking-wide text-sm pt-3 font-bold">COPERTI</div>
+                        <p class="pb-2 text-xs font-light text-red">Quanti coperti al massimo accetta il tuo locale?</p>
+
+                        <div class="relative">
+                            <input class="w-full shadow-inner p-2 border border-grey-300" type="number" name="guests" placeholder="Coperti">
+                        </div>
+
+                        <div class="uppercase tracking-wide text-sm pt-3 font-bold">TAGLIO</div>
                         <p class="pb-2 text-xs font-light text-red">Dividi le fasce orarie in slot temporali predefiniti. Impostando il campo a 0 ogni non verrà effettuata alcuna divisione</p>
 
                         <div class="relative">
                             <select id="cutter"  class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
                                 <option *ngFor="let cutter of cutterValue" [value]="form.cutterTimeForRanges">
-                                    {{ cutter }} min
+                                    dividi dascia oraria in slot di {{ cutter }} min 🕓
                                 </option>
                             </select>
                         </div>
+
+                        <div class="mb-4">
+                            <div class="uppercase tracking-wide text-sm pt-3 font-bold">ANIMALI</div>
+                            <p class="pb-2 text-xs font-light text-red">Accetti cani? Specifica fino a quanti kg.</p>
+                            <div class="relative">
+                                <select id="dogs"  class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
+                                    <option *ngFor="let dogSize of dogSizes" [ngValue]="form.dogSizeThresholdKg">
+                                        accetto cani fino a {{ dogSize }} Kg 🐶
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-
-
                     <div class="md:flex-1 mt-2 mb:mt-0 md:px-3">
                         <app-regularopeningconf [form]="form"></app-regularopeningconf>
                     </div>
                 </div>
                 <div class="md:flex mb-8">
                     <div class="md:w-1/4">
-                        <div class="uppercase tracking-wide text-sm">Eventi, Aperture e Chiusure eccezionali giornalieri</div>
+                        <div class="uppercase tracking-wide text-sm pt-3 font-bold">Eventi, Aperture e Chiusure eccezionali giornalieri</div>
                         <p class="text-xs font-light text-red">Configura aperture per giornate festive o chiusure. Schedula eventi specificando il titolo e caricando la locandina promozionale. Le configurazioni in questa sezione avranno priorità sulla normale configurazione di apertura e chiusura</p>
                     </div>
                     <div class="md:flex-1 mt-2 mb:mt-0 md:px-3">
@@ -159,15 +199,37 @@
                 </div>
                 <div class="md:flex mb-8">
                     <div class="md:w-1/4">
-                        <div class="uppercase tracking-wide text-sm">Chiusure periodiche</div>
+                        <div class="uppercase tracking-wide text-sm pt-3 font-bold">Chiusure periodiche</div>
                         <p class="text-xs font-light text-red">Configura qui i periodi di ferie e di chiusure programmate</p>
                     </div>
                     <div class="md:flex-1 mt-2 mb:mt-0 md:px-3">
+
+                        <div id="date-range-picker" class="flex items-center">
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                    </svg>
+                                </div>
+                                <input id="datepicker-range-start" name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date start">
+                            </div>
+                            <span class="mx-4 text-gray-500">al</span>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                        <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                    </svg>
+                                </div>
+                                <input id="datepicker-range-end" name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date end">
+                            </div>
+                        </div>
+
                     </div>
                 </div>
+
                 <div class="md:flex mb-8">
                     <div class="md:w-1/4">
-                        <div class="uppercase tracking-wide text-sm">Anteprima form</div>
+                        <div class="uppercase tracking-wide text-sm pt-3 font-bold">Anteprima form</div>
                         <p class="text-xs font-light text-red"></p>
                     </div>
                     <div class="flex flex-col flex-auto items-center sm:justify-center min-w-0">

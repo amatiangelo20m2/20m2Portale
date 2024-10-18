@@ -7,7 +7,7 @@ import {ActivatedRoute, RouterLink} from "@angular/router";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {MatIconModule} from "@angular/material/icon";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {NgClass, NgForOf, NgIf} from "@angular/common";
+import {NgClass, NgForOf, NgIf, NgStyle} from "@angular/common";
 import {MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
 import {MatAutocompleteModule, MatAutocompleteSelectedEvent} from "@angular/material/autocomplete";
 import {MatInputModule} from "@angular/material/input";
@@ -53,7 +53,8 @@ import {BookingFormComponent} from "../../../../../customer/forms/booking-form/b
         RegularopeningconfComponent,
         SpecialdayscomponentComponent,
         MatCardModule,
-        BookingFormComponent
+        BookingFormComponent,
+        NgStyle
     ],
     standalone: true,
     changeDetection: ChangeDetectionStrategy.Default
@@ -78,6 +79,7 @@ export class FormEditComponent implements OnInit{
         this.route.params.subscribe(params => {
             this.formCode = params['formCode'];
             console.log('Form Code:', this.formCode);
+
             this._formController.retrieveByFormCode(this.formCode).subscribe(
                 value => {
                     this.form = value;
@@ -219,4 +221,8 @@ export class FormEditComponent implements OnInit{
     timeSlot: String[] = [];
     cutterValue: number[] = [0,15,30,45,60,90,120];
 
+
+
+    message : any;
+    dogSizes: number[] = [0,15,30];
 }

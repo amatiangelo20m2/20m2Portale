@@ -3,21 +3,21 @@
     <tr class="border-b">
         <th class="w-1/7 text-left p-2">Giorno</th>
         <th class="w-1/7 text-left p-2"></th>
-        <th class="w-1/7 text-left p-2">Ora Apertura/Ora Chiusura</th>
-        <th class="w-4/7 text-left text-sm">Descrizione</th>
+        <th class="w-1/7 text-left p-2">Fasce Orarie</th>
+        <th class="w-3/7 text-left text-sm">Descrizione</th>
         <th class="w-1/7 text-left text-sm"><app-create-special-day-component [formCode]="form.formCode"></app-create-special-day-component></th>
 
     </tr>
     </thead>
     <tbody *ngFor="let specialDay of form.specialDays" >
     <tr class="border-b">
-        <td class="p-2"><mat-slide-toggle checked="{{!specialDay.closed}}">
+        <td class="p-2"><mat-slide-toggle color="#345345" checked="{{!specialDay.closed}}">
             <!--                                          (click)="changeStatusOfCurrentDay(form.formCode, specialDay.dayOfWeek)" color="primary">-->
         </mat-slide-toggle>{{specialDay.specialDate}}</td>
         <td *ngIf="!specialDay.closed"><mat-icon style="cursor: pointer;"
                                                  [svgIcon]="'heroicons_outline:plus'"
-                                                 [matTooltip]="tooltip || 'Aggiungi fascia oraria'">
-            <!--                                                    (click)="createTimeRange(form.formCode, regOpeningDay)"-->
+                                                 [matTooltip]="tooltip || 'Aggiungi fascia oraria'"
+                                                 (click)="createTimeRange(form.formCode, specialDay.specialDayCode, specialDay.timeRanges.length)">
         </mat-icon></td>
         <td class="flex flex-col p-2" *ngFor="let timeRange of specialDay.timeRanges">
             <div class="flex items-center" *ngIf="!specialDay.closed">
@@ -54,8 +54,8 @@
 
             </div>
         </td>
-        <td></td>
         <td>{{ specialDay.description }}</td>
+        <td></td>
     </tr>
 
     </tbody>

@@ -172,7 +172,8 @@ export class RegularopeningconfComponent implements OnInit {
                       timeSlotMap: Map<string, TimeRange>) {
 
         //i take the list from the map and i'll use to send to the update method
-        this._formControllerService.updateTimeRange(Array.from(timeSlotMap.values()), formCode, 'body').subscribe(
+        this._formControllerService
+            .updateTimeRange(Array.from(timeSlotMap.values()), formCode, 'body').subscribe(
             formDTO => {
             this._stateManagerProvider.showToast('Configurazione oraria modificata con successo', 'success');
             this.timeSlotMap.clear();
@@ -210,7 +211,7 @@ export class RegularopeningconfComponent implements OnInit {
         });
     }
 
-    //TODO: rifattorizzare funzione per apertura tutti i giorni
+    dogSizes: number[] = [0,15,30];
     manageOpeningDaysBasedOnCurrentState() {
 
         if(!this.isThisFormHasAnyConf()){

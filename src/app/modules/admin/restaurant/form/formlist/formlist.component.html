@@ -35,14 +35,6 @@
                 <td class="px-1 py-1 whitespace-nowrap">
                     <mat-icon style="cursor: pointer;" [svgIcon]="'heroicons_outline:computer-desktop'" [matTooltip]="tooltip || 'Mostra anteprima'" (click)="openTabWithFormUrl(form.formCode)"></mat-icon>
                 </td>
-<!--                <td class="px-1 py-1 whitespace-nowrap">-->
-<!--                    <div class="rounded-full px-3 py-0.5 text-sm font-semibold"-->
-<!--                         [ngClass]="{-->
-<!--                    'bg-blue-100 text-blue-800 dark:bg-blue-500 dark:text-blue-50': form.formType == FormDTO.FormTypeEnum.PRENOTAZIONE,-->
-<!--                    'bg-red-100 text-red-800 dark:bg-red-500 dark:text-red-50': form.formType == FormDTO.FormTypeEnum.RACCOLTADATI}">-->
-<!--                        FORM {{ form.formType }}-->
-<!--                    </div>-->
-<!--                </td>-->
                 <td class="px-6 py-4">
                     <mat-icon style="cursor: pointer;" [matTooltip]="tooltip || 'Aggiorna'" (click)="navigateToFormEditComponent(form)" [svgIcon]="'heroicons_outline:pencil-square'"></mat-icon>
                     <mat-icon style="cursor: pointer;" (click)="duplicateForm(form)" [matTooltip]="tooltip || 'Duplica'" [svgIcon]="'heroicons_outline:document-duplicate'"></mat-icon>

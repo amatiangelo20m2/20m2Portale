@@ -14,7 +14,8 @@ import {
     CreateSpecialDayComponentComponent
 } from "./create-special-day-component/create-special-day-component.component";
 import {DateformatitaPipe} from "../../../../../../pages/components/pipe/dateformatita.pipe";
-import {FormControllerService, FormDTO, TimeRange} from "../../../../../../../core/restaurant_service";
+import {FormControllerService, FormDTO, OpeningHoursDTO, TimeRange} from "../../../../../../../core/restaurant_service";
+import {StateManagerProvider} from "../../../../../../../state_manager/state-manager-provider.service";
 
 @Component({
     selector: 'app-specialdayscomponent',
@@ -40,6 +41,7 @@ import {FormControllerService, FormDTO, TimeRange} from "../../../../../../../co
 export class SpecialdayscomponentComponent implements OnInit {
 
     timeSlot: string[];
+    dogSizes: number[] = [0,15,30];
 
     @Input() form: FormDTO;
     @Input() tooltip: string;
@@ -49,7 +51,7 @@ export class SpecialdayscomponentComponent implements OnInit {
     }
 
 
-    constructor(private _formControllerService : FormControllerService) {
+    constructor(private _formControllerService : FormControllerService, private _stateManagerProvider: StateManagerProvider) {
     }
 
 
@@ -76,5 +78,17 @@ export class SpecialdayscomponentComponent implements OnInit {
 
     getClosingFormattedTime(timeRange: TimeRange) {
         return "";
+    }
+
+    createTimeRange(formCode: string, specialDayCode: string, currentLengthOfConf) {
+        if(currentLengthOfConf < 4 ){
+            this._formControllerService.addTimeRangeSpecialDay(formCode, specialDayCode).subscribe(value =>{
+                this.form = value;
+            })
+        }else{
+            this._stateManagerProvider.showToast('Non puoi creare piu di 4 slot orari', 'error');
+        }
+
+
     }
 }

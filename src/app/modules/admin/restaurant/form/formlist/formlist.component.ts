@@ -24,7 +24,7 @@ import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {BranchesmanagmentComponent} from "../../../../../layout/common/shortcuts/branchesmanagment.component";
 import {CreateFormComponentComponent} from "./create-form-component/create-form-component.component";
 import {clone} from "lodash-es";
-import {QRCodeComponentModal} from "../qrcode/q-r-code-component-modal.component";
+import {QRCodeComponentModal} from "./form-edit-component/qrcode/q-r-code-component-modal.component";
 import FormStatusEnum = FormDTO.FormStatusEnum;
 import {UtilityForm} from "./utility";
 
