@@ -61,10 +61,9 @@
                                     </div>
                                 </ng-container>
 
-                                <!-- Upload Button Overlay -->
                                 <button class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity">
                                     <mat-icon class="text-white text-3xl">add_a_photo</mat-icon>
-                                    <input type="file" class="absolute inset-0 opacity-0 cursor-pointer" (change)="onFileSelected($event)">
+                                    <input type="file" class="absolute inset-0 opacity-0 cursor-pointer">
                                 </button>
                             </div>
                         </div>
@@ -120,14 +119,14 @@
                                         </span>
                                 <div class="relative px-2">
                                     <select id="1" class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
-                                        <option *ngFor="let hour of timeSlot">
+                                        <option *ngFor="let hour of UtilityForm.timeSlot">
                                             {{ hour }}
                                         </option>
                                     </select>
                                 </div>
                                 <div class="relative">
                                     <select id="2" class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
-                                        <option *ngFor="let hour of timeSlot">
+                                        <option *ngFor="let hour of UtilityForm.timeSlot">
                                             {{ hour }}
                                         </option>
                                     </select>
@@ -140,14 +139,14 @@
                                         </span>
                                 <div class="relative px-2">
                                     <select id="3" class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
-                                        <option *ngFor="let hour of timeSlot">
+                                        <option *ngFor="let hour of UtilityForm.timeSlot">
                                             {{ hour }}
                                         </option>
                                     </select>
                                 </div>
                                 <div class="relative">
                                     <select id="4" class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
-                                        <option *ngFor="let hour of timeSlot">
+                                        <option *ngFor="let hour of UtilityForm.timeSlot">
                                             {{ hour }}
                                         </option>
                                     </select>
@@ -166,7 +165,7 @@
 
                         <div class="relative">
                             <select id="cutter"  class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
-                                <option *ngFor="let cutter of cutterValue" [value]="form.cutterTimeForRanges">
+                                <option *ngFor="let cutter of UtilityForm.cutterValue" [value]="form.cutterTimeForRanges">
                                     dividi dascia oraria in slot di {{ cutter }} min 🕓
                                 </option>
                             </select>
@@ -177,7 +176,7 @@
                             <p class="pb-2 text-xs font-light text-red">Accetti cani? Specifica fino a quanti kg.</p>
                             <div class="relative">
                                 <select id="dogs"  class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
-                                    <option *ngFor="let dogSize of dogSizes" [ngValue]="form.dogSizeThresholdKg">
+                                    <option *ngFor="let dogSize of UtilityForm.dogSizes" [ngValue]="form.dogSizeThresholdKg">
                                         accetto cani fino a {{ dogSize }} Kg 🐶
                                     </option>
                                 </select>

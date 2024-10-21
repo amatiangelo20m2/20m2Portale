@@ -1,16 +1,6 @@
 import {environment} from "../../../../../../environments/environment";
 
 export class UtilityForm{
-    static getFormUrl(formCode: string) {
-        return environment.formUrl + '/bfrm?form=' +  formCode;
-    }
-
-    static getIframeUrl(formCode: string) {
-        return `<div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%;">
-                    <iframe src="${this.getFormUrl(formCode)}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-                    </iframe>
-                </div>`;
-    }
 
     days: string[] = [
         'Lunedi',
@@ -21,6 +11,10 @@ export class UtilityForm{
         'Sabato',
         'Domenica'
     ];
+
+    static timeSlot: String[] = UtilityForm.generateTimeSlots();
+    static cutterValue: number [] = [0,15,30,45,60,90,120];
+    static dogSizes : number [] = [0,15,30];
 
 
     static generateTimeSlots(): string[] {
@@ -40,6 +34,17 @@ export class UtilityForm{
         }
 
         return timeSlots;
+    }
+
+    public static getFormUrl(formCode: string) {
+        return environment.formUrl + '/reservation?form=' +  formCode;
+    }
+
+    public static getIframeUrl(formCode: string) {
+        return `<div style="position: relative; width: 100%; height: 0; padding-bottom: 56.25%;">
+                    <iframe src="${this.getFormUrl(formCode)}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                    </iframe>
+                </div>`;
     }
 
 }

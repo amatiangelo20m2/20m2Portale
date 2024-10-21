@@ -11,8 +11,12 @@
         </th>
 
         <th class="w-1/10 text-left text-sm items-center">
-            <button (click)="saveConfiguration(form.formCode, timeSlotMap)" mat-button [matTooltip]="tooltip || 'Salva configurazione'" [ngClass]="{ 'animate-bounce': timeSlotMap.size > 0 }">
+            <button (click)="saveConfiguration()"
+                    mat-button [matTooltip]="tooltip || 'Salva configurazione'"
+                    [ngClass]="{ 'animate-bounce': timeSlotMap.size > 0 }">
+
             <mat-icon [svgIcon]="'feather:save'" [ngStyle]="{'color': timeSlotMap.size > 0 ? '#1e88dc' : '#898989'}"></mat-icon>
+
             </button>
         </th>
     </tr>
@@ -35,14 +39,14 @@
             <div class="flex items-center" *ngIf="!regOpeningDay.closed">
                 <div class="relative pr-2">
                     <select id="1" (change)="onSelectChange(form.formCode, timeRange.timeRangeCode, $event, 0)" class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
-                        <option *ngFor="let hour of timeSlot" [attr.selected]="hour === getOpeningFormattedTime(timeRange) ? true : null">
+                        <option *ngFor="let hour of UtilityForm.generateTimeSlots();" [attr.selected]="hour === getOpeningFormattedTime(timeRange) ? true : null">
                             {{ hour }}
                         </option>
                     </select>
                 </div>
                 <div class="relative">
                     <select id="2" (change)="onSelectChange(form.formCode,timeRange.timeRangeCode,$event,1)" class="block appearance-none bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 h-full py-2 px-3">
-                        <option *ngFor="let hour of timeSlot" [attr.selected]="hour === getClosingFormattedTime(timeRange) ? true : null">
+                        <option *ngFor="let hour of UtilityForm.generateTimeSlots();" [attr.selected]="hour === getClosingFormattedTime(timeRange) ? true : null">
                             {{ hour }}
                         </option>
                     </select>

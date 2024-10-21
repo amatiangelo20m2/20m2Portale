@@ -95,7 +95,6 @@ export const defaultNavigation: FuseNavigationItem[] = [
                 icon: 'heroicons_outline:tag',
                 link: '/dashboard/tags',
             }
-
         ],
     }, {
         id: 'discal',

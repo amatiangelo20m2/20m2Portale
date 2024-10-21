@@ -168,12 +168,10 @@ export class RegularopeningconfComponent implements OnInit {
 
     }
 
-    saveConfiguration(formCode: string,
-                      timeSlotMap: Map<string, TimeRange>) {
+    saveConfiguration() {
 
         //i take the list from the map and i'll use to send to the update method
-        this._formControllerService
-            .updateTimeRange(Array.from(timeSlotMap.values()), formCode, 'body').subscribe(
+        this._formControllerService.updateTimeRange(Array.from(this.timeSlotMap.values()), this.form.formCode, 'body').subscribe(
             formDTO => {
             this._stateManagerProvider.showToast('Configurazione oraria modificata con successo', 'success');
             this.timeSlotMap.clear();
@@ -184,7 +182,7 @@ export class RegularopeningconfComponent implements OnInit {
 
 
 
-    resetConfiguration(formCode: string) {
+    resetConfiguration() {
 
         Swal.fire({
             title: "Eliminare tutte le configurazioni presenti?",
@@ -195,7 +193,7 @@ export class RegularopeningconfComponent implements OnInit {
         }).then((result) => {
             /* Read more about isConfirmed, isDenied below */
             if (result.isConfirmed) {
-                this._formControllerService.resetDefaultConfigurationForm(formCode, 'body').subscribe(formDTO => {
+                this._formControllerService.resetDefaultConfigurationForm(this.form.formCode, 'body').subscribe(formDTO => {
                     this.form = formDTO;
                     this.form.regularOpeningHours = this.form.regularOpeningHours.sort((a, b) => a.id - b.id);
                 });
@@ -211,7 +209,7 @@ export class RegularopeningconfComponent implements OnInit {
         });
     }
 
-    dogSizes: number[] = [0,15,30];
+    //TODO: rifattorizzare funzione per apertura tutti i giorni
     manageOpeningDaysBasedOnCurrentState() {
 
         if(!this.isThisFormHasAnyConf()){
@@ -225,7 +223,7 @@ export class RegularopeningconfComponent implements OnInit {
                 this.form.regularOpeningHours = this.form.regularOpeningHours.sort((a, b) => a.id - b.id);
             });
         }else{
-            this.resetConfiguration(this.form.formCode);
+            this.resetConfiguration();
         }
 
     }
@@ -254,4 +252,6 @@ export class RegularopeningconfComponent implements OnInit {
 
 
     }
+
+    protected readonly UtilityForm = UtilityForm;
 }

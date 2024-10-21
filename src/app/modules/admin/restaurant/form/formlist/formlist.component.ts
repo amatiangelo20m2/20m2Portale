@@ -24,9 +24,7 @@ import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {BranchesmanagmentComponent} from "../../../../../layout/common/shortcuts/branchesmanagment.component";
 import {CreateFormComponentComponent} from "./create-form-component/create-form-component.component";
 import {clone} from "lodash-es";
-import {QRCodeComponentModal} from "./form-edit-component/qrcode/q-r-code-component-modal.component";
 import FormStatusEnum = FormDTO.FormStatusEnum;
-import {UtilityForm} from "./utility";
 
 
 @Component({
@@ -150,9 +148,9 @@ export class FormlistComponent implements OnInit, OnDestroy {
     copyToClipboard(formCode: string, type: number) {
         const textarea = document.createElement('textarea');
         if(type == 0){
-            textarea.value = UtilityForm.getIframeUrl(formCode);
+            // textarea.value = UtilityForm.getIframeUrl(formCode);
         }else{
-            textarea.value = UtilityForm.getFormUrl(formCode);
+            // textarea.value = UtilityForm.getFormUrl(formCode);
         }
 
         document.body.appendChild(textarea);
@@ -176,13 +174,13 @@ export class FormlistComponent implements OnInit, OnDestroy {
     protected readonly FormStatusEnum = FormStatusEnum;
 
     openTabWithFormUrl(formCode: string) {
-        window.open(UtilityForm.getFormUrl(formCode), '_blank');
+        // window.open(this.getFormUrl(formCode), '_blank');
     }
     openQrCodeModal(formCode : string) {
-        this.dialog.open(QRCodeComponentModal, {
-            data: { url: UtilityForm.getFormUrl(formCode) },
-            width: '400px' // Adjust width as necessary
-        });
+        // this.dialog.open(QRCodeComponentModal, {
+        //     data: { url: this.getFormUrl(formCode) },
+        //     width: '400px' // Adjust width as necessary
+        // });
     }
 }
 

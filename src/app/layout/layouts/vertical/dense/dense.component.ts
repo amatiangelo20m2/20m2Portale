@@ -103,8 +103,9 @@ export class DenseLayoutComponent implements OnInit, OnDestroy
         });
 
         this._communicationService.whatsAppConf$.subscribe(wsConfDTO => {
+
             this.whatAppConf = wsConfDTO;
-            if(wsConfDTO.waApiState == WaApiStateEnum.READY){
+            if(wsConfDTO != null && wsConfDTO.waApiState == WaApiStateEnum.READY){
                 this.showQuickChat = true;
             }
         });
